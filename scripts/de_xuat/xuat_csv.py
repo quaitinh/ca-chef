@@ -6,6 +6,7 @@ Vào:
 Ra (cùng cột với bảng gốc trong data/):
   nguyen_lieu_moi.csv, mon_an_moi.csv, mon_nguyen_lieu_moi.csv
   mon_nhan.csv – nhãn khung mâm cho mọi món (kể cả món đang có)
+  scripts/de_xuat/cach_lam_viet_lai.py – cách làm Cá Chef viết lại (tham khảo link Cookpad ở cột nguon)
 Món chưa có công thức chi tiết: cach_lam để trống, app dẫn sang link Cookpad ở cột nguon.
 
 Dùng: python3 scripts/de_xuat/xuat_csv.py
@@ -22,6 +23,7 @@ DATA = os.path.join(ROOT, "data")
 OUT = os.path.join(DATA, "de_xuat")
 sys.path.insert(0, HERE)
 import lo1_bac  # noqa: E402
+from cach_lam_viet_lai import CL  # noqa: E402
 from phan_loai import classify  # noqa: E402
 
 MON_AN_HEADER = ["ma_mon", "ten_mon", "loai", "nhiet", "do_nang", "dau_mo", "nguyen_lieu_chinh",
@@ -188,6 +190,14 @@ def main():
             if not b: continue
             if b["thoi_gian_phut"]: r[9] = int(b["thoi_gian_phut"])
             if "/tim-kiem/" in r[14] and b["nguon_cong_thuc"]: r[14] = b["nguon_cong_thuc"]  # link tìm kiếm -> công thức thật
+
+    # Cách làm Cá Chef viết lại (cach_lam_viet_lai.py) cho món còn trống công thức
+    for r in mon_rows:
+        if r[12] or r[0] not in CL: continue
+        mo_ta, phut, do_kho, buoc = CL[r[0]]
+        if do_kho not in ("de", "vua", "kho"): loi.append(f"{r[0]}: do_kho lạ {do_kho}")
+        r[9], r[10], r[11] = int(phut), do_kho, mo_ta
+        r[12] = "\n".join(f"{i}. {b}" for i, b in enumerate(buoc, 1))
 
     for r in mon_rows:
         rec = dict(zip(MON_AN_HEADER, r))

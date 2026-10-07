@@ -66,6 +66,20 @@ SUA_TAY = {
                                   "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm", "Tiêu"],
     "hu_tieu_kho": ["600 g hủ tiếu", "300 g thịt heo xay", "200 g tôm", "4 quả trứng cút", "200 g giá", "Hẹ, xà lách",
                     "4 tép tỏi", "3 muỗng canh nước tương", "1 muỗng canh dầu hào", "1 muỗng cà phê đường", "Hành phi"],
+    "cuu_nuong": ["1 kg thịt cừu", "3 cây sả", "1 củ tỏi", "2 củ hành tím", "2 muỗng canh dầu hào",
+                  "1 muỗng canh nước mắm", "1 muỗng canh mật ong", "1 muỗng cà phê tiêu", "2 muỗng canh dầu ăn",
+                  "Muối ớt chanh"],
+    "gia_xao_he": ["400 g giá đỗ", "1 bó hẹ", "2 tép tỏi", "1 muỗng canh dầu ăn", "1 muỗng cà phê hạt nêm"],
+    "xa_lach_tron_dau_giam": ["300 g xà lách", "2 quả cà chua", "1 củ hành tây", "2 quả trứng gà",
+                              "2 muỗng canh giấm", "2 muỗng canh dầu ăn", "1 muỗng canh đường", "Muối, tiêu"],
+    "mang_tay_luoc_cham_xi_dau_trung": ["500 g măng tây", "2 quả trứng gà", "3 muỗng canh xì dầu",
+                                        "1 muỗng cà phê đường", "Muối"],
+    "canh_dau_phu_ca_chua": ["2 bìa đậu phụ", "3 quả cà chua", "2 cây hành lá", "1 củ hành tím",
+                             "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm", "1 muỗng canh dầu ăn"],
+    "canh_cai_thao_dau_hu_nam": ["400 g cải thảo", "2 bìa đậu phụ", "150 g nấm rơm", "1 củ hành tím",
+                                 "1 muỗng cà phê hạt nêm", "1 muỗng canh nước mắm", "Hành lá"],
+    "canh_tom_nau_thom": ["200 g tôm", "1/4 quả dứa", "2 quả cà chua", "1 củ hành tím", "Hành lá, ngò gai",
+                          "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm"],
     "nuoc_chanh_muoi": ["2 quả chanh muối", "2 muỗng canh đường", "400 ml nước lọc", "1 ly đá viên"],
 }
 
@@ -135,7 +149,9 @@ def main(src):
         tg = ""
         m = re.search(r"(?:(\d+)\s*tiếng)?\s*(?:(\d+)\s*phút)?", rec.get("thoi_gian") or "")
         if m and (m[1] or m[2]): tg = int(m[1] or 0) * 60 + int(m[2] or 0)
-        bo_sung.append([ma, kp or "", round(hs, 2), tg, rec.get("url") or rec.get("url_goc")])
+        url = rec.get("url") or rec.get("url_goc") or ""
+        if "/tao-moi" in url: url, tg = "", ""  # crawl rơi vào trang "tạo món mới": không phải công thức
+        bo_sung.append([ma, kp or "", round(hs, 2), tg, url])
         ten_mon = mon[ma]["ten_mon"].lower()
         chinh_ma = set(filter(None, mon[ma]["nguyen_lieu_chinh"].split("|")))
         chinh_ma |= {c for p, c in MA if c and c not in ("bun", "dau_phong") and re.search(p, ten_mon)}  # nguyên liệu có trong tên món
