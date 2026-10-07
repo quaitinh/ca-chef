@@ -247,10 +247,15 @@ function pickMeals(ranked, day, keep = {}) {
   const bestMan = ranked.find((d) => d.score > -3 && vaiOf(d) === "man");
   let toi = keep.toi, lau = keep.toi ? keep.lau : false;
   if (!toi && !lauGanDay(day)) {
-    const l = pickRole(ranked, "lau", sh.toi);
-    if (l && l.score >= (bestMan?.score ?? -99)) {
+    // Đổi bữa tối mà giữ bữa trưa: lẩu mới không được trùng nguyên liệu của bữa trưa.
+    const daDung = new Set();
+    (keep.trua || []).forEach((d) => dungNL(d, daDung));
+    const exTrua = new Set([...sh.toi, ...(keep.trua || []).map((d) => d.ma_mon)]);
+    const l = pickRole(ranked, "lau", exTrua, (x) => khongTrung(x, daDung));
+    if (l && khongTrung(l, daDung) && l.score >= (bestMan?.score ?? -99)) {
       lau = true;
-      toi = [l, pickRole(ranked, "trang_mieng", sh.toi)].filter(Boolean);
+      dungNL(l, daDung);
+      toi = [l, pickRole(ranked, "trang_mieng", exTrua, (x) => khongTrung(x, daDung))].filter(Boolean);
     }
   }
   if (lau) {
