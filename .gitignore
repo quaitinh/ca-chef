@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+# Dữ liệu sinh ra khi build / khoá bí mật – không đưa lên kho
+app/static/data.json
+*credentials*.json
+*key*.json

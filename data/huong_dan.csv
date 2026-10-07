@@ -1,0 +1,6 @@
+Tab,Nội dung
+nguyen_lieu,"Nguyên liệu + lịch 12 tháng. T1..T12: 2 = đang rộ, 1 = có hàng, 0 = trái mùa. tin_cay: A nhiều nguồn khớp, B 1 nguồn/lệch, C chưa có nguồn."
+mon_an,"Danh sách món. nhiet: mat/am/nong. do_nang: nhe/nang. dau_mo: it/vua/nhieu. loai: mon_chinh/canh/goi/lau/an_vat/trang_mieng/do_uong. thoi_tiet_hop: nang/mua/moi. nguyen_lieu_chinh: nhiều mã cách nhau | = chỉ cần 1 mã đang có mùa. do_pho_bien: số kết quả tìm trên Cookpad VN (thô, để tham khảo). trang_thai: chua_nau_thu/da_nau_thu."
+mon_nguyen_lieu,"Định lượng theo khẩu phần gốc. kieu_tinh: theo_nguoi (nhân thẳng) hoặc theo_noi (tăng chậm, cho gia vị/nước dùng). vai_tro: chinh/phu/gia_vi."
+quy_tac,"Điểm món = tổng điểm các quy tắc khớp. App lấy 3 món điểm cao nhất, không trùng loại."
+gia_go,"Giá tham khảo từ sieuthi-go.vn ngày 2026-10-07 (danh mục online, có thể khác GO! Ninh Thuận)."

@@ -1,0 +1,58 @@
+ma,ten,nhom,vung,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,noi_mua,tin_cay,ghi_chu
+nho_nt,Nho Ninh Thuận,trái cây,Ninh Thuận,1,1,1,1,1,1,1,2,2,1,1,1,chợ/vựa,A,"2–3 vụ/năm: 4–5, 8–9, Tết; ngọt nhất 8–9"
+tao_xanh,Táo xanh Phan Rang,trái cây,Ninh Thuận,2,2,1,1,1,1,1,1,1,1,1,2,chợ/vựa,B,Vụ tập trung dịp Tết
+toi_pr,Tỏi Phan Rang,gia vị,Ninh Thuận,2,2,2,1,1,1,1,1,1,1,1,1,chợ/vựa,B,Thu hoạch quanh Tết; có nguồn ghi 4–5
+hanh_tim,Hành tím Ninh Thuận,gia vị,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,B,"Chu kỳ ~45 ngày, thu rải nhiều đợt"
+mang_tay,Măng tây xanh,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,A,"2 vụ trồng, có quanh năm"
+thit_de,Thịt dê,thịt,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/quán,A,
+thit_cuu,Thịt cừu,thịt,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/quán,A,
+tom_hum,"Tôm hùm (Vĩnh Hy, Bình Ba)",hải sản,Ninh Thuận/Khánh Hòa,1,1,1,1,1,1,1,1,1,1,1,1,vựa,B,Nuôi lồng
+rong_sun,Rong sụn Ninh Hải,hải sản,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,
+ca_com,Cá cơm tươi,hải sản,Ninh Thuận,0,0,0,1,1,1,2,2,1,0,0,0,chợ,A,Vụ cá Nam 4–9
+ca_nuc,Cá nục,hải sản,Ninh Thuận,0,0,0,1,1,1,2,2,1,0,0,0,chợ/GO!,A,Vụ cá Nam 4–9
+muc_tuoi,Mực tươi,hải sản,Ninh Thuận,0,0,0,1,1,1,2,2,1,0,0,0,chợ/GO!,A,Vụ cá Nam 4–9
+muc_mot_nang,Mực một nắng,hải sản,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,B,"Hàng phơi, mùa biển động vẫn có"
+ca_mai,Cá mai,hải sản,Ninh Thuận,0,0,0,1,1,1,1,1,1,0,0,0,chợ,C,"Chưa có nguồn về mùa, tạm theo vụ cá Nam"
+sua,Sứa,hải sản,Ninh Thuận,0,0,1,1,1,1,0,0,0,0,0,0,chợ,B,Tháng 2–5 âm lịch
+ca_com_kho,Cá cơm khô,hàng khô,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,B,
+mam_ca_na,Mắm/nước mắm Cà Ná,gia vị,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+muoi_ca_na,Muối Cà Ná,gia vị,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,Thu hoạch chính 4–7
+thanh_long,Thanh long,trái cây,Bình Thuận,1,1,1,1,1,1,2,2,2,1,1,1,GO!/chợ,A,"Chính vụ 6–12, trái vụ 1–5"
+sau_rieng_ks,Sầu riêng Khánh Sơn,trái cây,Khánh Hòa,0,0,0,0,0,0,1,2,1,0,0,0,vựa,B,Chín muộn hơn miền Tây 3–4 tháng
+sau_rieng_dl,Sầu riêng Đắk Lắk,trái cây,Đắk Lắk,0,0,0,0,0,0,2,2,1,0,0,0,vựa/chợ,A,GO! online không bán sầu riêng tươi
+mang_cut,Măng cụt Bảo Lộc,trái cây,Lâm Đồng,0,0,0,0,0,0,0,1,2,2,0,0,chợ,B,
+bo_booth,Bơ booth,trái cây,Đắk Lắk,0,0,0,0,0,0,0,2,2,1,0,0,GO!/chợ,B,
+bo_sap,Bơ sáp,trái cây,Đắk Lắk/Lâm Đồng,0,0,1,1,2,2,2,1,0,0,0,0,GO!/chợ,B,
+xoai_uc,Xoài Úc Cam Lâm,trái cây,Khánh Hòa,0,0,1,1,1,1,1,0,1,1,1,1,chợ/vựa,B,2 vụ; GO! online chỉ có xoài cát
+chom_chom,Chôm chôm Khánh Sơn,trái cây,Khánh Hòa,0,0,0,0,0,1,1,1,0,0,0,0,chợ,C,
+dua_hau,Dưa hấu,trái cây,Gia Lai/miền Trung,2,2,2,2,2,2,1,1,1,1,1,2,GO!/chợ,B,"Vụ Tết 12–2, vụ hè 3–6"
+ca_ngu_dd,Cá ngừ đại dương,hải sản,Phú Yên,1,1,1,2,1,0,0,0,0,0,0,0,GO!/chợ,A,GO! có hàng đông lạnh quanh năm
+bap_cai,Bắp cải Đà Lạt,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+ca_rot,Cà rốt,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+sup_lo,Súp lơ xanh,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+cai_thao,Cải thảo,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+xa_lach,Xà lách,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+khoai_tay,Khoai tây,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+su_su,Su su,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+ca_chua,Cà chua Đà Lạt,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+nam,"Nấm trồng (bào ngư, kim châm...)",rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+chanh_day,Chanh dây,trái cây,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+atiso,Atiso tươi,rau củ,Đà Lạt,1,1,1,1,0,0,0,0,0,0,0,0,chợ,B,
+dau_tay,Dâu tây,trái cây,Đà Lạt,2,2,2,1,0,0,0,0,0,0,1,1,chợ/GO!,A,
+man_dl,Mận Đà Lạt,trái cây,Đà Lạt,0,0,0,1,1,1,0,0,0,0,0,0,chợ,C,Chưa có nguồn
+hong_gion,Hồng giòn,trái cây,Đà Lạt,0,0,0,0,0,0,0,0,1,2,2,0,chợ,A,
+hong_treo_gio,Hồng treo gió,trái cây,Đà Lạt,0,0,0,0,0,0,0,0,0,1,1,1,chợ,A,
+mang_rung,Măng rừng,rau củ,Đà Lạt,0,0,0,0,1,1,1,1,1,0,0,0,chợ,C,Theo mùa mưa Tây Nguyên
+thit_heo,Thịt heo,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+long_heo,Lòng heo,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+ga_ta,Gà ta,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+trung,Trứng gà/vịt,trứng,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+tom_the,Tôm thẻ,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+ca_thu,Cá thu,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+bot_gao,Bột gạo,tinh bột,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+bun,Bún / bánh hỏi / bánh canh,tinh bột,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+banh_trang,Bánh tráng,tinh bột,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+dau_phong,Đậu phộng,gia vị,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,
+rau_thom,Rau thơm các loại,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+khe_me,"Khế, me (vị chua)",gia vị,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,
+sa_ot,"Sả, ớt, gừng",gia vị,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,

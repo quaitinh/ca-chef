@@ -1,0 +1,17 @@
+ma,ten,bien,toan_tu,nguong,ap_dung_cho,diem,ghi_chu
+R01,Nắng gắt,temperature_2m_max,>=,34,nhiet=mat,3,Ưu tiên món mát
+R02,Nắng gắt,temperature_2m_max,>=,34,nhiet=nong,-2,Hạn chế món nóng
+R03,Nắng gắt,temperature_2m_max,>=,34,dau_mo=nhieu,-1,Hạn chế món nhiều dầu
+R04,Nóng vừa,temperature_2m_max,between,31-34,nhiet=mat,1,
+R05,Trời mát,temperature_2m_max,<,28,nhiet=nong,2,Chủ yếu tháng 12–1
+R16,Trời dịu,temperature_2m_max,between,28-30,nhiet=nong,1,Tháng 11–2 thường 28–30°C
+R06,Có mưa,precipitation_sum,>=,3,nhiet=nong,3,Mưa ≥3mm/ngày
+R07,Có mưa,precipitation_sum,>=,3,nhiet=mat,-1,
+R08,Mưa to,precipitation_sum,>=,20,do_nang=nang,1,"Lẩu, món no bụng"
+R09,Khả năng mưa cao,precipitation_probability_max,>=,60,nhiet=nong,1,Chỉ áp dụng khi lượng mưa dự báo <3mm
+R10,Gió mạnh,wind_speed_10m_max,>=,25,loai=canh,1,Gió km/h; năm 2025 gió mạnh nhất 34 km/h
+R11,UV rất cao,uv_index_max,>=,10,nhiet=mat,1,
+R12,Nguyên liệu chính đang rộ,lich_thang,=,2,nguyen_lieu_chinh,3,Lấy từ tab nguyen_lieu
+R13,Nguyên liệu chính có hàng,lich_thang,=,1,nguyen_lieu_chinh,1,
+R14,Nguyên liệu chính trái mùa,lich_thang,=,0,nguyen_lieu_chinh,-5,Gần như loại khỏi gợi ý
+R15,Vừa gợi ý gần đây,so_ngay_tu_lan_cuoi,<=,3,mon,-4,Tránh lặp món

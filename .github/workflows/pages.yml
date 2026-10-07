@@ -1,0 +1,51 @@
+name: Cập nhật dữ liệu và đăng site
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 22 * * *" # 5h sáng giờ Việt Nam
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install gspread
+      - name: Lấy dữ liệu (Google Sheet nếu có key, không thì CSV trong kho)
+        env:
+          GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+        run: |
+          if [ -n "$GOOGLE_SA_KEY" ]; then
+            printf '%s' "$GOOGLE_SA_KEY" > "$RUNNER_TEMP/key.json"
+            export CA_CHEF_KEY="$RUNNER_TEMP/key.json"
+          fi
+          python scripts/export_json.py
+          python -c "import json; d=json.load(open('app/static/data.json')); print('Nguồn:', d['source'], '| lỗi:', d['error'])"
+          rm -f "$RUNNER_TEMP/key.json"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
