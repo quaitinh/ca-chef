@@ -28,6 +28,7 @@ jobs:
       - name: Lấy dữ liệu (Google Sheet nếu có key, không thì CSV trong kho)
         env:
           GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+          TZ: Asia/Ho_Chi_Minh
         run: |
           if [ -n "$GOOGLE_SA_KEY" ]; then
             printf '%s' "$GOOGLE_SA_KEY" > "$RUNNER_TEMP/key.json"
