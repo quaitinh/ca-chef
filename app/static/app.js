@@ -17,7 +17,7 @@ const LABEL = {
     trang_mieng: "Tráng miệng, chè", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Dưa, đồ ăn kèm" },
 };
 
-const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], offset: [0, 0], servings: {} };
+const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], picks: [null, null], shown: [new Set(), new Set()], servings: {} };
 const $app = document.getElementById("app");
 // Bỏ dấu tiếng Việt để tìm kiếm không cần gõ dấu.
 const plain = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
@@ -44,8 +44,10 @@ async function load() {
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   S.ranked = rankDishes(0);
-  recordHistory(S.ranked.slice(0, 3).map((d) => d.ma_mon));
+  S.picks[0] = pickThree(S.ranked, S.shown[0], 0);
+  recordHistory(S.picks[0].map((d) => d.ma_mon));
   S.rankedTomorrow = rankDishes(1); // sau recordHistory để không gợi ý lại món của hôm nay
+  S.picks[1] = pickThree(S.rankedTomorrow, S.shown[1], 1);
   document.getElementById("foot").innerHTML =
     `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
     `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
@@ -65,9 +67,12 @@ function seasonOf(codes, m = month()) {
 
 // ---------- Chấm điểm ----------
 // Số ngày từ lần gợi ý gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
+function readHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch { return {}; }
+}
+
 function daysSinceSuggested(ma, ref = today()) {
-  let hist = {};
-  try { hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch {}
+  const hist = readHistory();
   const t = new Date(ref);
   let best = Infinity;
   for (const [date, list] of Object.entries(hist)) {
@@ -80,7 +85,7 @@ function daysSinceSuggested(ma, ref = today()) {
 function recordHistory(list) {
   try {
     const hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}");
-    hist[today()] = list;
+    hist[today()] = [...new Set([...(hist[today()] || []), ...list])]; // mọi món đã hiện trong ngày
     const keep = Object.keys(hist).sort().slice(-14);
     localStorage.setItem(HISTORY_KEY, JSON.stringify(Object.fromEntries(keep.map((k) => [k, hist[k]]))));
   } catch {}
@@ -146,11 +151,20 @@ function rankDishes(day = 0) {
     .sort((a, b) => b.score - a.score || dayHash(a.ma_mon, day) - dayHash(b.ma_mon, day));
 }
 
-// 3 món điểm cao nhất, không trùng loại (bắt đầu từ vị trí offset khi bấm "Đổi món").
-function pickThree(ranked, offset) {
+// Lẩu là bữa lớn: chỉ gợi ý khi 6 ngày trước chưa gợi ý lẩu nào.
+const LAU_CACH_NGAY = 7;
+function lauGanDay(day) {
+  const ref = dayStr(day), loai = Object.fromEntries(S.data.mon_an.map((m) => [m.ma_mon, m.loai]));
+  return Object.entries(readHistory()).some(([date, list]) =>
+    date < ref && (new Date(ref) - new Date(date)) / 86400000 < LAU_CACH_NGAY && list.some((ma) => loai[ma] === "lau"));
+}
+
+// 3 món điểm cao nhất, không trùng loại, bỏ qua các món đã hiện (khi bấm "Đổi món").
+function pickThree(ranked, exclude = new Set(), day = 0) {
+  const boLau = lauGanDay(day);
   // Dưa, đồ ăn kèm không tính là một món gợi ý (chờ phần ghép mâm).
-  const pool = ranked.slice(offset).concat(ranked.slice(0, offset))
-    .filter((d) => d.score > -3 && S.nhan[d.ma_mon]?.vai_mam !== "dua_kem");
+  const pool = ranked.filter((d) => d.score > -3 && !exclude.has(d.ma_mon) &&
+    S.nhan[d.ma_mon]?.vai_mam !== "dua_kem" && !(boLau && d.loai === "lau"));
   const out = [], used = new Set();
   for (const d of pool) {
     if (used.has(d.loai)) continue;
@@ -207,7 +221,7 @@ function tomorrowTeaser() {
   const d = S.weather?.daily;
   if (!d || d.time.length < 2) return "";
   const [icon, desc] = wmo(d.weather_code[1]);
-  const top = pickThree(S.rankedTomorrow, 0).map((x) => x.ten_mon).join(", ");
+  const top = S.picks[1].map((x) => x.ten_mon).join(", ");
   return `<a class="card teaser" href="#/ngay-mai">
     <span class="t-icon">${icon}</span>
     <span><b>Ngày mai:</b> ${desc.toLowerCase()}, ${Math.round(d.temperature_2m_min[1])}–${Math.round(d.temperature_2m_max[1])}°, mưa ${d.precipitation_sum[1]} mm
@@ -260,7 +274,7 @@ function chips(d) {
 
 function pageHome(day = 0) {
   const ranked = day ? S.rankedTomorrow : S.ranked;
-  const picks = pickThree(ranked, S.offset[day]);
+  const picks = S.picks[day];
   const m = month(day);
   const inSeason = S.data.nguyen_lieu.filter((n) => n.thang[m - 1] === 2);
   const shown = new Set(picks.map((p) => p.ma_mon));
@@ -285,8 +299,11 @@ function pageHome(day = 0) {
       <a href="#/mon/${d.ma_mon}"><span>${esc(d.ten_mon)} <span class="muted">· ${LABEL.loai[d.loai] ?? ""}</span></span>
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score} điểm</span></a>`).join("")}</div>`;
   document.getElementById("swap").onclick = () => {
-    S.offset[day] = (S.offset[day] + 3) % Math.max(ranked.length, 1);
-    if (S.offset[day] >= 12) S.offset[day] = 0; // chỉ xoay trong nhóm điểm cao
+    picks.forEach((d) => S.shown[day].add(d.ma_mon));
+    let next = pickThree(ranked, S.shown[day], day);
+    if (next.length < 3) { S.shown[day].clear(); next = pickThree(ranked, S.shown[day], day); } // hết món thì quay vòng
+    S.picks[day] = next;
+    if (day === 0) recordHistory(next.map((d) => d.ma_mon));
     pageHome(day);
   };
 }
