@@ -3,6 +3,7 @@
 Vào:
   data/de_xuat/khung_mon.csv   – danh sách món theo khung mâm cơm (tên, vai, nhóm đạm, nguồn)
   scripts/de_xuat/lo1_bac.py   – công thức đầy đủ của lô 1
+  scripts/de_xuat/lo2_bac.py   – lô 2 (món chủ dự án đề nghị thêm), cùng định dạng, nguon_loai "lo2"
 Ra (cùng cột với bảng gốc trong data/):
   nguyen_lieu_moi.csv, mon_an_moi.csv, mon_nguyen_lieu_moi.csv
   mon_nhan.csv – nhãn khung mâm cho mọi món (kể cả món đang có)
@@ -23,6 +24,7 @@ DATA = os.path.join(ROOT, "data")
 OUT = os.path.join(DATA, "de_xuat")
 sys.path.insert(0, HERE)
 import lo1_bac  # noqa: E402
+import lo2_bac  # noqa: E402
 from cach_lam_viet_lai import CL  # noqa: E402
 from phan_loai import classify  # noqa: E402
 
@@ -108,13 +110,14 @@ def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
     goc_nl = {r["ma"] for r in doc(os.path.join(DATA, "nguyen_lieu.csv"))}
-    moi_nl = {n[0] for n in lo1_bac.NGUYEN_LIEU}
+    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU
+    moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl
-    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES}
+    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES}
 
     # Nguyên liệu mới
     nl_rows = []
-    for ma, ten, nhom, vung, lich, noi_mua, tin_cay, ghi_chu in lo1_bac.NGUYEN_LIEU:
+    for ma, ten, nhom, vung, lich, noi_mua, tin_cay, ghi_chu in NGUYEN_LIEU_MOI:
         if ma in goc_nl: loi.append(f"nguyên liệu trùng mã gốc: {ma}")
         nl_rows.append([ma, ten, nhom, vung, *lich, noi_mua, tin_cay, ghi_chu])
     # Lịch mùa vụ đã tra cứu có nguồn (gop_mua_vu.py): thay lịch ước lượng của mã mới, thêm mã chưa có.
@@ -136,7 +139,7 @@ def main():
         if nguon_loai == "dang_co":
             ma = k["ma_mon"]
             if ma not in goc_mon: loi.append(f"{ten}: không thấy {ma} trong data/mon_an.csv")
-        elif nguon_loai == "lo1":
+        elif nguon_loai in ("lo1", "lo2"):
             ma = k["ma_mon"]
             r = lo1[ma]
             if ma in dung: loi.append(f"trùng ma_mon {ma}")

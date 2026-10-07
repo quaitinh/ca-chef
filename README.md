@@ -26,3 +26,21 @@ gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã 
 
 Sinh lại sau khi sửa `khung_mon.csv` hoặc `scripts/de_xuat/lo1_bac.py`:
 `python3 scripts/de_xuat/xuat_csv.py`
+
+## Quy tắc ghép bữa (`app/static/app.js`, phần "Ghép bữa")
+
+Đang áp dụng:
+- Mỗi bữa: mặn + rau + canh. Lẩu chỉ buổi tối (tối đa 1 lần/7 ngày); hôm tối ăn lẩu thì trưa chọn món dễ nấu.
+- Món mặn kho/hầm/om/rim ở bữa trưa nấu gấp đôi, tối ăn lại (tối nấu thêm rau + canh).
+- Không lặp nguyên liệu chính trong ngày; đạm món mặn tối khác trưa.
+- Trong một bữa: tối đa 1 món **nấu lâu** (kho, om, hầm, rim, ram, bung, sốt vang – lâu nhưng ít công)
+  và 1 món **cầu kì** (nướng, nhồi, cuốn, cuộn, nem, chả, viên, mọc, gỏi nhiều thứ, món khó).
+- Không 2 món cùng chiên / xào / nướng trong một bữa. Canh có đạm thì khác nhóm đạm món mặn.
+- Cả ngày tối đa 1 món nhiều dầu mỡ.
+- Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
+- Quy tắc đứng trên sự mới lạ: khi bấm "Đổi" mà món chưa xem không thỏa quy tắc thì dùng lại món đã xem.
+
+Để làm sau:
+- Cân bằng nhóm đạm theo tuần từ lịch sử 7 ngày (cá/hải sản ≥3 bữa/tuần, nhóm đạm ăn ≥3 lần thì giảm điểm).
+- Có món khô thì có món nước (mặn kho/chiên đi với canh thanh hoặc canh chua).
+- Mỗi bữa tối đa 1 món chua và 1 món cay (cần gắn nhãn vị cho từng món).
