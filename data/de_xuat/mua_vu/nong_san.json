@@ -1,0 +1,989 @@
+[
+ {
+  "ma": "nho_nt",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Cắt cành 3 vụ: 12–1, 4–5, 9–10 → thu ~4–5, 8–9, Tết; ngọt nhất 8–9; tránh trái mùa mưa 10–11",
+  "nguon": [
+   {
+    "url": "https://moit.gov.vn/tu-hao-hang-viet-nam/nho-ninh-thuan-an-mot-lan-ma-nho-mai.html",
+    "trich": "Có 3 vụ cắt ra trái là đông xuân (tháng 12 đến tháng 1), xuân hè (tháng 4 đến tháng 5), thu đông (tháng 9 đến tháng 10)"
+   },
+   {
+    "url": "https://vnexpress.net/vuon-nho-ba-mau-o-ninh-thuan-4023932.html",
+    "trich": "Quả nho có thể ra quanh năm nhưng để đảm bảo chất lượng, người trồng phải tuân theo quy trình để tránh mùa mưa (tháng 10, 11)"
+   }
+  ]
+ },
+ {
+  "ma": "tao_xanh",
+  "thang": [
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Ra quả quanh năm; cắt cành tập trung 2 vụ: ~10–12 và sau Tết đến tháng 3",
+  "nguon": [
+   {
+    "url": "https://vnbusiness.vn/ninh-thuan-trong-tao-sach-nang-suat-gia-cao-nho-bao-luoi.html",
+    "trich": "Táo cho quả quanh năm hoặc có thể cắt cành cho ra trái tập trung mỗi năm 2 vụ"
+   },
+   {
+    "url": "https://baoninhthuan.com.vn/quehuong/16563p1c142/tao-say-dac-san-phan-rang.htm",
+    "trich": "(theo trích đoạn tìm kiếm; trang gốc đã ngừng hoạt động) mỗi năm 2 vụ táo: khoảng tháng 10–12 và sau Tết đến tháng 3"
+   }
+  ]
+ },
+ {
+  "ma": "toi_pr",
+  "thang": [
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Vụ chính trồng tháng 10, thu hoạch tháng 3 (~130–135 ngày); tỏi khô bán quanh năm",
+  "nguon": [
+   {
+    "url": "https://ctujsvn.ctu.edu.vn/index.php/ctujsvn/article/download/7230/5099/31065",
+    "trich": "Vụ 1: bố trí vụ chính, thời gian trồng từ tháng 10/2019, thu hoạch 3/2020. Vụ 2: ...trồng từ tháng 10/2020, thu hoạch 3/2021 (tỏi Phan Rang, Ninh Hải)"
+   },
+   {
+    "url": "https://jad.hcmuaf.edu.vn/index.php/jad/article/download/150/150",
+    "trich": "Thời điểm 135 NST, thu hoạch (thí nghiệm tỏi trên đất cát Ninh Thuận)"
+   }
+  ]
+ },
+ {
+  "ma": "hanh_tim",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Hành 45 ngày/lứa, 4–5 vụ/năm, trồng rải vụ nên thu hoạch quanh năm (có vụ hè tháng 8–9)",
+  "nguon": [
+   {
+    "url": "https://vnexpress.net/gia-cu-hanh-tim-tang-gap-doi-4646065.html",
+    "trich": "trong tháng 8, nông dân địa phương đã thu hoạch 55 ha... nhiều diện tích trồng rải vụ tiếp tục cho thu hoạch đều"
+   },
+   {
+    "url": "https://vov.vn/kinh-te/nong-dan-ninh-thuan-phan-khoi-vi-hanh-tim-duoc-mua-duoc-gia-944663.vov",
+    "trich": "(trích đoạn tìm kiếm) mỗi lứa trồng sau 45 ngày sẽ cho thu hoạch. Mỗi năm, nông dân canh tác được 5 vụ hành"
+   }
+  ]
+ },
+ {
+  "ma": "mang_tay",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "2 vụ: thu đông cuối 8–3, xuân hè cuối 2–6; thu 3 tháng nghỉ 1 tháng, gần như quanh năm",
+  "nguon": [
+   {
+    "url": "https://tapchicongthuong.vn/magazine/mang-tay-muot-xanh-vung-cat-trang-ninh-thuan-113266.htm",
+    "trich": "Thời vụ trồng măng tây thường có 2 vụ trong năm là thu đông từ cuối tháng 8 - tháng 3 và vụ xuân hè từ cuối tháng 2 - 6 dương lịch"
+   },
+   {
+    "url": "https://moit.gov.vn/tin-tuc/thi-truong-trong-nuoc/nang-cao-gia-tri-cay-mang-tay-cua-dong-bao-cham-tai-ninh-thuan.html",
+    "trich": "Cây măng tây cho thu hoạch 9 tháng/năm"
+   }
+  ]
+ },
+ {
+  "ma": "thit_de",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: chăn nuôi quanh năm, không có mùa vụ",
+  "nguon": []
+ },
+ {
+  "ma": "thit_cuu",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: chăn nuôi quanh năm, không có mùa vụ",
+  "nguon": []
+ },
+ {
+  "ma": "thanh_long",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Chính vụ ~6–9 (tháng 4–8 âm); trái vụ chong đèn 10–5, ít hàng nhất 12–2",
+  "nguon": [
+   {
+    "url": "https://vnexpress.net/gia-thanh-long-lai-rot-4292886.html",
+    "trich": "(12/6/2021) Đang vào chính vụ, lượng hàng lớn... thanh long tại Bình Thuận, Long An rớt giá"
+   },
+   {
+    "url": "https://vnbusiness.vn/thanh-long-chinh-vu-tieu-thu-on-dinh.html",
+    "trich": "(24/7/2018) Thời điểm này, người trồng thanh long ở Bình Thuận đang thu hoạch vụ thanh long chính vụ"
+   },
+   {
+    "url": "https://vnexpress.net/gia-thanh-long-hom-nay-4566949.html",
+    "trich": "từ tháng 12/2022 đến tháng 2/2023 là thời điểm trái vụ, sản lượng cung ứng ra thị trường thấp"
+   }
+  ]
+ },
+ {
+  "ma": "sau_rieng_ks",
+  "thang": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Rộ đầu 7–cuối 8, có từ tháng 6, lai rai sang 9; muộn hơn miền Tây, Tây Nguyên",
+  "nguon": [
+   {
+    "url": "https://tapchicongthuong.vn/magazine/sau-rieng-chia-khoa-xoa-ngheo-vung-khanh-son-112077.htm",
+    "trich": "Mùa sầu riêng Khánh Sơn bắt đầu vào khoảng tháng 6 hàng năm và kết thúc vào trung tầm tháng 8"
+   },
+   {
+    "url": "https://www.vietnamplus.vn/khanh-hoa-sau-rieng-dac-san-tai-khanh-son-duoc-mua-duoc-gia-post652796.vnp",
+    "trich": "(trích đoạn tìm kiếm) Sầu riêng Khánh Sơn cho thu hoạch rộ từ đầu tháng Bảy đến cuối tháng Tám, lệch khoảng 1 tháng so với miền Tây Nam Bộ và Tây Nguyên"
+   },
+   {
+    "url": "https://tapchitoaan.vn/tu-nuong-ray-bap-benh-den-%22cay-vang%22-doi-doi-tren-trien-nui-khanh-son16209.html",
+    "trich": "(17/8/2026) Những ngày tháng Tám... cũng là lúc sầu riêng Khánh Sơn bước vào chính vụ"
+   }
+  ]
+ },
+ {
+  "ma": "xoai_uc",
+  "thang": [
+   0,
+   0,
+   1,
+   2,
+   2,
+   2,
+   1,
+   0,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Chính vụ 3–7, chín rộ tháng 4–6; vụ nghịch 9–12",
+  "nguon": [
+   {
+    "url": "https://baovanhoa.vn/du-lich/bai-2-dua-du-khach-kham-pha-vung-trong-xoai-lon-nhat-nam-trung-bo-109905.html",
+    "trich": "Từ tháng 3-7 hay tháng 9-12, những vườn xoài Cam Lâm có bạt ngàn trái ngọt, xum xuê, trĩu quả"
+   },
+   {
+    "url": "https://baovanhoa.vn/kinh-te/nguoi-trong-xoai-cam-lam-cau-cuu-27441.html",
+    "trich": "(15/4/2020) xoài đã vào vụ, trái bắt đầu chín rộ"
+   },
+   {
+    "url": "https://vietnamnet.vn/xoai-uc-rot-gia-nha-nong-khanh-hoa-de-rung-day-goc-2008186.html",
+    "trich": "Những ngày đầu tháng tư này, bà con nông dân trên địa bàn huyện Cam Lâm... vụ xoài Úc đã vào mùa"
+   }
+  ]
+ },
+ {
+  "ma": "chom_chom",
+  "thang": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Chín muộn hơn Đông Nam Bộ >1 tháng; có mặt ở lễ hội trái cây Khánh Sơn tháng 8",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201308/khanh-son-khanh-hoa-hieu-qua-tu-mo-hinh-trong-chom-chom-thai-2258530/",
+    "trich": "(trích đoạn tìm kiếm) chôm chôm trồng ở Khánh Sơn cho thu hoạch muộn hơn nơi xuất xứ hơn một tháng nên ít bị cạnh tranh"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202407/cho-donle-hoi-trai-cay-khanh-son-ff6633f/",
+    "trich": "sầu riêng và hàng nghìn tấn nông sản khác như: Măng cụt, mía tím, bơ, chôm chôm, mít, bưởi… (Lễ hội trái cây Khánh Sơn, tháng 8)"
+   }
+  ]
+ },
+ {
+  "ma": "dua_hau",
+  "thang": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên; Ninh Hòa: trồng cuối tháng 11 âm, thu từ mùng 10 tháng Giêng; có vụ hè tháng 4",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/201402/mot-mua-dua-do-2294483/",
+    "trich": "trồng 8 sào dưa hấu từ cuối tháng 11 (âm lịch), bắt đầu thu hoạch từ mùng 10 tháng Giêng (trồng khoảng 60 ngày)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201605/dien-khanh-dua-hau-gia-5500-dongkg-nong-dan-co-lai-2436012/",
+    "trich": "(5/2016) Nông dân huyện Diên Khánh (Khánh Hòa) đang thu hoạch dưa hấu trái vụ"
+   }
+  ]
+ },
+ {
+  "ma": "rau_muong",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Mùa mưa Phan Rang là 9–12, mưa lũ 10–12 làm rau lá hư, giá tăng; rộ chuyển sang mùa khô có tưới 5–8",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/TCKHTV/article/view/59992",
+    "trich": "Mùa khô bắt đầu từ tháng 1 và kết thúc vào tháng 8; mùa mưa từ tháng 9 đến tháng 12 (khí hậu tỉnh Ninh Thuận)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202511/binh-on-thi-truongsau-mua-lu-8272767/",
+    "trich": "chợ Thanh Sơn (phường Phan Rang) cho thấy giá rau củ sau lũ tăng đáng kể... Các vựa rau trong tỉnh bị ngập, nhà vườn mất trắng"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/202412/rau-xanh-tang-gia-do-mua-lon-keo-dai-33b3b87/",
+    "trich": "Mưa nhiều nên rau ăn lá không được dồi dào như trước (15/12/2024)"
+   }
+  ]
+ },
+ {
+  "ma": "mong_toi",
+  "thang": [
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Rau ưa nóng, rộ mùa nắng 4–8; mưa lũ 10–12 rau lá giảm, đắt",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/TCKHTV/article/view/59992",
+    "trich": "Mùa khô bắt đầu từ tháng 1 và kết thúc vào tháng 8; mùa mưa từ tháng 9 đến tháng 12 (khí hậu tỉnh Ninh Thuận)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/202412/rau-xanh-tang-gia-do-mua-lon-keo-dai-33b3b87/",
+    "trich": "Mưa nhiều nên rau ăn lá không được dồi dào như trước (15/12/2024)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/202409/nha-trang-gia-rau-xanh-tai-cac-cho-truyen-thong-tang-nhe-cf00d53/",
+    "trich": "(22/9/2024) Hiện các loại rau như: Muống, mồng tơi, cải xanh, cải ngọt, cải thìa có giá dao động từ 10.000 đồng/bó"
+   }
+  ]
+ },
+ {
+  "ma": "rau_day",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; rau mùa nóng",
+  "nguon": []
+ },
+ {
+  "ma": "rau_ngot",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "la_lot",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "chuoi_xanh",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; chuối Khánh Sơn có quanh năm",
+  "nguon": []
+ },
+ {
+  "ma": "ngo",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "khoai_mon",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "khoai_lang",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "dau_bap",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "bi_dao",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; mưa lũ 10–12 bầu bí tăng giá",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202511/binh-on-thi-truongsau-mua-lu-8272767/",
+    "trich": "chợ Thanh Sơn (phường Phan Rang) cho thấy giá rau củ sau lũ tăng đáng kể... Các vựa rau trong tỉnh bị ngập, nhà vườn mất trắng"
+   }
+  ]
+ },
+ {
+  "ma": "bi_do",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "bau",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; mưa lũ 10–12 bầu bí tăng giá",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202511/binh-on-thi-truongsau-mua-lu-8272767/",
+    "trich": "chợ Thanh Sơn (phường Phan Rang) cho thấy giá rau củ sau lũ tăng đáng kể... Các vựa rau trong tỉnh bị ngập, nhà vườn mất trắng"
+   }
+  ]
+ },
+ {
+  "ma": "muop",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "ca_tim",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "dua_leo",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "cai_xanh",
+  "thang": [
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên; cải ưa mát, ngon 12–2 (cuối mưa, đầu khô)",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/202412/rau-xanh-tang-gia-do-mua-lon-keo-dai-33b3b87/",
+    "trich": "Mưa nhiều nên rau ăn lá không được dồi dào như trước (15/12/2024)"
+   }
+  ]
+ },
+ {
+  "ma": "rau_bi",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Bỏ rộ 10–11 vì mưa lũ Phan Rang (9–12) làm rau lá hư; còn rộ 8–9 (suy luận)",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/TCKHTV/article/view/59992",
+    "trich": "Mùa khô bắt đầu từ tháng 1 và kết thúc vào tháng 8; mùa mưa từ tháng 9 đến tháng 12 (khí hậu tỉnh Ninh Thuận)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202511/binh-on-thi-truongsau-mua-lu-8272767/",
+    "trich": "chợ Thanh Sơn (phường Phan Rang) cho thấy giá rau củ sau lũ tăng đáng kể... Các vựa rau trong tỉnh bị ngập, nhà vườn mất trắng"
+   }
+  ]
+ },
+ {
+  "ma": "rau_den",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; rau mùa nóng, khớp mùa khô Ninh Thuận",
+  "nguon": []
+ },
+ {
+  "ma": "rau_lang",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "rau_ma",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên; rộ 9–11 trùng mùa mưa thật của Ninh Thuận (9–12)",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/TCKHTV/article/view/59992",
+    "trich": "Mùa khô bắt đầu từ tháng 1 và kết thúc vào tháng 8; mùa mưa từ tháng 9 đến tháng 12 (khí hậu tỉnh Ninh Thuận)"
+   }
+  ]
+ },
+ {
+  "ma": "ca_phao",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "buoi",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên; bưởi da xanh Khánh Sơn vào chính vụ tháng 8 (lễ hội trái cây)",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202407/cho-donle-hoi-trai-cay-khanh-son-ff6633f/",
+    "trich": "Măng cụt, mía tím, bơ, chôm chôm, mít, bưởi… trưng bày sầu riêng siêu to, bưởi siêu to (Lễ hội trái cây Khánh Sơn)"
+   }
+  ]
+ },
+ {
+  "ma": "dua",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: có quanh năm",
+  "nguon": []
+ },
+ {
+  "ma": "mia",
+  "thang": [
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên; niên vụ mía Ninh Hòa thu hoạch ~12–4; mía ép nước có quanh năm",
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/phong-su/202503/mia-duong-vao-vu-thu-hoach-32c0e31/",
+    "trich": "(18/3/2025) Mía đường vào vụ thu hoạch... niên vụ 2024 - 2025... nông dân đã thu hoạch 50% diện tích"
+   }
+  ]
+ },
+ {
+  "ma": "nha_dam",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: thu hoạch quanh năm",
+  "nguon": []
+ },
+ {
+  "ma": "hat_sen",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: không trồng tại chỗ, hàng từ nơi khác",
+  "nguon": []
+ },
+ {
+  "ma": "khe_me",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ },
+ {
+  "ma": "sa_ot",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa",
+  "nguon": []
+ }
+]
