@@ -13,10 +13,15 @@ const LABEL = {
   do_nang: { nhe: "Nhẹ bụng", nang: "No lâu" },
   dau_mo: { it: "Ít dầu", vua: "Dầu vừa", nhieu: "Nhiều dầu" },
   do_kho: { de: "Dễ", vua: "Vừa", kho: "Khó" },
+  vai_mam: { man: "Món mặn", rau: "Món rau", canh: "Canh", mot_to: "Món một tô (sáng)", lau: "Lẩu",
+    trang_mieng: "Tráng miệng, chè", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Dưa, đồ ăn kèm" },
 };
 
-const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, ranked: [], rankedTomorrow: [], offset: [0, 0], servings: {} };
+const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], offset: [0, 0], servings: {} };
 const $app = document.getElementById("app");
+// Bỏ dấu tiếng Việt để tìm kiếm không cần gõ dấu.
+const plain = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
+const hasRecipe = (d) => String(d.cach_lam ?? "").trim() !== "";
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const today = () => new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Ho_Chi_Minh" });
 // Ngày (YYYY-MM-DD, giờ Việt Nam) cách hôm nay `i` ngày; tháng tương ứng.
@@ -37,6 +42,7 @@ async function load() {
   }
   for (const p of data.gia_go) S.prices[p.ma_nguyen_lieu] = p;
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
+  for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   S.ranked = rankDishes(0);
   recordHistory(S.ranked.slice(0, 3).map((d) => d.ma_mon));
   S.rankedTomorrow = rankDishes(1); // sau recordHistory để không gợi ý lại món của hôm nay
@@ -142,7 +148,9 @@ function rankDishes(day = 0) {
 
 // 3 món điểm cao nhất, không trùng loại (bắt đầu từ vị trí offset khi bấm "Đổi món").
 function pickThree(ranked, offset) {
-  const pool = ranked.slice(offset).concat(ranked.slice(0, offset)).filter((d) => d.score > -3);
+  // Dưa, đồ ăn kèm không tính là một món gợi ý (chờ phần ghép mâm).
+  const pool = ranked.slice(offset).concat(ranked.slice(0, offset))
+    .filter((d) => d.score > -3 && S.nhan[d.ma_mon]?.vai_mam !== "dua_kem");
   const out = [], used = new Set();
   for (const d of pool) {
     if (used.has(d.loai)) continue;
@@ -244,9 +252,10 @@ function chips(d) {
   return `<div class="chips">${peak}
     <span class="chip ${d.nhiet}">${LABEL.nhiet[d.nhiet] ?? d.nhiet}</span>
     <span class="chip">${LABEL.loai[d.loai] ?? d.loai}</span>
-    <span class="chip">${LABEL.do_nang[d.do_nang] ?? ""}</span>
-    <span class="chip">${LABEL.dau_mo[d.dau_mo] ?? ""}</span>
-    <span class="chip">⏱ ${d.thoi_gian_phut}′</span></div>`;
+    ${LABEL.do_nang[d.do_nang] ? `<span class="chip">${LABEL.do_nang[d.do_nang]}</span>` : ""}
+    ${LABEL.dau_mo[d.dau_mo] ? `<span class="chip">${LABEL.dau_mo[d.dau_mo]}</span>` : ""}
+    ${d.thoi_gian_phut ? `<span class="chip">⏱ ${d.thoi_gian_phut}′</span>` : ""}
+    ${hasRecipe(d) ? "" : `<span class="chip">↗ Cookpad</span>`}</div>`;
 }
 
 function pageHome(day = 0) {
@@ -264,7 +273,7 @@ function pageHome(day = 0) {
       <a class="card pick" href="#/mon/${d.ma_mon}">
         <span class="rank">Gợi ý ${i + 1}</span>
         <h3>${esc(d.ten_mon)}</h3>
-        <p>${esc(d.mo_ta_ngan)}</p>
+        ${d.mo_ta_ngan ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}
         ${chips(d)}
         <span class="why">✓ ${esc(d.reasons.filter((r) => r.diem > 0).map((r) => r.text).join(" · ") || "Hợp mùa")}</span>
       </a>`).join("")}</div>
@@ -330,13 +339,16 @@ function pageRecipe(ma) {
     <a class="back" href="#/">← Hôm nay</a>
     <div class="card">
       <h1>${esc(d.ten_mon)}</h1>
-      <p>${esc(d.mo_ta_ngan)}</p>
+      ${d.mo_ta_ngan ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}
       ${chips(d)}
-      <p class="note">Độ khó: ${LABEL.do_kho[d.do_kho] ?? d.do_kho} · Điểm hôm nay: ${d.score}
+      <p class="note">${d.do_kho ? `Độ khó: ${LABEL.do_kho[d.do_kho] ?? d.do_kho} · ` : ""}Điểm hôm nay: ${d.score}
         ${d.reasons.length ? `(${d.reasons.map((r) => `${esc(r.text)} ${r.diem > 0 ? "+" : ""}${r.diem}`).join(", ")})` : ""}</p>
       ${seasonBlock(d.ma_mon)}
     </div>
-    <h2>Nguyên liệu</h2>
+    ${hasRecipe(d) ? "" : `<div class="card cookpad">
+      <p>Cá Chef chưa có công thức chi tiết cho món này. Xem cách làm trên Cookpad:</p>
+      <a class="btn on" href="${esc(d.nguon)}" target="_blank" rel="noopener">Mở công thức trên Cookpad ↗</a></div>`}
+    ${rows.length ? `<h2>Nguyên liệu</h2>
     <div class="servings">
       <button id="minus" aria-label="Bớt">−</button><b>${n}</b><span>${unitName}</span><button id="plus" aria-label="Thêm">+</button>
     </div>
@@ -346,11 +358,12 @@ function pageRecipe(ma) {
         ${price ? `<a class="go" href="${esc(price.url)}" target="_blank" rel="noopener">GO!: ${esc(price.san_pham_go)} – ${Number(price.gia_vnd).toLocaleString("vi-VN")}đ</a>` : ""}</span>
         <span class="qty">${esc(scaleQty(r, factor))}</span></li>`;
     }).join("")}</ul>
-    <p class="note">Gia vị và nước dùng tăng chậm hơn số người – nêm lại cho vừa.</p>
-    <h2>Cách làm</h2>
-    <ol class="card steps">${String(d.cach_lam).split("\n").map((s) => `<li>${esc(s.replace(/^\d+\.\s*/, ""))}</li>`).join("")}</ol>
+    <p class="note">Gia vị và nước dùng tăng chậm hơn số người – nêm lại cho vừa.</p>` : ""}
+    ${hasRecipe(d) ? `<h2>Cách làm</h2>
+    <ol class="card steps">${String(d.cach_lam).split("\n").map((s) => `<li>${esc(s.replace(/^\d+\.\s*/, ""))}</li>`).join("")}</ol>` : ""}
     <p class="note">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">Cookpad</a> ·
       Trạng thái: ${d.trang_thai === "da_nau_thu" ? "đã nấu thử" : "chưa nấu thử"}</p>`;
+  if (!rows.length) return;
   const set = (v) => { S.servings[ma] = Math.min(20, Math.max(1, v)); pageRecipe(ma); };
   document.getElementById("minus").onclick = () => set(n - 1);
   document.getElementById("plus").onclick = () => set(n + 1);
@@ -382,15 +395,35 @@ function pageCalendar() {
   $app.querySelectorAll("[data-r]").forEach((b) => (b.onclick = () => { calRegion = b.dataset.r; pageCalendar(); }));
 }
 
+// Nhóm theo vai trong mâm (tab mon_nhan); món chưa có nhãn thì theo loại.
+function groupOf(d) {
+  const v = S.nhan[d.ma_mon]?.vai_mam;
+  return v ? LABEL.vai_mam[v] ?? v : LABEL.loai[d.loai] ?? d.loai;
+}
+
 function pageAll() {
+  $app.innerHTML = `<h1>Tất cả món (${S.ranked.length})</h1>
+    <input id="q" class="search" type="search" placeholder="Tìm món (gõ không dấu được, vd: ca thu, canh chua)" value="${esc(S.query)}">
+    <div id="all-list"></div>`;
+  const q = document.getElementById("q");
+  q.oninput = () => { S.query = q.value; renderAll(); };
+  renderAll();
+}
+
+function renderAll() {
+  const words = plain(S.query).split(/\s+/).filter(Boolean);
+  const list = S.ranked.filter((d) => words.every((w) => plain(d.ten_mon).includes(w)));
+  const order = Object.values(LABEL.vai_mam);
   const groups = {};
-  for (const d of S.ranked) (groups[d.loai] ??= []).push(d);
-  $app.innerHTML = `<h1>Tất cả món (${S.ranked.length})</h1>` +
-    Object.entries(groups).map(([loai, list]) => `
-      <h2>${LABEL.loai[loai] ?? loai}</h2>
-      <div class="card list">${list.map((d) => `
-        <a href="#/mon/${d.ma_mon}"><span>${esc(d.ten_mon)} ${d.season === 2 ? '<span class="chip peak">Đang rộ</span>' : d.season === 0 ? '<span class="chip">Trái mùa</span>' : ""}</span>
-        <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>`).join("");
+  for (const d of list) (groups[groupOf(d)] ??= []).push(d);
+  const keys = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+  document.getElementById("all-list").innerHTML = (words.length ? `<p class="note">${list.length} món khớp</p>` : "") +
+    (keys.map((g) => `
+      <h2>${esc(g)} <span class="muted" style="font-size:14px;font-weight:400">(${groups[g].length})</span></h2>
+      <div class="card list">${groups[g].map((d) => `
+        <a href="#/mon/${d.ma_mon}"><span>${esc(d.ten_mon)} ${d.season === 2 ? '<span class="chip peak">Đang rộ</span>' : d.season === 0 ? '<span class="chip">Trái mùa</span>' : ""}${hasRecipe(d) ? "" : ' <span class="muted" title="Công thức trên Cookpad">↗</span>'}</span>
+        <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>`).join("") ||
+      `<p class="muted">Không thấy món nào.</p>`);
 }
 
 // ---------- Điều hướng ----------
