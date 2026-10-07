@@ -156,6 +156,24 @@ def main():
         tre = "co" if "ít cay" in ten.lower() or not any(w in ten.lower() for w in CAY) else "can_nhac"
         nhan_rows.append([ma, vai, dam, cach, tre, nguon_loai])
 
+    # Nguyên liệu lấy từ Cookpad (chuyen_nguyen_lieu.py) cho các món chưa có công thức Cá Chef
+    cp_nl = os.path.join(OUT, "nguyen_lieu_cookpad.csv")
+    cp_bs = os.path.join(OUT, "cookpad_bo_sung.csv")
+    if os.path.exists(cp_nl):
+        co_ct = {r[0] for r in mon_rows if r[12]}
+        for r in doc(cp_nl):
+            if r["ma_mon"] in co_ct: continue
+            for c in r["ma_nguyen_lieu"].split("|"):
+                if c and c not in tat_ca_nl: loi.append(f"{r['ma_mon']}: mã nguyên liệu lạ {c}")
+            mon_nl_rows.append([r[h] for h in MON_NL_HEADER])
+    if os.path.exists(cp_bs):
+        bs = {r["ma_mon"]: r for r in doc(cp_bs)}
+        for r in mon_rows:
+            b = bs.get(r[0])
+            if not b: continue
+            if b["thoi_gian_phut"]: r[9] = int(b["thoi_gian_phut"])
+            if "/tim-kiem/" in r[14] and b["nguon_cong_thuc"]: r[14] = b["nguon_cong_thuc"]  # link tìm kiếm -> công thức thật
+
     for r in mon_rows:
         rec = dict(zip(MON_AN_HEADER, r))
         for f in ("loai", "nhiet", "do_nang", "dau_mo", "thoi_tiet_hop"):

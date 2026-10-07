@@ -132,3 +132,4 @@ table.cal { border-collapse: collapse; width: 100%; min-width: 620px; font-size:
 .meal-head { margin: 14px 0 8px; }
 .meal-head h3 { margin: 0; font-size: 17px; }
 .meal-head .btn { padding: 6px 12px; }
+.pick.leftover { background: var(--bg); border-style: dashed; }

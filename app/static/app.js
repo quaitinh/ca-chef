@@ -160,55 +160,117 @@ function lauGanDay(day) {
 }
 
 // ---------- Ghép bữa ----------
-// Trưa: nấu đơn giản, đủ chất (mặn + rau + canh). Tối: lẩu nếu hợp, không thì mâm mặn + rau + canh.
-const BUA = { trua: "🍚 Bữa trưa – đơn giản, đủ chất", toi: "🌙 Bữa tối" };
+// Quy tắc:
+//  - Lẩu chỉ ăn buổi tối (tối đa 1 lần/7 ngày). Hôm tối ăn lẩu thì trưa gợi ý món dễ nấu.
+//  - Trưa: mặn + rau + canh. Món mặn kho/hầm/om/rim thì nấu dư, tối ăn lại -> tối chỉ nấu thêm rau + canh.
+//  - Không lặp nguyên liệu chính trong ngày (rau thơm, gia vị dùng chung được); đạm tối khác đạm trưa.
 const VAI_TU_LOAI = { canh: "canh", lau: "lau", goi: "rau", trang_mieng: "trang_mieng", do_uong: "do_uong", an_vat: "an_vat", mon_chinh: "man" };
 const vaiOf = (d) => S.nhan[d.ma_mon]?.vai_mam || VAI_TU_LOAI[d.loai] || "man";
 const hopTre = (d) => S.nhan[d.ma_mon]?.hop_tre_em !== "can_nhac";
-// "Đơn giản": không quá 60 phút (nếu biết), không khó, không phải món nướng.
-const donGian = (d) => !(Number(d.thoi_gian_phut) > 60) && d.do_kho !== "kho" && S.nhan[d.ma_mon]?.cach_nau !== "nuong";
+// Món dễ nấu (cho bữa trưa hôm tối ăn lẩu): không hầm, không nướng, không khó, không quá 60 phút (nếu biết).
+const deNau = (d) => !(Number(d.thoi_gian_phut) > 60) && d.do_kho !== "kho" &&
+  S.nhan[d.ma_mon]?.cach_nau !== "nuong" && !/hầm/i.test(d.ten_mon);
+const khoHam = (d) => vaiOf(d) === "man" && /(^|\s)(kho|hầm|om|rim|ram|bung|sốt vang)(\s|$)/i.test(d.ten_mon);
 
-// Món điểm cao nhất theo vai, ưu tiên món hợp trẻ em; `ok` là điều kiện thêm.
-function pickRole(ranked, vai, exclude, ok = () => true) {
-  const pool = ranked.filter((d) => d.score > -3 && vaiOf(d) === vai && !exclude.has(d.ma_mon) && ok(d));
-  return pool.find(hopTre) || pool[0] || null;
+// Nguyên liệu chính của món: lấy từ bảng định lượng, món chưa có thì đoán theo tên.
+const NL_TEN = [
+  [/tôm|hải sản/, "tom"], [/mực|hải sản/, "muc"], [/cua|ghẹ/, "cua"], [/nghêu|ngao|sò|ốc|hến/, "so_oc"], [/sứa/, "sua"],
+  [/(^|\s)cá(\s|$)|chả cá/, "ca"], [/ếch/, "ech"], [/(^|\s)dê(\s|$)/, "de"], [/cừu/, "cuu"], [/(^|\s)(bò|bê)(\s|$)/, "bo"],
+  [/(^|\s)(gà|vịt|ngan)(\s|$)/, "ga"], [/trứng/, "trung"], [/đậu (phụ|hũ)|tàu hũ/, "dau_phu"],
+  [/thịt(?! (bò|gà|vịt|dê|cừu|ếch))|sườn|ba chỉ|ba rọi|(^|\s)giò(\s|$)|(^|\s)heo|lợn|nem|chả lá lốt|chả giò/, "heo"],
+  [/khoai tây/, "khoai_tay"], [/cà rốt/, "ca_rot"], [/bí đỏ|bí ngô/, "bi_do"], [/bí đao|bí xanh/, "bi_dao"], [/(^|\s)bầu/, "bau"],
+  [/mướp/, "muop"], [/cà tím|cà bung/, "ca_tim"], [/cà chua|sốt cà/, "ca_chua"], [/su su|đọt su/, "su_su"], [/su hào/, "su_hao"],
+  [/củ cải/, "cu_cai"], [/bắp cải/, "bap_cai"], [/đậu que|đậu cô ve/, "dau_co_ve"], [/đậu bắp/, "dau_bap"], [/ngô|(?<!đậu )bắp(?! (cải|bò))/, "ngo"],
+  [/nấm/, "nam"], [/xoài/, "xoai_uc"], [/măng tây/, "mang_tay"], [/rau muống/, "rau_muong"], [/mồng tơi/, "mong_toi"],
+  [/rau ngót/, "rau_ngot"], [/khổ qua|mướp đắng/, "kho_qua"], [/khoai sọ|khoai môn/, "khoai_mon"], [/khoai lang|rau lang/, "khoai_lang"],
+  [/khoai mỡ/, "khoai_mo"], [/rong biển/, "rong_bien"], [/(^|\s)giá(\s|$)/, "gia"], [/cải thảo/, "cai_thao"], [/súp lơ|bông cải/, "sup_lo"],
+  [/đậu hà lan/, "dau_ha_lan"], [/rau dền/, "rau_den"], [/cải (ngọt|chíp|bẹ|xanh|cúc|ngồng)/, "cai_xanh"], [/dưa (leo|chuột)/, "dua_leo"],
+  [/đu đủ/, "du_du"], [/bưởi/, "buoi"], [/chuối xanh/, "chuoi_xanh"],
+];
+const NL_MA = { thit_heo: "heo", long_heo: "heo", tom_the: "tom", tom_hum: "tom", muc_tuoi: "muc", muc_mot_nang: "muc",
+  thit_bo: "bo", ga_ta: "ga", thit_de: "de", thit_cuu: "cuu", cua_dong: "cua", sup_lo_trang: "sup_lo", bo_booth: "bo_trai", bo_sap: "bo_trai" };
+const NL_CHUNG = new Set(["rau_thom", "sa_ot", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
+const _keys = {};
+function nlChinh(d) {
+  if (_keys[d.ma_mon]) return _keys[d.ma_mon];
+  const k = new Set(), t = d.ten_mon.toLowerCase();
+  for (const [re, key] of NL_TEN) if (re.test(t)) k.add(key);
+  for (const r of S.ingByDish[d.ma_mon] || []) {
+    if (r.vai_tro === "gia_vi") continue;
+    for (const c of String(r.ma_nguyen_lieu || "").split("|").filter(Boolean))
+      if (!NL_CHUNG.has(c)) k.add(NL_MA[c] || (c.startsWith("ca_") && c !== "ca_rot" && c !== "ca_chua" && c !== "ca_tim" ? "ca" : c));
+  }
+  return (_keys[d.ma_mon] = k);
+}
+const khongTrung = (d, used) => ![...nlChinh(d)].some((k) => used.has(k));
+const dungNL = (d, used) => nlChinh(d).forEach((k) => used.add(k));
+
+// Món điểm cao nhất theo vai; thử lần lượt các điều kiện từ chặt đến lỏng, ưu tiên món hợp trẻ em.
+function pickRole(ranked, vai, exclude, ...conds) {
+  const pool = ranked.filter((d) => d.score > -3 && vaiOf(d) === vai && !exclude.has(d.ma_mon));
+  for (const ok of [...conds, () => true]) {
+    const c = pool.filter(ok);
+    if (c.length) return c.find(hopTre) || c[0];
+  }
+  return null;
 }
 
-function pickTrua(ranked, exclude) {
-  const ex = new Set(exclude);
-  const out = [];
+function pickTrua(ranked, exclude, used, deThoi) {
+  const ex = new Set(exclude), out = [];
   for (const vai of ["man", "rau", "canh"]) {
-    const d = pickRole(ranked, vai, ex, donGian) || pickRole(ranked, vai, ex);
-    if (d) { out.push(d); ex.add(d.ma_mon); }
+    const d = deThoi
+      ? pickRole(ranked, vai, ex, (x) => deNau(x) && khongTrung(x, used), (x) => khongTrung(x, used), deNau)
+      : pickRole(ranked, vai, ex, (x) => khongTrung(x, used));
+    if (d) { out.push(d); ex.add(d.ma_mon); dungNL(d, used); }
   }
   return out;
 }
 
-function pickToi(ranked, day, exclude, trua) {
-  const ex = new Set([...exclude, ...trua.map((d) => d.ma_mon)]);
-  const damTrua = S.nhan[trua[0]?.ma_mon]?.nhom_dam;
-  const man = pickRole(ranked, "man", ex, (d) => S.nhan[d.ma_mon]?.nhom_dam !== damTrua) || pickRole(ranked, "man", ex);
-  const lau = lauGanDay(day) ? null : pickRole(ranked, "lau", ex);
-  if (lau && lau.score >= (man?.score ?? -99)) {
-    const tm = pickRole(ranked, "trang_mieng", ex);
-    return [lau, tm].filter(Boolean);
+function pickToi(ranked, exclude, used, trua, du) {
+  const ex = new Set([...exclude, ...trua.map((d) => d.ma_mon)]), out = [];
+  if (du) out.push(du);
+  else {
+    const damTrua = S.nhan[trua[0]?.ma_mon]?.nhom_dam;
+    const man = pickRole(ranked, "man", ex, (x) => S.nhan[x.ma_mon]?.nhom_dam !== damTrua && khongTrung(x, used), (x) => khongTrung(x, used));
+    if (man) { out.push(man); ex.add(man.ma_mon); dungNL(man, used); }
   }
-  const out = man ? [man] : [];
-  if (man) ex.add(man.ma_mon);
   for (const vai of ["rau", "canh"]) {
-    const d = pickRole(ranked, vai, ex);
-    if (d) { out.push(d); ex.add(d.ma_mon); }
+    const d = pickRole(ranked, vai, ex, (x) => khongTrung(x, used));
+    if (d) { out.push(d); ex.add(d.ma_mon); dungNL(d, used); }
   }
   return out;
 }
 
+// keep: giữ nguyên bữa còn lại khi bấm "Đổi" một bữa.
 function pickMeals(ranked, day, keep = {}) {
-  const sh = S.shown[day];
-  const trua = keep.trua || pickTrua(ranked, new Set([...sh.trua, ...(keep.toi || []).map((d) => d.ma_mon)]));
-  const toi = keep.toi || pickToi(ranked, day, sh.toi, trua);
-  return { trua, toi };
+  const sh = S.shown[day], used = new Set();
+  const bestMan = ranked.find((d) => d.score > -3 && vaiOf(d) === "man");
+  let toi = keep.toi, lau = keep.toi ? keep.lau : false;
+  if (!toi && !lauGanDay(day)) {
+    // Đổi bữa tối mà giữ bữa trưa: lẩu mới không được trùng nguyên liệu của bữa trưa.
+    const daDung = new Set();
+    (keep.trua || []).forEach((d) => dungNL(d, daDung));
+    const exTrua = new Set([...sh.toi, ...(keep.trua || []).map((d) => d.ma_mon)]);
+    const l = pickRole(ranked, "lau", exTrua, (x) => khongTrung(x, daDung));
+    if (l && khongTrung(l, daDung) && l.score >= (bestMan?.score ?? -99)) {
+      lau = true;
+      dungNL(l, daDung);
+      toi = [l, pickRole(ranked, "trang_mieng", exTrua, (x) => khongTrung(x, daDung))].filter(Boolean);
+    }
+  }
+  if (lau) {
+    toi.forEach((d) => dungNL(d, used));
+    const trua = keep.trua || pickTrua(ranked, new Set([...sh.trua, ...toi.map((d) => d.ma_mon)]), used, true);
+    return { trua, toi, lau: true, du: null };
+  }
+  const trua = keep.trua || pickTrua(ranked, sh.trua, used, false);
+  if (keep.trua) trua.forEach((d) => dungNL(d, used));
+  const du = trua[0] && khoHam(trua[0]) ? trua[0] : null;
+  toi = pickToi(ranked, sh.toi, used, trua, du);
+  return { trua, toi, lau: false, du: du?.ma_mon ?? null };
 }
-const mealDishes = (m) => [...m.trua, ...m.toi];
+// Món phải nấu (món ăn lại từ trưa không tính 2 lần).
+const mealDishes = (m) => [...m.trua, ...m.toi.filter((d) => d.ma_mon !== m.du)];
 
 // ---------- Thời tiết ----------
 function wmo(code) {
@@ -257,7 +319,7 @@ function tomorrowTeaser() {
   if (!d || d.time.length < 2) return "";
   const [icon, desc] = wmo(d.weather_code[1]);
   const m = S.meals[1];
-  const top = `trưa ${m.trua.map((x) => x.ten_mon).join(", ")}; tối ${m.toi.map((x) => x.ten_mon).join(", ")}`;
+  const top = `trưa ${m.trua.map((x) => x.ten_mon).join(", ")}; tối ${m.toi.filter((x) => x.ma_mon !== m.du).map((x) => x.ten_mon).join(", ")}${m.du ? " (+ món mặn ăn lại từ trưa)" : ""}`;
   return `<a class="card teaser" href="#/ngay-mai">
     <span class="t-icon">${icon}</span>
     <span><b>Ngày mai:</b> ${desc.toLowerCase()}, ${Math.round(d.temperature_2m_min[1])}–${Math.round(d.temperature_2m_max[1])}°, mưa ${d.precipitation_sum[1]} mm
@@ -270,23 +332,24 @@ function tomorrowTeaser() {
 const FROZEN_GROUPS = ["thịt", "hải sản"];
 const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang"]; // rong khô, sứa ngâm, mực phơi: không cần rã đông lâu
 const FROZEN_WORDS = /chả cá|xương|mỡ heo|sườn|giò heo/i;
-function thawList(picks) {
+function thawList(meals) {
   const out = [];
-  for (const d of picks) {
+  for (const d of mealDishes(meals)) {
+    const f = d.ma_mon === meals.du ? 2 : 1; // nấu dư cho bữa tối
     for (const r of S.ingByDish[d.ma_mon] || []) {
       if (r.vai_tro === "gia_vi") continue;
       const codes = String(r.ma_nguyen_lieu || "").split("|").filter(Boolean);
       const frozen = codes.length
         ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
         : FROZEN_WORDS.test(r.ten_hien_thi);
-      if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon, qty: scaleQty(r, 1) });
+      if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (nấu dư cho tối)" : ""), qty: scaleQty(r, f) });
     }
   }
   return out;
 }
 
-function thawCard(picks) {
-  const list = thawList(picks);
+function thawCard(meals) {
+  const list = thawList(meals);
   if (!list.length) return `<div class="card thaw"><b>🧊 Rã đông:</b> các món gợi ý ngày mai không cần rã đông thịt/cá.</div>`;
   return `<div class="card thaw">
     <b>🧊 Tối nay chuyển từ ngăn đá xuống ngăn mát:</b>
@@ -308,15 +371,24 @@ function chips(d) {
     ${hasRecipe(d) ? "" : `<span class="chip">↗ Cookpad</span>`}</div>`;
 }
 
-function mealCards(list) {
-  return `<div class="picks">${list.map((d) => `
-      <a class="card pick" href="#/mon/${d.ma_mon}">
-        <span class="rank">${esc(LABEL.vai_mam[vaiOf(d)] ?? "")}</span>
+function mealCards(list, meals, bua) {
+  return `<div class="picks">${list.map((d) => {
+    const du = d.ma_mon === meals.du;
+    const ghi = du ? (bua === "trua" ? " · nấu gấp đôi, tối ăn tiếp" : " · ăn lại từ trưa") : "";
+    return `
+      <a class="card pick ${du && bua === "toi" ? "leftover" : ""}" href="#/mon/${d.ma_mon}">
+        <span class="rank">${esc(LABEL.vai_mam[vaiOf(d)] ?? "")}${ghi}</span>
         <h3>${esc(d.ten_mon)}</h3>
-        ${d.mo_ta_ngan ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}
-        ${chips(d)}
-        <span class="why">✓ ${esc(d.reasons.filter((r) => r.diem > 0).map((r) => r.text).join(" · ") || "Hợp mùa")}</span>
-      </a>`).join("")}</div>`;
+        ${d.mo_ta_ngan && !(du && bua === "toi") ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}
+        ${du && bua === "toi" ? "" : chips(d)}
+        ${du && bua === "toi" ? "" : `<span class="why">✓ ${esc(d.reasons.filter((r) => r.diem > 0).map((r) => r.text).join(" · ") || "Hợp mùa")}</span>`}
+      </a>`;
+  }).join("")}</div>`;
+}
+
+function buaTitle(meals, bua) {
+  if (bua === "trua") return "🍚 Bữa trưa" + (meals.lau ? " – món dễ nấu (tối ăn lẩu)" : "");
+  return "🌙 Bữa tối" + (meals.lau ? " – lẩu" : meals.du ? " – nấu thêm rau + canh" : "");
 }
 
 function pageHome(day = 0) {
@@ -331,9 +403,9 @@ function pageHome(day = 0) {
     ${day ? "" : tomorrowTeaser()}
     <h2>${day ? "Ngày mai nấu gì?" : "Hôm nay nấu gì?"}</h2>
     ${["trua", "toi"].map((k) => `
-      <div class="row meal-head"><h3>${BUA[k]}</h3><button class="btn" data-swap="${k}">🔄 Đổi</button></div>
-      ${mealCards(meals[k])}`).join("")}
-    ${day ? thawCard(mealDishes(meals)) : ""}
+      <div class="row meal-head"><h3>${buaTitle(meals, k)}</h3><button class="btn" data-swap="${k}">🔄 Đổi</button></div>
+      ${mealCards(meals[k], meals, k)}`).join("")}
+    ${day ? thawCard(meals) : ""}
     <h2>Đang vào mùa tháng ${m}</h2>
     <div class="chips">${inSeason.map((n) => `<span class="chip peak">${esc(n.ten)}</span>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
     <h2>Món khác cũng hợp</h2>
@@ -341,12 +413,14 @@ function pageHome(day = 0) {
       <a href="#/mon/${d.ma_mon}"><span>${esc(d.ten_mon)} <span class="muted">· ${LABEL.vai_mam[vaiOf(d)] ?? ""}</span></span>
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score} điểm</span></a>`).join("")}</div>`;
   $app.querySelectorAll("[data-swap]").forEach((btn) => (btn.onclick = () => {
-    const k = btn.dataset.swap, other = k === "trua" ? "toi" : "trua";
-    meals[k].forEach((d) => S.shown[day][k].add(d.ma_mon));
-    let next = pickMeals(ranked, day, { [other]: meals[other] });
-    if (next[k].length < meals[k].length) { S.shown[day][k].clear(); next = pickMeals(ranked, day, { [other]: meals[other] }); }
+    const k = btn.dataset.swap;
+    meals[k].filter((d) => k === "trua" || d.ma_mon !== meals.du).forEach((d) => S.shown[day][k].add(d.ma_mon));
+    // Đổi trưa: giữ lẩu tối (nếu có), còn không thì tối tính lại theo trưa mới. Đổi tối: giữ trưa.
+    const keep = k === "trua" ? (meals.lau ? { toi: meals.toi, lau: true } : {}) : { trua: meals.trua };
+    let next = pickMeals(ranked, day, keep);
+    if (next[k].length < 2) { S.shown[day][k].clear(); next = pickMeals(ranked, day, keep); } // hết món thì quay vòng
     S.meals[day] = next;
-    if (day === 0) recordHistory(next[k].map((d) => d.ma_mon));
+    if (day === 0) recordHistory(mealDishes(next).map((d) => d.ma_mon));
     pageHome(day);
   }));
 }
