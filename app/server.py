@@ -14,6 +14,7 @@ from urllib.parse import urlparse, parse_qs
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC = os.path.join(ROOT, "app", "static")
 DATA = os.path.join(ROOT, "data")
+DE_XUAT = os.path.join(DATA, "de_xuat")
 SHEET_ID = "1aoGQLY0g3UjnQRavXnufttwoigSb-Po4IkGB1z0fwno"
 TABS = ["nguyen_lieu", "mon_an", "mon_nguyen_lieu", "quy_tac", "gia_go"]
 CACHE_SECONDS = 300
@@ -50,6 +51,32 @@ def load_csv():
     return out
 
 
+def read_de_xuat(name):
+    path = os.path.join(DE_XUAT, name)
+    if not os.path.exists(path):
+        return []
+    with open(path, newline="") as f:
+        return to_records(list(csv.reader(f)))
+
+
+def merge_de_xuat(tabs):
+    """Gộp món đề xuất (data/de_xuat/) vào dữ liệu Sheet/CSV và ẩn các món trong an_mon.csv.
+
+    Món/nguyên liệu đã có trên Sheet (trùng mã) thì giữ bản trên Sheet.
+    """
+    an = {r["ma_mon"] for r in read_de_xuat("an_mon.csv")}
+    co_nl = {r["ma"] for r in tabs["nguyen_lieu"]}
+    tabs["nguyen_lieu"] += [r for r in read_de_xuat("nguyen_lieu_moi.csv") if r["ma"] not in co_nl]
+    co_mon = {r["ma_mon"] for r in tabs["mon_an"]}
+    moi = [r for r in read_de_xuat("mon_an_moi.csv") if r["ma_mon"] not in co_mon]
+    them = {r["ma_mon"] for r in moi}
+    tabs["mon_an"] = [r for r in tabs["mon_an"] + moi if r["ma_mon"] not in an]
+    tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
+        [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
+    tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
+    return len(moi)
+
+
 def get_data(refresh=False):
     if not refresh and _cache["payload"] and time.time() - _cache["at"] < CACHE_SECONDS:
         return _cache["payload"]
@@ -62,8 +89,9 @@ def get_data(refresh=False):
             tabs = load_csv()
     else:
         tabs = load_csv()
+    de_xuat = merge_de_xuat(tabs)
     payload = json.dumps({"source": source, "error": error, "fetched_at": time.strftime("%H:%M %d/%m/%Y"),
-                          **tabs}, ensure_ascii=False).encode()
+                          "de_xuat": de_xuat, **tabs}, ensure_ascii=False).encode()
     _cache.update(at=time.time(), payload=payload)
     return payload
 
