@@ -1,0 +1,1068 @@
+[
+ {
+  "ma": "mang_cau_ta",
+  "ten": "Mãng cầu ta (na) / mãng cầu Thái",
+  "nhom": "trái cây",
+  "vung": "Khánh Hòa/Ninh Thuận",
+  "thang": [
+   2,
+   2,
+   1,
+   0,
+   0,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "2 đợt: chính vụ ~T8–9 (âm 7–8) và vụ Tết xử lý ra hoa (T1–2); trái vụ rải rác",
+  "mon_goi_y": [
+   "Ăn tráng miệng",
+   "Sinh tố mãng cầu",
+   "Sữa chua mãng cầu"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202101/vu-mang-cau-tet-chua-nhu-mong-doi-8205613/",
+    "trich": "Hiện nay, tại các vườn mãng cầu Tết ở xã Cam Thành Nam (TP. Cam Ranh) và xã Cam An Nam (huyện Cam Lâm), trái trên cây phần lớn chưa bung hết gai"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202008/xa-cam-an-nam-phat-trien-cay-mang-cau-8179149/",
+    "trich": "Bình quân 1 năm 2 vụ... Ông đang trồng 2 loại mãng cầu Thái và mãng cầu dai (mãng cầu ta)"
+   },
+   {
+    "url": "https://hacheco.vn/nguoi-tien-phong-trong-mang-cau-thai-o-ninh-thuan/",
+    "trich": "đợt tết Canh Tý 2020, gia đình anh Thiêng [Phước Vinh, Ninh Phước] thu nhập trên 200 triệu/sào mãng cầu Thái (bài gốc NNVN)"
+   }
+  ]
+ },
+ {
+  "ma": "sau_dau",
+  "ten": "Sầu đâu (đọt và bông)",
+  "nhom": "rau củ",
+  "vung": "Ninh Thuận/miền Nam",
+  "thang": [
+   1,
+   2,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Cây mọc nhiều ở Ninh Thuận; đọt non + bông từ T11–T3 âm (≈T12–T4 dương). Vị đắng, chần qua",
+  "mon_goi_y": [
+   "Gỏi sầu đâu tôm thịt",
+   "Sầu đâu chấm mắm kho",
+   "Gỏi sầu đâu khô cá"
+  ],
+  "nguon": [
+   {
+    "url": "https://thanhnien.vn/sau-dau-18569070.htm",
+    "trich": "Từ tháng 11 đến tháng 3 âm lịch là thời điểm sầu đâu thay lá đơm bông."
+   },
+   {
+    "url": "https://thanhnien.vn/sau-dau-mang-lai-tin-vui-185328371.htm",
+    "trich": "Tại VN cây mọc hoang nhiều nhất ở An Giang, Kiên Giang, Ninh Thuận và rải rác ở đồng bằng sông Cửu Long."
+   },
+   {
+    "url": "https://baoangiang.com.vn/doc-dao-goi-sau-dau-a299952.html",
+    "trich": "khoảng tháng 11 đến tháng 3 (âm lịch), cây sầu đâu đến mùa thay lá, ra bông... lá và bông sầu đâu thường được làm rau ăn sống hoặc trộn gỏi"
+   }
+  ]
+ },
+ {
+  "ma": "cu_kieu",
+  "ten": "Củ kiệu tươi",
+  "nhom": "rau củ",
+  "vung": "Khánh Hòa (Cam Ranh, Cam Lâm)/Ninh Thuận",
+  "thang": [
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Vụ Tết: thương lái đặt từ T10 âm, thu rộ tháng Chạp; càng gần Tết củ càng chắc",
+  "mon_goi_y": [
+   "Dưa kiệu muối chua ngọt",
+   "Kiệu xào thịt bò",
+   "Kiệu chấm thịt luộc ngày Tết"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202301/vui-mua-kieu-tet-8274526/",
+    "trich": "Khoảng tháng 10 âm lịch, thương lái bắt đầu về các ruộng kiệu đặt mua. Song thời điểm này, củ kiệu còn mỏng nên giá thấp."
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202301/vui-mua-kieu-tet-8274526/",
+    "trich": "Tại huyện Cam Lâm, cây kiệu trồng tập trung tại các xã: Cam An Nam, Cam Hiệp Nam, Cam Hòa, Cam Thành Bắc và thị trấn Cam Đức."
+   },
+   {
+    "url": "https://baovanhoa.vn/xa-hoi/khanh-hoa-soi-dong-mua-thu-hoach-cu-kieu-tet-6.html",
+    "trich": "[tiêu đề] Khánh Hòa: Sôi động mùa thu hoạch củ kiệu Tết"
+   }
+  ]
+ },
+ {
+  "ma": "nam_moi",
+  "ten": "Nấm mối",
+  "nhom": "rau củ",
+  "vung": "Khánh Hòa (Cam Lâm)/Bình Thuận/Đắk Lắk",
+  "thang": [
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   2,
+   1,
+   0,
+   1,
+   2,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Nấm tự nhiên, chỉ mọc đầu mùa mưa: Tây Nguyên/Bình Thuận ~T5–7, Khánh Hòa ~T10–11. Đắt, ít",
+  "mon_goi_y": [
+   "Canh nấm mối nấu rau ngót/thịt bằm",
+   "Nấm mối xào",
+   "Cháo nấm mối"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/phong-su-anh/201911/san-nam-moi-dau-mua-8138905/",
+    "trich": "Sau những cơn mưa rả rích, gió lạnh đầu mùa tràn về cũng là lúc người dân các xã Sơn Tân, Cam Tân, Cam Hòa (huyện Cam Lâm) lại rủ nhau vào rừng tìm nấm mối"
+   },
+   {
+    "url": "https://baobinhthuan.com.vn/chuyen-nguoi-di-tim-nam-moi-o-uc-linh-109719.html",
+    "trich": "sau những cơn mưa đầu mùa người đi tìm nấm mối đông như đi hội (Đức Linh, bài 16/6/2023)"
+   },
+   {
+    "url": "https://baodaklak.vn/du-lich/202207/ngot-ngon-nam-moi-tay-nguyen-3aa46f3/",
+    "trich": "Xuất hiện mỗi năm một lần vào mùa mưa, nấm mối thường mọc ở những chỗ đất tơi xốp, ở gần các tổ mối đất."
+   }
+  ]
+ },
+ {
+  "ma": "xoai_cat",
+  "ten": "Xoài cát Hòa Lộc / xoài Cam Lâm (các giống ngoài xoài Úc)",
+  "nhom": "trái cây",
+  "vung": "Khánh Hòa (Cam Lâm)",
+  "thang": [
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|vựa|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Chính vụ Cam Lâm khoảng T4–6 (giữa T3 chưa vào vụ); có xoài tứ quý trái vụ",
+  "mon_goi_y": [
+   "Xoài chín tráng miệng",
+   "Gỏi xoài xanh tôm khô",
+   "Sinh tố xoài"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/du-lich/202303/trai-nghiem-vuon-xoai-o-cam-lam-8277655/",
+    "trich": "Giữa tháng 3, tuy vườn xoài chưa tất bật vào chính vụ... Cam Lâm bây giờ không chỉ có giống xoài Thủy Triều (xoài tây) bản địa, mà còn có... cát Hòa Lộc"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/phong-su/202004/vu-xoai-am-dam-8158202/",
+    "trich": "Hiện xoài đang vào chính vụ (bài tháng 4/2020)... xoài cát Hòa Lộc loại 1"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202405/xoai-cam-lamdau-ra-con-bap-benh-6602185/",
+    "trich": "xoài Úc tại thời điểm đầu tháng 5, loại 1 được mua với giá 26.000 đồng/kg"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201703/suoi-tan-phat-trien-xoai-tu-quy-trai-vu-5001013/",
+    "trich": "nông dân xã Suối Tân (huyện Cam Lâm) đang phát triển mạnh giống xoài Tứ quý sản xuất trái vụ."
+   }
+  ]
+ },
+ {
+  "ma": "chuoi_chin",
+  "ten": "Chuối chín (chuối mốc/sứ, chuối già)",
+  "nhom": "trái cây",
+  "vung": "Khánh Hòa (Khánh Sơn, Cam Lâm)",
+  "thang": [
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Có quanh năm; rộ vụ Tết (tháng Chạp âm). Bổ sung cho mục chuoi_xanh",
+  "mon_goi_y": [
+   "Ăn tráng miệng",
+   "Chè chuối",
+   "Chuối nướng"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201301/thon-khanh-thanh-suoi-cat-cam-lam-khanh-hoa-lo-mua-chuoi-tet-2212395/",
+    "trich": "Mọi năm, tháng Chạp là thời điểm thu hoạch rộ chuối vụ Tết"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201611/chuoi-moc-duoc-gia-2458860/",
+    "trich": "Mấy tháng qua, thương lái đổ xô đến huyện Khánh Sơn (Khánh Hòa) để thu mua chuối mốc."
+   }
+  ]
+ },
+ {
+  "ma": "du_du",
+  "ten": "Đu đủ (chín/xanh)",
+  "nhom": "trái cây",
+  "vung": "Khánh Hòa/Ninh Thuận",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "C",
+  "ghi_chu": "Trồng xen trong vườn ở Khánh Hòa, cho trái quanh năm; không có mùa rõ",
+  "mon_goi_y": [
+   "Đu đủ chín tráng miệng",
+   "Nộm đu đủ xanh",
+   "Đu đủ xanh hầm xương"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/phong-su/202101/mo-duoc-an-sach-8201817/",
+    "trich": "màu xanh ngát của dừa, ổi, mãng cầu, mít, thanh long ruột đỏ, đu đủ… (trang trại ở Ninh Tây, Ninh Hòa)"
+   }
+  ]
+ },
+ {
+  "ma": "oi",
+  "ten": "Ổi",
+  "nhom": "trái cây",
+  "vung": "Khánh Hòa/Ninh Thuận",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "C",
+  "ghi_chu": "Trồng phổ biến, nhanh cho thu hoạch, bán quanh năm; không có mùa rõ",
+  "mon_goi_y": [
+   "Ổi ăn tươi",
+   "Nước ép ổi"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/xa-hoi/202501/van-ninh-tich-cuc-ho-tro-phu-nu-khoi-nghiep-bc3177a/",
+    "trich": "vợ chồng bà thấy ổi và mãng cầu có giá trị kinh tế lại nhanh cho thu hoạch (Vạn Ninh)"
+   }
+  ]
+ },
+ {
+  "ma": "cha_la",
+  "ten": "Chà là tươi Ninh Thuận",
+  "nhom": "trái cây",
+  "vung": "Ninh Thuận",
+  "thang": [
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0
+  ],
+  "noi_mua": "vựa",
+  "tin_cay": "C",
+  "ghi_chu": "Mô hình mới ở Phan Rang, giá rất cao; 1 vụ/năm, ~6 tháng từ hoa đến trái; chín khoảng T6–7",
+  "mon_goi_y": [
+   "Ăn tươi tráng miệng"
+  ],
+  "nguon": [
+   {
+    "url": "https://thanhnien.vn/vuon-cha-la-tuyet-dep-thu-tien-ti-moi-nam-cua-lao-nong-ninh-thuan-185250606081632113.htm",
+    "trich": "Một năm chà là cho trái 1 vụ, từ thời điểm ra hoa đến khi thu hoạch kéo dài 6 tháng. (bài 6/6/2025, vườn đang thu hoạch, giá 600 nghìn–3 triệu/kg)"
+   }
+  ]
+ },
+ {
+  "ma": "tieu_moi",
+  "ten": "Hạt tiêu (tiêu mới, tiêu xanh)",
+  "nhom": "gia vị",
+  "vung": "Đắk Lắk",
+  "thang": [
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Tiêu khô có quanh năm; tiêu xanh tươi/tiêu mới vụ T2–3",
+  "mon_goi_y": [
+   "Cá kho tiêu",
+   "Thịt kho tiêu",
+   "Gà rang tiêu xanh"
+  ],
+  "nguon": [
+   {
+    "url": "https://baodaklak.vn/phong-su-ky-su/202603/vao-mua-ho-tieu-11149eb/",
+    "trich": "Hồ tiêu tại Đắk Lắk thường chín rộ và bước vào vụ thu hoạch chính từ tháng 2 đến tháng 3 dương lịch hằng năm."
+   }
+  ]
+ },
+ {
+  "ma": "mac_ca",
+  "ten": "Hạt mắc ca",
+  "nhom": "hàng khô",
+  "vung": "Đắk Lắk",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Hàng khô có quanh năm; hạt mới vụ thu hoạch rộ khoảng T7–9",
+  "mon_goi_y": [
+   "Hạt rang ăn vặt",
+   "Sữa hạt mắc ca"
+  ],
+  "nguon": [
+   {
+    "url": "https://baodaklak.vn/kinh-te/202408/mac-ca-duoc-gia-f3716c1/",
+    "trich": "Nông dân huyện Krông Năng đang bước vào thời điểm thu hoạch rộ mắc ca (bài tháng 8/2024)."
+   }
+  ]
+ },
+ {
+  "ma": "hat_dieu",
+  "ten": "Hạt điều",
+  "nhom": "hàng khô",
+  "vung": "Bình Thuận/Đắk Lắk",
+  "thang": [
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Hàng khô quanh năm; điều mới vụ thu hoạch khoảng T3–5",
+  "mon_goi_y": [
+   "Gà xào hạt điều",
+   "Hạt điều rang muối"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/hat-dieu-vao-mua-48145.html",
+    "trich": "Từ tháng 2 - 3 là thời điểm cây điều nở rộ hoa và cho trái."
+   },
+   {
+    "url": "https://baodaklak.vn/kinh-te/nong-lam-nghiep/202304/vu-dieu-buon-cua-nong-dan-e3b4b8a/",
+    "trich": "[tiêu đề bài 4/2023, Đắk Lắk đang vụ thu hoạch] Vụ điều buồn của nông dân"
+   }
+  ]
+ },
+ {
+  "ma": "mat_ong",
+  "ten": "Mật ong hoa cà phê",
+  "nhom": "khác",
+  "vung": "Đắk Lắk",
+  "thang": [
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Hoa cà phê nở tháng Chạp–T2 âm; mật mới ngon nhất khoảng T3",
+  "mon_goi_y": [
+   "Gừng mật ong",
+   "Gà nướng mật ong",
+   "Chanh mật ong"
+  ],
+  "nguon": [
+   {
+    "url": "https://baodaklak.vn/du-lich/202403/mat-ngot-mua-hoa-ca-phe-87702bc/",
+    "trich": "Tháng ba, khi nắng vàng phủ khắp đất trời Tây Nguyên cũng là thời điểm các loài hoa cho mật ngon nhất, đặc biệt là hoa cà phê."
+   }
+  ]
+ },
+ {
+  "ma": "yen_sao",
+  "ten": "Yến sào Khánh Hòa",
+  "nhom": "khác",
+  "vung": "Khánh Hòa",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   1,
+   1,
+   1,
+   2,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "GO!|cửa hàng",
+  "tin_cay": "B",
+  "ghi_chu": "Yến đảo khai thác 2 vụ: T4 âm và ~T8 âm; thành phẩm bán quanh năm. Đắt",
+  "mon_goi_y": [
+   "Yến chưng đường phèn",
+   "Súp yến gà",
+   "Cháo yến"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/200307/yen-sao-va-nghe-khai-thac-yen-o-khanh-hoa-1831047/",
+    "trich": "Vào tháng 4 âm lịch, khi có 5 - 10% số chim đẻ trứng cũng là lúc thu hoạch vụ 1."
+   }
+  ]
+ },
+ {
+  "ma": "ca_chuon",
+  "ten": "Cá chuồn",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa/Ninh Thuận/Bình Thuận",
+  "thang": [
+   0,
+   0,
+   1,
+   2,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Vụ cá chuồn T3–5 âm (≈T4–6 dương), rẻ (~20–25k/kg tại cảng)",
+  "mon_goi_y": [
+   "Cá chuồn kho cà chua",
+   "Cá chuồn chiên nghệ",
+   "Cá chuồn nướng"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201804/ngu-dan-trung-ca-chuon-dau-vu-8076662/",
+    "trich": "Được biết, vụ đánh bắt cá chuồn từ tháng 3 đến tháng 5 âm lịch."
+   },
+   {
+    "url": "https://thanhnien.vn/mua-ca-chuon-185347035.htm",
+    "trich": "Tháng tư trời yên biển lặng là mùa ngư dân miền Trung thường trúng cá chuồn... Mùa này, cá được bày bán tràn lan ở các chợ"
+   }
+  ]
+ },
+ {
+  "ma": "ca_ho",
+  "ten": "Cá hố",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa (Nha Trang)",
+  "thang": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Mùa cá hố T7–tháng Chạp âm, cao điểm T7–8 âm (≈T8–9 dương)",
+  "mon_goi_y": [
+   "Cá hố chiên",
+   "Cá hố kho",
+   "Cá hố rim mặn"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201510/thuy-san-duoc-mua-2410790/",
+    "trich": "mùa đánh bắt cá hố hàng năm thường bắt đầu từ tháng 7 đến tháng Chạp âm lịch, trong đó, tháng 7 và tháng 8 âm lịch là mùa cao điểm."
+   }
+  ]
+ },
+ {
+  "ma": "ca_trich",
+  "ten": "Cá trích",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận/Ninh Thuận",
+  "thang": [
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   2
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Hai đợt: mùa bấc (T12–2, Liên Hương, Phan Thiết) và vụ cá Nam (T7–8)",
+  "mon_goi_y": [
+   "Cá trích chiên giòn",
+   "Cá trích kho cà chua",
+   "Gỏi cá trích"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/nhon-nhip-cho-ca-trich-dem-22884.html",
+    "trich": "món cá trích ngon hảo hạng mùa trở bấc... chợ Cảng cá thị trấn Liên Hương (bài 6/12/2019)"
+   },
+   {
+    "url": "https://www.sggp.org.vn/ra-khoi-dau-nam-ngu-dan-binh-thuan-moi-tay-go-ca-trich-post726713.html",
+    "trich": "Những ngày đầu năm mới, nhiều tàu cá ở Bình Thuận chỉ cần ra khơi trong một đêm là có thể đánh bắt được hàng tạ cá trích (2/2024)"
+   },
+   {
+    "url": "https://vnexpress.net/mua-danh-ca-gan-bo-mui-ne-4308163.html",
+    "trich": "Cá gần bờ thường là cá tầng nổi như: chỉ vàng, liệt, ngân, trao tráo, trích, mòi, nhồng... (đầu tháng 7, Mũi Né)"
+   },
+   {
+    "url": "https://tuoitre.vn/da-mat-hinh-anh-ngu-dan-ninh-thuan-bat-ngo-trung-lon-mua-ca-nam-20210820121559308.htm",
+    "trich": "đem về những chuyến thuyền đầy các loại cá: cá nục, cá bạc má, cá cơm, cá lồ ồ, cá trích, mực… (Ninh Thuận, 8/2021)"
+   }
+  ]
+ },
+ {
+  "ma": "ca_ngu_soc_dua",
+  "ten": "Cá ngừ sọc dưa (cá ngừ vằn)",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa (cảng Hòn Rớ)",
+  "thang": [
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Lưới cản khai thác quanh năm; trúng mùa sau Tết đến ~T4. Rẻ hơn cá ngừ đại dương",
+  "mon_goi_y": [
+   "Cá ngừ kho thơm",
+   "Cá ngừ kho tiêu",
+   "Cá ngừ rim cà chua"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201604/duoc-mua-ca-ngu-soc-dua-2431639/",
+    "trich": "Hiện nay, cao điểm mỗi ngày có 25 - 30 tàu lưới cản khai thác cá ngừ sọc dưa cập cảng, mỗi tàu có sản lượng trung bình 12 - 15 tấn (bài 4/2016)"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202202/thuy-san-khai-thac-xa-bo-san-luong-va-gia-ban-deu-tang-8243361/",
+    "trich": "tàu lưới cản đường dài khai thác cá ngừ sọc dưa cũng đạt sản lượng 10-12 tấn/tàu... giá cá ngừ sọc dưa bán ở chợ 50.000 - 60.000 đồng/kg"
+   }
+  ]
+ },
+ {
+  "ma": "ca_ngu_o",
+  "ten": "Cá ngừ ồ (cá lồ ồ)",
+  "nhom": "hải sản",
+  "vung": "Ninh Thuận",
+  "thang": [
+   0,
+   0,
+   0,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Đánh cùng cá nục, cá cơm trong vụ cá Nam (T4–9), nhiều nhất T7–8; giá rẻ",
+  "mon_goi_y": [
+   "Cá ngừ kho",
+   "Cá ngừ chiên sốt cà chua"
+  ],
+  "nguon": [
+   {
+    "url": "https://tuoitre.vn/da-mat-hinh-anh-ngu-dan-ninh-thuan-bat-ngo-trung-lon-mua-ca-nam-20210820121559308.htm",
+    "trich": "Riêng sản lượng cá cơm, cá nục, cá lồ ồ… theo nhiều ngư dân, tăng hơn nhiều so với mùa cá nam năm trước."
+   }
+  ]
+ },
+ {
+  "ma": "ca_chi_vang",
+  "ten": "Cá chỉ vàng tươi",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Cá lưới gần bờ Mũi Né rộ khoảng T6–7; khô cá chỉ vàng có quanh năm",
+  "mon_goi_y": [
+   "Cá chỉ vàng chiên",
+   "Cá kho cà chua"
+  ],
+  "nguon": [
+   {
+    "url": "https://vnexpress.net/mua-danh-ca-gan-bo-mui-ne-4308163.html",
+    "trich": "Ngư dân chuyên nghề đi thúng đánh cá lưới gần bờ ở Phan Thiết đang vào mùa đánh bắt chính... mẻ lưới đầy ắp cá trích, chỉ vàng và trao tráo (7/2021)"
+   }
+  ]
+ },
+ {
+  "ma": "ca_doi",
+  "ten": "Cá đối",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận",
+  "thang": [
+   2,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   1,
+   2
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Cá cửa sông, nhiều khi gió bấc về (khoảng T11–2)",
+  "mon_goi_y": [
+   "Cá đối kho nghệ",
+   "Cá đối chiên",
+   "Cá đối nướng"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/mua-bac-di-cau-ca-doi-127067.html",
+    "trich": "Khi gió bấc đến, những cửa sông ở Phan Thiết như Cồn Chà, cầu Phú Hài... lại nhộn nhịp hơn bao giờ hết... để \"săn\" cá đối (1/2025)"
+   }
+  ]
+ },
+ {
+  "ma": "ca_liet",
+  "ten": "Cá liệt (liệt dầu)",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận (Tuy Phong)",
+  "thang": [
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2,
+   2
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Xuất hiện nhiều từ T9 âm đến Tết (≈T10–2 dương); cá nhỏ, béo",
+  "mon_goi_y": [
+   "Canh cá nấu chua",
+   "Cá liệt chiên giòn",
+   "Cá liệt nướng"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/ve-tuy-phong-nho-an-ca-liet-dau-115186.html",
+    "trich": "Theo những ngư dân ở Tuy Phong, cá liệt xuất hiện nhiều từ tháng 9 âm lịch đến mùa Tết Nguyên đán."
+   }
+  ]
+ },
+ {
+  "ma": "ca_duc",
+  "ten": "Cá đục",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Cá ven bờ, dày nhất mùa biển êm ~T6; cá đục đen bán nhiều cuối năm ở Tuy Phong",
+  "mon_goi_y": [
+   "Cá đục chiên",
+   "Cá đục kho",
+   "Canh chua cá đục"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/du-khach-va-mua-cau-ca-duc-119908.html",
+    "trich": "Lúc này đang là tháng 6... Mặt biển xanh màu ngọc bích và sóng nhẹ, thích hợp cho mùa câu cá đục"
+   },
+   {
+    "url": "https://baobinhthuan.com.vn/ve-tuy-phong-nho-an-ca-liet-dau-115186.html",
+    "trich": "vào những tháng cuối năm, dân địa phương thường hay thay thế cá liệt thành cá đục đen"
+   }
+  ]
+ },
+ {
+  "ma": "nhum",
+  "ten": "Nhum (cầu gai)",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa/Ninh Thuận (Vĩnh Hy)",
+  "thang": [
+   0,
+   0,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Mùa T3–T6/7 âm (≈T4–8 dương); cuối mùa chắc thịt nhất",
+  "mon_goi_y": [
+   "Cháo nhum",
+   "Nhum nướng mỡ hành",
+   "Trứng chưng nhum"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/201001/thu-vi-mon-chom-chom-bien-1923631/",
+    "trich": "Mùa nhum sinh sản từ tháng 3 đến tháng 6 hay tháng 7 âm lịch (từ tiết Xuân Phân và kết thúc vào tiết Lập Thu). Cuối mùa, nhum rất chắc thịt."
+   }
+  ]
+ },
+ {
+  "ma": "ruoc_tuoi",
+  "ten": "Ruốc (moi) tươi",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận (Tuy Phong)/Khánh Hòa",
+  "thang": [
+   2,
+   1,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Vụ chính khoảng tháng Chạp âm; thêm đợt gió nồm T4, T8 âm. Mắm ruốc có quanh năm",
+  "mon_goi_y": [
+   "Ruốc rang mỡ sả ớt",
+   "Canh ruốc nấu bầu",
+   "Trứng chiên ruốc"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/mam-ruoc-xu-duong-19709.html",
+    "trich": "Tuy chưa bước vào vụ khai thác chính (khoảng tháng chạp)... ngư dân xã Chí Công (Tuy Phong) vẫn thu được khá nhiều mẻ ruốc."
+   },
+   {
+    "url": "https://baobinhthuan.com.vn/mam-ruoc-huong-vi-que-nha-126478.html",
+    "trich": "Vào khoảng tháng tư, tháng tám, khi con gió nồm thổi"
+   },
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/am-thuc/201502/dia-ruoc-bien-rang-2368337/",
+    "trich": "Ruốc biển là dạng tép phiêu sinh trên biển theo mùa... món thường lệ là ruốc rang mỡ cùng gia vị gừng, xả, tiêu ớt"
+   }
+  ]
+ },
+ {
+  "ma": "oc_ruoc",
+  "ten": "Ốc ruốc (nghêu/hến biển nhỏ Mũi Né)",
+  "nhom": "hải sản",
+  "vung": "Bình Thuận (Mũi Né)",
+  "thang": [
+   0,
+   0,
+   2,
+   2,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Mùa T2–hết T5 âm (≈T3–6 dương); bán luộc sẵn ở chợ",
+  "mon_goi_y": [
+   "Ốc ruốc xào sả ớt",
+   "Canh ốc ruốc nấu bầu"
+  ],
+  "nguon": [
+   {
+    "url": "https://baobinhthuan.com.vn/mua-oc-ruoc-16955.html",
+    "trich": "mùa ốc ruốc ở khu vực này chỉ kéo dài trong khoảng thời gian từ tháng 2 đến hết tháng 5 âm lịch"
+   }
+  ]
+ },
+ {
+  "ma": "rong_nho",
+  "ten": "Rong nho tươi",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa (Ninh Hòa, Cam Ranh)/Ninh Thuận",
+  "thang": [
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   0,
+   0,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Trồng ao/đìa, cần nắng, độ mặn cao; vào vụ từ ~T3, hạn chế mùa mưa (T10–11)",
+  "mon_goi_y": [
+   "Rong nho chấm sốt mè",
+   "Gỏi rong nho tôm",
+   "Rong nho trộn dầu giấm"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/doi-song/202503/lien-ket-phat-trien-rong-nho-71a0c1c/",
+    "trich": "Những ngày này, các đìa rong nho vùng đìa Đông Hà (phường Ninh Hải, thị xã Ninh Hòa) bắt đầu bước vào vụ thu hoạch... (bài 3/2025)"
+   },
+   {
+    "url": "https://vnbusiness.vn/lai-tram-trieu-moi-nam-tu-trong-rong-nho.html",
+    "trich": "Rong nho có thể trồng quanh năm, riêng các tháng mùa mưa trồng hạn chế do đây là loại rong có khoảng thích ứng nhiệt độ trên 20oC, độ mặn cao trên 28o/oo"
+   }
+  ]
+ },
+ {
+  "ma": "hau",
+  "ten": "Hàu (hàu Thái Bình Dương, hàu sữa)",
+  "nhom": "hải sản",
+  "vung": "Ninh Thuận (đầm Nại)",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ",
+  "tin_cay": "B",
+  "ghi_chu": "Nuôi treo dây ở đầm Nại, ~4 tháng/lứa, thu cuốn chiếu quanh năm; rẻ",
+  "mon_goi_y": [
+   "Hàu nướng mỡ hành",
+   "Cháo hàu",
+   "Hàu chiên trứng"
+  ],
+  "nguon": [
+   {
+    "url": "https://www.vietnamplus.vn/nuoi-hau-thai-binh-duong-treo-day-mang-lai-thu-nhap-on-dinh-post654332.vnp",
+    "trich": "Chỉ cần thả giống, không phải cung cấp thức ăn, khoảng 4 tháng có thể thu hoạch là mô hình nuôi hàu Thái Bình Dương treo dây... ở huyện ven biển Ninh Hải"
+   }
+  ]
+ },
+ {
+  "ma": "ca_bop",
+  "ten": "Cá bớp (cá giò) nuôi lồng",
+  "nhom": "hải sản",
+  "vung": "Khánh Hòa/Ninh Thuận",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "noi_mua": "chợ|GO!",
+  "tin_cay": "B",
+  "ghi_chu": "Cá nuôi lồng biển, bán quanh năm theo khúc/lát; thịt chắc, ít xương",
+  "mon_goi_y": [
+   "Lẩu cá bớp",
+   "Cá bớp kho tiêu",
+   "Cá bớp nướng"
+  ],
+  "nguon": [
+   {
+    "url": "https://baokhanhhoa.vn/kinh-te/202106/nuoi-ca-bop-trong-long-tron-hdpe-8219167/",
+    "trich": "Dự án \"Xây dựng mô hình nuôi biển cá giò (người dân gọi là cá bớp) bằng lồng tròn HDPE kiểu Na Uy\" đang triển khai ở huyện Vạn Ninh"
+   }
+  ]
+ }
+]

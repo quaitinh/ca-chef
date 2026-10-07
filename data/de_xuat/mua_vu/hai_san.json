@@ -1,0 +1,670 @@
+[
+ {
+  "ma": "ca_com",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Có quanh năm (pha xúc cả vụ Bắc); rộ khoảng T7–T10 (tháng 6–9 âm lịch)",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "Vụ cá Bắc: thành phần sản lượng nghề mành, vây, pha xúc ... tập trung vào các loài cá nổi nhỏ và mực ống như vụ cá Nam (cá cơm 70% pha xúc, cá nục ~60% lưới vây)"
+   },
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184 (PDF tr.50–51)",
+    "trich": "Bảng 2–3: lưới vây 27.067 kg/tàu/vụ Nam vs 27.017 kg/tàu/vụ Bắc; pha xúc 47.056 vs 38.433 kg; lồng bẫy (<6m) 1.350 vs 2.050 kg"
+   },
+   {
+    "url": "https://www.sggp.org.vn/loc-cua-bien-208971.html",
+    "trich": "Ngư dân Phước Diêm: từ tháng 6 đến tháng 9 âm lịch nhiều cá nhất, sản lượng đánh bắt tăng gấp 5 - 6 lần những tháng khác"
+   },
+   {
+    "url": "https://tuoitre.vn/ngu-dan-ninh-thuan-ve-ben-xuan-khoang-thuyen-day-ap-ca-com-20190208124340667.htm",
+    "trich": "Sáng 8-2 (mồng 4 Tết) ... ngư dân Ninh Thuận ... trở về với khoang thuyền đầy ắp cá cơm"
+   },
+   {
+    "url": "https://tepbac.com/tin-tuc/full/ninh-thuan-buoc-vao-vu-khai-thac-ca-bac-23734.html",
+    "trich": "Chi cục TS Ninh Thuận: vụ cá bấc kết thúc vào tháng 3 năm sau ... 2 tháng đầu vụ bấc (tháng 10 và 11), ước sản lượng khai thác đạt khoảng 9.000 tấn"
+   },
+   {
+    "url": "https://thuysanvietnam.com.vn/ninh-thuan-chu-trong-khai-thac-thuy-san-hieu-qua-ben-vung/",
+    "trich": "4 tháng đầu năm 2024, sản lượng thủy sản của tỉnh Ninh Thuận ước đạt 38.251,6 tấn ... sản lượng khai thác đạt 35.933,6 tấn"
+   },
+   {
+    "url": "https://www.vietnamplus.vn/trung-lon-vu-danh-bat-ca-nam-ngu-dan-tinh-ninh-thuan-phan-khoi-post968145.vnp",
+    "trich": "Phó Chi cục trưởng Chi cục Thủy Sản Ninh Thuận: vụ cá Nam hằng năm từ tháng 4 đến hết tháng 9; là vụ khai thác chính"
+   }
+  ]
+ },
+ {
+  "ma": "ca_nuc",
+  "thang": [
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Lưới vây bắt cá nục cả 2 vụ (sản lượng vụ Bắc ≈ vụ Nam); luồng lớn thường T4–T8",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184 (PDF tr.50–51)",
+    "trich": "Bảng 2–3: lưới vây 27.067 kg/tàu/vụ Nam vs 27.017 kg/tàu/vụ Bắc; pha xúc 47.056 vs 38.433 kg; lồng bẫy (<6m) 1.350 vs 2.050 kg"
+   },
+   {
+    "url": "https://thuysanvietnam.com.vn/ninh-thuan-ngu-dan-trung-dam-ca-nuc-article-2263.tsvn",
+    "trich": "Từ ngày 16-5, ngư trường tỉnh Ninh Thuận xuất hiện một luồng cá nục lớn, với mật độ dày đặc"
+   },
+   {
+    "url": "https://www.vietnamplus.vn/ngu-dan-tinh-ninh-thuan-vuon-khoi-khai-thac-vu-ca-nam-post954954.vnp",
+    "trich": "Chi cục Thủy sản Ninh Thuận: khu vực biển Ninh Thuận đến Nha Trang xuất hiện các đàn cá nục ... lưới vây (cá nục, cá cơm)"
+   },
+   {
+    "url": "https://tuoitre.vn/da-mat-hinh-anh-ngu-dan-ninh-thuan-bat-ngo-trung-lon-mua-ca-nam-20210820121559308.htm",
+    "trich": "mùa cá nam ... bắt đầu rộ từ giữa tháng 7 ... cá nục, cá bạc má, cá cơm, cá lồ ồ, cá trích, mực"
+   },
+   {
+    "url": "https://tepbac.com/tin-tuc/full/ninh-thuan-buoc-vao-vu-khai-thac-ca-bac-23734.html",
+    "trich": "Chi cục TS Ninh Thuận: vụ cá bấc kết thúc vào tháng 3 năm sau ... 2 tháng đầu vụ bấc (tháng 10 và 11), ước sản lượng khai thác đạt khoảng 9.000 tấn"
+   },
+   {
+    "url": "https://thuysanvietnam.com.vn/ninh-thuan-chu-trong-khai-thac-thuy-san-hieu-qua-ben-vung/",
+    "trich": "4 tháng đầu năm 2024, sản lượng thủy sản của tỉnh Ninh Thuận ước đạt 38.251,6 tấn ... sản lượng khai thác đạt 35.933,6 tấn"
+   },
+   {
+    "url": "https://www.vietnamplus.vn/trung-lon-vu-danh-bat-ca-nam-ngu-dan-tinh-ninh-thuan-phan-khoi-post968145.vnp",
+    "trich": "Phó Chi cục trưởng Chi cục Thủy Sản Ninh Thuận: vụ cá Nam hằng năm từ tháng 4 đến hết tháng 9; là vụ khai thác chính"
+   }
+  ]
+ },
+ {
+  "ma": "muc_tuoi",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Mực ống (câu, mành) cả 2 vụ, mực nang nhiều ở vụ Bắc; lưới chụp mực chỉ vụ Nam, rộ ~T7–T8",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "Vụ cá Bắc, thành phần sản lượng chính của nghề lưới rê <6m là mực nang (Sepia spp.) chiếm 31,65%"
+   },
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "nghề lặn và lưới chụp chỉ hoạt động trong vụ cá Nam ... lưới chụp, đối tượng khai thác chính là mực ống (Loligo spp.) đạt hơn 48%"
+   },
+   {
+    "url": "https://tuoitre.vn/da-mat-hinh-anh-ngu-dan-ninh-thuan-bat-ngo-trung-lon-mua-ca-nam-20210820121559308.htm",
+    "trich": "mùa cá nam tại ngư trường Ninh Thuận bắt đầu rộ từ giữa tháng 7 ... cá nục, cá bạc má, cá cơm ... mực"
+   },
+   {
+    "url": "https://tepbac.com/tin-tuc/full/ninh-thuan-buoc-vao-vu-khai-thac-ca-bac-23734.html",
+    "trich": "Chi cục TS Ninh Thuận: vụ cá bấc kết thúc vào tháng 3 năm sau ... 2 tháng đầu vụ bấc (tháng 10 và 11), ước sản lượng khai thác đạt khoảng 9.000 tấn"
+   },
+   {
+    "url": "https://thuysanvietnam.com.vn/ninh-thuan-chu-trong-khai-thac-thuy-san-hieu-qua-ben-vung/",
+    "trich": "4 tháng đầu năm 2024, sản lượng thủy sản của tỉnh Ninh Thuận ước đạt 38.251,6 tấn ... sản lượng khai thác đạt 35.933,6 tấn"
+   },
+   {
+    "url": "https://www.vietnamplus.vn/trung-lon-vu-danh-bat-ca-nam-ngu-dan-tinh-ninh-thuan-phan-khoi-post968145.vnp",
+    "trich": "Phó Chi cục trưởng Chi cục Thủy Sản Ninh Thuận: vụ cá Nam hằng năm từ tháng 4 đến hết tháng 9; là vụ khai thác chính"
+   }
+  ]
+ },
+ {
+  "ma": "muc_mot_nang",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: hàng phơi từ mực câu, mực có cả 2 vụ nên có quanh năm",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "Đối tượng khai thác chính của nghề câu trong vụ cá Bắc cũng tương đồng như vụ cá Nam ... mực ống Loligo spp. (40,82%)"
+   }
+  ]
+ },
+ {
+  "ma": "ca_mai",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Không có nguồn riêng; cá nổi nhỏ ven bờ khai thác cả vụ Bắc nên bỏ 0 – suy luận",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "Vụ cá Bắc: thành phần sản lượng nghề mành, vây, pha xúc ... tập trung vào các loài cá nổi nhỏ và mực ống như vụ cá Nam (cá cơm 70% pha xúc, cá nục ~60% lưới vây)"
+   }
+  ]
+ },
+ {
+  "ma": "sua",
+  "thang": [
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Sứa tươi rộ ~T3–T6 (Phú Yên, miền Trung); sứa muối/sơ chế (bún, gỏi) có quanh năm",
+  "nguon": [
+   {
+    "url": "https://nld.com.vn/thoi-su-trong-nuoc/phu-yen-sua-xuat-hien-nhieu-o-dam-o-loan-87380.htm",
+    "trich": "Từ đầu tháng 4 đến nay, sứa biển bỗng xuất hiện rất nhiều ở đầm Ô Loan (huyện Tuy An, tỉnh Phú Yên)"
+   },
+   {
+    "url": "https://tepbac.com/tin-tuc/full/mua-sua-bien-bat-dau-ngu-dan-tat-bat-vao-vu-37660.html",
+    "trich": "Mùa vớt sứa biển thường bắt đầu từ khoảng tháng 3 đến tháng 6 hàng năm, tùy thuộc vào điều kiện thời tiết và dòng chảy"
+   }
+  ]
+ },
+ {
+  "ma": "ca_com_kho",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Hàng khô có quanh năm; cá cơm khô/hấp mới nhiều nhất mùa cá cơm rộ T7–T10",
+  "nguon": [
+   {
+    "url": "https://www.sggp.org.vn/loc-cua-bien-208971.html",
+    "trich": "từ tháng 6 đến tháng 9 âm lịch nhiều cá nhất ... Người dân Phước Diêm và Cà Ná đang đưa cá cơm từ cảng đi tiêu thụ tại các lò hấp"
+   },
+   {
+    "url": "https://tuoitre.vn/ngu-dan-ninh-thuan-ve-ben-xuan-khoang-thuyen-day-ap-ca-com-20190208124340667.htm",
+    "trich": "Một số lượng khác được phơi làm cá cơm khô"
+   }
+  ]
+ },
+ {
+  "ma": "tom_hum",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: nuôi lồng, xuất bán luân phiên quanh năm; giá cao nhất dịp Tết",
+  "nguon": [
+   {
+    "url": "https://nhandan.vn/huong-toi-xuat-khau-chinh-ngach-tom-hum-post785120.html",
+    "trich": "Hằng tháng, các hộ nuôi tôm thường xuất bán luân phiên để có tiền mua thức ăn cho tôm"
+   }
+  ]
+ },
+ {
+  "ma": "rong_sun",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: Ninh Hải thu 2 mùa/năm, nuôi 2–4 tháng; bán chủ yếu dạng khô nên có quanh năm",
+  "nguon": [
+   {
+    "url": "https://baophapluat.vn/doc-dao-mut-rong-hong-van-va-cuoc-song-doi-thay-nho-nuoi-trong-rong-bien-o-ninh-thuan-post382909.html",
+    "trich": "Người dân ở huyện Ninh Hải cho biết, một năm thu hoạch rong sụn được 2 mùa ... thu hoạch rong tươi, sau đó phơi khô để bán"
+   }
+  ]
+ },
+ {
+  "ma": "ca_ngu_dd",
+  "thang": [
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Chính vụ ~T12–T4 (tháng 11–3 âm lịch, gió Đông Bắc); giữa năm ít hơn, đông lạnh quanh năm",
+  "nguon": [
+   {
+    "url": "https://www.sggp.org.vn/ngu-dan-nam-trung-bo-hoi-ha-vuon-khoi-vu-tet-post774405.html",
+    "trich": "Các luồng cá ngừ đại dương bắt đầu xuất hiện từ tháng 11 âm lịch đến tháng 3 năm sau. Khi gió mùa Đông Bắc thổi mạnh, cá ngừ đại dương sẽ xuất hiện càng nhiều"
+   },
+   {
+    "url": "https://plo.vn/vao-vu-san-ca-ngu-dip-tet-post771815.html",
+    "trich": "từ tháng 10 đến tháng 3 Âm lịch năm sau là thời điểm chính vụ ... Sản lượng trung bình 2,3 tấn/tàu, gấp 3-4 lần so với các tháng giữa năm"
+   }
+  ]
+ },
+ {
+  "ma": "tom_the",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: tôm nuôi, có quanh năm",
+  "nguon": []
+ },
+ {
+  "ma": "ca_thu",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: cá thu là đối tượng câu chính cả vụ Bắc và vụ Nam (~37–41% sản lượng câu)",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "vụ cá Bắc ... nhóm cá thu Scombridae chiếm tỷ lệ 40,91%, tiếp đến là mực ống Loligo spp. (21,41%) và nhóm cá ngừ Thunidae (13,70%)"
+   },
+   {
+    "url": "https://tuoitre.vn/ngu-dan-khanh-hoa-duoc-mua-ca-ngu-soc-dua-ca-thu-2023012914133311.htm",
+    "trich": "từ ngày 23 đến ngày 29-1 (tức từ mùng 2 đến mùng 8 Tết), cảng Hòn Rớ đã đón 19 tàu cá xa bờ, khai thác cá ngừ sọc dưa, cá thu"
+   }
+  ]
+ },
+ {
+  "ma": "cua_dong",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên; mùa mưa Ninh Thuận T9–T11 khớp đỉnh – chưa có nguồn riêng về cua đồng",
+  "nguon": [
+   {
+    "url": "https://vinwonders.com/vi/bai-viet-du-lich/cap-nhat-thoi-tiet-ninh-thuan/",
+    "trich": "mùa mưa từ khoảng tháng 9 đến tháng 11, còn mùa khô từ tháng 12 đến tháng 8"
+   }
+  ]
+ },
+ {
+  "ma": "ca_loc",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên; cá nuôi quanh năm, cá đồng theo mùa mưa T9–T11 – chưa có nguồn riêng",
+  "nguon": [
+   {
+    "url": "https://vinwonders.com/vi/bai-viet-du-lich/cap-nhat-thoi-tiet-ninh-thuan/",
+    "trich": "mùa mưa từ khoảng tháng 9 đến tháng 11, còn mùa khô từ tháng 12 đến tháng 8"
+   }
+  ]
+ },
+ {
+  "ma": "ech",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên; ếch nuôi quanh năm, ếch đồng theo mùa mưa T9–T11 – chưa có nguồn riêng",
+  "nguon": [
+   {
+    "url": "https://vinwonders.com/vi/bai-viet-du-lich/cap-nhat-thoi-tiet-ninh-thuan/",
+    "trich": "mùa mưa từ khoảng tháng 9 đến tháng 11, còn mùa khô từ tháng 12 đến tháng 8"
+   }
+  ]
+ },
+ {
+  "ma": "ca_bac_ma",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Bỏ đỉnh mùa gió bấc (không có căn cứ); Ninh Thuận có bạc má trong vụ cá Nam",
+  "nguon": [
+   {
+    "url": "https://tuoitre.vn/da-mat-hinh-anh-ngu-dan-ninh-thuan-bat-ngo-trung-lon-mua-ca-nam-20210820121559308.htm",
+    "trich": "mùa cá nam ... nhiều tàu thuyền về bến đầy ắp cá ... cá nục, cá bạc má, cá cơm, cá lồ ồ, cá trích, mực"
+   }
+  ]
+ },
+ {
+  "ma": "ca_chim",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: cá chim nuôi lồng ở Khánh Hòa, có quanh năm",
+  "nguon": [
+   {
+    "url": "https://nongnghiepmoitruong.vn/buoc-tien-nuoi-bien-ho-o-tinh-khanh-hoa-d392982.html",
+    "trich": "Khánh Hòa có 4 vùng nuôi lồng ... với các đối tượng cá bớp, cá chim, cá mú (theo tóm tắt kết quả tìm kiếm; trang chặn tải trực tiếp)"
+   }
+  ]
+ },
+ {
+  "ma": "ghe",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Lồng bẫy ghẹ và lưới kéo cho ghẹ cả 2 vụ, vụ Bắc không kém vụ Nam – bỏ đỉnh T4–T8",
+  "nguon": [
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184",
+    "trich": "Nghề lồng bẫy chủ yếu là lồng bẫy ghẹ (Portunus spp.) với tỷ lệ 83,16% (vụ Bắc) / 81,11% (vụ Nam) sản lượng ở nhóm tàu <6m"
+   },
+   {
+    "url": "https://vjol.info.vn/tckhcnthuysan/article/view/133184 (PDF tr.50–51)",
+    "trich": "Bảng 2–3: lưới vây 27.067 kg/tàu/vụ Nam vs 27.017 kg/tàu/vụ Bắc; pha xúc 47.056 vs 38.433 kg; lồng bẫy (<6m) 1.350 vs 2.050 kg"
+   }
+  ]
+ },
+ {
+  "ma": "cua_bien",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: cua nuôi (đầm Nại) có quanh năm; chưa có nguồn về mùa",
+  "nguon": []
+ },
+ {
+  "ma": "ngheu",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: chủ yếu hàng nuôi, có quanh năm; chưa có nguồn mùa vụ địa phương",
+  "nguon": []
+ },
+ {
+  "ma": "oc",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "B",
+  "ghi_chu": "Giữ nguyên: ốc hương Khánh Hòa nuôi 2 vụ (thả T3–4 và T9–10), có hàng quanh năm",
+  "nguon": [
+   {
+    "url": "https://moit.gov.vn/tu-hao-hang-viet-nam/oc-huong-khanh-hoa-vao-danh-sach-bao-ho-chi-dan-dia-ly.html",
+    "trich": "Người dân Khánh Hòa nuôi ốc hương 2 vụ/năm (vụ chính thả giống từ tháng 3 - tháng 4, vụ phụ thả giống từ tháng 9 - tháng 10)"
+   }
+  ]
+ },
+ {
+  "ma": "so_diep",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "C",
+  "ghi_chu": "Giữ nguyên: không tìm được nguồn mùa vụ sò điệp cho NT/KH",
+  "nguon": []
+ },
+ {
+  "ma": "mam_ca_na",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Giữ nguyên: nước mắm ủ từ cá cơm, bán quanh năm",
+  "nguon": [
+   {
+    "url": "https://www.sggp.org.vn/loc-cua-bien-208971.html",
+    "trich": "Từ nguyên liệu cá cơm, Cà Ná phát triển mạnh hai nghề: làm nước mắm và cá cơm hấp ... trên 60 hộ sản xuất nước mắm có thương hiệu"
+   }
+  ]
+ },
+ {
+  "ma": "muoi_ca_na",
+  "thang": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "tin_cay": "A",
+  "ghi_chu": "Muối trữ bán quanh năm; vụ làm muối ở Ninh Thuận chủ yếu mùa khô ~T12–T5 (sửa ghi chú cũ 4–7)",
+  "nguon": [
+   {
+    "url": "https://www.vietnamplus.vn/ngo-ngang-voi-ve-dep-trang-le-cua-nhung-canh-dong-muoi-o-ninh-thuan-post755568.vnp",
+    "trich": "Cánh đồng muối Phương Cựu ... Giống như vùng biển Cà Ná ... Mùa làm muối nơi đây bắt đầu từ tháng 12 đến tháng 5 năm sau"
+   }
+  ]
+ }
+]

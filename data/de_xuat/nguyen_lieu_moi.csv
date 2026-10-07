@@ -1,25 +1,78 @@
 ma,ten,nhom,vung,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,noi_mua,tin_cay,ghi_chu
-thit_bo,Thịt bò,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Bán quanh năm ở chợ và GO!
-ech,Ếch,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,"Ếch nuôi, chợ Phan Rang có quanh năm – cần chủ dự án xác nhận"
-cua_dong,Cua đồng,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Cua đồng xay sẵn/đông lạnh; tươi nhiều hơn mùa mưa – chưa có nguồn
-dau_phu,Đậu phụ,đậu,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,"Sản phẩm chế biến, có quanh năm"
-rau_muong,Rau muống,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Rau ăn lá trồng quanh năm – chưa có nguồn riêng
-mong_toi,Mồng tơi,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Ngon nhất mùa mưa – chưa có nguồn riêng
-rau_day,Rau đay,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Ít gặp hơn ở miền Nam – chưa có nguồn
-rau_ngot,Rau ngót,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-la_lot,Lá lốt,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-chuoi_xanh,Chuối xanh (chuối chát),trái cây,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-ngo,Ngô (bắp),rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Bắp nếp/bắp Mỹ có quanh năm – chưa có nguồn riêng
-khoai_mon,Khoai sọ / khoai môn,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-khoai_lang,Khoai lang,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Chưa có nguồn riêng
-dau_bap,Đậu bắp,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-dau_co_ve,Đậu cô ve (đậu que),rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Rau Đà Lạt có quanh năm
-sup_lo_trang,Súp lơ trắng,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Rau Đà Lạt có quanh năm
-su_hao,Su hào,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Rau Đà Lạt có quanh năm
-cu_cai,Củ cải trắng,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Rau Đà Lạt có quanh năm
-can_tay,Cần tây,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Rau Đà Lạt có quanh năm
-bi_dao,Bí đao,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Chưa có nguồn riêng
-bi_do,Bí đỏ (bí ngô),rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Chưa có nguồn riêng
-bau,Bầu,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-muop,Mướp hương,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chưa có nguồn riêng
-ca_tim,Cà tím,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Chưa có nguồn riêng
+thit_bo,Thịt bò,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Giữ nguyên: quanh năm; giá nhích dịp Tết
+ech,Ếch,thịt,chung,1,1,1,1,1,1,1,1,2,2,2,1,chợ,C,"Giữ nguyên; ếch nuôi quanh năm, ếch đồng theo mùa mưa T9–T11 – chưa có nguồn riêng"
+cua_dong,Cua đồng,hải sản,chung,1,1,1,1,1,1,1,1,2,2,2,1,chợ,C,Giữ nguyên; mùa mưa Ninh Thuận T9–T11 khớp đỉnh – chưa có nguồn riêng về cua đồng
+dau_phu,Đậu phụ,đậu,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,"Giữ nguyên: chế biến, quanh năm"
+rau_muong,Rau muống,rau củ,Ninh Thuận,1,1,1,1,2,2,2,2,1,1,1,1,chợ/GO!,C,"Mùa mưa Phan Rang là 9–12, mưa lũ 10–12 làm rau lá hư, giá tăng; rộ chuyển sang mùa khô có tưới 5–8"
+mong_toi,Mồng tơi,rau củ,Ninh Thuận,1,1,1,2,2,2,2,2,1,1,1,1,chợ,C,"Rau ưa nóng, rộ mùa nắng 4–8; mưa lũ 10–12 rau lá giảm, đắt"
+rau_day,Rau đay,rau củ,chung,1,1,1,1,2,2,2,2,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; rau mùa nóng
+rau_ngot,Rau ngót,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+la_lot,Lá lốt,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+chuoi_xanh,Chuối xanh (chuối chát),trái cây,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; chuối Khánh Sơn có quanh năm
+ngo,Ngô (bắp),rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+khoai_mon,Khoai sọ / khoai môn,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+khoai_lang,Khoai lang,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+dau_bap,Đậu bắp,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+dau_co_ve,Đậu cô ve (đậu que),rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Giữ nguyên: có quanh năm; mùa mưa T6–10 giá nhích lên
+sup_lo_trang,Súp lơ trắng,rau củ,Đà Lạt,2,1,1,0,0,0,0,0,0,0,1,2,GO!/chợ,C,"Suy theo súp lơ xanh/rau Đà Lạt: rẻ mùa khô T12–3, mưa T6–10 giá cao"
+su_hao,Su hào,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Giữ nguyên: có quanh năm; mùa mưa T6–10 giá nhích lên
+cu_cai,Củ cải trắng,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Giữ nguyên: có quanh năm; mùa mưa T6–10 giá nhích lên
+can_tay,Cần tây,rau củ,Đà Lạt,1,1,1,1,1,1,1,1,1,1,1,1,GO!/chợ,A,Giữ nguyên: có quanh năm; mùa mưa T6–10 giá nhích lên
+bi_dao,Bí đao,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; mưa lũ 10–12 bầu bí tăng giá
+bi_do,Bí đỏ (bí ngô),rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+bau,Bầu,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; mưa lũ 10–12 bầu bí tăng giá
+muop,Mướp hương,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+ca_tim,Cà tím,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+ca_loc,Cá lóc,thủy sản,chung,1,1,1,1,1,1,1,1,2,2,2,1,chợ,C,"Giữ nguyên; cá nuôi quanh năm, cá đồng theo mùa mưa T9–T11 – chưa có nguồn riêng"
+ca_bac_ma,Cá bạc má,hải sản,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Bỏ đỉnh mùa gió bấc (không có căn cứ); Ninh Thuận có bạc má trong vụ cá Nam
+ca_chim,Cá chim,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,B,"Giữ nguyên: cá chim nuôi lồng ở Khánh Hòa, có quanh năm"
+ghe,Ghẹ,hải sản,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,A,"Lồng bẫy ghẹ và lưới kéo cho ghẹ cả 2 vụ, vụ Bắc không kém vụ Nam – bỏ đỉnh T4–T8"
+cua_bien,Cua biển,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,C,Giữ nguyên: cua nuôi (đầm Nại) có quanh năm; chưa có nguồn về mùa
+ngheu,Nghêu / ngao / sò,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,B,"Giữ nguyên: chủ yếu hàng nuôi, có quanh năm; chưa có nguồn mùa vụ địa phương"
+oc,"Ốc (ốc hương, ốc biển)",hải sản,Ninh Thuận/Khánh Hòa,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,B,"Giữ nguyên: ốc hương Khánh Hòa nuôi 2 vụ (thả T3–4 và T9–10), có hàng quanh năm"
+so_diep,Sò điệp,hải sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn mùa vụ sò điệp cho NT/KH
+dua_leo,Dưa leo,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+cai_xanh,"Rau cải (cải ngọt, chíp, ngồng, bẹ)",rau củ,chung,2,2,1,1,1,1,1,1,1,1,1,2,chợ/GO!,C,"Giữ nguyên; cải ưa mát, ngon 12–2 (cuối mưa, đầu khô)"
+rau_bi,Ngọn bí,rau củ,chung,1,1,1,1,1,1,1,2,2,1,1,1,chợ,C,Bỏ rộ 10–11 vì mưa lũ Phan Rang (9–12) làm rau lá hư; còn rộ 8–9 (suy luận)
+rau_den,Rau dền,rau củ,chung,1,1,1,1,2,2,2,2,1,1,1,1,chợ,C,"Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa; rau mùa nóng, khớp mùa khô Ninh Thuận"
+rau_lang,Rau lang,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+rau_ma,Rau má,rau củ,chung,1,1,1,1,1,1,1,1,2,2,2,1,chợ,C,Giữ nguyên; rộ 9–11 trùng mùa mưa thật của Ninh Thuận (9–12)
+gia_do,Giá đỗ,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,A,"Giữ nguyên: giá ủ, quanh năm"
+ca_phao,Cà pháo,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Giữ nguyên: không tìm được nguồn riêng cho Ninh Thuận/Khánh Hòa
+buoi,Bưởi,trái cây,chung,1,1,1,1,1,1,1,2,2,2,1,1,chợ/GO!,B,Giữ nguyên; bưởi da xanh Khánh Sơn vào chính vụ tháng 8 (lễ hội trái cây)
+dua,Dừa,trái cây,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,A,Giữ nguyên: có quanh năm
+mia,Mía,khác,chung,2,2,2,1,1,1,1,1,1,1,1,2,chợ,B,Giữ nguyên; niên vụ mía Ninh Hòa thu hoạch ~12–4; mía ép nước có quanh năm
+nha_dam,Nha đam,rau củ,Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ/vựa,A,Giữ nguyên: thu hoạch quanh năm
+hat_sen,Hạt sen,hàng khô,chung,1,1,1,1,1,2,2,2,1,1,1,1,chợ/GO!,B,"Giữ nguyên: không trồng tại chỗ, hàng từ nơi khác"
+dau_hat,Đậu xanh / đỏ / đen,hàng khô,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,A,Giữ nguyên: hàng khô
+gao_nep,Gạo nếp / nếp cẩm,tinh bột,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,A,Giữ nguyên: hàng khô
+suong_sao,Sương sáo,khác,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,A,Giữ nguyên: hàng làm sẵn
+mang_cau_ta,Mãng cầu,trái cây,Khánh Hòa/Ninh Thuận,2,2,1,0,0,1,1,2,2,1,1,1,chợ,B,2 đợt: chính vụ ~T8–9 (âm 7–8) và vụ Tết xử lý ra hoa (T1–2); trái vụ rải rác
+sau_dau,Sầu đâu,rau củ,Ninh Thuận/miền Nam,1,2,2,2,1,0,0,0,0,0,0,1,chợ,B,"Cây mọc nhiều ở Ninh Thuận; đọt non + bông từ T11–T3 âm (≈T12–T4 dương). Vị đắng, chần qua"
+cu_kieu,Củ kiệu,rau củ,"Khánh Hòa (Cam Ranh, Cam Lâm)/Ninh Thuận",2,1,0,0,0,0,0,0,0,0,1,2,chợ,B,"Vụ Tết: thương lái đặt từ T10 âm, thu rộ tháng Chạp; càng gần Tết củ càng chắc"
+nam_moi,Nấm mối,rau củ,Khánh Hòa (Cam Lâm)/Bình Thuận/Đắk Lắk,0,0,0,0,1,2,2,1,0,1,2,1,chợ,B,"Nấm tự nhiên, chỉ mọc đầu mùa mưa: Tây Nguyên/Bình Thuận ~T5–7, Khánh Hòa ~T10–11. Đắt, ít"
+xoai_cat,Xoài cát Cam Lâm,trái cây,Khánh Hòa (Cam Lâm),1,1,1,2,2,2,1,1,1,1,1,1,chợ|vựa|GO!,B,Chính vụ Cam Lâm khoảng T4–6 (giữa T3 chưa vào vụ); có xoài tứ quý trái vụ
+chuoi_chin,Chuối chín,trái cây,"Khánh Hòa (Khánh Sơn, Cam Lâm)",2,1,1,1,1,1,1,1,1,1,1,2,chợ|GO!,B,Có quanh năm; rộ vụ Tết (tháng Chạp âm). Bổ sung cho mục chuoi_xanh
+du_du,Đu đủ (chín/xanh),trái cây,Khánh Hòa/Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ|GO!,C,"Trồng xen trong vườn ở Khánh Hòa, cho trái quanh năm; không có mùa rõ"
+oi,Ổi,trái cây,Khánh Hòa/Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ|GO!,C,"Trồng phổ biến, nhanh cho thu hoạch, bán quanh năm; không có mùa rõ"
+cha_la,Chà là Ninh Thuận,trái cây,Ninh Thuận,0,0,0,0,1,2,2,1,0,0,0,0,vựa,C,"Mô hình mới ở Phan Rang, giá rất cao; 1 vụ/năm, ~6 tháng từ hoa đến trái; chín khoảng T6–7"
+tieu_moi,Tiêu mới,gia vị,Đắk Lắk,1,2,2,1,1,1,1,1,1,1,1,1,chợ|GO!,B,Tiêu khô có quanh năm; tiêu xanh tươi/tiêu mới vụ T2–3
+mac_ca,Mắc ca,hàng khô,Đắk Lắk,1,1,1,1,1,1,2,2,2,1,1,1,chợ|GO!,B,Hàng khô có quanh năm; hạt mới vụ thu hoạch rộ khoảng T7–9
+hat_dieu,Hạt điều,hàng khô,Bình Thuận/Đắk Lắk,1,1,2,2,2,1,1,1,1,1,1,1,chợ|GO!,B,Hàng khô quanh năm; điều mới vụ thu hoạch khoảng T3–5
+mat_ong,Mật ong hoa cà phê,khác,Đắk Lắk,1,1,2,2,1,1,1,1,1,1,1,1,chợ|GO!,B,Hoa cà phê nở tháng Chạp–T2 âm; mật mới ngon nhất khoảng T3
+yen_sao,Yến sào,khác,Khánh Hòa,1,1,1,1,2,1,1,1,2,1,1,1,GO!|cửa hàng,B,Yến đảo khai thác 2 vụ: T4 âm và ~T8 âm; thành phẩm bán quanh năm. Đắt
+ca_chuon,Cá chuồn,hải sản,Khánh Hòa/Ninh Thuận/Bình Thuận,0,0,1,2,2,2,1,0,0,0,0,0,chợ,B,"Vụ cá chuồn T3–5 âm (≈T4–6 dương), rẻ (~20–25k/kg tại cảng)"
+ca_ho,Cá hố,hải sản,Khánh Hòa (Nha Trang),1,0,0,0,0,0,0,2,2,1,1,1,chợ,B,"Mùa cá hố T7–tháng Chạp âm, cao điểm T7–8 âm (≈T8–9 dương)"
+ca_trich,Cá trích,hải sản,Bình Thuận/Ninh Thuận,2,2,1,1,1,1,2,2,1,1,1,2,chợ,B,"Hai đợt: mùa bấc (T12–2, Liên Hương, Phan Thiết) và vụ cá Nam (T7–8)"
+ca_ngu_soc_dua,Cá ngừ sọc dưa,hải sản,Khánh Hòa (cảng Hòn Rớ),2,2,2,2,1,1,1,1,1,1,1,1,chợ,B,Lưới cản khai thác quanh năm; trúng mùa sau Tết đến ~T4. Rẻ hơn cá ngừ đại dương
+ca_ngu_o,Cá ngừ ồ,hải sản,Ninh Thuận,1,1,1,1,1,1,2,2,1,1,1,1,chợ,B,"Đánh cùng cá nục, cá cơm trong vụ cá Nam (T4–9), nhiều nhất T7–8; giá rẻ"
+ca_chi_vang,Cá chỉ vàng,hải sản,Bình Thuận,1,1,1,1,1,2,2,1,1,1,1,1,chợ,B,Cá lưới gần bờ Mũi Né rộ khoảng T6–7; khô cá chỉ vàng có quanh năm
+ca_doi,Cá đối,hải sản,Bình Thuận,2,2,1,0,0,0,0,0,0,1,1,2,chợ,B,"Cá cửa sông, nhiều khi gió bấc về (khoảng T11–2)"
+ca_liet,Cá liệt,hải sản,Bình Thuận (Tuy Phong),2,1,1,1,1,1,1,1,1,2,2,2,chợ,B,Tuy Phong nhiều từ T10 đến Tết; ven bờ Ninh Thuận còn đánh lưới rê vụ Nam
+ca_duc,Cá đục,hải sản,Bình Thuận,1,1,1,1,1,2,2,1,1,1,1,2,chợ,B,"Cá ven bờ, dày nhất mùa biển êm ~T6; cá đục đen bán nhiều cuối năm ở Tuy Phong"
+nhum,Nhum (cầu gai),hải sản,Khánh Hòa/Ninh Thuận (Vĩnh Hy),0,0,1,1,1,2,2,2,1,0,0,0,chợ,B,Mùa T3–T6/7 âm (≈T4–8 dương); cuối mùa chắc thịt nhất
+ruoc_tuoi,Ruốc tươi,hải sản,Bình Thuận (Tuy Phong)/Khánh Hòa,2,1,0,0,1,0,0,0,1,0,0,1,chợ,B,"Vụ chính khoảng tháng Chạp âm; thêm đợt gió nồm T4, T8 âm. Mắm ruốc có quanh năm"
+oc_ruoc,Ốc ruốc,hải sản,Bình Thuận (Mũi Né),0,0,2,2,2,1,0,0,0,0,0,0,chợ,B,Mùa T2–hết T5 âm (≈T3–6 dương); bán luộc sẵn ở chợ
+rong_nho,Rong nho,hải sản,"Khánh Hòa (Ninh Hòa, Cam Ranh)/Ninh Thuận",1,1,2,2,2,2,2,2,1,0,0,1,chợ|GO!,B,"Trồng ao/đìa, cần nắng, độ mặn cao; vào vụ từ ~T3, hạn chế mùa mưa (T10–11)"
+hau,Hàu,hải sản,Ninh Thuận (đầm Nại),1,1,1,1,1,1,1,1,1,1,1,1,chợ,B,"Nuôi treo dây ở đầm Nại, ~4 tháng/lứa, thu cuốn chiếu quanh năm; rẻ"
+ca_bop,Cá bớp,hải sản,Khánh Hòa/Ninh Thuận,1,1,1,1,1,1,1,1,1,1,1,1,chợ|GO!,B,"Cá nuôi lồng biển, bán quanh năm theo khúc/lát; thịt chắc, ít xương"

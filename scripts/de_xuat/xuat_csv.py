@@ -117,6 +117,16 @@ def main():
     for ma, ten, nhom, vung, lich, noi_mua, tin_cay, ghi_chu in lo1_bac.NGUYEN_LIEU:
         if ma in goc_nl: loi.append(f"nguyên liệu trùng mã gốc: {ma}")
         nl_rows.append([ma, ten, nhom, vung, *lich, noi_mua, tin_cay, ghi_chu])
+    # Lịch mùa vụ đã tra cứu có nguồn (gop_mua_vu.py): thay lịch ước lượng của mã mới, thêm mã chưa có.
+    # Mã trên Sheet giữ nguyên – đề xuất sửa nằm ở de_xuat_sua_sheet.csv.
+    lich_nc = os.path.join(OUT, "lich_mua_nghien_cuu.csv")
+    if os.path.exists(lich_nc):
+        theo_ma = {r[0]: r for r in nl_rows}
+        for r in doc(lich_nc):
+            if r["ma"] in goc_nl: continue
+            dong = [r[h] for h in NL_HEADER]
+            if r["ma"] in theo_ma: theo_ma[r["ma"]][:] = dong
+            else: nl_rows.append(dong); moi_nl.add(r["ma"]); tat_ca_nl.add(r["ma"])
 
     mon_rows, mon_nl_rows, nhan_rows, dung = [], [], [], set(goc_mon)
     for k in doc(os.path.join(OUT, "khung_mon.csv")):
