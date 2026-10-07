@@ -33,7 +33,7 @@ DON_VI = [
     (r"lát", "lát", 1), (r"nắm", "nắm", 1), (r"bìa|bìa đậu", "bìa", 1), (r"bắp", "bắp", 1), (r"lon", "lon", 1),
 ]
 
-GIA_VI = r"^hành$|bơ (lạt|thực vật|nhạt|mặn)|^bơ \d|gia vị|giềng|riềng|muối|đường|nước mắm|(^|\s)mắm|hạt nêm|bột nêm|bột canh|bột ngọt|mì chính|(^|\s)tiêu|dầu ăn|dầu hào|dầu điều|dầu mè|xì dầu|nước tương|tương|giấm|dấm|(^|\s)tỏi|hành tím|hành khô|hành củ|gừng|(^|\s)sả|(^|\s)ớt|ngũ vị|quế|(^|\s)hồi|thảo quả|bột năng|bột bắp|bột mì|bột chiên|mật ong|sa tế|nước cốt chanh|(^|\s)chanh|(^|\s)me|rượu|màu điều|(^|\s)bơ lạt|maggi|knorr|nước lọc|nước sôi|(^|\s)nước$|đá viên|lá dứa|nước màu|sốt"
+GIA_VI = r"^hành$|bơ (lạt|thực vật|nhạt|mặn)|^bơ \d|gia vị|giềng|riềng|muối|đường|nước mắm|(^|\s)mắm|hạt nêm|bột nêm|bột canh|bột ngọt|mì chính|(^|\s)tiêu|dầu ăn|dầu hào|dầu điều|dầu mè|xì dầu|nước tương|tương|giấm|dấm|(^|\s)tỏi|hành tím|hành khô|hành củ|gừng|(^|\s)sả|(^|\s)ớt|ngũ vị|quế|(^|\s)hồi|thảo quả|bột năng|bột bắp|bột mì|bột chiên|mật ong|sa tế|nước cốt chanh|(^|\s)chanh(?! dây)|(^|\s)me|rượu|màu điều|(^|\s)bơ lạt|maggi|knorr|nước lọc|nước sôi|(^|\s)nước$|đá viên|lá dứa|nước màu|sốt"
 RAU_THOM = r"hành lá|hành hoa|hành ngò|(^|\s)ngò|rau mùi|rau thơm|húng|rau răm|thì là|tía tô|kinh giới|lá chanh|lá lốt|rau sống|ngò gai|lá é|rau quế"
 
 # Tên nguyên liệu -> mã trong bảng nguyen_lieu (cụm dài/đặc thù trước)
@@ -55,9 +55,17 @@ MA = [
     (r"dưa hấu", "dua_hau"), (r"(quả|trái) bơ|bơ (sáp|booth|chín)|^bơ$", "bo_booth|bo_sap"), (r"atiso", "atiso"), (r"chanh dây", "chanh_day"),
     (r"bún|bánh phở|phở|bánh canh|bánh hỏi|hủ tiếu|(^|\s)mì|miến|nui", "bun"), (r"bánh tráng|bánh đa nem", "banh_trang"),
     (r"đậu phộng|lạc", "dau_phong"), (r"bột gạo", "bot_gao"),
+    (r"cá lóc|cá quả", "ca_loc"), (r"cá bạc má", "ca_bac_ma"), (r"cá chim", "ca_chim"), (r"ghẹ", "ghe"),
+    (r"(^|\s)cua(\s|$)|cua biển|cua thịt|cua gạch", "cua_bien"), (r"sò điệp", "so_diep"),
+    (r"nghêu|ngao|sò huyết|(^|\s)sò(\s|$)|hến", "ngheu"), (r"(^|\s)ốc", "oc"),
+    (r"dưa leo|dưa chuột", "dua_leo"), (r"ngọn bí|rau bí|đọt bí", "rau_bi"), (r"rau dền", "rau_den"), (r"rau lang", "rau_lang"),
+    (r"rau má", "rau_ma"), (r"(^|\s)giá(\s|$)|giá đỗ|giá sống|giá đậu", "gia_do"), (r"cà pháo", "ca_phao"),
+    (r"cải (ngọt|chíp|ngồng|bẹ|xanh|bó xôi|làn|mầm)|rau cải", "cai_xanh"),
+    (r"bưởi", "buoi"), (r"(^|\s)dừa|cơm dừa", "dua"), (r"(^|\s)mía", "mia"), (r"nha đam|lô hội", "nha_dam"), (r"hạt sen|(^|\s)sen(\s|$)", "hat_sen"),
+    (r"đậu (xanh|đỏ|đen)", "dau_hat"), (r"(^|\s)nếp|gạo nếp", "gao_nep"), (r"sương sáo|thạch đen", "suong_sao"),
 ]
 GV_MA = [(r"nước mắm", "mam_ca_na"), (r"muối", "muoi_ca_na"), (r"(^|\s)tỏi", "toi_pr"), (r"hành tím|hành khô|hành củ", "hanh_tim"),
-         (r"(^|\s)sả|(^|\s)ớt|gừng", "sa_ot"), (r"(^|\s)chanh|(^|\s)me|khế", "khe_me")]
+         (r"(^|\s)sả|(^|\s)ớt|gừng", "sa_ot"), (r"(^|\s)chanh(?! dây)|(^|\s)me|khế", "khe_me")]
 
 
 # Món mà trang Cookpad liệt kê thiếu/gộp nguyên liệu: Cá Chef tự điền (định lượng 4 người, đồ uống 2 phần).

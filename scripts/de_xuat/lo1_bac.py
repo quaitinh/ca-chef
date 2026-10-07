@@ -11,15 +11,23 @@ TK = "https://cookpad.com/vn/tim-kiem/"
 MC, MCF = "muỗng canh", "muỗng cà phê"
 Q = [1] * 12  # có hàng quanh năm
 
+
+def ro(*thang):
+    """Có hàng quanh năm, ngon/rộ nhất (2) vào các tháng cho trước."""
+    return [2 if t in thang else 1 for t in range(1, 13)]
+
+
+MUA_MUA = (9, 10, 11)  # mùa mưa Phan Rang (mưa tập trung tháng 9–11)
+
 # Nguyên liệu mới: (mã, tên, nhóm, vùng, lịch 12 tháng, nơi mua, tin cậy, ghi chú)
 NGUYEN_LIEU = [
     ("thit_bo", "Thịt bò", "thịt", "chung", Q, "GO!/chợ", "A", "Bán quanh năm ở chợ và GO!"),
-    ("ech", "Ếch", "thịt", "chung", Q, "chợ", "C", "Ếch nuôi, chợ Phan Rang có quanh năm – cần chủ dự án xác nhận"),
-    ("cua_dong", "Cua đồng", "hải sản", "chung", Q, "chợ", "C", "Cua đồng xay sẵn/đông lạnh; tươi nhiều hơn mùa mưa – chưa có nguồn"),
+    ("ech", "Ếch", "thịt", "chung", ro(*MUA_MUA), "chợ", "C", "Ếch nuôi có quanh năm; ếch đồng nhiều, béo vào đầu mùa mưa"),
+    ("cua_dong", "Cua đồng", "hải sản", "chung", ro(*MUA_MUA), "chợ", "C", "Cua đồng xay sẵn/đông lạnh quanh năm; cua tươi nhiều, chắc vào mùa mưa"),
     ("dau_phu", "Đậu phụ", "đậu", "chung", Q, "GO!/chợ", "A", "Sản phẩm chế biến, có quanh năm"),
-    ("rau_muong", "Rau muống", "rau củ", "Ninh Thuận", Q, "chợ/GO!", "C", "Rau ăn lá trồng quanh năm – chưa có nguồn riêng"),
-    ("mong_toi", "Mồng tơi", "rau củ", "Ninh Thuận", Q, "chợ", "C", "Ngon nhất mùa mưa – chưa có nguồn riêng"),
-    ("rau_day", "Rau đay", "rau củ", "chung", Q, "chợ", "C", "Ít gặp hơn ở miền Nam – chưa có nguồn"),
+    ("rau_muong", "Rau muống", "rau củ", "Ninh Thuận", ro(8, 9, 10), "chợ/GO!", "C", "Trồng quanh năm; mùa mưa ra ngọn non, rẻ – chưa có nguồn riêng"),
+    ("mong_toi", "Mồng tơi", "rau củ", "Ninh Thuận", ro(7, 8, 9, 10), "chợ", "C", "Rau mùa hè–mưa, lá dày ngon nhất tháng 7–10 – chưa có nguồn riêng"),
+    ("rau_day", "Rau đay", "rau củ", "chung", ro(5, 6, 7, 8), "chợ", "C", "Rau mùa hè; ít gặp hơn ở miền Nam – chưa có nguồn"),
     ("rau_ngot", "Rau ngót", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
     ("la_lot", "Lá lốt", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
     ("chuoi_xanh", "Chuối xanh (chuối chát)", "trái cây", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
@@ -37,6 +45,31 @@ NGUYEN_LIEU = [
     ("bau", "Bầu", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
     ("muop", "Mướp hương", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
     ("ca_tim", "Cà tím", "rau củ", "chung", Q, "chợ/GO!", "C", "Chưa có nguồn riêng"),
+    # Bổ sung lịch mùa vụ (07/10/2026): nguyên liệu chính của các món trước đây chưa có mã
+    ("ca_loc", "Cá lóc", "thủy sản", "chung", ro(*MUA_MUA), "chợ", "C", "Cá nuôi có quanh năm; cá đồng nhiều, rẻ vào mùa mưa"),
+    ("ca_bac_ma", "Cá bạc má", "hải sản", "Ninh Thuận", ro(12, 1, 2, 3), "chợ", "C", "Có quanh năm; tạm coi rộ mùa gió bấc – chưa có nguồn"),
+    ("ca_chim", "Cá chim", "hải sản", "chung", Q, "chợ/GO!", "C", "Chưa có nguồn riêng"),
+    ("ghe", "Ghẹ", "hải sản", "Ninh Thuận", ro(4, 5, 6, 7, 8), "chợ/vựa", "C", "Ghẹ chắc, nhiều khi biển êm (tháng 4–8); nguồn tham khảo vùng khác"),
+    ("cua_bien", "Cua biển", "hải sản", "chung", Q, "chợ/vựa", "C", "Cua nuôi có quanh năm"),
+    ("ngheu", "Nghêu / ngao / sò", "hải sản", "chung", Q, "chợ/GO!", "B", "Chủ yếu là hàng nuôi, có quanh năm"),
+    ("oc", "Ốc (ốc hương, ốc biển)", "hải sản", "Ninh Thuận/Khánh Hòa", Q, "chợ/vựa", "B", "Ốc hương nuôi ở Ninh Thuận, Khánh Hòa"),
+    ("so_diep", "Sò điệp", "hải sản", "chung", Q, "chợ/GO!", "C", "Chưa có nguồn riêng"),
+    ("dua_leo", "Dưa leo", "rau củ", "Ninh Thuận", Q, "chợ/GO!", "C", "Trồng quanh năm"),
+    ("cai_xanh", "Rau cải (cải ngọt, chíp, ngồng, bẹ)", "rau củ", "chung", ro(12, 1, 2), "chợ/GO!", "C", "Có quanh năm; mùa lạnh cải ngồng, cải bẹ ngon hơn – chưa có nguồn"),
+    ("rau_bi", "Ngọn bí", "rau củ", "chung", ro(8, 9, 10, 11), "chợ", "C", "Mùa mưa bí ra ngọn nhiều – chưa có nguồn"),
+    ("rau_den", "Rau dền", "rau củ", "chung", ro(5, 6, 7, 8), "chợ", "C", "Rau mùa hè – chưa có nguồn"),
+    ("rau_lang", "Rau lang", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
+    ("rau_ma", "Rau má", "rau củ", "chung", ro(*MUA_MUA), "chợ", "C", "Mùa mưa rau má mọc tốt, lá to – chưa có nguồn"),
+    ("gia_do", "Giá đỗ", "rau củ", "chung", Q, "chợ/GO!", "A", "Giá ủ, có quanh năm"),
+    ("ca_phao", "Cà pháo", "rau củ", "chung", Q, "chợ", "C", "Chưa có nguồn riêng"),
+    ("buoi", "Bưởi", "trái cây", "chung", ro(8, 9, 10), "chợ/GO!", "B", "Bưởi chính vụ quanh Trung thu (8–10); da xanh có quanh năm"),
+    ("dua", "Dừa", "trái cây", "chung", Q, "chợ/GO!", "A", "Có quanh năm"),
+    ("mia", "Mía", "khác", "chung", ro(12, 1, 2, 3), "chợ", "B", "Vụ ép mía từ cuối năm đến đầu năm sau"),
+    ("nha_dam", "Nha đam", "rau củ", "Ninh Thuận", Q, "chợ/vựa", "A", "Đặc sản Ninh Thuận, thu hoạch quanh năm"),
+    ("hat_sen", "Hạt sen", "hàng khô", "chung", ro(6, 7, 8), "chợ/GO!", "B", "Sen tươi vào mùa hè; hạt sen khô có quanh năm"),
+    ("dau_hat", "Đậu xanh / đỏ / đen", "hàng khô", "chung", Q, "chợ/GO!", "A", "Hàng khô"),
+    ("gao_nep", "Gạo nếp / nếp cẩm", "tinh bột", "chung", Q, "chợ/GO!", "A", "Hàng khô"),
+    ("suong_sao", "Sương sáo", "khác", "chung", Q, "chợ", "A", "Hàng làm sẵn"),
 ]
 
 
