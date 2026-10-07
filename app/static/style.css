@@ -133,3 +133,14 @@ table.cal { border-collapse: collapse; width: 100%; min-width: 620px; font-size:
 .meal-head h3 { margin: 0; font-size: 17px; }
 .meal-head .btn { padding: 6px 12px; }
 .pick.leftover { background: var(--bg); border-style: dashed; }
+
+/* Chọn món trong bữa: món đã chọn giữ lại khi đổi các món còn lại */
+.pick-wrap { position: relative; display: flex; }
+.pick-wrap > .pick { flex: 1; }
+.pick .rank { margin-right: 96px; }
+.pick.da-chon { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--card)); }
+.chon { position: absolute; top: 10px; right: 10px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--card); color: var(--muted); cursor: pointer; font: inherit; font-size: 13px; }
+.chon:hover { border-color: var(--accent); color: var(--accent); }
+.chon.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chot { font-size: 14px; color: var(--accent); font-weight: 600; padding: 6px 4px; }
