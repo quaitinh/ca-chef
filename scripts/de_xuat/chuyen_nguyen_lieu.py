@@ -33,26 +33,26 @@ DON_VI = [
     (r"lát", "lát", 1), (r"nắm", "nắm", 1), (r"bìa|bìa đậu", "bìa", 1), (r"bắp", "bắp", 1), (r"lon", "lon", 1),
 ]
 
-GIA_VI = r"^hành$|gia vị|giềng|riềng|muối|đường|nước mắm|(^|\s)mắm|hạt nêm|bột nêm|bột canh|bột ngọt|mì chính|(^|\s)tiêu|dầu ăn|dầu hào|dầu điều|dầu mè|xì dầu|nước tương|tương|giấm|dấm|(^|\s)tỏi|hành tím|hành khô|hành củ|gừng|(^|\s)sả|(^|\s)ớt|ngũ vị|quế|(^|\s)hồi|thảo quả|bột năng|bột bắp|bột mì|bột chiên|mật ong|sa tế|nước cốt chanh|(^|\s)chanh|(^|\s)me|rượu|màu điều|(^|\s)bơ lạt|maggi|knorr|nước lọc|nước sôi|(^|\s)nước$|đá viên|lá dứa|nước màu|sốt"
+GIA_VI = r"^hành$|bơ (lạt|thực vật|nhạt|mặn)|^bơ \d|gia vị|giềng|riềng|muối|đường|nước mắm|(^|\s)mắm|hạt nêm|bột nêm|bột canh|bột ngọt|mì chính|(^|\s)tiêu|dầu ăn|dầu hào|dầu điều|dầu mè|xì dầu|nước tương|tương|giấm|dấm|(^|\s)tỏi|hành tím|hành khô|hành củ|gừng|(^|\s)sả|(^|\s)ớt|ngũ vị|quế|(^|\s)hồi|thảo quả|bột năng|bột bắp|bột mì|bột chiên|mật ong|sa tế|nước cốt chanh|(^|\s)chanh|(^|\s)me|rượu|màu điều|(^|\s)bơ lạt|maggi|knorr|nước lọc|nước sôi|(^|\s)nước$|đá viên|lá dứa|nước màu|sốt"
 RAU_THOM = r"hành lá|hành hoa|hành ngò|(^|\s)ngò|rau mùi|rau thơm|húng|rau răm|thì là|tía tô|kinh giới|lá chanh|lá lốt|rau sống|ngò gai|lá é|rau quế"
 
 # Tên nguyên liệu -> mã trong bảng nguyen_lieu (cụm dài/đặc thù trước)
 MA = [
     (r"tôm khô|ruốc|chà bông", ""), (r"tôm hùm", "tom_hum"), (r"tôm|tép", "tom_the"), (r"mực (khô|một nắng)", "muc_mot_nang"),
     (r"mực", "muc_tuoi"), (r"cá cơm khô", "ca_com_kho"), (r"cá cơm", "ca_com"), (r"cá nục", "ca_nuc"), (r"cá thu", "ca_thu"),
-    (r"cá ngừ", "ca_ngu_dd"), (r"cua đồng", "cua_dong"), (r"sứa", "sua"), (r"ếch", "ech"), (r"(^|\s)dê", "thit_de"),
-    (r"cừu", "thit_cuu"), (r"(^|\s)(bò|bê)(\s|$)|bắp bò|nạm|gầu", "thit_bo"), (r"trứng", "trung"),
+    (r"cá ngừ", "ca_ngu_dd"), (r"cua đồng|rạm|riêu cua|cua xay|cà ra", "cua_dong"), (r"sứa", "sua"), (r"ếch", "ech"), (r"(^|\s)dê", "thit_de"),
+    (r"cừu", "thit_cuu"), (r"(^|\s)(bò|bê)(\s|$)|bắp bò|nạm|gầu", "thit_bo"), (r"đậu (hũ|phụ) trứng", "dau_phu"), (r"trứng", "trung"),
     (r"(^|\s)(gà|vịt|ngan)", "ga_ta"), (r"đậu (hũ|phụ)|tàu hũ|đậu non", "dau_phu"), (r"lòng|dồi", "long_heo"),
     (r"thịt|sườn|ba chỉ|ba rọi|nạc|giò heo|chân giò|móng giò|xương heo|xương ống|mỡ heo|(^|\s)heo|lợn|tai heo|da heo", "thit_heo"),
     (r"rau muống", "rau_muong"), (r"mồng tơi", "mong_toi"), (r"rau ngót", "rau_ngot"), (r"rau đay", "rau_day"),
     (r"măng tây", "mang_tay"), (r"bí đao|bí xanh", "bi_dao"), (r"bí đỏ|bí ngô", "bi_do"), (r"(^|\s)bầu", "bau"), (r"mướp", "muop"),
-    (r"su hào", "su_hao"), (r"su su", "su_su"), (r"củ cải", "cu_cai"), (r"đậu bắp", "dau_bap"), (r"đậu que|đậu cô ve|đậu ve", "dau_co_ve"),
+    (r"su hào", "su_hao"), (r"su ?su", "su_su"), (r"củ cải|cải trắng", "cu_cai"), (r"đậu bắp", "dau_bap"), (r"đậu que|đậu cô ve|đậu ve", "dau_co_ve"),
     (r"cà tím", "ca_tim"), (r"khoai sọ|khoai môn", "khoai_mon"), (r"khoai lang", "khoai_lang"), (r"khoai tây", "khoai_tay"),
-    (r"(^|\s)ngô|bắp (mỹ|nếp|non)|hạt bắp", "ngo"), (r"bắp cải|cải bắp", "bap_cai"), (r"cải thảo", "cai_thao"),
+    (r"(^|\s)ngô|bắp (mỹ|nếp|non|ngọt)|hạt bắp|^bắp$", "ngo"), (r"bắp cải|cải bắp", "bap_cai"), (r"cải thảo", "cai_thao"),
     (r"súp lơ trắng|bông cải trắng", "sup_lo_trang"), (r"súp lơ|bông cải", "sup_lo"), (r"cà chua", "ca_chua"), (r"cà rốt", "ca_rot"),
     (r"cần tây", "can_tay"), (r"nấm", "nam"), (r"xà lách", "xa_lach"), (r"chuối xanh|chuối chát", "chuoi_xanh"),
     (r"xoài", "xoai_uc"), (r"thanh long", "thanh_long"), (r"(^|\s)nho", "nho_nt"), (r"dâu tây", "dau_tay"), (r"hồng giòn|(quả|trái) hồng", "hong_gion"),
-    (r"dưa hấu", "dua_hau"), (r"(^|\s)bơ(\s|$)", "bo_booth|bo_sap"), (r"atiso", "atiso"), (r"chanh dây", "chanh_day"),
+    (r"dưa hấu", "dua_hau"), (r"(quả|trái) bơ|bơ (sáp|booth|chín)|^bơ$", "bo_booth|bo_sap"), (r"atiso", "atiso"), (r"chanh dây", "chanh_day"),
     (r"bún|bánh phở|phở|bánh canh|bánh hỏi|hủ tiếu|(^|\s)mì|miến|nui", "bun"), (r"bánh tráng|bánh đa nem", "banh_trang"),
     (r"đậu phộng|lạc", "dau_phong"), (r"bột gạo", "bot_gao"),
 ]
@@ -66,6 +66,20 @@ SUA_TAY = {
                                   "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm", "Tiêu"],
     "hu_tieu_kho": ["600 g hủ tiếu", "300 g thịt heo xay", "200 g tôm", "4 quả trứng cút", "200 g giá", "Hẹ, xà lách",
                     "4 tép tỏi", "3 muỗng canh nước tương", "1 muỗng canh dầu hào", "1 muỗng cà phê đường", "Hành phi"],
+    "cuu_nuong": ["1 kg thịt cừu", "3 cây sả", "1 củ tỏi", "2 củ hành tím", "2 muỗng canh dầu hào",
+                  "1 muỗng canh nước mắm", "1 muỗng canh mật ong", "1 muỗng cà phê tiêu", "2 muỗng canh dầu ăn",
+                  "Muối ớt chanh"],
+    "gia_xao_he": ["400 g giá đỗ", "1 bó hẹ", "2 tép tỏi", "1 muỗng canh dầu ăn", "1 muỗng cà phê hạt nêm"],
+    "xa_lach_tron_dau_giam": ["300 g xà lách", "2 quả cà chua", "1 củ hành tây", "2 quả trứng gà",
+                              "2 muỗng canh giấm", "2 muỗng canh dầu ăn", "1 muỗng canh đường", "Muối, tiêu"],
+    "mang_tay_luoc_cham_xi_dau_trung": ["500 g măng tây", "2 quả trứng gà", "3 muỗng canh xì dầu",
+                                        "1 muỗng cà phê đường", "Muối"],
+    "canh_dau_phu_ca_chua": ["2 bìa đậu phụ", "3 quả cà chua", "2 cây hành lá", "1 củ hành tím",
+                             "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm", "1 muỗng canh dầu ăn"],
+    "canh_cai_thao_dau_hu_nam": ["400 g cải thảo", "2 bìa đậu phụ", "150 g nấm rơm", "1 củ hành tím",
+                                 "1 muỗng cà phê hạt nêm", "1 muỗng canh nước mắm", "Hành lá"],
+    "canh_tom_nau_thom": ["200 g tôm", "1/4 quả dứa", "2 quả cà chua", "1 củ hành tím", "Hành lá, ngò gai",
+                          "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm"],
     "nuoc_chanh_muoi": ["2 quả chanh muối", "2 muỗng canh đường", "400 ml nước lọc", "1 ly đá viên"],
 }
 
@@ -86,7 +100,7 @@ def so(txt):
 
 def tach(dong):
     """'300 gram thịt bằm (thịt xay)' -> (300, 'g', 'thịt bằm', 'thịt xay')"""
-    s = unicodedata.normalize("NFC", dong).strip().strip("-•*+").strip()
+    s = unicodedata.normalize("NFC", dong).strip().strip("-•*+_").strip()
     ghi = "; ".join(x.strip() for x in re.findall(r"\(([^)]*)\)", s))
     s = re.sub(r"\([^)]*\)", " ", s)
     qty, rest = so(s)
@@ -135,7 +149,9 @@ def main(src):
         tg = ""
         m = re.search(r"(?:(\d+)\s*tiếng)?\s*(?:(\d+)\s*phút)?", rec.get("thoi_gian") or "")
         if m and (m[1] or m[2]): tg = int(m[1] or 0) * 60 + int(m[2] or 0)
-        bo_sung.append([ma, kp or "", round(hs, 2), tg, rec.get("url") or rec.get("url_goc")])
+        url = rec.get("url") or rec.get("url_goc") or ""
+        if "/tao-moi" in url: url, tg = "", ""  # crawl rơi vào trang "tạo món mới": không phải công thức
+        bo_sung.append([ma, kp or "", round(hs, 2), tg, url])
         ten_mon = mon[ma]["ten_mon"].lower()
         chinh_ma = set(filter(None, mon[ma]["nguyen_lieu_chinh"].split("|")))
         chinh_ma |= {c for p, c in MA if c and c not in ("bun", "dau_phong") and re.search(p, ten_mon)}  # nguyên liệu có trong tên món
@@ -167,7 +183,7 @@ def main(src):
         idx = [i for i, r in enumerate(mon_rows) if (r[1] and r[6] != "gia_vi" and set(r[1].split("|")) & chinh_ma) or trong_ten(r)]
         if not idx:
             idx = [i for i, r in enumerate(mon_rows) if r[6] == "phu" and r[1] and r[1] != "rau_thom"][:1] or \
-                  [i for i, r in enumerate(mon_rows) if r[6] == "phu" and r[1] != "rau_thom"][:1]
+                  [i for i, r in enumerate(mon_rows) if r[6] == "phu" and r[1] != "rau_thom"][:1] or [0][:len(mon_rows)]
         for i in idx: mon_rows[i][6] = "chinh"
         rows += mon_rows
     with open(os.path.join(OUT, "nguyen_lieu_cookpad.csv"), "w", newline="") as f:

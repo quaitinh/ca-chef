@@ -445,7 +445,7 @@ function seasonBlock(ma) {
   const m = month();
   const seen = new Set();
   const rows = (S.ingByDish[ma] || [])
-    .filter((r) => r.ma_nguyen_lieu && !seen.has(r.ma_nguyen_lieu) && seen.add(r.ma_nguyen_lieu))
+    .filter((r) => r.ma_nguyen_lieu && r.vai_tro !== "gia_vi" && !seen.has(r.ma_nguyen_lieu) && seen.add(r.ma_nguyen_lieu))
     .map((r) => ({ ten: r.ten_hien_thi, chinh: r.vai_tro === "chinh",
       thang: Array.from({ length: 12 }, (_, i) => seasonOf(r.ma_nguyen_lieu, i + 1)) }))
     .filter((r) => r.thang.some((v) => v !== 1))
