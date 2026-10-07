@@ -1,10 +1,10 @@
-// Cá Chef – demo: thời tiết Phan Rang + mùa vụ -> 3 món gợi ý.
+// Cá Chef – demo: thời tiết Phan Rang + mùa vụ -> 3 món gợi ý (hôm nay và ngày mai).
 const LAT = 11.56, LON = 108.99;
 const WEATHER_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}` +
   "&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m" +
   "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum," +
   "precipitation_probability_max,wind_speed_10m_max,uv_index_max" +
-  "&timezone=Asia%2FHo_Chi_Minh&forecast_days=1";
+  "&timezone=Asia%2FHo_Chi_Minh&forecast_days=2";
 const HISTORY_KEY = "cachef.history";
 
 const LABEL = {
@@ -15,11 +15,13 @@ const LABEL = {
   do_kho: { de: "Dễ", vua: "Vừa", kho: "Khó" },
 };
 
-const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, ranked: [], offset: 0, servings: {} };
+const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, ranked: [], rankedTomorrow: [], offset: [0, 0], servings: {} };
 const $app = document.getElementById("app");
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const month = () => new Date().getMonth() + 1;
 const today = () => new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Ho_Chi_Minh" });
+// Ngày (YYYY-MM-DD, giờ Việt Nam) cách hôm nay `i` ngày; tháng tương ứng.
+const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOString().slice(0, 10);
+const month = (i = 0) => Number(dayStr(i).slice(5, 7));
 
 // ---------- Dữ liệu ----------
 async function load() {
@@ -35,8 +37,9 @@ async function load() {
   }
   for (const p of data.gia_go) S.prices[p.ma_nguyen_lieu] = p;
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
-  S.ranked = rankDishes();
+  S.ranked = rankDishes(0);
   recordHistory(S.ranked.slice(0, 3).map((d) => d.ma_mon));
+  S.rankedTomorrow = rankDishes(1); // sau recordHistory để không gợi ý lại món của hôm nay
   document.getElementById("foot").innerHTML =
     `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
     `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
@@ -55,13 +58,14 @@ function seasonOf(codes, m = month()) {
 }
 
 // ---------- Chấm điểm ----------
-function daysSinceSuggested(ma) {
+// Số ngày từ lần gợi ý gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
+function daysSinceSuggested(ma, ref = today()) {
   let hist = {};
   try { hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch {}
-  const t = new Date(today());
+  const t = new Date(ref);
   let best = Infinity;
   for (const [date, list] of Object.entries(hist)) {
-    if (date === today() || !list.includes(ma)) continue;
+    if (date >= ref || !list.includes(ma)) continue;
     best = Math.min(best, Math.round((t - new Date(date)) / 86400000));
   }
   return best;
@@ -85,10 +89,11 @@ function compare(x, op, ng) {
   return { ">=": x >= ng, "<=": x <= ng, ">": x > ng, "<": x < ng, "=": x === ng }[op] ?? false;
 }
 
-function weatherRulesHit() {
+// Quy tắc thời tiết khớp với dự báo của ngày thứ `i` (0 = hôm nay, 1 = ngày mai).
+function weatherRulesHit(i = 0) {
   const d = S.weather?.daily;
-  if (!d) return [];
-  const w = Object.fromEntries(Object.keys(d).map((k) => [k, d[k][0]]));
+  if (!d || d.time.length <= i) return [];
+  const w = Object.fromEntries(Object.keys(d).map((k) => [k, d[k][i]]));
   return S.data.quy_tac.filter((r) => {
     if (!(r.bien in w) || !compare(w[r.bien], r.toan_tu, r.nguong)) return false;
     // R09: khả năng mưa cao chỉ tính khi chưa đủ mưa để kích hoạt quy tắc "Có mưa".
@@ -97,7 +102,7 @@ function weatherRulesHit() {
   });
 }
 
-function scoreDish(dish, weatherHits) {
+function scoreDish(dish, weatherHits, day = 0) {
   let score = 0;
   const reasons = [];
   for (const r of weatherHits) {
@@ -107,8 +112,8 @@ function scoreDish(dish, weatherHits) {
       reasons.push({ text: r.ten, diem: Number(r.diem) });
     }
   }
-  const season = seasonOf(dish.nguyen_lieu_chinh);
-  const since = daysSinceSuggested(dish.ma_mon);
+  const season = seasonOf(dish.nguyen_lieu_chinh, month(day));
+  const since = daysSinceSuggested(dish.ma_mon, dayStr(day));
   for (const r of S.data.quy_tac) {
     let hit = false;
     if (r.bien === "lich_thang") hit = compare(season, r.toan_tu, r.nguong);
@@ -122,22 +127,22 @@ function scoreDish(dish, weatherHits) {
 }
 
 // Xáo nhẹ theo ngày để các món bằng điểm không lần nào cũng xếp như nhau.
-function dayHash(s) {
+function dayHash(s, day = 0) {
   let h = 0;
-  for (const c of today() + s) h = (h * 31 + c.charCodeAt(0)) | 0;
+  for (const c of dayStr(day) + s) h = (h * 31 + c.charCodeAt(0)) | 0;
   return h;
 }
 
-function rankDishes() {
-  const hits = weatherRulesHit();
+function rankDishes(day = 0) {
+  const hits = weatherRulesHit(day);
   return S.data.mon_an
-    .map((d) => scoreDish(d, hits))
-    .sort((a, b) => b.score - a.score || dayHash(a.ma_mon) - dayHash(b.ma_mon));
+    .map((d) => scoreDish(d, hits, day))
+    .sort((a, b) => b.score - a.score || dayHash(a.ma_mon, day) - dayHash(b.ma_mon, day));
 }
 
 // 3 món điểm cao nhất, không trùng loại (bắt đầu từ vị trí offset khi bấm "Đổi món").
-function pickThree(offset) {
-  const pool = S.ranked.slice(offset).concat(S.ranked.slice(0, offset)).filter((d) => d.score > -3);
+function pickThree(ranked, offset) {
+  const pool = ranked.slice(offset).concat(ranked.slice(0, offset)).filter((d) => d.score > -3);
   const out = [], used = new Set();
   for (const d of pool) {
     if (used.has(d.loai)) continue;
@@ -160,28 +165,76 @@ function wmo(code) {
   return ["⛈️", "Dông"];
 }
 
-function weatherCard() {
-  if (!S.weather?.daily) return `<div class="card">Không lấy được thời tiết (kiểm tra mạng). Gợi ý chỉ dựa trên mùa vụ.</div>`;
-  const c = S.weather.current, d = S.weather.daily;
-  const [icon, desc] = wmo(c.weather_code);
-  const hits = weatherRulesHit();
+function weatherCard(day = 0) {
+  const d = S.weather?.daily;
+  if (!d || d.time.length <= day) return `<div class="card">Không lấy được thời tiết${day ? " ngày mai" : ""} (kiểm tra mạng). Gợi ý chỉ dựa trên mùa vụ.</div>`;
+  const c = S.weather.current;
+  const [icon, desc] = wmo(day === 0 && c ? c.weather_code : d.weather_code[day]);
+  const hits = weatherRulesHit(day);
   const names = [...new Set(hits.map((r) => r.ten))];
   const rainy = hits.some((r) => r.ap_dung_cho === "nhiet=nong" && r.diem > 0);
   const hot = hits.some((r) => r.ap_dung_cho === "nhiet=mat" && r.diem > 0);
   const verdict = rainy ? ["rain", "Ưu tiên món nóng, ấm bụng"] : hot ? ["hot", "Ưu tiên món mát, thanh nhiệt, ít dầu"] : null;
+  const [, mm, dd] = d.time[day].split("-");
+  const big = day === 0 && c ? `${Math.round(c.temperature_2m)}°C` : `${Number(dd)}/${Number(mm)}`;
+  const where = day === 0 && c ? "Phan Rang" : "Ngày mai · Phan Rang";
   return `<div class="card">
     <div class="weather">
       <div class="icon">${icon}</div>
-      <div class="now">${Math.round(c.temperature_2m)}°C <span class="muted" style="font-size:16px;font-weight:400">Phan Rang</span></div>
-      <div class="desc">${desc} · cao ${Math.round(d.temperature_2m_max[0])}° / thấp ${Math.round(d.temperature_2m_min[0])}°</div>
+      <div class="now">${big} <span class="muted" style="font-size:16px;font-weight:400">${where}</span></div>
+      <div class="desc">${desc} · cao ${Math.round(d.temperature_2m_max[day])}° / thấp ${Math.round(d.temperature_2m_min[day])}°</div>
     </div>
     <div class="stats">
-      <span class="stat">🌧️ Mưa <b>${d.precipitation_sum[0]} mm</b> (${d.precipitation_probability_max[0]}%)</span>
-      <span class="stat">💨 Gió <b>${Math.round(d.wind_speed_10m_max[0])} km/h</b></span>
-      <span class="stat">🔆 UV <b>${Math.round(d.uv_index_max[0])}</b></span>
-      <span class="stat">💧 Ẩm <b>${c.relative_humidity_2m}%</b></span>
+      <span class="stat">🌧️ Mưa <b>${d.precipitation_sum[day]} mm</b> (${d.precipitation_probability_max[day]}%)</span>
+      <span class="stat">💨 Gió <b>${Math.round(d.wind_speed_10m_max[day])} km/h</b></span>
+      <span class="stat">🔆 UV <b>${Math.round(d.uv_index_max[day])}</b></span>
+      ${day === 0 && c ? `<span class="stat">💧 Ẩm <b>${c.relative_humidity_2m}%</b></span>` : ""}
     </div>
     ${verdict ? `<div class="verdict ${verdict[0]}">${verdict[1]}${names.length ? ` – ${esc(names.join(", ").toLowerCase())}` : ""}</div>` : ""}
+  </div>`;
+}
+
+// Tóm tắt thời tiết ngày mai một dòng, hiện ở trang Hôm nay.
+function tomorrowTeaser() {
+  const d = S.weather?.daily;
+  if (!d || d.time.length < 2) return "";
+  const [icon, desc] = wmo(d.weather_code[1]);
+  const top = pickThree(S.rankedTomorrow, 0).map((x) => x.ten_mon).join(", ");
+  return `<a class="card teaser" href="#/ngay-mai">
+    <span class="t-icon">${icon}</span>
+    <span><b>Ngày mai:</b> ${desc.toLowerCase()}, ${Math.round(d.temperature_2m_min[1])}–${Math.round(d.temperature_2m_max[1])}°, mưa ${d.precipitation_sum[1]} mm
+      <span class="muted">· Gợi ý: ${esc(top)}</span></span>
+    <span class="t-go">Xem & rã đông →</span>
+  </a>`;
+}
+
+// Đồ tươi sống (thịt, hải sản) của các món ngày mai – thường để ngăn đá, cần rã đông từ tối nay.
+const FROZEN_GROUPS = ["thịt", "hải sản"];
+const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang"]; // rong khô, sứa ngâm, mực phơi: không cần rã đông lâu
+const FROZEN_WORDS = /chả cá|xương|mỡ heo|sườn|giò heo/i;
+function thawList(picks) {
+  const out = [];
+  for (const d of picks) {
+    for (const r of S.ingByDish[d.ma_mon] || []) {
+      if (r.vai_tro === "gia_vi") continue;
+      const codes = String(r.ma_nguyen_lieu || "").split("|").filter(Boolean);
+      const frozen = codes.length
+        ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
+        : FROZEN_WORDS.test(r.ten_hien_thi);
+      if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon, qty: scaleQty(r, 1) });
+    }
+  }
+  return out;
+}
+
+function thawCard(picks) {
+  const list = thawList(picks);
+  if (!list.length) return `<div class="card thaw"><b>🧊 Rã đông:</b> các món gợi ý ngày mai không cần rã đông thịt/cá.</div>`;
+  return `<div class="card thaw">
+    <b>🧊 Tối nay chuyển từ ngăn đá xuống ngăn mát:</b>
+    <ul>${list.map((x) => `<li><b>${esc(x.ten)}</b> <span class="muted">– ${esc(x.qty)} · cho ${esc(x.mon)}</span></li>`).join("")}</ul>
+    <p class="note">Rã đông trong ngăn mát mất khoảng 12–24 giờ (miếng to lâu hơn). Quên thì ngâm cả túi kín trong nước lạnh, 30 phút thay nước một lần.
+      Không rã đông ở nhiệt độ phòng.</p>
   </div>`;
 }
 
@@ -196,15 +249,17 @@ function chips(d) {
     <span class="chip">⏱ ${d.thoi_gian_phut}′</span></div>`;
 }
 
-function pageHome() {
-  const picks = pickThree(S.offset);
-  const m = month();
+function pageHome(day = 0) {
+  const ranked = day ? S.rankedTomorrow : S.ranked;
+  const picks = pickThree(ranked, S.offset[day]);
+  const m = month(day);
   const inSeason = S.data.nguyen_lieu.filter((n) => n.thang[m - 1] === 2);
   const shown = new Set(picks.map((p) => p.ma_mon));
-  const others = S.ranked.filter((d) => !shown.has(d.ma_mon)).slice(0, 8);
+  const others = ranked.filter((d) => !shown.has(d.ma_mon)).slice(0, 8);
   $app.innerHTML = `
-    ${weatherCard()}
-    <div class="row"><h2>Hôm nay nấu gì?</h2><button class="btn" id="swap">🔄 Đổi món khác</button></div>
+    ${weatherCard(day)}
+    ${day ? "" : tomorrowTeaser()}
+    <div class="row"><h2>${day ? "Ngày mai nấu gì?" : "Hôm nay nấu gì?"}</h2><button class="btn" id="swap">🔄 Đổi món khác</button></div>
     <div class="picks">${picks.map((d, i) => `
       <a class="card pick" href="#/mon/${d.ma_mon}">
         <span class="rank">Gợi ý ${i + 1}</span>
@@ -213,6 +268,7 @@ function pageHome() {
         ${chips(d)}
         <span class="why">✓ ${esc(d.reasons.filter((r) => r.diem > 0).map((r) => r.text).join(" · ") || "Hợp mùa")}</span>
       </a>`).join("")}</div>
+    ${day ? thawCard(picks) : ""}
     <h2>Đang vào mùa tháng ${m}</h2>
     <div class="chips">${inSeason.map((n) => `<span class="chip peak">${esc(n.ten)}</span>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
     <h2>Món khác cũng hợp</h2>
@@ -220,9 +276,9 @@ function pageHome() {
       <a href="#/mon/${d.ma_mon}"><span>${esc(d.ten_mon)} <span class="muted">· ${LABEL.loai[d.loai] ?? ""}</span></span>
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score} điểm</span></a>`).join("")}</div>`;
   document.getElementById("swap").onclick = () => {
-    S.offset = (S.offset + 3) % Math.max(S.ranked.length, 1);
-    if (S.offset >= 12) S.offset = 0; // chỉ xoay trong nhóm điểm cao
-    pageHome();
+    S.offset[day] = (S.offset[day] + 3) % Math.max(ranked.length, 1);
+    if (S.offset[day] >= 12) S.offset[day] = 0; // chỉ xoay trong nhóm điểm cao
+    pageHome(day);
   };
 }
 
@@ -342,8 +398,9 @@ function route() {
   const h = location.hash.slice(1) || "/";
   const [, page, arg] = h.split("/");
   document.querySelectorAll("[data-nav]").forEach((a) =>
-    a.classList.toggle("on", a.dataset.nav === (page === "lich" ? "lich" : page === "mon" && !arg ? "mon" : !page ? "home" : "")));
+    a.classList.toggle("on", a.dataset.nav === (page === "lich" ? "lich" : page === "ngay-mai" ? "ngay-mai" : page === "mon" && !arg ? "mon" : !page ? "home" : "")));
   if (page === "lich") pageCalendar();
+  else if (page === "ngay-mai") pageHome(1);
   else if (page === "mon" && arg) pageRecipe(decodeURIComponent(arg));
   else if (page === "mon") pageAll();
   else pageHome();
