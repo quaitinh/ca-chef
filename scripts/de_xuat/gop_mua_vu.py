@@ -19,6 +19,7 @@ OUT = os.path.join(ROOT, "data", "de_xuat")
 SRC = os.path.join(OUT, "mua_vu")
 sys.path.insert(0, HERE)
 import lo1_bac  # noqa: E402
+import lo2_bac  # noqa: E402
 
 THANG = [f"T{i}" for i in range(1, 13)]
 HEADER = ["ma", "ten", "nhom", "vung", *THANG, "noi_mua", "tin_cay", "ghi_chu"]
@@ -47,7 +48,7 @@ def doc(path):
 
 def main():
     goc = {r["ma"]: r for r in doc(os.path.join(ROOT, "data", "nguyen_lieu.csv"))}
-    moi = {n[0]: dict(zip(HEADER, [n[0], n[1], n[2], n[3], *n[4], n[5], n[6], n[7]])) for n in lo1_bac.NGUYEN_LIEU}
+    moi = {n[0]: dict(zip(HEADER, [n[0], n[1], n[2], n[3], *n[4], n[5], n[6], n[7]])) for n in lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU}
     hien_tai = {**moi, **goc}
 
     muc = {}

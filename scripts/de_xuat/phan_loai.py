@@ -54,7 +54,7 @@ def classify(title):
     if vai in ("canh","mot_to","lau") or vai == "man":
         pass
     cach = next((c for c, ws in [
-        ("chien", ["chiên","rán","nồi chiên"]), ("nuong", ["nướng","quay"]),
+        ("chien", ["chiên","rán","nồi chiên","nem nấm","chả giò"]), ("nuong", ["nướng","quay"]),
         ("kho_om", ["kho","rim","om","rang","ram","sốt","um","ngũ vị","khìa","lúc lắc"]),
         ("xao", ["xào","áp chảo"]), ("luoc_hap", ["luộc","hấp","chần","trụng"]),
         ("nau", ["canh","nấu","hầm","lẩu","súp","cháo"]), ("tron_cuon", ["gỏi","nộm","trộn","cuốn","salad","ngâm","tái"]),
