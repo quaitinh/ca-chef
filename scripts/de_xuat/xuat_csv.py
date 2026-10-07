@@ -44,10 +44,10 @@ NL_TU_KHOA = [
     ("diêu hồng", ""), ("hồng giòn", "hong_gion"), ("xoài", "xoai_uc"), ("thanh long", "thanh_long"),
     ("nho", "nho_nt"), ("dâu tây", "dau_tay"), ("atiso", "atiso"), ("măng tây", "mang_tay"), ("dưa hấu", "dua_hau"),
     ("bơ", "bo_booth|bo_sap"), ("táo xanh", "tao_xanh"), ("rong sụn", "rong_sun"), ("sứa", "sua"),
-    ("cá cơm khô", "ca_com_kho"), ("cá cơm", "ca_com"), ("cá nục", "ca_nuc"), ("cá thu", "ca_thu"),
+    ("giả bò", "thit_heo"), ("mực rim", "muc_mot_nang"), ("cá cơm khô", "ca_com_kho"), ("cá cơm", "ca_com"), ("cá nục", "ca_nuc"), ("cá thu", "ca_thu"),
     ("cá ngừ", "ca_ngu_dd"), ("cá mai", "ca_mai"), ("mực một nắng", "muc_mot_nang"), ("mực", "muc_tuoi"),
-    ("tôm hùm", "tom_hum"), ("tôm", "tom_the"), ("ếch", "ech"), ("dê", "thit_de"), ("cừu", "thit_cuu"),
-    ("bò", "thit_bo"), ("gà", "ga_ta"), ("vịt", "ga_ta"), ("trứng", "trung"), ("đậu phụ", "dau_phu"),
+    ("tôm hùm", "tom_hum"), ("tôm khô", ""), ("tôm", "tom_the"), ("ếch", "ech"), ("dê", "thit_de"), ("cừu", "thit_cuu"),
+    ("bò", "thit_bo"), ("gà", "ga_ta"), ("vịt", "ga_ta"), ("đậu hũ trứng", "dau_phu"), ("trứng", "trung"), ("đậu phụ", "dau_phu"),
     ("đậu hũ", "dau_phu"), ("riêu cua", "cua_dong"), ("canh cua", "cua_dong"), ("rau muống", "rau_muong"),
     ("mồng tơi", "mong_toi"), ("rau ngót", "rau_ngot"), ("bí đao", "bi_dao"), ("bí đỏ", "bi_do"), ("bầu", "bau"),
     ("mướp", "muop"), ("su hào", "su_hao"), ("su su", "su_su"), ("củ cải", "cu_cai"), ("đậu bắp", "dau_bap"),
@@ -166,6 +166,21 @@ def main():
             for c in r["ma_nguyen_lieu"].split("|"):
                 if c and c not in tat_ca_nl: loi.append(f"{r['ma_mon']}: mã nguyên liệu lạ {c}")
             mon_nl_rows.append([r[h] for h in MON_NL_HEADER])
+    # Đồng bộ nguyên liệu chính: món chưa có mã chính (vd. cá lóc, ghẹ) thì lấy từ dòng "chính" trong định lượng;
+    # dòng định lượng nào có mã trùng nguyên liệu chính của món thì đánh dấu "chính".
+    BO_QUA = {"rau_thom", "bun", "banh_trang", "dau_phong", "sa_ot", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me"}
+    theo_mon = {}
+    for r in mon_nl_rows: theo_mon.setdefault(r[0], []).append(r)
+    for r in mon_rows:
+        if r[12] and r[0] in lo1: continue  # lô 1 đã tự khai báo
+        dong = theo_mon.get(r[0], [])
+        if not r[6]:
+            ma_chinh = [c for d in dong if d[6] == "chinh" for c in d[1].split("|") if c and c not in BO_QUA]
+            r[6] = "|".join(dict.fromkeys(ma_chinh))
+        chinh = set(filter(None, r[6].split("|")))
+        for d in dong:
+            if d[6] == "phu" and d[1] and set(d[1].split("|")) & chinh: d[6] = "chinh"
+
     if os.path.exists(cp_bs):
         bs = {r["ma_mon"]: r for r in doc(cp_bs)}
         for r in mon_rows:
