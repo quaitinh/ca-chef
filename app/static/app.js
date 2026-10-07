@@ -241,15 +241,26 @@ function scaleQty(row, factor) {
 }
 const fmt = (v) => (Math.round(v * 100) / 100).toLocaleString("vi-VN");
 
-function miniSeason(codes) {
-  const first = String(codes).split("|")[0];
-  const n = S.ing[first];
-  if (!n) return "";
+// Thanh mùa vụ cho các nguyên liệu của món có mùa rõ rệt (bỏ qua loại có quanh năm như bột gạo, thịt heo).
+function seasonBlock(ma) {
   const m = month();
-  return `<p class="note">Mùa của ${esc(n.ten)} (${esc(n.vung)}):</p>
-    <div class="mini">${n.thang.map((v, i) => `<span class="v${v} ${i + 1 === m ? "cur" : ""}" title="Tháng ${i + 1}"></span>`).join("")}</div>
-    <div class="mini-lbl">${n.thang.map((_, i) => `<span>${i + 1}</span>`).join("")}</div>`;
+  const seen = new Set();
+  const rows = (S.ingByDish[ma] || [])
+    .filter((r) => r.ma_nguyen_lieu && !seen.has(r.ma_nguyen_lieu) && seen.add(r.ma_nguyen_lieu))
+    .map((r) => ({ ten: r.ten_hien_thi, chinh: r.vai_tro === "chinh",
+      thang: Array.from({ length: 12 }, (_, i) => seasonOf(r.ma_nguyen_lieu, i + 1)) }))
+    .filter((r) => r.thang.some((v) => v !== 1))
+    .sort((a, b) => b.chinh - a.chinh)
+    .slice(0, 4);
+  if (!rows.length) return `<p class="note">Nguyên liệu của món này có quanh năm.</p>`;
+  const bar = (r) => `<div class="mini-row"><span class="mini-name">${esc(r.ten)}</span>
+    <div class="mini">${r.thang.map((v, i) => `<span class="v${v} ${i + 1 === m ? "cur" : ""}" title="Tháng ${i + 1}"></span>`).join("")}</div></div>`;
+  return `<p class="note">Mùa vụ nguyên liệu (khung đậm = tháng ${m}):</p>
+    ${rows.map(bar).join("")}
+    <div class="mini-row"><span class="mini-name"></span><div class="mini-lbl">${rows[0].thang.map((_, i) =>
+      `<span class="${i + 1 === m ? "cur-lbl" : ""}">${i + 1}</span>`).join("")}</div></div>`;
 }
+
 
 function pageRecipe(ma) {
   const d = S.ranked.find((x) => x.ma_mon === ma);
@@ -267,7 +278,7 @@ function pageRecipe(ma) {
       ${chips(d)}
       <p class="note">Độ khó: ${LABEL.do_kho[d.do_kho] ?? d.do_kho} · Điểm hôm nay: ${d.score}
         ${d.reasons.length ? `(${d.reasons.map((r) => `${esc(r.text)} ${r.diem > 0 ? "+" : ""}${r.diem}`).join(", ")})` : ""}</p>
-      ${miniSeason(d.nguyen_lieu_chinh)}
+      ${seasonBlock(d.ma_mon)}
     </div>
     <h2>Nguyên liệu</h2>
     <div class="servings">
