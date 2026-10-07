@@ -479,7 +479,8 @@ function pageHome(day = 0) {
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score} điểm</span></a>`).join("")}</div>`;
   $app.querySelectorAll("[data-swap]").forEach((btn) => (btn.onclick = () => {
     const k = btn.dataset.swap;
-    meals[k].filter((d) => k === "trua" || d.ma_mon !== meals.du).forEach((d) => S.shown[day][k].add(d.ma_mon));
+    // Đưa món vừa hiện về cuối danh sách đã xem (kể cả món đã xem từ trước) để lần đổi này không ra lại.
+    meals[k].filter((d) => k === "trua" || d.ma_mon !== meals.du).forEach((d) => { S.shown[day][k].delete(d.ma_mon); S.shown[day][k].add(d.ma_mon); });
     // Đổi trưa: giữ lẩu tối (nếu có), còn không thì tối tính lại theo trưa mới. Đổi tối: giữ trưa.
     const keep = k === "trua" ? (meals.lau ? { toi: meals.toi, lau: true } : {}) : { trua: meals.trua };
     let next = pickMeals(ranked, day, keep);
