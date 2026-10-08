@@ -39,7 +39,7 @@ function saveChon(day, chon) {
     const all = readChon(), giu = new Set([dayStr(0), dayStr(1)]);
     for (const d of Object.keys(all)) if (!giu.has(d)) delete all[d];
     all[dayStr(day)] = { trua: [...chon.trua], toi: [...chon.toi] };
-    localStorage.setItem(CHON_KEY, JSON.stringify(all));
+    ghiLS(CHON_KEY, all);
   } catch { /* trình duyệt chặn lưu: lựa chọn chỉ còn trong phiên này */ }
 }
 // Món đã chọn của một ngày, lấy từ danh sách đã chấm điểm (bỏ qua mã không còn trong dữ liệu).
@@ -58,7 +58,7 @@ function saveBua(day) {
     const ma = (l) => l.map((d) => d.ma_mon);
     all[dayStr(day)] = { trua: ma(m.trua), toi: ma(m.toi), lau: m.lau, du: m.du, pho: m.pho, kem: m.kem,
       shown: { trua: [...S.shown[day].trua], toi: [...S.shown[day].toi] } };
-    localStorage.setItem(BUA_KEY, JSON.stringify(all));
+    ghiLS(BUA_KEY, all);
   } catch { /* chặn lưu: F5 sẽ gợi ý lại */ }
 }
 // Khôi phục bữa đã lưu nếu mọi món còn trong dữ liệu; không thì null để ghép bữa mới.
@@ -100,6 +100,29 @@ async function load() {
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   for (const r of data.anh_mon || []) if (r.anh_id) S.anh[r.ma_mon] = r;
   for (const r of data.bi_quyet || []) S.bq[r.ma] = r;
+  // Đồng bộ trong nhà: lấy dữ liệu máy khác đã sửa trước khi ghép bữa (chờ tối đa 4 giây, mạng chậm thì dùng bản trên máy).
+  if (dbBat()) await Promise.race([dbKeo(), new Promise((ok) => setTimeout(ok, 4000))]);
+  khoiTaoBua();
+  DB.onDoi = () => { // máy khác vừa sửa: đọc lại dữ liệu, vẽ lại trang (trừ khi đang nấu từng bước)
+    S.tuLanh = null; S.dg = null; S.dc = null; S.chon = {};
+    khoiTaoBua();
+    if (!location.hash.startsWith("#/nau/")) route();
+  };
+  dbTuDong();
+  document.getElementById("foot").innerHTML =
+    `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
+    `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
+    `<a href="#" id="refresh">Tải lại dữ liệu</a> · <a href="#/dong-bo">☁ Đồng bộ${dbBat() ? " (đang bật)" : ""}</a>`;
+  document.getElementById("refresh").onclick = async (e) => {
+    e.preventDefault();
+    await fetch("data.json?refresh=1");
+    location.reload();
+  };
+}
+
+// Bữa hôm nay, ngày mai: bữa đã lưu (của máy này hoặc máy khác trong nhà) hoặc ghép mới.
+function khoiTaoBua() {
+  S.shown = [{ trua: new Set(), toi: new Set() }, { trua: new Set(), toi: new Set() }];
   S.ranked = rankDishes(0);
   S.meals[0] = readBua(S.ranked, 0) || pickMeals(S.ranked, 0, monDaChon(S.ranked, 0));
   saveBua(0);
@@ -107,15 +130,6 @@ async function load() {
   S.rankedTomorrow = rankDishes(1); // sau recordHistory để không gợi ý lại món của hôm nay
   S.meals[1] = readBua(S.rankedTomorrow, 1) || pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
   saveBua(1);
-  document.getElementById("foot").innerHTML =
-    `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
-    `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
-    `<a href="#" id="refresh">Tải lại dữ liệu</a>`;
-  document.getElementById("refresh").onclick = async (e) => {
-    e.preventDefault();
-    await fetch("data.json?refresh=1");
-    location.reload();
-  };
 }
 
 // Giá trị mùa của 1 hoặc nhiều mã (a|b): lấy cao nhất.
@@ -136,7 +150,7 @@ function saveDanhGia(ma, sua) {
   const all = danhGia();
   all[ma] = { ...(all[ma] || {}), ...sua };
   if (all[ma].nau) all[ma].nau = [...new Set(all[ma].nau)].sort().slice(-20);
-  try { localStorage.setItem(DG_KEY, JSON.stringify(all)); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  try { ghiLS(DG_KEY, all); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
   // Chấm lại điểm để lần gợi ý sau phản ánh ngay; bữa đang hiện giữ nguyên.
   S.ranked = rankDishes(0);
   S.rankedTomorrow = rankDishes(1);
@@ -168,7 +182,7 @@ function recordHistory(list) {
     const hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}");
     hist[today()] = [...new Set([...(hist[today()] || []), ...list])]; // mọi món đã hiện trong ngày
     const keep = Object.keys(hist).sort().slice(-14);
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(Object.fromEntries(keep.map((k) => [k, hist[k]]))));
+    ghiLS(HISTORY_KEY, Object.fromEntries(keep.map((k) => [k, hist[k]])));
   } catch {}
 }
 
@@ -1075,7 +1089,7 @@ function tuLanh() {
   return S.tuLanh;
 }
 function saveTuLanh() {
-  try { localStorage.setItem(TL_KEY, JSON.stringify(S.tuLanh)); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  try { ghiLS(TL_KEY, S.tuLanh); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
   S.ranked = rankDishes(0); S.rankedTomorrow = rankDishes(1);
 }
 // Hạn dùng theo bí quyết bảo quản: de = số ngày đã để, con = số ngày còn ngon (âm là quá hạn).
@@ -1189,7 +1203,7 @@ function dcCaiDat() {
 function saveDc() {
   const dc = dcCaiDat();
   for (const d of Object.keys(dc.mua)) if (d < dayStr(0)) delete dc.mua[d];
-  try { localStorage.setItem(DC_KEY, JSON.stringify(dc)); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  try { ghiLS(DC_KEY, dc); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
 }
 const daMua = () => { const dc = dcCaiDat(); return new Set(dc.mua[dayStr(dc.tu)] || []); };
 
@@ -1385,9 +1399,61 @@ function pageDiCho() {
   for (const id of ["cat", "cat2"]) { const b = document.getElementById(id); if (b) b.onclick = cat; }
 }
 
+// ---------- Đồng bộ trong nhà ----------
+// Mở link "#/dong-bo?u=<URL Apps Script>&nha=<mã nhà>" (gửi từ máy đã cài) là tự điền sẵn, bấm Bật là xong.
+const maNhaMoi = () => Array.from(crypto.getRandomValues(new Uint8Array(9)), (b) => "abcdefghijkmnpqrstuvwxyz23456789"[b % 32]).join("");
+const gioPhut = (t) => t ? new Date(t).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }) : "";
+function pageDongBo() {
+  const cfg = dbCfg(), q = new URLSearchParams(location.hash.split("?")[1] || "");
+  const url = q.get("u") || cfg.url, nha = q.get("nha") || cfg.nha || maNhaMoi(), bat = dbBat();
+  const link = `${location.origin}${location.pathname}#/dong-bo?u=${encodeURIComponent(url)}&nha=${encodeURIComponent(nha)}`;
+  const cho = Object.keys(cfg.cho).length;
+  $app.innerHTML = `
+    <h1 class="ptitle">Đồng bộ trong nhà<small>Tủ lạnh, món đã chọn, đánh giá, lịch sử, đi chợ dùng chung giữa các điện thoại – lưu trên Google Sheet Cá Chef</small></h1>
+    ${bat ? `<div class="box db-ok"><b>☁ Đang bật</b><br><span class="muted">${DB.loi ? esc(DB.loi) : DB.luc ? `Đồng bộ lúc ${gioPhut(DB.luc)}` : "Chưa đồng bộ lần nào trong phiên này"}${cho ? ` · ${cho} mục chờ gửi` : ""}</span>
+        <div class="db-nut"><button class="cta2" id="dbNgay">Đồng bộ ngay</button></div></div>
+      <h4>Mời người nhà</h4>
+      <p class="note">Gửi link này (Zalo, tin nhắn) cho vợ/chồng, mở bằng điện thoại rồi bấm "Bật đồng bộ". Link có mã nhà – chỉ gửi cho người trong nhà.</p>
+      <div class="db-link"><input class="search" id="dbLink" readonly value="${esc(link)}"><button class="cta2" id="dbChep">${navigator.share ? "Gửi link" : "Chép link"}</button></div>
+      <p class="note"><button class="link" id="dbTat">Tắt đồng bộ trên máy này</button> (dữ liệu trên máy vẫn giữ)</p>`
+    : `<p class="note">${q.get("u") ? "Đã điền sẵn từ link mời – bấm Bật đồng bộ." : `Cài một lần trên Google Sheet (người giữ Sheet làm):
+        mở Sheet "Cá Chef" › Tiện ích mở rộng › Apps Script, dán nội dung file <code>scripts/apps_script/dong_bo.gs</code>,
+        bấm Triển khai › Tùy chọn triển khai mới › Ứng dụng web, chọn "Thực thi: Tôi" và "Ai có quyền truy cập: Bất kỳ ai",
+        rồi chép URL ứng dụng web vào ô dưới.`}</p>
+      <label class="db-lb">URL ứng dụng web (Apps Script)<input class="search" id="dbUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(url)}"></label>
+      <label class="db-lb">Mã nhà (giống nhau trên mọi máy trong nhà)<input class="search" id="dbNha" value="${esc(nha)}"></label>
+      <button class="cta2" id="dbBat">Bật đồng bộ</button>
+      ${DB.loi ? `<p class="tip rain">${esc(DB.loi)}</p>` : ""}`}
+    <p class="note">Dữ liệu trên máy được gộp với dữ liệu trên Sheet: mục nào sửa sau cùng thì giữ. App tự lấy dữ liệu mới khi mở lại và mỗi 45 giây.</p>`;
+  const nutBat = document.getElementById("dbBat");
+  if (nutBat) nutBat.onclick = async () => {
+    const u = document.getElementById("dbUrl").value.trim(), n = document.getElementById("dbNha").value.trim();
+    if (!/^https:\/\/script\.google(usercontent)?\.com\//.test(u)) { alert("URL phải là link ứng dụng web Apps Script (https://script.google.com/…/exec)."); return; }
+    if (!/^[A-Za-z0-9_-]{8,64}$/.test(n)) { alert("Mã nhà cần 8–64 ký tự chữ, số."); return; }
+    nutBat.disabled = true; nutBat.textContent = "Đang đồng bộ…";
+    const r = await dbBatDau(u, n);
+    if (!r.ok) { dbTat(); DB.loi = DB.loi || "Không kết nối được"; pageDongBo(); return; }
+    location.replace("#/dong-bo");
+    DB.onDoi(); headerFoot();
+  };
+  const ngay = document.getElementById("dbNgay");
+  if (ngay) ngay.onclick = async () => { ngay.disabled = true; ngay.textContent = "Đang đồng bộ…"; await dbGui(); const d = await dbKeo(); if (d) DB.onDoi(); pageDongBo(); };
+  const chep = document.getElementById("dbChep");
+  if (chep) chep.onclick = async () => {
+    try { if (navigator.share) await navigator.share({ title: "Cá Chef – đồng bộ trong nhà", url: link }); else { await navigator.clipboard.writeText(link); chep.textContent = "Đã chép ✓"; } }
+    catch { document.getElementById("dbLink").select(); }
+  };
+  const tat = document.getElementById("dbTat");
+  if (tat) tat.onclick = () => { if (confirm("Tắt đồng bộ trên máy này?")) { dbTat(); headerFoot(); pageDongBo(); } };
+}
+function headerFoot() {
+  const a = document.querySelector('#foot a[href="#/dong-bo"]');
+  if (a) a.textContent = `☁ Đồng bộ${dbBat() ? " (đang bật)" : ""}`;
+}
+
 // ---------- Điều hướng ----------
 function route() {
-  const h = location.hash.slice(1) || "/";
+  const h = (location.hash.slice(1) || "/").split("?")[0];
   const [, page, arg, arg2] = h.split("/");
   const tab = page === "lich" ? "lich" : page === "mon" || page === "yeu-thich" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "di-cho" ? "di-cho" : page === "nau" ? "" : "home";
   document.querySelectorAll("[data-nav]").forEach((a) => a.classList.toggle("on", a.dataset.nav === tab));
@@ -1405,6 +1471,7 @@ function route() {
   else if (page === "mon") pageAll();
   else if (page === "tu-lanh") pageFridge();
   else if (page === "di-cho") pageDiCho();
+  else if (page === "dong-bo") pageDongBo();
   else if (page === "nau" && arg) pageCook(decodeURIComponent(arg), Number(arg2 || 1) - 1);
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);
