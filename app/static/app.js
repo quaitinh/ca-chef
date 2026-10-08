@@ -405,7 +405,7 @@ function thawList(meals) {
       const frozen = codes.length
         ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
         : FROZEN_WORDS.test(r.ten_hien_thi);
-      if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (nấu dư cho tối)" : ""), qty: scaleQty(r, f) });
+      if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (gồm phần cho bữa tối)" : ""), qty: scaleQty(r, f) });
     }
   }
   return out;
@@ -444,22 +444,35 @@ function headerBar() {
   wx.textContent = `${icon} ${Math.round(c ? c.temperature_2m : d.temperature_2m_max[0])}° · mưa ${d.precipitation_probability_max[0]}%`;
 }
 
-// Một dòng gợi ý theo thời tiết; chạm để xem chi tiết.
+// Lời khuyên theo thời tiết: so tổng điểm các quy tắc nghiêng về món nóng với món mát, kèm lý do chính.
+function loiKhuyen(day) {
+  const d = S.weather.daily, hits = weatherRulesHit(day);
+  const theo = (h) => hits.filter((r) => r.ap_dung_cho === `nhiet=${h}` && Number(r.diem) > 0);
+  const tong = (h) => theo(h).reduce((t, r) => t + Number(r.diem), 0);
+  if (!tong("nong") && !tong("mat")) return null;
+  const huong = tong("nong") >= tong("mat") ? "nong" : "mat";
+  const r = theo(huong).sort((a, b) => b.diem - a.diem)[0];
+  const lyDo = {
+    precipitation_sum: `dự báo mưa ${d.precipitation_sum[day]} mm`,
+    precipitation_probability_max: `khả năng mưa ${d.precipitation_probability_max[day]}%`,
+    temperature_2m_max: `${r.ten.toLowerCase()}, cao nhất ${Math.round(d.temperature_2m_max[day])}°`,
+    uv_index_max: `UV ${Math.round(d.uv_index_max[day])}`,
+  }[r.bien] || r.ten.toLowerCase();
+  return { huong, text: huong === "nong" ? "Ưu tiên món nóng, ấm bụng" : "Ưu tiên món mát, ít dầu", lyDo };
+}
+
+// Dự báo trong ngày (khớp với lời khuyên) + lời khuyên; chạm để xem chi tiết.
 function weatherTip(day) {
   const d = S.weather?.daily;
   if (!d || d.time.length <= day) return `<div class="tip">Không lấy được thời tiết – gợi ý chỉ theo mùa vụ.</div>`;
   const c = day === 0 ? S.weather.current : null;
-  const [icon, desc] = wmo(c ? c.weather_code : d.weather_code[day]);
-  const hits = weatherRulesHit(day);
-  const names = [...new Set(hits.map((r) => r.ten))];
-  const rainy = hits.some((r) => r.ap_dung_cho === "nhiet=nong" && r.diem > 0);
-  const hot = hits.some((r) => r.ap_dung_cho === "nhiet=mat" && r.diem > 0);
-  const verdict = rainy ? "ưu tiên món nóng, ấm bụng" : hot ? "ưu tiên món mát, ít dầu" : "món nào cũng hợp";
-  return `<details class="tip ${rainy ? "rain" : hot ? "hot" : ""}">
-    <summary><span>${icon} ${desc} – <b>${verdict}</b></span><span class="t">${Math.round(d.temperature_2m_min[day])}–${Math.round(d.temperature_2m_max[day])}°</span></summary>
-    <div class="tip-more">🌧️ Mưa ${d.precipitation_sum[day]} mm (${d.precipitation_probability_max[day]}%) · 💨 Gió ${Math.round(d.wind_speed_10m_max[day])} km/h
-      · 🔆 UV ${Math.round(d.uv_index_max[day])}${c ? ` · 💧 Ẩm ${c.relative_humidity_2m}%` : ""}
-      ${names.length ? `<br>Quy tắc đang áp dụng: ${esc(names.join(", ").toLowerCase())}` : ""}</div>
+  const [icon, desc] = wmo(d.weather_code[day]);
+  const lk = loiKhuyen(day);
+  return `<details class="tip ${lk ? (lk.huong === "nong" ? "rain" : "hot") : ""}">
+    <summary><span class="t1">${icon} ${day ? "Ngày mai" : "Hôm nay"}: ${desc.toLowerCase()} · ${Math.round(d.temperature_2m_min[day])}–${Math.round(d.temperature_2m_max[day])}°</span>
+      <span class="t2">${lk ? `<b>${lk.text}</b> – ${esc(lk.lyDo)}` : "Thời tiết dễ chịu – món nào cũng hợp"}</span></summary>
+    <div class="tip-more">🌧️ Mưa ${d.precipitation_sum[day]} mm (khả năng ${d.precipitation_probability_max[day]}%) · 💨 Gió ${Math.round(d.wind_speed_10m_max[day])} km/h
+      · 🔆 UV ${Math.round(d.uv_index_max[day])}${c ? ` · Lúc này ${Math.round(c.temperature_2m)}°, ẩm ${c.relative_humidity_2m}%` : ""}</div>
   </details>`;
 }
 
@@ -486,7 +499,7 @@ function metaMon(d, du) {
   else if (d.nhiet === "nong") p.push(`<span class="hot">Nóng</span>`);
   else if (d.nhiet === "mat") p.push(`<span class="cool">Mát</span>`);
   if (d.thoi_gian_phut) p.push(`${d.thoi_gian_phut}′`);
-  if (du) p.push("nấu gấp đôi");
+  if (du) p.push("nấu thêm phần cho tối");
   if (coNuoc(d)) p.push("có nước, thay canh");
   else if (d.do_kho && !du) p.push((LABEL.do_kho[d.do_kho] || d.do_kho).toLowerCase());
   if (!hopTre(d)) p.push("cân nhắc cho bé");
@@ -499,9 +512,9 @@ function mealBlock(meals, k, chon) {
   const phut = Math.max(0, ...nau.map((d) => Number(d.thoi_gian_phut) || 0));
   const conDoi = nau.some((d) => !chon[k].has(d.ma_mon));
   const sub = k === "trua"
-    ? [`${nau.length} món`, phut && `~${phut}′`, meals.lau && "dễ nấu, tối ăn lẩu", meals.du && "kho dư cho tối"]
+    ? [`${nau.length} món`, phut && `~${phut}′`, meals.lau && "dễ nấu, tối ăn lẩu", meals.du && "nấu thêm phần cho tối"]
     : meals.lau ? ["lẩu + tráng miệng", phut && `~${phut}′`]
-    : meals.du ? ["ăn lại món trưa", `nấu thêm ${nau.length} món`, phut && `~${phut}′`] : [`${nau.length} món`, phut && `~${phut}′`];
+    : meals.du ? ["dùng tiếp món trưa", `nấu thêm ${nau.length} món`, phut && `~${phut}′`] : [`${nau.length} món`, phut && `~${phut}′`];
   return `<section class="meal">
     <div class="mh"><h3>${k === "trua" ? "🍚 Trưa" : "🌙 Tối"}<span class="sub">${sub.filter(Boolean).join(" · ")}</span></h3>
       ${conDoi ? `<button class="swap" data-swap="${k}">🔄 ${chon[k].size ? "Đổi món còn lại" : "Đổi"}</button>` : `<span class="chot">✓ Đã chốt bữa</span>`}</div>
@@ -509,7 +522,7 @@ function mealBlock(meals, k, chon) {
       const on = chon[k].has(d.ma_mon), lai = anLai(d);
       return `<div class="row ${lai ? "ghost" : ""} ${on ? "picked" : ""}">
         <a class="row-link" href="#/mon/${d.ma_mon}"><span class="ic">${iconOf(d)}</span>
-          <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${lai ? "ăn lại từ trưa" : metaMon(d, d.ma_mon === meals.du)}</span></span></a>
+          <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${lai ? "Phần để dành từ bữa trưa" : metaMon(d, d.ma_mon === meals.du)}</span></span></a>
         ${lai ? "" : `<button class="ck ${on ? "on" : ""}" data-chon="${k}" data-ma="${d.ma_mon}" aria-pressed="${on}"
           aria-label="${on ? "Bỏ chọn" : "Chọn"} ${esc(d.ten_mon)}" title="${on ? "Bỏ chọn" : "Chọn – giữ món này khi đổi các món còn lại"}">✓</button>`}
       </div>`;
