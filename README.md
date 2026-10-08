@@ -56,6 +56,11 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   Món kho, rim, sốt khô vẫn đi với canh.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
+- Đủ đạm: điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;
+  canh hoặc rau có thịt/cá/tôm 1, có trứng/đậu 0,5; canh cua đồng, canh rau 0. Ví dụ trứng cút rim thì canh hoặc rau phải có thịt/cá/tôm.
+- Trưa món mặn đạm nhẹ thì tối bắt buộc có món mặn thịt/cá; món mặn đạm nhẹ không nấu dư cho tối.
+- Không 2 món rau lá trong một bữa (rau muống, mồng tơi, rau đay, rau ngót, cải, bắp cải...): canh rau lá thì rau là củ quả, và ngược lại.
+- Canh cua đồng ăn kèm cà pháo muối xổi (không tính vào giờ nấu).
 - Lời khuyên thời tiết so tổng điểm quy tắc nghiêng món nóng / món mát và ghi lý do chính (mưa, nắng gắt...).
 - Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
 - Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1.
