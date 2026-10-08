@@ -88,6 +88,12 @@ SUA_TAY = {
                                  "1 muỗng cà phê hạt nêm", "1 muỗng canh nước mắm", "Hành lá"],
     "canh_tom_nau_thom": ["200 g tôm", "1/4 quả dứa", "2 quả cà chua", "1 củ hành tím", "Hành lá, ngò gai",
                           "1 muỗng canh nước mắm", "1 muỗng cà phê hạt nêm"],
+    # Trang Cookpad thiếu nguyên liệu có trong tên món (đậu phộng, rau lang, muối vừng): điền đủ cho khớp tên.
+    "ca_com_kho_rim_dau_phong": ["150 g cá cơm khô", "100 g đậu phộng", "3 tép tỏi", "2 muỗng canh đường", "2 muỗng canh nước mắm",
+                                 "1 muỗng canh nước cốt chanh", "1 muỗng canh tương ớt", "5 lá chanh", "Tiêu"],
+    "rau_lang_luoc_cham_kho_quet": ["500 g rau lang", "150 g thịt ba chỉ", "50 g mỡ heo", "30 g tôm khô", "4 tép tỏi", "2 củ hành tím",
+                                    "2 muỗng canh nước mắm", "1 muỗng canh đường", "Hành lá", "Ớt", "Tiêu"],
+    "dau_que_luoc_cham_muoi_me": ["400 g đậu que", "2 muỗng canh vừng (mè) rang", "1 muỗng cà phê muối", "1 muỗng cà phê đường"],
     "nuoc_chanh_muoi": ["2 quả chanh muối", "2 muỗng canh đường", "400 ml nước lọc", "1 ly đá viên"],
 }
 
