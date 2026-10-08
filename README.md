@@ -52,11 +52,13 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Trong một bữa: tối đa 1 món **nấu lâu** (kho, om, hầm, rim, ram, bung, sốt vang – lâu nhưng ít công)
   và 1 món **cầu kì** (nướng, nhồi, cuốn, cuộn, nem, chả, viên, mọc, gỏi nhiều thứ, món khó).
 - Không 2 món cùng chiên / xào / nướng trong một bữa. Canh có đạm thì khác nhóm đạm món mặn.
-- Món mặn có nhiều nước (om, bung, nấu, hầm, cà ri, bò kho, sốt vang) thì bữa đó bỏ canh: chỉ mặn + rau.
+- Món mặn có nhiều nước (om, bung, nấu, hầm, cà ri, bò kho, sốt vang) có thịt/cá là nguyên liệu chính thì bữa đó bỏ canh: chỉ mặn + rau
+  (tiêu đề bữa ghi "không cần canh"). Món có nước mà nguyên liệu chính chỉ là rau, đậu, trứng (cà tím bung đậu phụ...) ăn như canh:
+  xếp vào vai canh, bữa vẫn có một món mặn thịt/cá.
   Món kho, rim, sốt khô vẫn đi với canh.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
-- Đủ đạm: điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;
+- Đủ đạm (tính theo nguyên liệu chính, món chưa có bảng nguyên liệu thì theo nhóm đạm): điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;
   canh hoặc rau có thịt/cá/tôm 1, có trứng/đậu 0,5; canh cua đồng, canh rau 0. Ví dụ trứng cút rim thì canh hoặc rau phải có thịt/cá/tôm.
 - Trưa món mặn đạm nhẹ thì tối bắt buộc có món mặn thịt/cá; món mặn đạm nhẹ không nấu dư cho tối.
 - Không 2 món rau lá trong một bữa (rau muống, mồng tơi, rau đay, rau ngót, cải, bắp cải...): canh rau lá thì rau là củ quả, và ngược lại.
