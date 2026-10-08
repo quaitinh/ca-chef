@@ -67,10 +67,9 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Trong một bữa: tối đa 1 món **nấu lâu** (kho, om, hầm, rim, ram, bung, sốt vang – lâu nhưng ít công)
   và 1 món **cầu kì** (nướng, nhồi, cuốn, cuộn, nem, chả, viên, mọc, gỏi nhiều thứ, món khó).
 - Không 2 món cùng chiên / xào / nướng trong một bữa. Canh có đạm thì khác nhóm đạm món mặn.
-- Món mặn có nhiều nước (om, bung, nấu, hầm, cà ri, bò kho, sốt vang) có thịt/cá là nguyên liệu chính thì bữa đó bỏ canh: chỉ mặn + rau
-  (tiêu đề bữa ghi "không cần canh"). Món có nước mà nguyên liệu chính chỉ là rau, đậu, trứng (cà tím bung đậu phụ...) ăn như canh:
-  xếp vào vai canh, bữa vẫn có một món mặn thịt/cá.
-  Món kho, rim, sốt khô vẫn đi với canh.
+- Bữa nào cũng đủ 3 món. Món mặn có nhiều nước (om, bung, nấu, hầm, cà ri, bò kho, sốt vang) có thịt/cá thì canh đi kèm là
+  canh nhẹ (canh rau, trứng, đậu – không thêm thịt/cá). Món có nước mà nguyên liệu chính chỉ là rau, đậu, trứng (cà tím bung đậu phụ...)
+  ăn như canh: xếp vào vai canh, bữa vẫn có một món mặn thịt/cá.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
 - Đủ đạm (tính theo nguyên liệu chính, món chưa có bảng nguyên liệu thì theo nhóm đạm): điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;

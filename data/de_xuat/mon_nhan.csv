@@ -4,7 +4,7 @@ thit_bam_rang_man_ngot,man,heo,kho_om,co,cookpad_top
 ba_chi_rang_chay_canh,man,heo,kho_om,co,cookpad_top
 thit_ba_chi_rim_man_ngot,man,heo,kho_om,co,cookpad_top
 ca_tim_om_thit_bam,man,heo,kho_om,co,cookpad_top
-khoai_tay_xao_thit_bam,man,heo,xao,co,cookpad_top
+khoai_tay_xao_thit_bam,man,heo,xao,co,lo4
 cha_gio_re,man,heo,chien,co,cookpad_top
 thit_heo_mot_nang_chien,man,heo,chien,co,cookpad_top
 suon_xao_chua_ngot,man,heo,xao,co,cookpad_top
@@ -149,7 +149,7 @@ canh_bap_cai_cuon,canh,heo,nau,co,dang_co
 canh_atiso_gio_heo,canh,heo,nau,co,dang_co
 canh_suon_khoai_ca_rot,canh,heo,nau,co,dang_co
 canh_cua_rau_day,canh,hai_san,nau,co,lo1
-canh_rau_ngot_thit_bam,canh,heo,nau,co,lo1
+canh_rau_ngot_thit_bam,canh,heo,nau,co,lo4
 canh_muop_mong_toi,canh,hai_san,nau,co,lo1
 canh_trung_ca_chua,canh,trung_dau,nau,co,lo1
 canh_khoai_so_suon,canh,heo,nau,co,lo1
@@ -368,3 +368,6 @@ lau_vit_nau_chao,lau,ga,nau,co,lo4
 vit_nau_mang,man,ga,nau,co,lo4
 mang_xao_long_vit,man,ga,xao,can_nhac,lo4
 pad_thai,mot_to,hai_san,,co,lo4
+cha_trung_hap_thit_bam,man,heo,luoc_hap,co,lo4
+thit_bam_xao_kieu_thai,man,heo,xao,can_nhac,lo4
+sup_ga_ngo_nam,mot_to,ga,nau,co,lo4
