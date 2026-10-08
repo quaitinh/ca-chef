@@ -21,8 +21,11 @@ from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 OUT = os.path.join(ROOT, "data", "de_xuat", "anh_mon.csv")
-UA = {"User-Agent": "Mozilla/5.0 (CaChef; dự án cá nhân)"}
+UA = {"User-Agent": "Mozilla/5.0 (CaChef; personal project)"}  # header HTTP chỉ nhận ASCII
 ANH = re.compile(r"cpcdn\.com/recipes/([0-9a-f]{12,})/")
+
+
+LOI = []
 
 
 def tai(url):
@@ -30,8 +33,10 @@ def tai(url):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=25) as r:
                 return r.read().decode("utf-8", "ignore")
-        except Exception:
+        except Exception as e:
+            loi = e
             time.sleep(1 + lan * 2)
+    LOI.append(f"{url}: {type(loi).__name__} {loi}")
     return ""
 
 
@@ -81,6 +86,11 @@ def mot_mon(r):
     else:
         tk = nguon
     anh, tg, url = tim(tk, bo_qua={nguon})
+    # Không ra kết quả: tìm lại bằng tên ngắn dần (bỏ bớt chữ cuối, vd "khổ qua nhồi thịt hấp" -> "khổ qua nhồi thịt").
+    chu = re.sub(r"\(.*?\)", "", ten).split()
+    while not anh and len(chu) > 2:
+        chu = chu[:-1]
+        anh, tg, url = tim("https://cookpad.com/vn/tim-kiem/" + urllib.parse.quote(" ".join(chu)), bo_qua={nguon})
     return [ma, anh, url, tg]
 
 
@@ -94,7 +104,7 @@ def main():
     cu = {r["ma_mon"]: r for r in doc(OUT)} if os.path.exists(OUT) and "--lam-lai" not in sys.argv else {}
     can = [r for r in mon if not cu.get(r["ma_mon"], {}).get("anh_id")]
     print(f"{len(mon)} món, cần lấy ảnh {len(can)}")
-    with ThreadPoolExecutor(4) as ex:
+    with ThreadPoolExecutor(6) as ex:
         moi = list(ex.map(mot_mon, can))
     rows = {**{k: [v["ma_mon"], v["anh_id"], v["nguon_anh"], v["tac_gia"]] for k, v in cu.items()}, **{r[0]: r for r in moi}}
     with open(OUT, "w", newline="", encoding="utf-8") as f:
@@ -103,6 +113,8 @@ def main():
         w.writerows(sorted(rows.values()))
     thieu = [r[0] for r in rows.values() if not r[1]]
     print(f"có ảnh: {len(rows) - len(thieu)}/{len(rows)}" + (f" | chưa có: {', '.join(thieu)}" if thieu else ""))
+    if LOI:
+        print(f"{len(LOI)} trang tải lỗi, ví dụ:", *LOI[:3], sep="\n  ")
 
 
 if __name__ == "__main__":

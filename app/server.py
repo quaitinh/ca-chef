@@ -74,7 +74,11 @@ def merge_de_xuat(tabs):
     tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
         [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
     tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
-    tabs.setdefault("anh_mon", read_de_xuat("anh_mon.csv"))  # ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py)
+    # Ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py). Đọc nguyên chuỗi: mã hex như "8e12…" không được đổi thành số.
+    path = os.path.join(DE_XUAT, "anh_mon.csv")
+    if "anh_mon" not in tabs and os.path.exists(path):
+        with open(path, newline="", encoding="utf-8") as f:
+            tabs["anh_mon"] = list(csv.DictReader(f))
     return len(moi)
 
 
