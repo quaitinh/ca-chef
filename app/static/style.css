@@ -62,9 +62,9 @@ body.cook .tabbar, body.cook .topbar, body.cook .foot { display: none; }
 .tip { background: var(--none); border-radius: 12px; padding: 8px 12px; font-size: 13px; margin-bottom: 12px; }
 .tip.rain { background: var(--accent-soft); color: #9a3412; }
 .tip.hot { background: var(--cool-soft); color: #155e75; }
-.tip summary { display: flex; justify-content: space-between; gap: 8px; cursor: pointer; list-style: none; }
+.tip summary { display: flex; flex-direction: column; gap: 2px; cursor: pointer; list-style: none; }
+.tip .t1 { color: var(--ink); opacity: .75; }
 .tip summary::-webkit-details-marker { display: none; }
-.tip .t { white-space: nowrap; font-weight: 600; }
 .tip-more { margin-top: 6px; color: var(--ink); opacity: .8; }
 
 /* Bữa ăn */

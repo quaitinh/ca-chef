@@ -39,7 +39,7 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 
 Đang áp dụng:
 - Mỗi bữa: mặn + rau + canh. Lẩu chỉ buổi tối (tối đa 1 lần/7 ngày); hôm tối ăn lẩu thì trưa chọn món dễ nấu.
-- Món mặn kho/hầm/om/rim ở bữa trưa nấu gấp đôi, tối ăn lại (tối nấu thêm rau + canh).
+- Món mặn kho/hầm/om/rim ở bữa trưa nấu thêm phần cho tối (tối dùng tiếp, chỉ nấu thêm rau + canh).
 - Không lặp nguyên liệu chính trong ngày; đạm món mặn tối khác trưa.
 - Trong một bữa: tối đa 1 món **nấu lâu** (kho, om, hầm, rim, ram, bung, sốt vang – lâu nhưng ít công)
   và 1 món **cầu kì** (nướng, nhồi, cuốn, cuộn, nem, chả, viên, mọc, gỏi nhiều thứ, món khó).
@@ -48,6 +48,7 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   Món kho, rim, sốt khô vẫn đi với canh.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
+- Lời khuyên thời tiết so tổng điểm quy tắc nghiêng món nóng / món mát và ghi lý do chính (mưa, nắng gắt...).
 - Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
 - Quy tắc đứng trên sự mới lạ: khi bấm "Đổi" mà món chưa xem không thỏa quy tắc thì dùng lại món đã xem.
 
