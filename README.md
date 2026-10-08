@@ -30,7 +30,9 @@ lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã tr
 được `app/server.py` đè lên bản Sheet qua `de_len_sheet.csv`):
 `python3 scripts/de_xuat/xuat_csv.py`
 
-Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
+Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): gà tách lòng, chân cổ xương, cánh, ức và gà nguyên con / nửa con
+(mặc định cho món ghi chung "gà"; cột `bao_gom`: tủ có gà nguyên con thì món cánh, ức, chân cổ, lòng cũng tính là có), đùi gà
+tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào). Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
 thịt nạc, sườn, chân giò, xương, mỡ heo, tai, lưỡi, da (bì), thịt hộp. Món chỉ ghi chung "thịt heo" hiểu là thịt nạc hoặc
 ba chỉ (cột `mac_dinh`). Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
 trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
@@ -52,12 +54,13 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Tủ lạnh: ghi thứ đang có, ngày cho vào, ngăn mát hay ngăn đá (❄); tính hạn dùng theo bí quyết bảo quản, thứ sắp hết hạn tô màu và nhắc ở trang Nấu gì.
   Gợi ý món nấu được ngay (nút ＋Trưa / ＋Tối đưa thẳng vào bữa hôm nay, thành món đã chọn) và món thiếu 1 thứ.
   Nấu xong một món thì hỏi bỏ đồ đã dùng khỏi tủ. Thứ đang ghi ở ngăn mát không cần nhắc rã đông.
-- Đi chợ: chọn đi hôm nay / ngày mai, mua cho 3, 4 hoặc 5 ngày. App lên thực đơn các ngày đó (lưu lại, đến ngày đó gợi ý
-  đúng món đã mua; các ngày tính chống lặp với nhau; ngày thứ 3 trở đi có nút Đổi) và gộp nguyên liệu (trừ gia vị) thành danh sách
-  theo nhóm, cho 4 người, có phần nấu dư cho tối. Theo số ngày để được ở ngăn mát (`bi_quyet_nl.csv`): dùng muộn hơn thì ghi
-  "❄ cấp đông phần T…" (thịt, cá), còn thứ không cấp đông được (rau lá, bún tươi) xếp vào "Mua thêm gần ngày nấu". Đồ có trong
-  tủ tách riêng. Tick đồ đã mua (`cachef.di_cho`), bấm "Cất đồ đã mua vào tủ" để ghi vào Tủ lạnh (phần cần cấp đông ghi ngăn đá).
-  Dự báo thời tiết lấy 6 ngày để chấm điểm món các ngày tới.
+- Đi chợ: chọn đi hôm nay / ngày mai và mua cho 3, 4 hoặc 5 ngày. Chỉ bữa hôm nay, ngày mai có món cụ thể (sửa ở trang Nấu gì);
+  danh sách mua đúng nguyên liệu các bữa đó (cho 4 người, cộng phần nấu dư, đồ đã có trong tủ tách riêng).
+  Mấy ngày còn lại không gò theo món: một dòng lời khuyên theo dự báo (mưa – món hầm, om; nắng nóng – món mát) và
+  "giỏ mua dư" gồm 2–3 thứ đạm khác họ (gà hoặc vịt, heo, bò, cá, hải sản...), 2 rau củ để lâu, 1 rau lá, 1 trái cây đang rộ –
+  chọn theo điểm các món hợp từng ngày tới (thời tiết, mùa, chưa ăn gần đây), bỏ đồ đã có trong tủ. Tick đồ đã mua, bấm
+  "Cất vào tủ lạnh": đồ cho bữa gần để ngăn mát, đạm của giỏ mua dư để ngăn đá. Sau đó Cá Chef gợi ý món theo tủ.
+- Tủ sắp hết đồ (đã dùng tủ lạnh mà còn ≤ 1 thứ thịt, cá, trứng, đậu chưa quá hạn): trang Nấu gì nhắc nên đi chợ.
 - Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
   mỡ heo luôn để ngăn mát nên không có trong danh sách.
 - Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
@@ -88,7 +91,10 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1.
   Các món điểm gần nhau được xoay theo ngày (cộng thêm 0–1,5 điểm ngẫu nhiên cố định theo ngày) để không ngày nào cũng ra cùng một nhóm món.
   Mô phỏng 14 ngày liền (tháng 10, trời mưa): 52 món khác nhau / 69 lượt, trước đó 21 món.
-- Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +2, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
+- Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +3, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
+- Phở gà trưa (một tô): nấu dư nước dùng, tối vẫn cơm đủ món – miến gà hoặc súp gà nấu từ nước dùng đó thay canh, món mặn
+  tối không phải gà. Phở được chọn khi điểm không kém món mặn tốt nhất quá 2 điểm và cách lần trước hơn 7 ngày
+  (mô phỏng 8 tuần trời mưa: 4 lần).
 - Món thuốc bắc (tên có "thuốc bắc", vd. gà tiềm thuốc bắc): cách nhau ít nhất 14 ngày, khoảng 2 lần/tháng.
 - Phản hồi của nhà (lưu trên máy, `cachef.danh_gia`): 👍 +2, ♥ +1, 👎 −6 (hầu như không gợi ý nữa).
 - Quy tắc đứng trên sự mới lạ: khi bấm "Đổi" mà món chưa xem không thỏa quy tắc thì dùng lại món đã xem.

@@ -275,4 +275,21 @@ RECIPES = [
        ("nam", "Nấm hương", 8, "tai", "n", "phu"), ("trung", "Trứng gà", 2, "quả", "n", "phu"),
        ("", "Nước dùng gà", 1.2, "lít", "x", "phu"), ("", "Bột năng", 3, MC, "x", "gia_vi"), HAT_NEM(1), DAU(1),
        RAU_THOM("Rau mùi")]),
+
+    # ---------- Phở gà (trưa), nấu dư nước dùng cho tối (miến gà / súp gà thay canh) ----------
+    M("mot_to", "ga", "pho_ga", "Phở gà", "mon_chinh", "nong", "nhe", "it", "ga_ta", "mua", 120, "vua",
+      "Phở gà kiểu Bắc: luộc gà nguyên con, ninh xương với gừng hành nướng và hoa hồi, quế – nước trong, ngọt; "
+      "nấu dư nước dùng và để riêng ít thịt ức để tối nấu miến hoặc súp thay canh.",
+      ["Gà làm sạch, xát muối với gừng giã rồi rửa lại; chân, cổ, khung xương chần sơ nước sôi.",
+       "Nướng (hoặc đốt trên bếp) gừng, hành tây, hành khô đến cháy xém vỏ, cạo sạch; rang thơm hoa hồi, quế, thảo quả, hạt mùi rồi cho vào túi lọc.",
+       "Cho gà, xương, gừng hành nướng vào nồi khoảng 5 lít nước lạnh, đun sôi rồi hạ lửa nhỏ, hớt bọt; luộc gà khoảng 30–35 phút đến khi chín (xiên đùi không ra nước hồng) thì vớt ra ngâm nước nguội cho da giòn.",
+       "Thả túi gia vị vào nồi, ninh tiếp xương lửa nhỏ khoảng 1 tiếng; nêm muối, nước mắm, chút đường phèn cho nước ngọt thanh.",
+       "Múc riêng khoảng 1,5 lít nước dùng và để riêng phần ức gà, cất ngăn mát – tối nấu miến gà hoặc súp gà.",
+       "Gà xé hoặc chặt miếng; lá chanh thái chỉ; hành lá, rau mùi thái nhỏ. Trụng bánh phở, xếp thịt gà, rắc hành, lá chanh, chan nước dùng thật nóng; ăn kèm chanh, ớt (phần người lớn)."],
+      None, tk("phở gà Hà Nội"),
+      [("ga_ta", "Gà ta nguyên con", 1600, "g", "n", "chinh"), ("ga_ta", "Chân, cổ, khung xương gà", 500, "g", "n", "phu"),
+       ("bun", "Bánh phở tươi", 1000, "g", "n", "phu"), ("", "Hành tây", 2, "củ", "x", "phu"), GUNG(1), HANH(5),
+       ("", "Gia vị phở (hồi, quế, thảo quả, hạt mùi)", 1, "gói", "x", "gia_vi"), ("", "Lá chanh", 10, "lá", "x", "phu"),
+       HANH_LA, RAU_THOM("Rau mùi"), ("", "Chanh", 2, "quả", "x", "gia_vi"), OT(2), MUOI, MAM(2),
+       ("", "Đường phèn", 1, MC, "x", "gia_vi")]),
 ]
