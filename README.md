@@ -27,6 +27,14 @@ gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã 
 Sinh lại sau khi sửa `khung_mon.csv` hoặc `scripts/de_xuat/lo1_bac.py`:
 `python3 scripts/de_xuat/xuat_csv.py`
 
+## Giao diện (điện thoại trước)
+
+Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`).
+- Nấu gì: bữa trưa, tối mỗi món một dòng; ✓ để chọn giữ món, "Đổi" xoay các món còn lại; nhắc rã đông cho ngày mai.
+- Trang món: thông tin nhanh, 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng.
+- Mùa vụ: chọn tháng và nhóm; Đang rộ / Sắp vào mùa / Có hàng / Trái mùa, chạm để xem nguồn và món nấu được.
+- Tủ lạnh: đánh dấu thứ đang có (lưu trên máy), gợi ý món đủ nguyên liệu chính và món thiếu 1 thứ.
+
 ## Quy tắc ghép bữa (`app/static/app.js`, phần "Ghép bữa")
 
 Đang áp dụng:
