@@ -351,6 +351,8 @@ ngheu_xao_sa_ot,man,hai_san,xao,can_nhac,lo3
 trung_xao_ca_chua,man,trung_dau,xao,co,lo3
 com_chien_kim_chi,mot_to,trung_dau,chien,can_nhac,lo3
 lau_kim_chi_hai_san,lau,hai_san,nau,can_nhac,lo3
+oi_cham_muoi_ot,trang_mieng,,,co,lo3
+nuoc_ep_oi,do_uong,,,co,lo3
 nuong_kieu_han_kim_chi,nuong,heo,nuong,can_nhac,lo3
 nuong_thap_cam_kieu_viet,nuong,heo,nuong,co,lo3
 hai_san_nuong_mo_hanh,nuong,hai_san,nuong,co,lo3

@@ -536,6 +536,26 @@ RECIPES = [
        ("bun", "Mì Hàn hoặc bún", 400, "g", "n", "phu"), ("", "Nước tương", 2, MC, "x", "gia_vi"), DUONG(1),
        ("", "Ớt bột Hàn", 1, MC, "x", "gia_vi")]),
 
+    # ---------- Trái cây ----------
+    M("trang_mieng", "", "oi_cham_muoi_ot", "Ổi chấm muối ớt", "trang_mieng", "mat", "nhe", "it", "oi", "nang", 10, "de",
+      "Ổi giòn cắt miếng chấm muối ớt chanh (phần bé chấm muối đường không ớt) – tráng miệng nhanh, nhiều vitamin C.",
+      ["Ổi rửa sạch, ngâm nước muối loãng 5 phút, để ráo.",
+       "Cắt ổi thành miếng cau, bỏ bớt ruột nếu hạt cứng (phần cho bé gọt vỏ, bỏ hạt).",
+       "Muối hột rang giã với ớt, chút đường, vắt vài giọt chanh; phần bé chỉ trộn muối với đường.",
+       "Bày ổi ra đĩa, chấm muối ăn ngay cho giòn."],
+      None, tk("ổi chấm muối ớt"),
+      [("oi", "Ổi", 3, "quả", "n", "chinh"), ("muoi_ca_na", "Muối hột", 1, MC, "x", "gia_vi"), OT(1), DUONG(0.5),
+       ("", "Chanh", 0.5, "quả", "x", "gia_vi")]),
+    M("do_uong", "", "nuoc_ep_oi", "Nước ép ổi", "do_uong", "mat", "nhe", "it", "oi", "nang", 10, "de",
+      "Ổi chín ép hoặc xay lọc với chút đường, đá – thơm, mát, bé uống được.",
+      ["Ổi chín rửa sạch, bỏ cuống, cắt miếng (ổi ruột đỏ cho màu đẹp).",
+       "Ép lấy nước, hoặc xay với khoảng 200 ml nước rồi lọc qua rây cho bỏ hạt.",
+       "Thêm chút đường hoặc mật ong, vài giọt chanh cho dậy mùi.",
+       "Rót ly, thêm đá; uống ngay cho khỏi tách nước."],
+      None, tk("nước ép ổi"),
+      [("oi", "Ổi chín", 3, "quả", "n", "chinh"), DUONG(1), ("", "Chanh", 0.25, "quả", "x", "gia_vi"),
+       ("", "Đá viên", 1, "ly", "x", "phu")], khau_phan=2),
+
     # ---------- Bữa nướng (bữa chính một món, như lẩu) ----------
     M("nuong", "heo", "nuong_kieu_han_kim_chi", "Nướng ba chỉ, bò Mỹ kiểu Hàn ăn kèm kim chi", "nuong", "nong", "nang", "vua",
       "thit_heo|thit_bo|kim_chi", "moi", 60, "de",
