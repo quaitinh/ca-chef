@@ -904,6 +904,8 @@ function pageRecipe(ma, moiXong = false) {
     <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">Cookpad</a> · ${d.trang_thai === "da_nau_thu" || dgMon(d.ma_mon).nau?.length ? "đã nấu thử" : "chưa nấu thử"}</p>
     ${hasRecipe(d) ? `<a class="cta" href="#/nau/${d.ma_mon}">👩‍🍳 Bắt đầu nấu – từng bước</a>` : ""}`;
   document.getElementById("back").onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
+  const cta = $app.querySelector(".cta");
+  if (cta) cta.onclick = (e) => { e.preventDefault(); location.replace(cta.getAttribute("href")); };
   $app.querySelectorAll("[data-dg]").forEach((b) => (b.onclick = () => {
     const dg = dgMon(ma), hom = dayStr(0), k = b.dataset.dg;
     if (k === "nau") saveDanhGia(ma, { nau: dg.nau?.includes(hom) ? dg.nau.filter((x) => x !== hom) : [...(dg.nau || []), hom] });
@@ -947,6 +949,12 @@ function pageCook(ma, i) {
       ${i ? `<a class="btn" href="#/nau/${ma}/${i}">‹ Trước</a>` : "<span></span>"}
       <a class="btn on" href="${cuoi ? `#/mon/${ma}/xong` : `#/nau/${ma}/${i + 2}`}">${cuoi ? "Xong 🎉" : "Tiếp ›"}</a>
     </div>`;
+  thayLichSu();
+}
+// Chế độ nấu không thêm mục lịch sử: chuyển bước, Thoát, Xong đều thay mục hiện tại, để "Quay lại" ở trang món
+// về đúng trang trước đó thay vì lùi qua từng bước nấu.
+function thayLichSu() {
+  $app.querySelectorAll('a[href^="#/"]').forEach((a) => (a.onclick = (e) => { e.preventDefault(); location.replace(a.getAttribute("href")); }));
 }
 
 // ---------- Mùa vụ theo tháng ----------

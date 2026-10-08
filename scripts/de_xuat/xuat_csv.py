@@ -4,6 +4,8 @@ Vào:
   data/de_xuat/khung_mon.csv   – danh sách món theo khung mâm cơm (tên, vai, nhóm đạm, nguồn)
   scripts/de_xuat/lo1_bac.py   – công thức đầy đủ của lô 1
   scripts/de_xuat/lo2_bac.py   – lô 2 (món chủ dự án đề nghị thêm), cùng định dạng, nguon_loai "lo2"
+  scripts/de_xuat/lo4_chu_nha.py – lô 4 (món chủ nhà chọn kèm link công thức), nguon_loai "lo4"; mã trùng thì thay món cũ,
+                                 món trên Sheet trong DE_SHEET ghi ra de_len_sheet.csv để server.py đè lên bản Sheet
   scripts/de_xuat/lo3_dam.py   – lô 3 (món đạm, dưa chua, kim chi, bữa nướng), khung món khai báo ngay trong file, nguon_loai "lo3"
 Ra (cùng cột với bảng gốc trong data/):
   nguyen_lieu_moi.csv, mon_an_moi.csv, mon_nguyen_lieu_moi.csv
@@ -27,6 +29,7 @@ sys.path.insert(0, HERE)
 import lo1_bac  # noqa: E402
 import lo2_bac  # noqa: E402
 import lo3_dam  # noqa: E402
+import lo4_chu_nha  # noqa: E402
 from cach_lam_viet_lai import CL  # noqa: E402
 from phan_loai import classify  # noqa: E402
 
@@ -114,10 +117,10 @@ def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
     goc_nl = {r["ma"] for r in doc(os.path.join(DATA, "nguyen_lieu.csv"))}
-    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU
+    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl
-    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES}
+    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES}
 
     # Nguyên liệu mới
     nl_rows = []
@@ -140,6 +143,12 @@ def main():
     co_khung = {k["ma_mon"] for k in khung}
     khung += [{"ma_mon": ma, "ten_mon": lo1[ma]["ten"], "vai_mam": vai, "nhom_dam": dam, "nguon_loai": "lo3", "nguon": lo1[ma]["nguon"]}
               for ma, vai, dam in lo3_dam.KHUNG if ma not in co_khung]
+    # Lô 4: công thức chủ nhà chọn – thay dòng khung của món cùng mã (kể cả món trên Sheet), không thì thêm mới.
+    theo_khung = {k["ma_mon"] or slug(k["ten_mon"]): k for k in khung}  # dòng Cookpad để trống mã: mã sinh từ tên
+    for ma, vai, dam in lo4_chu_nha.KHUNG:
+        dong = {"ma_mon": ma, "ten_mon": lo1[ma]["ten"], "vai_mam": vai, "nhom_dam": dam, "nguon_loai": "lo4", "nguon": lo1[ma]["nguon"]}
+        if ma in theo_khung: theo_khung[ma].update(dong)
+        else: khung.append(dong)
     for k in khung:
         ten, vai, dam, nguon_loai, url = k["ten_mon"], k["vai_mam"], k["nhom_dam"], k["nguon_loai"], k["nguon"]
         if vai not in ENUM["vai_mam"]: loi.append(f"{ten}: vai_mam lạ {vai}")
@@ -147,10 +156,10 @@ def main():
         if nguon_loai == "dang_co":
             ma = k["ma_mon"]
             if ma not in goc_mon: loi.append(f"{ten}: không thấy {ma} trong data/mon_an.csv")
-        elif nguon_loai in ("lo1", "lo2", "lo3"):
+        elif nguon_loai in ("lo1", "lo2", "lo3", "lo4"):
             ma = k["ma_mon"]
             r = lo1[ma]
-            if ma in dung: loi.append(f"trùng ma_mon {ma}")
+            if ma in dung and ma not in lo4_chu_nha.DE_SHEET: loi.append(f"trùng ma_mon {ma}")
             dung.add(ma)
             for c in r["chinh"].split("|"):
                 if c and c not in tat_ca_nl: loi.append(f"{ma}: mã nguyên liệu chính lạ {c}")
@@ -232,6 +241,7 @@ def main():
     ghi("mon_an_moi.csv", MON_AN_HEADER, mon_rows)
     ghi("mon_nguyen_lieu_moi.csv", MON_NL_HEADER, mon_nl_rows)
     ghi("mon_nhan.csv", NHAN_HEADER, nhan_rows)
+    ghi("de_len_sheet.csv", ["ma_mon"], [[m] for m in sorted(lo4_chu_nha.DE_SHEET)])
     co_ct = sum(1 for r in mon_rows if r[12])
     print(f"Món mới: {len(mon_rows)} ({co_ct} có công thức, {len(mon_rows) - co_ct} dẫn link Cookpad) | "
           f"nhãn: {len(nhan_rows)} món | nguyên liệu mới: {len(nl_rows)} | dòng định lượng: {len(mon_nl_rows)}")

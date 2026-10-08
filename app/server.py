@@ -136,6 +136,10 @@ def merge_de_xuat(tabs):
     """
     an = {r["ma_mon"] for r in read_de_xuat("an_mon.csv")}
     sua_lich_mua(tabs)
+    # Món chủ nhà đổi sang công thức khác (de_len_sheet.csv, sinh từ lo4_chu_nha.py): bỏ bản Sheet để lấy bản đề xuất.
+    de = {r["ma_mon"] for r in read_de_xuat("de_len_sheet.csv")} if os.path.exists(os.path.join(DE_XUAT, "de_len_sheet.csv")) else set()
+    tabs["mon_an"] = [r for r in tabs["mon_an"] if r["ma_mon"] not in de]
+    tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in de]
     co_nl = {r["ma"] for r in tabs["nguyen_lieu"]}
     tabs["nguyen_lieu"] += [r for r in read_de_xuat("nguyen_lieu_moi.csv") if r["ma"] not in co_nl]
     co_mon = {r["ma_mon"] for r in tabs["mon_an"]}

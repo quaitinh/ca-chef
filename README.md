@@ -25,7 +25,9 @@ gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã 
 - `an_mon.csv` – món ẩn khỏi app (vd. món chủ nhà không thích).
 
 Sinh lại sau khi sửa `khung_mon.csv` hoặc các lô công thức `scripts/de_xuat/lo1_bac.py`, `lo2_bac.py`, `lo3_dam.py`
-(lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file):
+(lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file;
+lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã trùng thì thay món cũ, món trên Sheet ghi trong `DE_SHEET`
+được `app/server.py` đè lên bản Sheet qua `de_len_sheet.csv`):
 `python3 scripts/de_xuat/xuat_csv.py`
 
 Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
@@ -43,6 +45,7 @@ trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên
 
 Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`).
 - Nấu gì: bữa trưa, tối mỗi món một dòng; ✓ để chọn giữ món, "Đổi" xoay các món còn lại; nhắc rã đông cho ngày mai.
+- Chế độ nấu không thêm mục lịch sử (chuyển bước, Thoát, Xong thay mục hiện tại), nên "Quay lại" ở trang món về đúng trang trước.
 - Trang món: thông tin nhanh; thanh phản hồi ✓ Đã nấu / 👍 Ngon / 👎 Không hợp / ♥; 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng. Bấm "Xong" ở bước cuối thì ghi là đã nấu hôm nay và hỏi cả nhà thấy thế nào.
 - Món: lọc ♥ Yêu thích (♥ hoặc 👍), ✓ Đã nấu, theo vai món; `#/yeu-thich` mở thẳng danh sách yêu thích.
 - Mùa vụ: chọn tháng và nhóm; Đang rộ / Sắp vào mùa / Có hàng / Trái mùa, chạm để xem nguồn và món nấu được.
