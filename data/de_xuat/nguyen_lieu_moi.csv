@@ -52,6 +52,15 @@ oc_dong,Ốc đồng / ốc nhồi,thủy sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,ch
 hoa_chuoi,Hoa chuối,rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chuối trồng quanh năm – chưa có nguồn riêng
 kho_qua,Khổ qua (mướp đắng),rau củ,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Trồng quanh năm – chưa có nguồn riêng
 thom,Dứa (thơm),trái cây,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,Có quanh năm – chưa có nguồn riêng
+vit,Vịt,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Vịt nuôi có quanh năm – chưa có nguồn riêng
+ngan,Ngan,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,"Ngan nuôi có quanh năm, ở Phan Rang ít hơn vịt – chưa có nguồn riêng"
+chim_cut,Chim cút,thịt,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ,C,Chim cút nuôi có quanh năm – chưa có nguồn riêng
+ca_chep,Cá chép,thủy sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,"Cá nuôi nước ngọt; chợ Phan Rang ít gặp, siêu thị có cá làm sẵn"
+ca_tram,Cá trắm,thủy sản,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,C,"Cá nuôi nước ngọt; chợ Phan Rang ít gặp, siêu thị có cá cắt khúc"
+sau,Sấu,trái cây,Miền Bắc,1,1,1,1,2,2,2,2,1,1,1,1,chợ/online,C,Sấu tươi chỉ có ở miền Bắc mùa hè; ở Phan Rang mua sấu đông lạnh hoặc sấu ngâm
+thien_ly,Hoa thiên lý,rau củ,chung,1,1,1,1,2,2,2,2,1,1,1,1,chợ,C,Hoa nở rộ mùa hè – chưa có nguồn riêng
+dua_cai_chua,Dưa cải muối chua,khác,chung,1,1,1,1,1,1,1,1,1,1,1,1,chợ/GO!,A,"Dưa muối sẵn hoặc tự muối, có quanh năm"
+kim_chi,Kim chi cải thảo,khác,chung,1,1,1,1,1,1,1,1,1,1,1,1,GO!/siêu thị,A,Kim chi đóng hộp bán quanh năm ở siêu thị
 mang_cau_ta,Mãng cầu,trái cây,Khánh Hòa/Ninh Thuận,2,2,1,0,0,1,1,2,2,1,1,1,chợ,B,2 đợt: chính vụ ~T8–9 (âm 7–8) và vụ Tết xử lý ra hoa (T1–2); trái vụ rải rác
 sau_dau,Sầu đâu,rau củ,Ninh Thuận/miền Nam,1,2,2,2,1,0,0,0,0,0,0,1,chợ,B,"Cây mọc nhiều ở Ninh Thuận; đọt non + bông từ T11–T3 âm (≈T12–T4 dương). Vị đắng, chần qua"
 cu_kieu,Củ kiệu,rau củ,"Khánh Hòa (Cam Ranh, Cam Lâm)/Ninh Thuận",2,1,0,0,0,0,0,0,0,0,1,2,chợ,B,"Vụ Tết: thương lái đặt từ T10 âm, thu rộ tháng Chạp; càng gần Tết củ càng chắc"

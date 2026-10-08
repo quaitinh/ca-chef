@@ -148,7 +148,7 @@ RECIPES = [
        "Phi tỏi, xào lòng lửa lớn với chút nước mắm cho săn, múc ra.",
        "Xào cà chua cho mềm, cho dưa vào đảo 3 phút, trút lòng vào, nêm đường, nước mắm; thêm hành lá, tiêu rồi tắt bếp."],
       None, tk("lòng xào dưa"),
-      [("long_heo", "Lòng heo", 600, "g", "n", "chinh"), ("cai_xanh", "Dưa cải chua", 400, "g", "n", "phu"),
+      [("long_heo", "Lòng heo", 600, "g", "n", "chinh"), ("dua_cai_chua", "Dưa cải chua", 400, "g", "n", "phu"),
        ("ca_chua", "Cà chua", 2, "quả", "n", "phu"), TOI(4), MAM(1.5), DUONG(1), HANH_LA, TIEU, DAU(2)]),
     R("luoi_heo_luoc", "Lưỡi heo luộc", "mon_chinh", "am", "nhe", "it", "thit_heo", "moi", 50, "de",
       "Lưỡi heo luộc giòn sần sật, thái mỏng chấm nước mắm gừng hoặc muối tiêu chanh.",
@@ -206,7 +206,7 @@ RECIPES = [
        "Thả ba chỉ bò vào, sôi lại là tắt bếp để thịt mềm; rắc hành lá. Phần của bé múc trước khi cho nhiều kim chi."],
       None, tk("canh kim chi bò"),
       [("thit_bo", "Ba chỉ bò Mỹ", 300, "g", "n", "chinh"), ("nam", "Nấm kim châm", 200, "g", "n", "chinh"),
-       ("", "Kim chi cải thảo", 250, "g", "n", "phu"), ("dau_phu", "Đậu phụ non", 1, "hộp", "n", "phu"),
+       ("kim_chi", "Kim chi cải thảo", 250, "g", "n", "phu"), ("dau_phu", "Đậu phụ non", 1, "hộp", "n", "phu"),
        MAM(1), HAT_NEM(1), DUONG(0.5), HANH_LA, DAU(1)]),
 
     # ---------- Nấm ----------
@@ -274,7 +274,7 @@ RECIPES = [
        "Phi hành, xào cà chua, cho dưa vào đảo 3 phút, thêm nước xâm xấp, nêm nước mắm, chút đường.",
        "Xếp cá vào, om lửa nhỏ 15–20 phút cho cá thấm vị chua; tắt bếp thả thì là, hành lá."],
       None, tk("cá om dưa"),
-      [("", "Cá diêu hồng", 800, "g", "n", "chinh"), ("cai_xanh", "Dưa cải chua", 400, "g", "n", "phu"),
+      [("", "Cá diêu hồng", 800, "g", "n", "chinh"), ("dua_cai_chua", "Dưa cải chua", 400, "g", "n", "phu"),
        ("ca_chua", "Cà chua", 3, "quả", "n", "phu"), RAU_THOM("Thì là, hành lá"), HANH(2), MAM(1.5), DUONG(0.5), DAU(4)]),
     R("ca_dieu_hong_nuong_giay_bac", "Cá diêu hồng nướng giấy bạc", "mon_chinh", "am", "nhe", "it", "", "moi", 50, "vua",
       "Cá ướp sả, gừng, hành, bọc giấy bạc nướng lò hoặc nồi chiên không dầu – thịt ngọt, giữ nước, ít dầu.",

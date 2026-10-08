@@ -82,7 +82,7 @@ ca_loc_kho_to,Cá lóc kho tộ,mon_chinh,nong,nang,vua,ca_loc,mua,4,60,vua,"Cá
 2. Chiên sơ cá cho săn, cuối cùng phi vàng hành tỏi cùng.
 3. Lót ba chỉ thái miếng dày dưới đáy nồi đất, rải gừng, riềng thái lát, ớt, hành tỏi phi; xếp cá lên trên.
 4. Đổ nước ngập mặt cá cùng phần nước ướp, kho lửa nhỏ đến khi nước gần cạn, sánh lại; thả hành lá, đậy nắp 5 phút.",,https://cookpad.com/vn/cong-thuc/217193,chua_nau_thu
-ca_kho_rieng,Cá kho riềng (kiểu Bắc),mon_chinh,nong,nang,vua,thit_heo,mua,4,90,vua,"Cá kho riềng sả kiểu Bắc, kho lửa nhỏ nhiều lần cho chắc thịt, thấm vị.","1. Cá làm sạch, cắt khúc; riềng thái lát, sả đập dập, gừng đập, ớt băm; ba chỉ thái lát.
+ca_kho_rieng,Cá kho riềng (kiểu Bắc),mon_chinh,nong,nang,vua,ca_tram,mua,4,90,vua,"Cá kho riềng sả kiểu Bắc, kho lửa nhỏ nhiều lần cho chắc thịt, thấm vị.","1. Cá làm sạch, cắt khúc; riềng thái lát, sả đập dập, gừng đập, ớt băm; ba chỉ thái lát.
 2. Ướp cá với gia vị kho riềng (hoặc nước mắm, đường, chút muối) cùng một phần riềng sả gừng ít nhất 45 phút.
 3. Làm nước màu; xếp lần lượt riềng sả gừng, ba chỉ, cá và phần riềng sả còn lại vào nồi.
 4. Đổ nước ngập cá, sôi thì hạ lửa thật nhỏ, kho 30–40 phút; không đảo để cá khỏi nát; để nguội rồi kho thêm lần nữa cho đậm.",,https://cookpad.com/vn/cong-thuc/5514398,chua_nau_thu
@@ -204,7 +204,7 @@ thit_ga_sot_chua_ngot,Thịt gà sốt chua ngọt,mon_chinh,am,nang,vua,ga_ta,m
 3. Ớt chuông và cà chua cắt hạt vuông.
 4. Phi nóng dầu mè, xào cà chua đến mềm rồi cho ớt chuông vào, nêm giấm, đường, muối thành sốt chua ngọt vừa miệng.
 5. Trút gà vào đảo nhanh cho sốt áo đều, bày ra đĩa và rắc mè đen.",,https://cookpad.com/vn/cong-thuc/25799674,chua_nau_thu
-vit_chay_toi,Vịt cháy tỏi,mon_chinh,am,nhe,it,ga_ta,moi,4,70,vua,"Ngan chiên vàng ướp ngũ vị, phủ tỏi phi giòn rụm, thơm nức cả nhà.","1. Ngan bóp với gừng, rượu và muối rồi rửa sạch, để ráo, chặt miếng vừa ăn; tỏi chia hai phần, một phần băm, một phần thái lát.
+vit_chay_toi,Vịt cháy tỏi,mon_chinh,am,nhe,it,vit,moi,4,70,vua,"Ngan chiên vàng ướp ngũ vị, phủ tỏi phi giòn rụm, thơm nức cả nhà.","1. Ngan bóp với gừng, rượu và muối rồi rửa sạch, để ráo, chặt miếng vừa ăn; tỏi chia hai phần, một phần băm, một phần thái lát.
 2. Ướp ngan với tỏi băm, gừng băm, ngũ vị hương, rượu mai quế lộ, hạt nêm, đường, nước tương khoảng 30 phút.
 3. Đun nóng dầu, chiên ngan đến khi chín vàng, vớt ra để ráo dầu.
 4. Tắt bếp, thả tỏi lát vào dầu còn nóng chiên đến khi vàng giòn rồi vớt ra.
@@ -219,7 +219,7 @@ canh_ga_chien_nuoc_mam,Cánh gà chiên nước mắm,mon_chinh,nong,nhe,nhieu,g
 3. Phi tỏi vàng rồi vớt ra; thêm dầu, chiên cánh gà vàng đều, sau đó chiên lại lần nữa cho giòn hơn.
 4. Pha nước mắm, đường, nước cốt chanh, ớt xay với nửa bát nước, đun trong chảo đến khi sánh.
 5. Trút cánh gà và tỏi phi vào đảo nhanh cho sốt bám đều, rắc hành lá; phần của bé bỏ ớt.",,https://cookpad.com/vn/cong-thuc/4579470,chua_nau_thu
-vit_nau_thom,Vịt nấu thơm,mon_chinh,am,nhe,it,ga_ta,moi,4,120,kho,"Vịt nấu thơm với nước dừa, khoai, nấm và huyết, nước dùng chua ngọt đậm đà.","1. Vịt chặt miếng, ướp với sa tế, nước mắm, đường, bột ngọt, tiêu, hành tỏi xay và gừng sợi khoảng 1 tiếng.
+vit_nau_thom,Vịt nấu thơm,mon_chinh,am,nhe,it,vit,moi,4,120,kho,"Vịt nấu thơm với nước dừa, khoai, nấm và huyết, nước dùng chua ngọt đậm đà.","1. Vịt chặt miếng, ướp với sa tế, nước mắm, đường, bột ngọt, tiêu, hành tỏi xay và gừng sợi khoảng 1 tiếng.
 2. Thơm, cà rốt, khoai tây cắt miếng; sả đập dập; nấm đông cô ngâm mềm; huyết vịt cắt miếng.
 3. Phi hành tỏi, sả và gừng với dầu ăn và dầu điều, cho vịt vào xào lửa lớn 7–10 phút cho săn.
 4. Đổ nước dừa và thêm nước lọc xăm xắp, nêm muối, đường rồi hầm đến khi vịt mềm.
@@ -254,7 +254,7 @@ ca_ri_ga,Cà ri gà (ít cay),mon_chinh,nong,nhe,it,ga_ta,mua,4,80,vua,"Cà ri g
 3. Phi thơm hành tỏi, cho gà vào xào săn, đổ nước xăm xắp, thả sả vào đun sôi.
 4. Cho cà rốt vào trước, sôi lại thì thêm khoai tây và hành tây, nấu đến khi khoai vừa mềm.
 5. Thêm nước cốt dừa, sữa tươi, chút sữa đặc và cà ri, nêm vừa ăn rồi đun thêm 10 phút; múc ra bát rắc rau thơm, ăn với bánh mì hoặc bún.",,https://cookpad.com/vn/cong-thuc/910411-ca-ri-ga,chua_nau_thu
-vit_luoc_cham_mam_gung,Vịt luộc chấm mắm gừng,mon_chinh,mat,nhe,it,ga_ta,nang,4,70,de,"Vịt luộc da vàng, thịt ngọt, chấm nước mắm gừng cay ấm đúng vị Bắc.","1. Gừng giã dập trộn rượu trắng, xát khắp con vịt để khử mùi, rồi rửa lại nhiều lần.
+vit_luoc_cham_mam_gung,Vịt luộc chấm mắm gừng,mon_chinh,mat,nhe,it,vit,nang,4,70,de,"Vịt luộc da vàng, thịt ngọt, chấm nước mắm gừng cay ấm đúng vị Bắc.","1. Gừng giã dập trộn rượu trắng, xát khắp con vịt để khử mùi, rồi rửa lại nhiều lần.
 2. Cho vịt vào nồi nước lạnh cùng gừng, chút muối và hạt nêm, luộc lửa vừa đến khi chín thì tắt bếp ủ thêm 10 phút.
 3. Vớt vịt ra để nguội rồi chặt miếng; nước luộc giữ lại nấu canh.
 4. Pha nước mắm với nước, đường, gừng giã, chút chanh và ớt làm nước chấm; bát của bé không cho ớt.",,https://cookpad.com/vn/cong-thuc/24337187,chua_nau_thu
@@ -722,7 +722,7 @@ canh_cai_thao_dau_hu_nam,Canh cải thảo đậu hũ nấm,canh,am,nhe,it,dau_p
 3. Đổ khoảng 1,2 lít nước, đun sôi rồi cho phần cuống cải thảo vào trước, nấu 3 phút.
 4. Thêm lá cải và đậu hũ, nêm muối, hạt nêm vừa ăn, đun thêm 2–3 phút cho cải mềm.
 5. Rắc hành lá, chút tiêu rồi tắt bếp.",,https://cookpad.com/vn/tim-kiem/canh%20c%E1%BA%A3i%20th%E1%BA%A3o%20n%E1%BA%A5m,chua_nau_thu
-canh_dua_chua_nau_suon,Canh dưa chua nấu sườn (kiểu Bắc),canh,mat,nhe,it,thit_heo,nang,4,50,vua,"Canh dưa chua nấu sườn kiểu Bắc, chua dịu, sườn mềm, thơm thì là.","1. Dưa chua vắt bớt nước, thái nhỏ; cà chua bổ múi; sườn và da heo chần qua nước sôi có muối rồi rửa lại, da heo thái miếng.
+canh_dua_chua_nau_suon,Canh dưa chua nấu sườn (kiểu Bắc),canh,mat,nhe,it,dua_cai_chua,nang,4,50,vua,"Canh dưa chua nấu sườn kiểu Bắc, chua dịu, sườn mềm, thơm thì là.","1. Dưa chua vắt bớt nước, thái nhỏ; cà chua bổ múi; sườn và da heo chần qua nước sôi có muối rồi rửa lại, da heo thái miếng.
 2. Cho sườn vào nồi với khoảng 1 lít nước, nêm chút hạt nêm và nước mắm, ninh 15–20 phút cho sườn mềm, thêm da heo đun tiếp 5 phút.
 3. Phi vàng hành tím, cho cà chua vào đảo một phút rồi thêm dưa chua xào khoảng 3 phút cho dưa ngấm vị.
 4. Trút dưa cà vào nồi sườn, đun sôi lại và nêm nếm vừa khẩu vị.
@@ -1067,7 +1067,7 @@ ca_phao_muoi_xoi,Cà pháo muối xổi,goi,am,nhe,it,ca_phao,moi,4,150,de,"Cà 
 2. Ngâm cà trong nước muối pha nửa quả chanh khoảng 30 phút cho ra hết nhựa, rửa lại và để ráo.
 3. Giã hoặc băm tỏi ớt, pha với nước mắm, đường và nước cốt chanh cho chua mặn ngọt vừa miệng.
 4. Trộn cà với nước mắm vừa pha, cho vào hũ đậy kín, để nhiệt độ phòng 1–2 tiếng là ăn được, sau đó cất ngăn mát.",,https://cookpad.com/vn/cong-thuc/14426801,chua_nau_thu
-dua_cai_muoi_chua,Dưa cải muối chua,goi,mat,nhe,it,cai_xanh,nang,4,60,vua,"Dưa cải muối chua giòn vàng ươm, thơm hành, ăn kèm cơm, kho cá hay xào thịt.","1. Cắt bớt lá cải, phơi héo khoảng 3 tiếng nếu có thời gian; rửa sạch, cắt miếng vừa ăn và để ráo. Hành bắc bóc vỏ, rửa sạch.
+dua_cai_muoi_chua,Dưa cải muối chua,goi,mat,nhe,it,dua_cai_chua,nang,4,60,vua,"Dưa cải muối chua giòn vàng ươm, thơm hành, ăn kèm cơm, kho cá hay xào thịt.","1. Cắt bớt lá cải, phơi héo khoảng 3 tiếng nếu có thời gian; rửa sạch, cắt miếng vừa ăn và để ráo. Hành bắc bóc vỏ, rửa sạch.
 2. Đun sôi 2 lít nước, tráng hũ và nắp bằng nước sôi; hòa muối và đường vào phần nước còn lại, để nguội.
 3. Trộn cải, hành với nước muối trong thau lớn khoảng 30 phút cho cải hơi héo.
 4. Xếp cải vào hũ, đổ nước muối ngập, dùng vỉ tre hoặc đĩa nén chặt; đậy nắp, để 3–4 ngày là dưa chua vàng.",,https://cookpad.com/vn/cong-thuc/16691531,chua_nau_thu
@@ -1195,3 +1195,220 @@ nam_huong_nhoi_thit_hap,Nấm hương nhồi thịt hấp,mon_chinh,am,nhe,it,na
 2. Băm tôm, trộn với thịt băm, chân nấm, hành tím, nước mắm, tiêu, chút bột năng cho dẻo.
 3. Rắc chút bột năng vào mặt trong mũ nấm, nhồi nhân thành khối tròn, xếp vào đĩa.
 4. Hấp 15 phút; đun nước hấp với dầu hào, chút đường, bột năng cho sánh, rưới lên, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/n%E1%BA%A5m%20h%C6%B0%C6%A1ng%20nh%E1%BB%93i%20th%E1%BB%8Bt,chua_nau_thu
+ga_rang_gung,Gà rang gừng,mon_chinh,nong,nhe,vua,ga_ta,mua,4,40,de,"Gà chặt miếng rang với thật nhiều gừng, nước mắm, đường đến khi sém cạnh, thơm cay ấm bụng (kiểu Bắc).","1. Gà chặt miếng vừa ăn, rửa với nước muối pha gừng đập dập, để ráo.
+2. Ướp gà với nước mắm, chút đường, hạt nêm, một nửa gừng thái sợi trong 20 phút.
+3. Phi thơm hành tím, cho gà vào đảo lửa lớn đến khi săn và ra mỡ.
+4. Thêm phần gừng còn lại, rưới chút nước màu hoặc đường thắng, rang lửa vừa đến khi gà khô, sém cạnh, bóng đều.
+5. Nêm lại, rắc tiêu và hành lá rồi tắt bếp.",,https://cookpad.com/vn/tim-kiem/g%C3%A0%20rang%20g%E1%BB%ABng,chua_nau_thu
+ga_rang_muoi,Gà rang muối,mon_chinh,nong,nhe,nhieu,ga_ta,moi,4,45,vua,"Gà chiên vàng rồi đảo với muối rang, lá chanh, sả, tỏi phi – giòn mặn thơm, trẻ con thích.","1. Gà chặt miếng, ướp chút muối, hạt nêm, tiêu 15 phút; lăn qua lớp bột năng mỏng.
+2. Chiên gà ngập dầu lửa vừa đến chín, vớt ra rồi chiên lại lửa lớn 1 phút cho giòn.
+3. Rang muối với hạt nêm, chút đường đến khô thơm; phi tỏi, sả băm, lá chanh thái chỉ cho vàng giòn.
+4. Cho gà vào chảo muối, đảo nhanh tay với tỏi, sả, lá chanh cho áo đều rồi bày ra đĩa.",,https://cookpad.com/vn/tim-kiem/g%C3%A0%20rang%20mu%E1%BB%91i,chua_nau_thu
+ga_xao_sa_ot,Gà xào sả ớt,mon_chinh,nong,nhe,vua,ga_ta,mua,4,35,de,"Gà xào săn với sả, ớt, nghệ – thơm nồng đưa cơm ngày mưa (múc riêng phần bé trước khi cho ớt).","1. Gà chặt miếng nhỏ, ướp nước mắm, hạt nêm, chút nghệ, một nửa sả băm trong 15 phút.
+2. Phi thơm hành, tỏi, phần sả còn lại; cho gà vào đảo lửa lớn đến khi săn.
+3. Thêm chút nước, đậy nắp om nhỏ lửa 10 phút cho gà mềm và thấm.
+4. Múc riêng phần cho bé, cho ớt vào phần còn lại, đảo khô nước, rắc tiêu và lá chanh.",,https://cookpad.com/vn/tim-kiem/g%C3%A0%20x%C3%A0o%20s%E1%BA%A3%20%E1%BB%9Bt,chua_nau_thu
+ga_kho_sa,Gà kho sả,mon_chinh,nong,nhe,vua,ga_ta,mua,4,45,de,"Gà kho với sả cây đập dập, nước mắm và nước màu – nước kho sệt, đậm vị, chan cơm ngon.","1. Gà chặt miếng, ướp nước mắm, đường, hạt nêm, tiêu, sả băm 20 phút.
+2. Phi thơm hành, sả cây đập dập; cho gà vào đảo đến săn.
+3. Thêm nước màu và nước xâm xấp, kho lửa nhỏ 20–25 phút đến khi nước sệt lại.
+4. Nêm lại vừa ăn, rắc tiêu và hành lá.",,https://cookpad.com/vn/tim-kiem/g%C3%A0%20kho%20s%E1%BA%A3,chua_nau_thu
+ngan_xao_sa_ot,Ngan xào sả ớt,mon_chinh,nong,nhe,vua,ngan,mua,4,45,vua,"Ngan chặt miếng xào sả ớt, chút mẻ cho thơm – thịt ngan dai ngọt, chấm thêm mắm gừng (kiểu Bắc).","1. Ngan làm sạch, xát gừng và rượu cho bớt mùi, chặt miếng nhỏ.
+2. Ướp ngan với nước mắm, hạt nêm, sả băm, chút mẻ trong 20 phút.
+3. Phi thơm hành tỏi, cho ngan vào xào lửa lớn đến săn, thêm ít nước, đậy nắp om 15 phút cho mềm.
+4. Múc phần cho bé, thêm ớt vào phần còn lại, đảo khô, rắc lá chanh thái chỉ.",,https://cookpad.com/vn/tim-kiem/ngan%20x%C3%A0o%20s%E1%BA%A3%20%E1%BB%9Bt,chua_nau_thu
+vit_om_sau,Vịt om sấu,mon_chinh,nong,nang,vua,vit|sau,moi,4,75,vua,"Vịt om với sấu chua thanh, khoai sọ bùi, chan bún hay cơm đều hợp – món Hà Nội ngày giao mùa.","1. Vịt làm sạch, xát gừng, chặt miếng; ướp với nước mắm, hạt nêm, hành tím băm 20 phút.
+2. Sấu (sấu đông lạnh rã đông) gọt vỏ, khía cạnh; khoai sọ gọt, cắt đôi, ngâm nước muối.
+3. Phi hành, cho vịt vào đảo săn, đổ nước ngập, thả sấu, om lửa nhỏ 30 phút.
+4. Cho khoai sọ vào om thêm 15 phút đến khi khoai mềm; dầm vài quả sấu cho nước chua dịu, nêm lại.
+5. Tắt bếp thả hành lá, rau mùi; ăn với bún hoặc cơm, chấm mắm gừng.",,https://cookpad.com/vn/tim-kiem/v%E1%BB%8Bt%20om%20s%E1%BA%A5u,chua_nau_thu
+vit_kho_gung,Vịt kho gừng,mon_chinh,nong,nang,vua,vit,mua,4,60,de,"Vịt kho gừng, nước mắm, nước màu đến khi thịt săn, nước sánh – ấm bụng, ít mùi.","1. Vịt chặt miếng, rửa với nước muối gừng, chần qua nước sôi cho sạch.
+2. Ướp vịt với nước mắm, đường, hạt nêm, nửa phần gừng thái sợi 20 phút.
+3. Phi hành, cho vịt vào đảo cho ra bớt mỡ, chắt bớt mỡ thừa.
+4. Thêm nước màu, phần gừng còn lại và nước xâm xấp, kho lửa nhỏ 35–40 phút đến khi sánh, rắc tiêu.",,https://cookpad.com/vn/tim-kiem/v%E1%BB%8Bt%20kho%20g%E1%BB%ABng,chua_nau_thu
+canh_ga_tan_hat_sen,Canh gà tần hạt sen,canh,am,nhe,it,ga_ta|hat_sen,moi,4,90,de,"Gà tần với hạt sen, táo đỏ, nấm hương – canh ngọt thanh, bổ, bé dễ ăn.","1. Gà chặt miếng to, chần nước sôi 2 phút, rửa sạch.
+2. Hạt sen bỏ tim, ngâm mềm; nấm hương ngâm, cắt chân; táo đỏ rửa sạch.
+3. Cho gà, hạt sen, nấm, táo đỏ, gừng vào nồi, đổ khoảng 1,5 lít nước, tần hoặc hầm lửa nhỏ 60 phút.
+4. Nêm muối, hạt nêm vừa ăn; hớt bọt, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/g%C3%A0%20t%E1%BA%A7n%20h%E1%BA%A1t%20sen,chua_nau_thu
+me_ga_xao_dua_chua,Mề gà xào dưa chua,mon_chinh,nong,nhe,vua,ga_ta|dua_cai_chua,moi,4,30,de,"Mề gà giòn sần sật xào với dưa cải chua, cà chua – chua nhẹ, đưa cơm (kiểu Bắc).","1. Mề gà bóc màng vàng, rửa muối và giấm, thái lát mỏng; ướp nước mắm, tiêu, hành băm 10 phút.
+2. Dưa cải chua vắt bớt nước, cắt khúc; cà chua bổ múi.
+3. Phi hành tỏi, xào mề lửa lớn đến săn thì múc ra.
+4. Xào cà chua cho mềm, cho dưa vào đảo 3 phút, cho mề vào đảo đều, nêm đường, nước mắm, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/m%E1%BB%81%20g%C3%A0%20x%C3%A0o%20d%C6%B0a%20chua,chua_nau_thu
+chim_cut_ro_ti,Chim cút rô ti,mon_chinh,nong,nhe,vua,chim_cut,moi,4,50,vua,"Chim cút ướp nước dừa, chiên vàng rồi rim sệt – da bóng, thịt mềm, bé cầm tay ăn được.","1. Chim cút làm sạch, để nguyên con hoặc chặt đôi; ướp nước mắm, đường, tỏi băm, tiêu, chút ngũ vị 30 phút.
+2. Chiên chim cút lửa vừa đến vàng đều các mặt.
+3. Phi tỏi, cho chim vào cùng nước dừa và phần nước ướp, rim lửa nhỏ 15–20 phút đến khi nước sệt, bám bóng.
+4. Bày ra đĩa, ăn kèm dưa leo, cà chua.",,https://cookpad.com/vn/tim-kiem/chim%20c%C3%BAt%20r%C3%B4%20ti,chua_nau_thu
+bo_xao_kho_qua,Bò xào khổ qua,mon_chinh,mat,nhe,vua,thit_bo|kho_qua,nang,4,25,de,"Thịt bò mềm xào nhanh với khổ qua giòn – đắng nhẹ, mát người ngày nắng.","1. Bò thái mỏng ngang thớ, ướp dầu hào, tiêu, tỏi băm, chút dầu ăn 15 phút.
+2. Khổ qua bổ đôi, bỏ ruột, thái lát xiên; chần qua nước sôi có muối cho bớt đắng.
+3. Xào bò lửa thật lớn vừa tái thì múc ra.
+4. Phi tỏi, xào khổ qua 2 phút, cho bò vào đảo nhanh, nêm nước mắm, hạt nêm, rắc tiêu.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20x%C3%A0o%20kh%E1%BB%95%20qua,chua_nau_thu
+bo_xao_thien_ly,Bò xào hoa thiên lý,mon_chinh,mat,nhe,vua,thit_bo|thien_ly,nang,4,20,de,Hoa thiên lý xanh giòn xào với thịt bò – món mùa hè thanh mát của người Hà Nội.,"1. Bò thái mỏng, ướp tỏi băm, dầu hào, tiêu, chút dầu ăn 15 phút.
+2. Hoa thiên lý nhặt bỏ cuống già, rửa nhẹ tay, để ráo.
+3. Xào bò lửa lớn vừa tái thì múc ra.
+4. Phi tỏi, xào hoa thiên lý 1 phút, cho bò vào đảo đều, nêm hạt nêm, nước mắm rồi tắt bếp ngay cho hoa khỏi nhũn.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20x%C3%A0o%20hoa%20thi%C3%AAn%20l%C3%BD,chua_nau_thu
+bo_bit_tet,Bò bít tết kiểu Việt,mon_chinh,nong,nang,vua,thit_bo,moi,4,30,de,"Bò áp chảo gang với bơ tỏi, ốp la trứng, khoai tây chiên, chấm sốt tiêu – bé rất thích.","1. Bò cắt miếng dày 1,5 cm, đập nhẹ cho mềm, ướp tỏi băm, dầu hào, tiêu, chút dầu 20 phút.
+2. Khoai tây cắt thanh, chiên vàng; trứng ốp la để riêng.
+3. Đun nóng chảo gang, áp bò mỗi mặt 1,5–2 phút (phần bé để chín kỹ hơn), thêm bơ và tỏi đập rưới lên mặt thịt.
+4. Dùng chảo áp thịt nấu sốt: nước, chút dầu hào, tiêu đen, hành tây; rưới lên thịt, ăn kèm khoai, trứng, bánh mì.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20b%C3%ADt%20t%E1%BA%BFt,chua_nau_thu
+bo_xao_ot_chuong,Bò xào ớt chuông,mon_chinh,am,nhe,vua,thit_bo,moi,4,25,de,"Bò mềm xào ớt chuông ba màu, hành tây – ngọt giòn, nhiều màu cho bé.","1. Bò thái mỏng, ướp dầu hào, tỏi, tiêu, chút bột năng và dầu ăn 15 phút.
+2. Ớt chuông bỏ hạt, cắt miếng vuông; hành tây bổ múi cau.
+3. Xào bò lửa lớn vừa tái, múc ra.
+4. Xào ớt chuông, hành tây 2 phút, cho bò vào, nêm nước tương, hạt nêm, đảo đều rồi tắt bếp.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20x%C3%A0o%20%E1%BB%9Bt%20chu%C3%B4ng,chua_nau_thu
+bo_ham_tieu_xanh,Bò hầm tiêu xanh,mon_chinh,nong,nang,vua,thit_bo|tieu_moi,mua,4,120,de,"Bắp bò hầm mềm với tiêu xanh, sả, gừng – nước hầm cay thơm, ấm bụng ngày mưa.","1. Bắp bò cắt miếng vuông, chần nước sôi, rửa sạch.
+2. Ướp bò với nước mắm, hạt nêm, hành tỏi băm, sả băm 30 phút.
+3. Xào bò cho săn, đổ nước ngập, thêm gừng, sả cây đập dập, hầm lửa nhỏ 90 phút đến khi bò mềm.
+4. Thả tiêu xanh nguyên chùm, hầm thêm 10 phút, nêm lại; ăn với bánh mì hoặc cơm.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20h%E1%BA%A7m%20ti%C3%AAu%20xanh,chua_nau_thu
+bo_tai_chanh,Bò tái chanh,goi,mat,nhe,it,thit_bo,nang,4,30,vua,"Thăn bò thái mỏng trần tái, trộn chanh, hành tây, rau thơm, vừng rang – món nhậu mát ngày nắng (không hợp bé).","1. Thăn bò thái thật mỏng; trần nhanh qua nước sôi có gừng 10 giây, vớt ra vắt ráo.
+2. Trộn bò với nước cốt chanh 5 phút cho tái, vắt bớt nước chanh.
+3. Pha nước trộn: nước mắm, đường, tỏi ớt băm, chút nước cốt chanh.
+4. Trộn bò với hành tây thái mỏng, rau răm, kinh giới, nước trộn; rắc vừng và lạc rang khi ăn.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20t%C3%A1i%20chanh,chua_nau_thu
+canh_bo_nau_chua,Canh bò nấu chua,canh,mat,nhe,it,thit_bo|ca_chua,nang,4,30,de,"Thịt bò thái mỏng nấu với cà chua, dứa, dọc mùng – chua thanh kiểu Bắc, ăn ngày nắng rất đưa cơm.","1. Bò thái mỏng, ướp chút nước mắm, tiêu, hành băm.
+2. Dọc mùng tước vỏ, thái vát, bóp muối rồi rửa; cà chua bổ múi; dứa thái miếng.
+3. Phi hành, xào cà chua và dứa cho mềm, đổ khoảng 1,2 lít nước đun sôi.
+4. Cho dọc mùng vào, nêm nước mắm, chút đường cho chua dịu; thả bò vào, sôi lại là tắt bếp, rắc hành, rau thơm.",,https://cookpad.com/vn/tim-kiem/canh%20b%C3%B2%20n%E1%BA%A5u%20chua,chua_nau_thu
+bo_xao_dua_chua,Bò xào dưa chua,mon_chinh,nong,nhe,vua,thit_bo|dua_cai_chua,moi,4,25,de,"Bò mềm xào dưa cải chua, cà chua – chua dịu, thơm, món cơm nhà quen thuộc của người Bắc.","1. Bò thái mỏng, ướp tỏi, dầu hào, tiêu 15 phút.
+2. Dưa cải chua vắt bớt nước, cắt khúc; cà chua bổ múi.
+3. Xào bò lửa lớn vừa tái, múc ra.
+4. Xào cà chua cho mềm, cho dưa vào đảo 3–4 phút, nêm đường cho dịu chua; cho bò vào đảo đều, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20x%C3%A0o%20d%C6%B0a%20chua,chua_nau_thu
+bo_ham_dua_chua,Bò hầm dưa chua,mon_chinh,nong,nang,vua,thit_bo|dua_cai_chua,mua,4,120,de,"Bắp bò hầm mềm với dưa cải chua, cà chua – nước hầm chua ngọt, ăn với cơm hay bún đều ngon.","1. Bắp bò cắt miếng vừa ăn, chần nước sôi, rửa sạch; ướp nước mắm, hạt nêm, hành băm 20 phút.
+2. Dưa cải chua vắt bớt nước, cắt khúc; cà chua bổ múi.
+3. Phi hành, xào bò cho săn, đổ nước ngập, hầm lửa nhỏ 70–80 phút đến khi bò gần mềm.
+4. Xào cà chua với dưa 3 phút rồi cho vào nồi bò, hầm thêm 20 phút; nêm đường, nước mắm cho chua dịu, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/b%C3%B2%20h%E1%BA%A7m%20d%C6%B0a%20chua,chua_nau_thu
+thit_chung_mam_tep,Thịt chưng mắm tép,mon_chinh,nong,nhe,vua,thit_heo,moi,4,40,de,"Thịt ba chỉ băm chưng với mắm tép, đường, ớt – mặn ngọt đậm đà, ăn với cơm trắng, dưa cà (kiểu Bắc).","1. Thịt ba chỉ thái hạt lựu nhỏ hoặc băm thô.
+2. Phi thơm hành tím, cho thịt vào đảo đến khi ra mỡ, hơi xém.
+3. Thêm mắm tép, đường, chút nước, đun lửa nhỏ 15–20 phút, đảo đều đến khi sệt lại.
+4. Múc phần cho bé trước, thêm ớt vào phần còn lại; rắc tiêu, hành lá.",,https://cookpad.com/vn/tim-kiem/th%E1%BB%8Bt%20ch%C6%B0ng%20m%E1%BA%AFm%20t%C3%A9p,chua_nau_thu
+ruoc_thit_heo,Ruốc thịt heo,mon_chinh,am,nhe,it,thit_heo,moi,4,90,vua,"Thịt nạc rim rồi xé tơi, sao khô thành ruốc bông – làm một lần ăn nhiều bữa, bé ăn cơm, cháo đều hợp.","1. Thịt nạc thăn cắt miếng to theo thớ, luộc với chút muối, hành 30 phút đến chín mềm.
+2. Vớt thịt, để nguội, xé nhỏ theo thớ hoặc giã nhẹ cho tơi.
+3. Cho thịt vào chảo cùng nước mắm, đường, chút nước luộc, rim lửa nhỏ đến khi thấm khô.
+4. Sao lửa thật nhỏ, đảo liên tục 30–40 phút đến khi ruốc tơi bông, vàng nhẹ; để nguội cho vào hũ kín, ngăn mát dùng 2 tuần.",,https://cookpad.com/vn/tim-kiem/ru%E1%BB%91c%20th%E1%BB%8Bt%20heo,chua_nau_thu
+gan_heo_xao_hanh,Gan heo xào hành,mon_chinh,nong,nhe,vua,long_heo,moi,4,20,de,"Gan heo thái mỏng xào lửa lớn với hành tây, hành lá – mềm, không tanh, bổ sung sắt cho bé.","1. Gan ngâm sữa tươi hoặc nước muối loãng 20 phút cho sạch máu, thái lát mỏng.
+2. Ướp gan với nước mắm, tiêu, tỏi băm, chút bột năng 10 phút.
+3. Phi tỏi, xào gan lửa thật lớn 2–3 phút đến vừa chín (xào lâu gan sẽ bở, khô).
+4. Cho hành tây, hành lá vào đảo nhanh, nêm hạt nêm, tắt bếp.",,https://cookpad.com/vn/tim-kiem/gan%20heo%20x%C3%A0o%20h%C3%A0nh,chua_nau_thu
+tim_cat_xao_can_toi,Tim cật heo xào cần tỏi,mon_chinh,nong,nhe,vua,long_heo,moi,4,30,vua,"Tim, cật heo làm sạch kỹ, xào giòn với cần tây, tỏi – món xào nhanh quen thuộc mâm cơm Bắc.","1. Cật bổ đôi, lạng bỏ phần trắng, khía vảy rồng, ngâm nước muối gừng 15 phút; tim bổ đôi, rửa sạch máu, thái lát.
+2. Chần tim cật qua nước sôi 30 giây, vớt ra để ráo; ướp nước mắm, tiêu, tỏi.
+3. Cần tây cắt khúc, cà rốt thái lát mỏng.
+4. Phi tỏi, xào tim cật lửa lớn 2 phút, cho cần, cà rốt vào đảo, nêm dầu hào, hạt nêm.",,https://cookpad.com/vn/tim-kiem/tim%20c%E1%BA%ADt%20x%C3%A0o%20c%E1%BA%A7n%20t%E1%BB%8Fi,chua_nau_thu
+suon_nuong_mat_ong,Sườn nướng mật ong,mon_chinh,nong,nhe,vua,thit_heo,moi,4,70,vua,"Sườn non ướp mật ong, tỏi, nước tương rồi nướng lò hoặc nồi chiên không dầu – bóng, thơm, bé thích.","1. Sườn non chặt miếng dài, chần nước sôi, để ráo.
+2. Ướp sườn với mật ong, nước tương, dầu hào, tỏi băm, tiêu, chút ngũ vị ít nhất 2 tiếng (để qua đêm càng ngấm).
+3. Nướng 200°C khoảng 25 phút, lật mặt, quét lại nước ướp, nướng thêm 10–15 phút đến khi xém cạnh.
+4. Ăn với cơm, dưa leo, cà chua.",,https://cookpad.com/vn/tim-kiem/s%C6%B0%E1%BB%9Dn%20n%C6%B0%E1%BB%9Bng%20m%E1%BA%ADt%20ong,chua_nau_thu
+thit_quay_gion_bi,Thịt ba chỉ quay giòn bì,mon_chinh,nong,nang,nhieu,thit_heo,moi,4,150,kho,"Ba chỉ ướp ngũ vị, phơi khô bì rồi quay đến khi da nổ giòn – chấm mắm, ăn với dưa chua.","1. Ba chỉ miếng to luộc 10 phút, vớt ra, dùng xiên châm thật nhiều lỗ trên bì.
+2. Ướp mặt thịt (không ướp bì) với muối, đường, ngũ vị, tỏi băm; xát muối và giấm lên bì.
+3. Để mặt bì lên trên, cho vào ngăn mát không đậy khoảng 4 tiếng (hoặc qua đêm) cho bì thật khô.
+4. Nướng 180°C 40 phút, tăng 220°C thêm 20–30 phút đến khi bì phồng nổ giòn; để nguội 10 phút rồi thái miếng.",,https://cookpad.com/vn/tim-kiem/th%E1%BB%8Bt%20ba%20ch%E1%BB%89%20quay%20gi%C3%B2n%20b%C3%AC,chua_nau_thu
+gia_cay_chan_gio,Giả cầy (chân giò om mẻ riềng),mon_chinh,nong,nang,vua,thit_heo,mua,4,120,kho,"Chân giò thui vàng om với riềng, mẻ, mắm tôm, nghệ – món ngày lạnh đậm vị của người Bắc.","1. Chân giò thui vàng bì (hoặc khò), cạo sạch, chặt miếng vừa ăn.
+2. Ướp với riềng giã, nghệ, mẻ, mắm tôm, nước mắm, chút đường ít nhất 2 tiếng.
+3. Phi hành, đảo chân giò cho săn, đổ nước xâm xấp, om lửa nhỏ 60–70 phút đến khi mềm, nước sánh.
+4. Nêm lại, thả lá lốt, hành lá thái nhỏ rồi tắt bếp; ăn với bún hoặc cơm nóng.",,https://cookpad.com/vn/tim-kiem/gi%E1%BA%A3%20c%E1%BA%A7y%20ch%C3%A2n%20gi%C3%B2,chua_nau_thu
+mong_gio_ham_mang,Móng giò hầm măng,mon_chinh,nong,nang,vua,thit_heo|mang_rung,mua,4,120,vua,"Móng giò hầm mềm với măng khô hoặc măng tươi – nước ngọt béo, món quen ngày lạnh.","1. Măng khô ngâm qua đêm, luộc kỹ vài lần thay nước, xé sợi (măng tươi luộc kỹ bỏ nước đắng).
+2. Móng giò chặt miếng, chần nước sôi, rửa sạch.
+3. Xào măng với hành, nước mắm cho thấm; cho móng giò vào, đổ nước ngập, hầm lửa nhỏ 80–90 phút.
+4. Nêm lại vừa ăn, rắc hành lá, tiêu.",,https://cookpad.com/vn/tim-kiem/m%C3%B3ng%20gi%C3%B2%20h%E1%BA%A7m%20m%C4%83ng,chua_nau_thu
+xiu_mai_sot_ca,Xíu mại sốt cà,mon_chinh,am,nhe,vua,thit_heo|ca_chua,moi,4,50,vua,"Viên thịt mềm trộn củ sắn, mộc nhĩ hấp chín rồi rim sốt cà chua – bé ăn với bánh mì hoặc cơm.","1. Thịt băm trộn củ sắn (củ đậu) băm, mộc nhĩ băm, hành tím, nước mắm, tiêu, chút bột năng; nhồi đều, vo viên.
+2. Hấp viên thịt 15 phút cho chín và giữ dáng; giữ lại nước hấp.
+3. Phi hành, xào cà chua băm cho nhừ, thêm chút tương cà, nước hấp viên, nêm đường, nước mắm.
+4. Cho viên vào rim lửa nhỏ 10 phút cho thấm sốt, rắc hành lá.",,https://cookpad.com/vn/tim-kiem/x%C3%ADu%20m%E1%BA%A1i%20s%E1%BB%91t%20c%C3%A0,chua_nau_thu
+thit_kho_dua_cai,Thịt ba chỉ kho dưa cải,mon_chinh,nong,nang,vua,thit_heo|dua_cai_chua,mua,4,60,de,"Ba chỉ kho với dưa cải chua đến khi dưa ngấm mỡ, thịt mềm – chua mặn ngọt, để được vài bữa.","1. Ba chỉ cắt miếng vừa ăn, ướp nước mắm, đường, hành băm 20 phút.
+2. Dưa cải chua vắt bớt nước, cắt khúc (dưa chua quá thì rửa qua).
+3. Thắng chút đường làm nước màu, cho thịt vào đảo săn, thêm nước xâm xấp, kho 20 phút.
+4. Cho dưa vào kho thêm 20–25 phút đến khi dưa mềm, ngấm, nước sệt; nêm lại, rắc tiêu.",,https://cookpad.com/vn/tim-kiem/th%E1%BB%8Bt%20kho%20d%C6%B0a%20c%E1%BA%A3i,chua_nau_thu
+tau_hu_ky_cuon_thit,Tàu hũ ky cuộn thịt,mon_chinh,nong,nhe,nhieu,thit_heo,moi,4,50,vua,"Tàu hũ ky cuộn nhân thịt tôm, chiên vàng giòn, chấm tương ớt – món nhà làm bé thích.","1. Thịt băm trộn tôm băm, mộc nhĩ, hành tím, nước mắm, tiêu, chút bột năng.
+2. Tàu hũ ky lau ẩm cho mềm, cắt miếng vuông, đặt nhân, cuộn chặt, dán mép bằng chút bột năng pha nước.
+3. Hấp cuộn 10 phút cho nhân chín, để nguội.
+4. Chiên ngập dầu lửa vừa đến khi vàng giòn; cắt khúc, chấm tương ớt hoặc nước mắm chua ngọt.",,https://cookpad.com/vn/tim-kiem/t%C3%A0u%20h%C5%A9%20ky%20cu%E1%BB%99n%20th%E1%BB%8Bt,chua_nau_thu
+ba_chi_xao_kim_chi,Ba chỉ xào kim chi,mon_chinh,nong,nhe,vua,thit_heo|kim_chi,mua,4,20,de,"Ba chỉ thái mỏng xào với kim chi, hành tây – cay chua đậm đà, ăn với cơm trắng (phần bé ít kim chi).","1. Ba chỉ thái lát mỏng; kim chi cắt miếng vừa, giữ lại nước kim chi.
+2. Áp chảo ba chỉ cho ra mỡ, hơi xém.
+3. Cho kim chi, hành tây vào xào 3–4 phút, thêm 2 muỗng nước kim chi, chút đường, nước tương.
+4. Đảo đều, rắc hành lá và vừng rang.",,https://cookpad.com/vn/tim-kiem/ba%20ch%E1%BB%89%20x%C3%A0o%20kim%20chi,chua_nau_thu
+canh_kim_chi_thit_dau_phu,Canh kim chi thịt ba chỉ đậu phụ,canh,nong,nhe,vua,kim_chi|thit_heo|dau_phu,mua,4,35,de,Kim chi xào với ba chỉ rồi nấu cùng đậu phụ non – canh chua cay ấm bụng kiểu Hàn.,"1. Ba chỉ thái mỏng; kim chi cắt nhỏ; đậu phụ non cắt miếng; hành tây thái múi.
+2. Áp chảo ba chỉ cho ra mỡ, cho kim chi vào xào 3 phút cho thơm.
+3. Đổ khoảng 1 lít nước cùng nước kim chi, đun sôi 10 phút; thêm hành tây, nấm.
+4. Thả đậu phụ, nêm nước tương, chút đường; sôi lại thì rắc hành lá.",,https://cookpad.com/vn/tim-kiem/canh%20kim%20chi,chua_nau_thu
+ca_liet_chien_gion,Cá liệt chiên giòn,mon_chinh,nong,nhe,nhieu,ca_liet,moi,4,30,de,"Cá liệt nhỏ lăn bột chiên giòn rụm, ăn được cả xương – chấm nước mắm tỏi ớt.","1. Cá liệt làm sạch, bỏ ruột, rửa nước muối, để thật ráo.
+2. Ướp cá với chút muối, tiêu 10 phút; lăn qua bột chiên giòn.
+3. Chiên ngập dầu lửa vừa đến khi vàng giòn, vớt ra để ráo dầu.
+4. Pha nước mắm tỏi ớt chua ngọt để chấm (phần bé không ớt).",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20li%E1%BB%87t%20chi%C3%AAn%20gi%C3%B2n,chua_nau_thu
+ca_ho_chien_sa,Cá hố chiên sả,mon_chinh,nong,nhe,nhieu,ca_ho,moi,4,35,de,"Cá hố cắt khúc ướp sả nghệ, chiên vàng thơm – thịt trắng ngọt, ít xương dăm.","1. Cá hố cạo nhẹ lớp bạc, cắt khúc 6–7 cm, rửa nước muối, để ráo.
+2. Ướp cá với sả băm, chút nghệ, muối, hạt nêm 15 phút.
+3. Chiên cá lửa vừa đến vàng hai mặt, vớt ra.
+4. Phi phần sả còn lại cho vàng giòn, rắc lên cá; chấm nước mắm chanh.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20h%E1%BB%91%20chi%C3%AAn%20s%E1%BA%A3,chua_nau_thu
+ca_chuon_kho_man,Cá chuồn kho mặn,mon_chinh,nong,nhe,it,ca_chuon,moi,4,50,de,"Cá chuồn kho nước mắm, tiêu, ớt đến khi thịt săn, nước keo lại – món quen miền biển Ninh Thuận.","1. Cá chuồn làm sạch, cắt đôi, rửa nước muối, để ráo.
+2. Ướp cá với nước mắm, đường, tiêu, hành tỏi băm 20 phút.
+3. Xếp cá vào nồi, thêm nước màu và nước xâm xấp, kho lửa nhỏ 30 phút đến khi nước keo lại.
+4. Thêm ớt (phần bé để riêng), rắc tiêu, hành lá.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20chu%E1%BB%93n%20kho,chua_nau_thu
+ca_trich_chien_gion,Cá trích chiên giòn,mon_chinh,nong,nhe,nhieu,ca_trich,moi,4,30,de,"Cá trích tươi chiên giòn đến mềm xương, chấm nước mắm me hoặc mắm gừng.","1. Cá trích đánh vảy, bỏ ruột, rửa nước muối, để ráo; khứa nhẹ thân.
+2. Ướp chút muối, tiêu, lăn qua bột chiên giòn mỏng.
+3. Chiên ngập dầu lửa vừa 8–10 phút đến khi vàng giòn, xương mềm.
+4. Ăn kèm rau sống, chấm nước mắm me hoặc mắm gừng.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20tr%C3%ADch%20chi%C3%AAn%20gi%C3%B2n,chua_nau_thu
+ca_duc_chien_gion,Cá đục chiên giòn,mon_chinh,nong,nhe,nhieu,ca_duc,moi,4,30,de,"Cá đục thịt trắng ngọt, chiên giòn chấm mắm tỏi ớt – cá nhỏ dễ ăn, ít xương to.","1. Cá đục đánh vảy, bỏ ruột, rửa nước muối, để thật ráo.
+2. Ướp muối, tiêu, chút hạt nêm 10 phút; áo qua lớp bột năng mỏng.
+3. Chiên ngập dầu lửa vừa đến vàng giòn, vớt ra để ráo.
+4. Chấm nước mắm tỏi ớt chua ngọt, ăn kèm rau sống.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20%C4%91%E1%BB%A5c%20chi%C3%AAn%20gi%C3%B2n,chua_nau_thu
+ca_bop_kho_tieu,Cá bớp kho tiêu,mon_chinh,nong,nang,vua,ca_bop,mua,4,45,de,"Cá bớp cắt khúc dày kho tiêu – thịt chắc béo, nước kho sệt, cay thơm.","1. Cá bớp cắt khúc dày, rửa nước muối gừng, để ráo.
+2. Ướp cá với nước mắm, đường, hạt nêm, hành tỏi băm, nhiều tiêu 20 phút.
+3. Thắng nước màu, xếp cá vào, thêm nước xâm xấp, kho lửa nhỏ 25–30 phút, trở mặt một lần.
+4. Khi nước sệt lại, rắc thêm tiêu, hành lá.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20b%E1%BB%9Bp%20kho%20ti%C3%AAu,chua_nau_thu
+ca_doi_kho_tieu,Cá đối kho tiêu,mon_chinh,nong,nang,vua,ca_doi,mua,4,50,de,"Cá đối biển kho tiêu với chút mỡ hành – béo, thơm, mùa gió bấc cá đối ngon nhất.","1. Cá đối đánh vảy, bỏ ruột, cắt khúc, rửa nước muối, để ráo.
+2. Ướp cá với nước mắm, đường, tiêu, hành băm 20 phút.
+3. Xếp cá vào nồi, thêm nước màu và nước xâm xấp, kho lửa nhỏ 30 phút.
+4. Nước sệt thì rắc tiêu, hành lá; chan cơm nóng.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20%C4%91%E1%BB%91i%20kho%20ti%C3%AAu,chua_nau_thu
+ca_ngu_soc_dua_nuong_sa,Cá ngừ sọc dưa nướng sả,mon_chinh,nong,nhe,vua,ca_ngu_soc_dua,nang,4,50,vua,"Cá ngừ sọc dưa nguyên con ướp sả ớt, nướng than hoặc nồi chiên – thịt chắc, thơm, chấm muối ớt xanh.","1. Cá ngừ làm sạch, bỏ ruột, khứa thân; rửa nước muối, để ráo.
+2. Ướp cá với sả băm, tỏi, nước mắm, đường, chút dầu ăn 30 phút.
+3. Nướng than hoặc nồi chiên 200°C khoảng 25 phút, lật mặt giữa chừng, quét dầu cho khỏi khô.
+4. Gỡ thịt ăn với rau sống, bánh tráng, chấm muối ớt xanh chanh (phần bé chấm nước mắm ngọt).",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20ng%E1%BB%AB%20n%C6%B0%E1%BB%9Bng%20s%E1%BA%A3,chua_nau_thu
+ca_chep_om_dua,Cá chép om dưa,mon_chinh,nong,nang,vua,ca_chep|dua_cai_chua,mua,4,60,vua,"Cá chép rán sơ rồi om với dưa cải chua, cà chua, thì là – món om quen thuộc của người Bắc.","1. Cá chép đánh vảy, bỏ ruột và đường gân hai bên thân, cắt khúc; rửa nước muối gừng, ướp nước mắm, tiêu 15 phút.
+2. Rán cá sơ cho săn vàng mặt.
+3. Phi hành, xào cà chua cho nhừ, cho dưa vào đảo 3 phút, thêm nước, đun sôi.
+4. Thả cá vào om lửa nhỏ 20 phút, nêm lại; tắt bếp thả thì là, hành lá.",,https://cookpad.com/vn/tim-kiem/c%C3%A1%20ch%C3%A9p%20om%20d%C6%B0a,chua_nau_thu
+canh_dua_chua_nau_ca_loc,Canh dưa chua nấu cá lóc,canh,mat,nhe,it,ca_loc|dua_cai_chua,nang,4,35,de,"Cá lóc rán sơ nấu với dưa cải chua, cà chua – canh chua nhẹ, ngọt cá, ăn ngày nắng.","1. Cá lóc làm sạch nhớt, cắt khúc, ướp chút nước mắm, tiêu.
+2. Rán cá sơ cho săn; dưa cải chua vắt bớt nước, cắt khúc; cà chua bổ múi.
+3. Phi hành, xào cà chua và dưa 3 phút, đổ khoảng 1,2 lít nước, đun sôi.
+4. Thả cá vào nấu 10 phút, nêm nước mắm, chút đường; tắt bếp thả hành lá, thì là.",,https://cookpad.com/vn/tim-kiem/canh%20d%C6%B0a%20chua%20c%C3%A1%20l%C3%B3c,chua_nau_thu
+tom_chien_xu,Tôm chiên xù,mon_chinh,nong,nhe,nhieu,tom_the,moi,4,35,de,"Tôm bóc vỏ chừa đuôi, lăn trứng và bột chiên xù, chiên vàng giòn – chấm tương cà, bé rất thích.","1. Tôm bóc vỏ chừa đuôi, rút chỉ, khứa bụng cho tôm thẳng; ướp chút muối, tiêu 10 phút.
+2. Lăn tôm lần lượt qua bột mì, trứng đánh tan, bột chiên xù; ấn nhẹ cho bột bám.
+3. Chiên ngập dầu lửa vừa đến khi vàng đều, vớt ra để ráo.
+4. Ăn kèm tương cà, mayonnaise và xà lách.",,https://cookpad.com/vn/tim-kiem/t%C3%B4m%20chi%C3%AAn%20x%C3%B9,chua_nau_thu
+muc_chien_gion,Mực chiên giòn,mon_chinh,nong,nhe,nhieu,muc_tuoi,moi,4,30,de,"Mực ống cắt khoanh, áo bột chiên giòn – giòn ngoài, mềm trong, chấm tương ớt.","1. Mực làm sạch, lột da, cắt khoanh; thấm thật khô.
+2. Ướp mực chút muối, tiêu, tỏi băm 10 phút.
+3. Lăn mực qua bột chiên giòn trộn chút bột năng.
+4. Chiên dầu thật nóng 2–3 phút đến khi vàng giòn (chiên lâu mực sẽ dai); ăn ngay khi nóng.",,https://cookpad.com/vn/tim-kiem/m%E1%BB%B1c%20chi%C3%AAn%20gi%C3%B2n,chua_nau_thu
+muc_xao_can_toi,Mực xào cần tỏi,mon_chinh,am,nhe,vua,muc_tuoi,moi,4,25,de,"Mực khía vảy rồng xào nhanh với cần tây, tỏi, cà chua – giòn ngọt, không dai.","1. Mực làm sạch, khía vảy rồng mặt trong, cắt miếng vừa ăn; chần nhanh nước sôi 10 giây cho mực cuộn lại.
+2. Cần tây cắt khúc; cà chua bổ múi; hành tây thái múi cau.
+3. Phi tỏi, xào cà chua, hành tây 1 phút, cho cần tây vào đảo.
+4. Cho mực vào đảo lửa lớn 1–2 phút, nêm dầu hào, nước mắm, hạt nêm, tiêu rồi tắt bếp.",,https://cookpad.com/vn/tim-kiem/m%E1%BB%B1c%20x%C3%A0o%20c%E1%BA%A7n%20t%E1%BB%8Fi,chua_nau_thu
+hau_nuong_mo_hanh,Hàu nướng mỡ hành,mon_chinh,nong,nhe,vua,hau,moi,4,30,de,"Hàu tươi nướng với mỡ hành, đậu phộng rang – béo ngọt, nướng chín kỹ cho cả nhà.","1. Hàu cọ sạch vỏ, tách bỏ một mảnh vỏ, giữ lại phần thịt và nước trong vỏ.
+2. Làm mỡ hành: phi hành lá thái nhỏ với dầu ăn hoặc mỡ, thêm chút hạt nêm.
+3. Xếp hàu lên vỉ hoặc khay, nướng 5–7 phút đến khi hàu chín, nước sôi lăn tăn.
+4. Rưới mỡ hành, rắc đậu phộng rang, hành phi; ăn với muối ớt xanh chanh.",,https://cookpad.com/vn/tim-kiem/h%C3%A0u%20n%C6%B0%E1%BB%9Bng%20m%E1%BB%A1%20h%C3%A0nh,chua_nau_thu
+ngheu_xao_sa_ot,Nghêu xào sả ớt,mon_chinh,nong,nhe,vua,ngheu,mua,4,30,de,"Nghêu luộc vừa há miệng rồi xào sả ớt, rau răm – cay thơm, chấm bánh mì nước sốt.","1. Ngâm nghêu nước muối pha ớt 2 tiếng cho nhả cát, rửa sạch.
+2. Luộc nghêu với sả đập dập đến khi vừa há miệng, vớt ra; bỏ con không mở.
+3. Phi tỏi, sả băm cho thơm, thêm chút sa tế (phần bé để riêng), nước mắm, đường.
+4. Cho nghêu vào đảo nhanh cho thấm, rắc rau răm, hành lá.",,https://cookpad.com/vn/tim-kiem/ngh%C3%AAu%20x%C3%A0o%20s%E1%BA%A3%20%E1%BB%9Bt,chua_nau_thu
+trung_xao_ca_chua,Trứng xào cà chua,mon_chinh,am,nhe,vua,trung|ca_chua,moi,4,15,de,"Trứng đánh tan xào với cà chua chín mềm, hành lá – nhanh, mềm, bé ăn cơm rất hợp.","1. Trứng đánh tan với chút nước mắm; cà chua bổ múi cau.
+2. Đổ trứng vào chảo nóng có dầu, đảo nhẹ đến khi vừa đông thì múc ra.
+3. Phi hành, xào cà chua đến mềm, ra nước, nêm chút đường, nước mắm.
+4. Cho trứng vào đảo nhẹ cho quyện, rắc hành lá, tiêu.",,https://cookpad.com/vn/tim-kiem/tr%E1%BB%A9ng%20x%C3%A0o%20c%C3%A0%20chua,chua_nau_thu
+com_chien_kim_chi,Cơm chiên kim chi,mon_chinh,nong,nhe,vua,kim_chi,moi,4,20,de,"Cơm nguội chiên với kim chi, ba chỉ, trứng ốp la lên trên – bữa nhanh gọn, chua cay vừa.","1. Kim chi cắt nhỏ; ba chỉ thái hạt lựu; hành tây băm.
+2. Áp chảo ba chỉ cho ra mỡ, thêm hành tây, kim chi xào 3 phút.
+3. Cho cơm vào đảo tơi, thêm 2 muỗng nước kim chi, nước tương, chút đường; đảo đến khi cơm săn.
+4. Ốp la trứng đặt lên trên mỗi đĩa, rắc hành lá, vừng.",,https://cookpad.com/vn/tim-kiem/c%C6%A1m%20chi%C3%AAn%20kim%20chi,chua_nau_thu
+lau_kim_chi_hai_san,Lẩu kim chi hải sản,lau,nong,nang,vua,kim_chi|tom_the|muc_tuoi,mua,4,50,vua,"Nước lẩu kim chi chua cay nhúng tôm, mực, nghêu, nấm, đậu phụ – bữa chính ngày mưa.","1. Ninh xương gà hoặc xương heo 30 phút làm nước dùng.
+2. Xào kim chi với chút ba chỉ cho thơm, đổ vào nồi nước dùng cùng nước kim chi, nêm nước tương, đường, chút ớt bột Hàn (phần bé múc nước dùng trước khi cho ớt).
+3. Tôm cắt râu; mực cắt khoanh; nghêu ngâm nhả cát; đậu phụ, nấm, cải thảo, mì Hàn xếp đĩa.
+4. Nhúng hải sản, rau, nấm, đậu phụ; ăn kèm mì hoặc bún.",,https://cookpad.com/vn/tim-kiem/l%E1%BA%A9u%20kim%20chi%20h%E1%BA%A3i%20s%E1%BA%A3n,chua_nau_thu
+nuong_kieu_han_kim_chi,"Nướng ba chỉ, bò Mỹ kiểu Hàn ăn kèm kim chi",nuong,nong,nang,vua,thit_heo|thit_bo|kim_chi,moi,4,60,de,"Ba chỉ heo và bò Mỹ thái mỏng nướng bếp điện tại bàn, cuốn xà lách với kim chi, tỏi, sốt tương – bữa chính vui như lẩu.","1. Ba chỉ thái lát dày 0,5 cm; ướp bò Mỹ với nước tương, đường, dầu mè, tỏi băm, tiêu 30 phút (ba chỉ để nguyên vị hoặc ướp chút muối tiêu).
+2. Pha sốt chấm: tương đậu Hàn, chút tương ớt, dầu mè, tỏi băm, vừng (phần bé dùng sốt mè hoặc nước tương ngọt).
+3. Xà lách, lá tía tô rửa sạch; kim chi, tỏi lát, nấm, hành tây, ớt chuông xếp đĩa.
+4. Nướng ba chỉ trước cho ra mỡ, nướng kèm kim chi và nấm trong mỡ; bò Mỹ nướng nhanh 20–30 giây mỗi mặt.
+5. Cuốn thịt với xà lách, kim chi, tỏi, chấm sốt; ăn kèm cơm trắng.",,https://cookpad.com/vn/tim-kiem/th%E1%BB%8Bt%20n%C6%B0%E1%BB%9Bng%20H%C3%A0n%20Qu%E1%BB%91c%20kim%20chi,chua_nau_thu
+nuong_thap_cam_kieu_viet,Nướng thập cẩm kiểu Việt,nuong,nong,nang,vua,thit_heo|thit_bo,moi,4,70,vua,"Ba chỉ ướp sả, bò cuộn lá lốt, đậu bắp, cà tím, bắp nướng – cuốn bánh tráng rau sống, chấm mắm nêm hoặc muối ớt.","1. Ba chỉ thái lát, ướp sả băm, tỏi, nước mắm, đường, chút dầu hào 30 phút.
+2. Bò thái mỏng ướp tỏi, tiêu, dầu hào, cuộn trong lá lốt.
+3. Đậu bắp, cà tím, bắp, nấm cắt miếng, quét mỡ hành.
+4. Nướng trên bếp than hoặc bếp điện; ba chỉ và rau củ trước, bò lá lốt sau (chín nhanh).
+5. Cuốn bánh tráng với rau sống, dưa leo, bún; chấm mắm nêm pha dứa hoặc muối ớt chanh (phần bé chấm nước mắm ngọt).",,https://cookpad.com/vn/tim-kiem/n%C6%B0%E1%BB%9Bng%20th%E1%BA%ADp%20c%E1%BA%A9m,chua_nau_thu
+hai_san_nuong_mo_hanh,Hải sản nướng mỡ hành,nuong,nong,nang,vua,tom_the|muc_tuoi|hau,moi,4,60,vua,"Tôm, mực, hàu, sò điệp nướng mỡ hành – hải sản Phan Rang, chấm muối ớt xanh, bữa chính một món.","1. Tôm cắt râu, rút chỉ; mực làm sạch, khứa; hàu, sò điệp cọ sạch, tách một mảnh vỏ.
+2. Ướp tôm, mực với chút muối, tiêu, sả băm, dầu ăn 15 phút.
+3. Làm mỡ hành: phi hành lá với dầu, thêm chút hạt nêm; rang đậu phộng giã dập.
+4. Nướng tôm, mực trên than hoặc bếp điện; hàu, sò điệp nướng đến khi sôi nước thì rưới mỡ hành, đậu phộng.
+5. Chấm muối ớt xanh chanh; ăn kèm bánh mì hoặc cơm, rau sống.",,https://cookpad.com/vn/tim-kiem/h%E1%BA%A3i%20s%E1%BA%A3n%20n%C6%B0%E1%BB%9Bng%20m%E1%BB%A1%20h%C3%A0nh,chua_nau_thu
