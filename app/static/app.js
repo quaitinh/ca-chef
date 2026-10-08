@@ -775,7 +775,8 @@ function pageCalendar(mo) {
     return `<details class="ni" id="nl-${n.ma}" ${S.calOpen === n.ma ? "open" : ""}>
       <summary><span class="nn">${esc(n.ten)}${n.vung && n.vung !== "chung" ? `<small>${esc(n.vung)}</small>` : ""}</span>${thangBar(n.thang, m)}</summary>
       <div class="nd">${n.ghi_chu ? `<p>${esc(n.ghi_chu)}</p>` : ""}
-        <p class="src">Mua ở: ${esc(n.noi_mua || "chợ")} · tin cậy ${esc(n.tin_cay || "–")}</p>
+        <p class="src">Mua ở: ${esc(n.noi_mua || "chợ")} · tin cậy ${esc(n.tin_cay || "–")}${n.nguon ? ` · nguồn: ${String(n.nguon).split("|")
+          .map((u, i) => `<a href="${esc(u.trim())}" target="_blank" rel="noopener">${i + 1}</a>`).join(", ")}` : ""}</p>
         ${mon.length ? `<div class="hs wrap">${mon.map((d) => `<a class="chip" href="#/mon/${d.ma_mon}">${esc(d.ten_mon)}</a>`).join("")}</div>` : ""}</div>
     </details>`;
   };

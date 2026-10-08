@@ -59,12 +59,42 @@ def read_de_xuat(name):
         return to_records(list(csv.reader(f)))
 
 
+def sua_lich_mua(tabs):
+    """Đè lịch mùa vụ đã tra cứu có nguồn (de_xuat_sua_sheet.csv, sinh bởi gop_mua_vu.py) lên dòng nguyên liệu
+    trên Sheet. Chỉ đè khi Sheet vẫn giữ lịch cũ: chủ dự án tự sửa dòng nào trên Sheet thì giữ theo Sheet."""
+    path = os.path.join(DE_XUAT, "de_xuat_sua_sheet.csv")
+    if not os.path.exists(path):
+        return 0
+    with open(path, newline="", encoding="utf-8") as f:  # đọc nguyên chuỗi để giữ số 0 đầu của lịch "000111..."
+        sua = {r["ma"]: r for r in csv.DictReader(f) if r["nguon"].strip()}
+    n = 0
+    for r in tabs["nguyen_lieu"]:
+        moi = sua.get(r["ma"])
+        if not moi:
+            continue
+        try:
+            hien = "".join(str(int(float(r.get(f"T{i}") or 0))) for i in range(1, 13))
+        except ValueError:
+            continue
+        if hien != moi["lich_tren_sheet"]:
+            continue
+        for i, v in enumerate(moi["lich_de_xuat"], 1):
+            r[f"T{i}"] = int(v)
+        r["tin_cay"] = moi["tin_cay_moi"]
+        r["ghi_chu"] = moi["ghi_chu"]
+        r["nguon"] = moi["nguon"]
+        n += 1
+    tabs["lich_tra_cuu"] = n
+    return n
+
+
 def merge_de_xuat(tabs):
     """Gộp món đề xuất (data/de_xuat/) vào dữ liệu Sheet/CSV và ẩn các món trong an_mon.csv.
 
     Món/nguyên liệu đã có trên Sheet (trùng mã) thì giữ bản trên Sheet.
     """
     an = {r["ma_mon"] for r in read_de_xuat("an_mon.csv")}
+    sua_lich_mua(tabs)
     co_nl = {r["ma"] for r in tabs["nguyen_lieu"]}
     tabs["nguyen_lieu"] += [r for r in read_de_xuat("nguyen_lieu_moi.csv") if r["ma"] not in co_nl]
     co_mon = {r["ma_mon"] for r in tabs["mon_an"]}
