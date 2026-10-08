@@ -2,23 +2,25 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fbf7f1">
   <title>Cá Chef</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
-    <a href="#/" class="brand">🐟 Cá Chef</a>
-    <nav>
-      <a href="#/" data-nav="home">Hôm nay</a>
-      <a href="#/ngay-mai" data-nav="ngay-mai">Ngày mai</a>
-      <a href="#/lich" data-nav="lich">Lịch mùa vụ</a>
-      <a href="#/mon" data-nav="mon">Tất cả món</a>
-    </nav>
+    <a href="#/" class="brand">🐟 Cá Chef<small id="today"></small></a>
+    <a href="#/" class="wx" id="wx"></a>
   </header>
   <main id="app"><p class="muted">Đang tải…</p></main>
   <footer class="foot" id="foot"></footer>
+  <nav class="tabbar" aria-label="Điều hướng chính">
+    <a href="#/" data-nav="home"><i>🍚</i>Nấu gì</a>
+    <a href="#/lich" data-nav="lich"><i>📅</i>Mùa vụ</a>
+    <a href="#/mon" data-nav="mon"><i>📖</i>Món</a>
+    <a href="#/tu-lanh" data-nav="tu-lanh"><i>🧊</i>Tủ lạnh</a>
+  </nav>
   <script src="app.js"></script>
 </body>
 </html>
