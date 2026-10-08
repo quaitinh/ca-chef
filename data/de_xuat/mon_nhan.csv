@@ -50,7 +50,7 @@ oc_huong_luoc,man,hai_san,luoc_hap,co,cookpad_top
 tom_rang_muoi,man,hai_san,kho_om,co,cookpad_top
 cha_muc,man,hai_san,,co,cookpad_top
 muc_mot_nang_nuong,man,hai_san,nuong,co,dang_co
-goi_cuon,man,hai_san,tron_cuon,co,dang_co
+goi_cuon,man,hai_san,tron_cuon,co,lo4
 tom_hap_nuoc_dua,man,hai_san,luoc_hap,co,cookpad_tu_chon
 ghe_hap_gung_sa,man,hai_san,luoc_hap,co,cookpad_tu_chon
 so_diep_nuong_mo_hanh,man,hai_san,nuong,co,cookpad_tu_chon
@@ -157,7 +157,7 @@ canh_cu_cai_xuong,canh,heo,nau,co,lo1
 canh_bi_dao_tom,canh,hai_san,nau,co,lo1
 canh_bi_do_thit_bam,canh,heo,nau,co,lo1
 canh_bau_tom,canh,hai_san,nau,co,lo1
-canh_ga_rau_cu,canh,ga,nau,co,cookpad_top
+canh_ga_rau_cu,canh,ga,nau,co,lo4
 canh_moc_nam_huong,canh,heo,nau,co,cookpad_top
 canh_kho_qua_nhoi_thit,canh,heo,nau,co,cookpad_top
 canh_rong_bien_thit_bam,canh,heo,nau,co,cookpad_top
@@ -308,6 +308,7 @@ ngan_xao_sa_ot,man,ga,xao,can_nhac,lo3
 vit_om_sau,man,ga,kho_om,co,lo3
 vit_kho_gung,man,ga,kho_om,co,lo3
 canh_ga_tan_hat_sen,canh,ga,nau,co,lo3
+ga_tiem_thuoc_bac,canh,ga,,co,lo3
 me_ga_xao_dua_chua,man,ga,xao,co,lo3
 chim_cut_ro_ti,man,ga,,co,lo3
 bo_xao_kho_qua,man,bo,xao,co,lo3
@@ -350,6 +351,20 @@ ngheu_xao_sa_ot,man,hai_san,xao,can_nhac,lo3
 trung_xao_ca_chua,man,trung_dau,xao,co,lo3
 com_chien_kim_chi,mot_to,trung_dau,chien,can_nhac,lo3
 lau_kim_chi_hai_san,lau,hai_san,nau,can_nhac,lo3
+oi_cham_muoi_ot,trang_mieng,,,co,lo3
+nuoc_ep_oi,do_uong,,,co,lo3
 nuong_kieu_han_kim_chi,nuong,heo,nuong,can_nhac,lo3
 nuong_thap_cam_kieu_viet,nuong,heo,nuong,co,lo3
 hai_san_nuong_mo_hanh,nuong,hai_san,nuong,co,lo3
+ga_ham_nam,man,ga,nau,co,lo4
+ga_ham_sa,lau,ga,nau,co,lo4
+ga_hap_mam_nhi,man,ga,luoc_hap,can_nhac,lo4
+mien_xao_long_ga,mot_to,ga,xao,can_nhac,lo4
+tom_thit_kho_thom,man,hai_san,kho_om,co,lo4
+tom_rang_gion,man,hai_san,kho_om,co,lo4
+sup_tom_ngo_nam,mot_to,hai_san,,co,lo4
+bun_suon_tom_chua_cay,mot_to,heo,,can_nhac,lo4
+lau_vit_nau_chao,lau,ga,nau,co,lo4
+vit_nau_mang,man,ga,nau,co,lo4
+mang_xao_long_vit,man,ga,xao,can_nhac,lo4
+pad_thai,mot_to,hai_san,,co,lo4

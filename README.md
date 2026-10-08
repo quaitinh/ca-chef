@@ -25,8 +25,18 @@ gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã 
 - `an_mon.csv` – món ẩn khỏi app (vd. món chủ nhà không thích).
 
 Sinh lại sau khi sửa `khung_mon.csv` hoặc các lô công thức `scripts/de_xuat/lo1_bac.py`, `lo2_bac.py`, `lo3_dam.py`
-(lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file):
+(lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file;
+lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã trùng thì thay món cũ, món trên Sheet ghi trong `DE_SHEET`
+được `app/server.py` đè lên bản Sheet qua `de_len_sheet.csv`):
 `python3 scripts/de_xuat/xuat_csv.py`
+
+Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
+thịt nạc, sườn, chân giò, xương, mỡ heo, tai, lưỡi, da (bì), thịt hộp. Món chỉ ghi chung "thịt heo" hiểu là thịt nạc hoặc
+ba chỉ (cột `mac_dinh`). Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
+trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
+(trang Mùa vụ chỉ hiện mã cha). Tủ lạnh: có nhánh nào thì món dùng đúng nhánh đó được tính là có; món ghi chung "thịt heo" chỉ tính khi tủ có nạc, nạc vai
+hoặc ba chỉ;
+tủ ghi chung "Thịt heo" thì tính là có mọi nhánh.
 
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
 trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên Sheet (khác lịch cũ) thì giữ theo Sheet.
@@ -35,6 +45,7 @@ trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên
 
 Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`).
 - Nấu gì: bữa trưa, tối mỗi món một dòng; ✓ để chọn giữ món, "Đổi" xoay các món còn lại; nhắc rã đông cho ngày mai.
+- Chế độ nấu không thêm mục lịch sử (chuyển bước, Thoát, Xong thay mục hiện tại), nên "Quay lại" ở trang món về đúng trang trước.
 - Trang món: thông tin nhanh; thanh phản hồi ✓ Đã nấu / 👍 Ngon / 👎 Không hợp / ♥; 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng. Bấm "Xong" ở bước cuối thì ghi là đã nấu hôm nay và hỏi cả nhà thấy thế nào.
 - Món: lọc ♥ Yêu thích (♥ hoặc 👍), ✓ Đã nấu, theo vai món; `#/yeu-thich` mở thẳng danh sách yêu thích.
 - Mùa vụ: chọn tháng và nhóm; Đang rộ / Sắp vào mùa / Có hàng / Trái mùa, chạm để xem nguồn và món nấu được.
@@ -73,6 +84,7 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   Các món điểm gần nhau được xoay theo ngày (cộng thêm 0–1,5 điểm ngẫu nhiên cố định theo ngày) để không ngày nào cũng ra cùng một nhóm món.
   Mô phỏng 14 ngày liền (tháng 10, trời mưa): 52 món khác nhau / 69 lượt, trước đó 21 món.
 - Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +2, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
+- Món thuốc bắc (tên có "thuốc bắc", vd. gà tiềm thuốc bắc): cách nhau ít nhất 14 ngày, khoảng 2 lần/tháng.
 - Phản hồi của nhà (lưu trên máy, `cachef.danh_gia`): 👍 +2, ♥ +1, 👎 −6 (hầu như không gợi ý nữa).
 - Quy tắc đứng trên sự mới lạ: khi bấm "Đổi" mà món chưa xem không thỏa quy tắc thì dùng lại món đã xem.
 

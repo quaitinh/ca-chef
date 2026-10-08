@@ -30,6 +30,7 @@ NGUYEN_LIEU = [
     ("thien_ly", "Hoa thiên lý", "rau củ", "chung", ro(5, 6, 7, 8), "chợ", "C", "Hoa nở rộ mùa hè – chưa có nguồn riêng"),
     ("dua_cai_chua", "Dưa cải muối chua", "khác", "chung", Q, "chợ/GO!", "A", "Dưa muối sẵn hoặc tự muối, có quanh năm"),
     ("kim_chi", "Kim chi cải thảo", "khác", "chung", Q, "GO!/siêu thị", "A", "Kim chi đóng hộp bán quanh năm ở siêu thị"),
+    ("tao_do", "Táo đỏ (táo tàu)", "hàng khô", "chung", Q, "chợ/GO!/tiệm thuốc bắc", "A", "Hàng khô, có quanh năm"),
 ]
 
 KHUNG = []
@@ -117,7 +118,17 @@ RECIPES = [
        "Nêm muối, hạt nêm vừa ăn; hớt bọt, rắc hành lá."],
       None, tk("gà tần hạt sen"),
       [("ga_ta", "Gà ta", 600, "g", "n", "chinh"), ("hat_sen", "Hạt sen", 150, "g", "n", "chinh"),
-       ("nam", "Nấm hương", 8, "tai", "n", "phu"), ("", "Táo đỏ", 8, "quả", "n", "phu"), GUNG(1), MUOI, HAT_NEM(1), HANH_LA]),
+       ("nam", "Nấm hương", 8, "tai", "n", "phu"), ("tao_do", "Táo đỏ", 8, "quả", "n", "phu"), GUNG(1), MUOI, HAT_NEM(1), HANH_LA]),
+    M("canh", "ga", "ga_tiem_thuoc_bac", "Gà tiềm thuốc bắc", "canh", "nong", "nhe", "it", "ga_ta|tao_do", "mua", 120, "de",
+      "Gà ác (hoặc gà ta) tiềm cách thủy với gói thuốc bắc, táo đỏ, kỷ tử – nước trong, ngọt thơm, bồi bổ ngày mưa.",
+      ["Gà làm sạch, xát muối và gừng cho bớt mùi, chần qua nước sôi; để nguyên con hoặc chặt đôi.",
+       "Gói thuốc bắc tiềm gà (đương quy, hoài sơn, kỷ tử, táo đỏ...) rửa nhanh qua nước; táo đỏ khứa nhẹ.",
+       "Cho gà vào thố hoặc nồi nhỏ cùng thuốc bắc, táo đỏ, vài lát gừng, đổ nước vừa ngập.",
+       "Chưng cách thủy hoặc hầm lửa thật nhỏ 90 phút đến khi gà mềm; cuối cùng nêm muối, chút hạt nêm (vị thanh, không nêm đậm).",
+       "Bé ăn thịt gà và nước dùng lượng vừa phải; múc ra thố ăn nóng."],
+      None, tk("gà tiềm thuốc bắc"),
+      [("ga_ta", "Gà ác hoặc gà ta", 1, "con", "n", "chinh"), ("tao_do", "Táo đỏ", 10, "quả", "x", "chinh"),
+       ("", "Gói thuốc bắc tiềm gà", 1, "gói", "x", "phu"), ("", "Kỷ tử", 1, MC, "x", "phu"), GUNG(1), MUOI, HAT_NEM(0.5)]),
     M("man", "ga", "me_ga_xao_dua_chua", "Mề gà xào dưa chua", "mon_chinh", "nong", "nhe", "vua", "ga_ta|dua_cai_chua", "moi", 30, "de",
       "Mề gà giòn sần sật xào với dưa cải chua, cà chua – chua nhẹ, đưa cơm (kiểu Bắc).",
       ["Mề gà bóc màng vàng, rửa muối và giấm, thái lát mỏng; ướp nước mắm, tiêu, hành băm 10 phút.",
@@ -524,6 +535,26 @@ RECIPES = [
        ("nam", "Nấm các loại", 300, "g", "n", "phu"), ("cai_thao", "Cải thảo", 300, "g", "n", "phu"),
        ("bun", "Mì Hàn hoặc bún", 400, "g", "n", "phu"), ("", "Nước tương", 2, MC, "x", "gia_vi"), DUONG(1),
        ("", "Ớt bột Hàn", 1, MC, "x", "gia_vi")]),
+
+    # ---------- Trái cây ----------
+    M("trang_mieng", "", "oi_cham_muoi_ot", "Ổi chấm muối ớt", "trang_mieng", "mat", "nhe", "it", "oi", "nang", 10, "de",
+      "Ổi giòn cắt miếng chấm muối ớt chanh (phần bé chấm muối đường không ớt) – tráng miệng nhanh, nhiều vitamin C.",
+      ["Ổi rửa sạch, ngâm nước muối loãng 5 phút, để ráo.",
+       "Cắt ổi thành miếng cau, bỏ bớt ruột nếu hạt cứng (phần cho bé gọt vỏ, bỏ hạt).",
+       "Muối hột rang giã với ớt, chút đường, vắt vài giọt chanh; phần bé chỉ trộn muối với đường.",
+       "Bày ổi ra đĩa, chấm muối ăn ngay cho giòn."],
+      None, tk("ổi chấm muối ớt"),
+      [("oi", "Ổi", 3, "quả", "n", "chinh"), ("muoi_ca_na", "Muối hột", 1, MC, "x", "gia_vi"), OT(1), DUONG(0.5),
+       ("", "Chanh", 0.5, "quả", "x", "gia_vi")]),
+    M("do_uong", "", "nuoc_ep_oi", "Nước ép ổi", "do_uong", "mat", "nhe", "it", "oi", "nang", 10, "de",
+      "Ổi chín ép hoặc xay lọc với chút đường, đá – thơm, mát, bé uống được.",
+      ["Ổi chín rửa sạch, bỏ cuống, cắt miếng (ổi ruột đỏ cho màu đẹp).",
+       "Ép lấy nước, hoặc xay với khoảng 200 ml nước rồi lọc qua rây cho bỏ hạt.",
+       "Thêm chút đường hoặc mật ong, vài giọt chanh cho dậy mùi.",
+       "Rót ly, thêm đá; uống ngay cho khỏi tách nước."],
+      None, tk("nước ép ổi"),
+      [("oi", "Ổi chín", 3, "quả", "n", "chinh"), DUONG(1), ("", "Chanh", 0.25, "quả", "x", "gia_vi"),
+       ("", "Đá viên", 1, "ly", "x", "phu")], khau_phan=2),
 
     # ---------- Bữa nướng (bữa chính một món, như lẩu) ----------
     M("nuong", "heo", "nuong_kieu_han_kim_chi", "Nướng ba chỉ, bò Mỹ kiểu Hàn ăn kèm kim chi", "nuong", "nong", "nang", "vua",
