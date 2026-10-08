@@ -109,6 +109,11 @@ def merge_de_xuat(tabs):
     if "anh_mon" not in tabs and os.path.exists(path):
         with open(path, newline="", encoding="utf-8") as f:
             tabs["anh_mon"] = list(csv.DictReader(f))
+    # Bí quyết chọn và bảo quản nguyên liệu (bi_quyet.py): mat/da là số ngày để ngon ở ngăn mát/ngăn đá.
+    path = os.path.join(DE_XUAT, "bi_quyet_nl.csv")
+    if "bi_quyet" not in tabs and os.path.exists(path):
+        with open(path, newline="", encoding="utf-8") as f:
+            tabs["bi_quyet"] = list(csv.DictReader(f))
     return len(moi)
 
 

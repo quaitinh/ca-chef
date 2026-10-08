@@ -18,7 +18,7 @@ const LABEL = {
     trang_mieng: "Tráng miệng, chè", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Dưa, đồ ăn kèm" },
 };
 
-const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], meals: [null, null], shown: [{ trua: new Set(), toi: new Set() }, { trua: new Set(), toi: new Set() }], servings: {}, chon: {}, anh: {} };
+const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], meals: [null, null], shown: [{ trua: new Set(), toi: new Set() }, { trua: new Set(), toi: new Set() }], servings: {}, chon: {}, anh: {}, bq: {} };
 
 // Món đã chọn trong bữa (giữ nguyên khi bấm Đổi các món còn lại), lưu theo ngày để tải lại trang vẫn còn.
 function readChon() {
@@ -99,6 +99,7 @@ async function load() {
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   for (const r of data.anh_mon || []) if (r.anh_id) S.anh[r.ma_mon] = r;
+  for (const r of data.bi_quyet || []) S.bq[r.ma] = r;
   S.ranked = rankDishes(0);
   S.meals[0] = readBua(S.ranked, 0) || pickMeals(S.ranked, 0, monDaChon(S.ranked, 0));
   saveBua(0);
@@ -123,6 +124,25 @@ function seasonOf(codes, m = month()) {
   return vals.length ? Math.max(...vals) : 1;
 }
 
+// ---------- Phản hồi của gia đình (lưu trên máy) ----------
+// { ma_mon: { nau: ["YYYY-MM-DD", ...], y: 1 (ngon) | -1 (không hợp) | 0, tim: true (yêu thích) } }
+const DG_KEY = "cachef.danh_gia";
+function danhGia() {
+  if (!S.dg) { try { S.dg = JSON.parse(localStorage.getItem(DG_KEY) || "{}"); } catch { S.dg = {}; } }
+  return S.dg;
+}
+const dgMon = (ma) => danhGia()[ma] || {};
+function saveDanhGia(ma, sua) {
+  const all = danhGia();
+  all[ma] = { ...(all[ma] || {}), ...sua };
+  if (all[ma].nau) all[ma].nau = [...new Set(all[ma].nau)].sort().slice(-20);
+  try { localStorage.setItem(DG_KEY, JSON.stringify(all)); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  // Chấm lại điểm để lần gợi ý sau phản ánh ngay; bữa đang hiện giữ nguyên.
+  S.ranked = rankDishes(0);
+  S.rankedTomorrow = rankDishes(1);
+}
+const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
+
 // ---------- Chấm điểm ----------
 // Số ngày từ lần gợi ý gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
 function readHistory() {
@@ -137,6 +157,8 @@ function daysSinceSuggested(ma, ref = today()) {
     if (date >= ref || !list.includes(ma)) continue;
     best = Math.min(best, Math.round((t - new Date(date)) / 86400000));
   }
+  for (const date of dgMon(ma).nau || []) // món đã nấu cũng tính là vừa ăn
+    if (date < ref) best = Math.min(best, Math.round((t - new Date(date)) / 86400000));
   return best;
 }
 
@@ -192,10 +214,25 @@ function scoreDish(dish, weatherHits, day = 0) {
       reasons.push({ text: r.ten, diem: Number(r.diem) });
     }
   }
+  // Chống lặp theo tuần: ngoài quy tắc "vừa gợi ý" (≤3 ngày) trên Sheet, trừ dần đến 14 ngày.
+  const them = (text, diem) => { score += diem; reasons.push({ text, diem }); };
+  if (since > 3 && since <= 7) them("Đã gợi ý trong tuần", -2);
+  else if (since > 7 && since <= 14) them("Đã gợi ý 2 tuần qua", -1);
+  const dg = dgMon(dish.ma_mon);
+  if (dg.y === 1) them("Nhà khen ngon", DIEM_DG.ngon);
+  if (dg.y === -1) them("Nhà thấy không hợp", DIEM_DG.khongHop);
+  if (dg.tim) them("Yêu thích", DIEM_DG.tim);
+  // Đồ có sẵn trong tủ: món dùng hết nguyên liệu chính trong tủ +2, dùng một phần +1; có thứ sắp quá hạn thêm +2.
+  const c = chinhCua(dish), co = c.filter((x) => tuLanh()[x]);
+  if (co.length) {
+    them(co.length === c.length ? "Có sẵn trong tủ" : "Có một phần trong tủ", co.length === c.length ? 2 : 1);
+    if (co.some(canDungSom)) them("Đồ trong tủ cần dùng sớm", 2);
+  }
   return { ...dish, score, reasons, season };
 }
 
-// Xáo nhẹ theo ngày để các món bằng điểm không lần nào cũng xếp như nhau.
+// Xáo theo ngày: món chênh nhau dưới XAO_DIEM điểm đổi chỗ cho nhau mỗi ngày, để món sát điểm cũng được lên.
+const XAO_DIEM = 1.5;
 function dayHash(s, day = 0) {
   let h = 0;
   for (const c of dayStr(day) + s) h = (h * 31 + c.charCodeAt(0)) | 0;
@@ -206,7 +243,8 @@ function rankDishes(day = 0) {
   const hits = weatherRulesHit(day);
   return S.data.mon_an
     .map((d) => scoreDish(d, hits, day))
-    .sort((a, b) => b.score - a.score || dayHash(a.ma_mon, day) - dayHash(b.ma_mon, day));
+    .map((d) => ({ ...d, xep: d.score + XAO_DIEM * ((dayHash(d.ma_mon, day) >>> 0) % 1000) / 1000 }))
+    .sort((a, b) => b.xep - a.xep);
 }
 
 // Lẩu là bữa lớn: chỉ gợi ý khi 6 ngày trước chưa gợi ý lẩu nào.
@@ -434,6 +472,7 @@ function thawList(meals) {
       const frozen = codes.length
         ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
         : FROZEN_WORDS.test(r.ten_hien_thi);
+      if (frozen && codes.length && codes.every((c) => tuLanh()[c] && !tuLanh()[c].da)) continue; // tủ lạnh ghi đang ở ngăn mát
       if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (gồm phần cho bữa tối)" : ""), qty: scaleQty(r, f) });
     }
   }
@@ -529,10 +568,12 @@ const thumb = (d, cls = "") => `<span class="ic ${cls}">${iconOf(d)}${S.anh[d.ma
 
 // Dòng phụ dưới tên món: chỉ những gì giúp quyết định nhanh.
 function metaMon(d, du) {
-  const p = [];
+  const p = [], dg = dgMon(d.ma_mon);
+  if (dg.y === 1 || dg.tim) p.push(`<span class="peak">${dg.tim ? "♥" : ""}${dg.y === 1 ? "👍" : ""}</span>`);
   if (d.season === 2) p.push(`<span class="peak">Đang rộ</span>`);
   else if (d.nhiet === "nong") p.push(`<span class="hot">Nóng</span>`);
   else if (d.nhiet === "mat") p.push(`<span class="cool">Mát</span>`);
+  if (chinhCua(d).some((c) => tuLanh()[c])) p.push(`<span class="tl-co">🧊 có trong tủ</span>`);
   if (d.thoi_gian_phut) p.push(`${d.thoi_gian_phut}′`);
   if (du) p.push("nấu thêm phần cho tối");
   if (coNuoc(d)) p.push("có nước, thay canh");
@@ -583,6 +624,18 @@ function thawBox(moSan = false) {
   </details>`;
 }
 
+// Nhắc đồ trong tủ cần dùng sớm và bữa hôm nay đã dùng tới chưa.
+function tlBox(meals) {
+  const som = Object.keys(tuLanh()).filter((c) => S.ing[c] && canDungSom(c));
+  if (!som.length) return "";
+  const trongBuaNay = new Set(mealDishes(meals).flatMap(chinhCua));
+  const chua = som.filter((c) => !trongBuaNay.has(c)), ten = (l) => l.map((c) => S.ing[c].ten).join(", ");
+  return `<a class="nhac tl-nhac" href="#/tu-lanh"><span class="ic">🧊</span>
+    <span class="tx"><b>Tủ lạnh: ${som.length} thứ cần dùng sớm</b><span class="meta">${chua.length
+      ? `Chưa có trong bữa: ${esc(ten(chua))} – chạm để chọn món`
+      : `Bữa hôm nay đã dùng: ${esc(ten(som))}`}</span></span><span class="chev">›</span></a>`;
+}
+
 // ---------- Trang Nấu gì (hôm nay / ngày mai) ----------
 function pageHome(day = 0) {
   const ranked = day ? S.rankedTomorrow : S.ranked;
@@ -597,6 +650,7 @@ function pageHome(day = 0) {
     ${weatherTip(day)}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
+    ${day ? "" : tlBox(meals)}
     ${thawBox(day === 1)}
     <h4>Đang vào mùa tháng ${m}</h4>
     <div class="hs">${inSeason.map((n) => `<a class="chip peak" href="#/lich/${n.ma}">${esc(n.ten)}</a>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
@@ -622,20 +676,38 @@ function pageHome(day = 0) {
     let next = pickMeals(ranked, day, keep);
     const moi = (b) => next[b].filter((d) => !chon[b].has(d.ma_mon)).length;
     if (!moi(k)) { S.shown[day][k].clear(); next = pickMeals(ranked, day, keep); } // hết món thì quay vòng
-    S.meals[day] = next;
-    saveBua(day);
-    if (day === 0) {
-      recordHistory(mealDishes(next).map((d) => d.ma_mon));
-      // Hôm nay vừa đổi sang món đang có trong bữa ngày mai: gợi ý lại ngày mai (giữ món đã chọn).
-      const homNay = new Set(mealDishes(next).map((d) => d.ma_mon));
-      if (S.meals[1] && mealDishes(S.meals[1]).some((d) => homNay.has(d.ma_mon) && !chonOf(1).trua.has(d.ma_mon) && !chonOf(1).toi.has(d.ma_mon))) {
-        S.rankedTomorrow = rankDishes(1);
-        S.meals[1] = pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
-        saveBua(1);
-      }
-    }
+    datBua(day, next);
     pageHome(day);
   }));
+}
+
+// Lưu bữa mới của một ngày; hôm nay đổi sang món đang có trong bữa ngày mai thì gợi ý lại ngày mai (giữ món đã chọn).
+function datBua(day, next) {
+  S.meals[day] = next;
+  saveBua(day);
+  if (day !== 0) return;
+  recordHistory(mealDishes(next).map((d) => d.ma_mon));
+  const homNay = new Set(mealDishes(next).map((d) => d.ma_mon));
+  if (S.meals[1] && mealDishes(S.meals[1]).some((d) => homNay.has(d.ma_mon) && !chonOf(1).trua.has(d.ma_mon) && !chonOf(1).toi.has(d.ma_mon))) {
+    S.rankedTomorrow = rankDishes(1);
+    S.meals[1] = pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
+    saveBua(1);
+  }
+}
+
+// Đưa một món vào bữa (từ tab Tủ lạnh): món thành "đã chọn", thay món đã chọn cùng vai; các món chưa chọn ghép lại theo quy tắc.
+// Lẩu chỉ vào bữa tối và thay cả bữa tối (giữ tráng miệng).
+function duaVaoBua(ma, k, day = 0) {
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day);
+  const d = ranked.find((x) => x.ma_mon === ma), v = vaiOf(d);
+  for (const x of [...chon[k]]) {
+    const vx = vaiOf(ranked.find((y) => y.ma_mon === x) || {});
+    if (vx === v || vx === "lau" || (v === "lau" && vx !== "trang_mieng")) chon[k].delete(x);
+  }
+  chon[k === "trua" ? "toi" : "trua"].delete(ma);
+  chon[k].add(ma);
+  saveChon(day, chon);
+  datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
 }
 
 // ---------- Trang món ----------
@@ -659,6 +731,24 @@ function seasonBlock(ma) {
 const thangBar = (thang, m) => `<span class="bar">${Array.from({ length: 12 }, (_, i) =>
   thang ? `<i class="v${thang[i]} ${i + 1 === m ? "cur" : ""}"></i>` : `<i class="n ${i + 1 === m ? "cur" : ""}">${i + 1}</i>`).join("")}</span>`;
 
+// Thanh phản hồi: đã nấu, ngon / không hợp, yêu thích. moiXong: vừa bấm "Xong" ở chế độ nấu.
+function thanhDanhGia(d, moiXong) {
+  const dg = dgMon(d.ma_mon), nau = dg.nau || [], hom = nau.includes(dayStr(0)), tlDung = chinhCua(d).filter((c) => tuLanh()[c]);
+  const lan = nau.length ? `Nhà đã nấu ${nau.length} lần, gần nhất ${nau.at(-1).slice(8, 10)}/${Number(nau.at(-1).slice(5, 7))}` : "Nhà chưa nấu món này";
+  return `<div class="dg ${moiXong && !dg.y ? "hoi" : ""}">
+    ${moiXong && !dg.y ? `<p class="dg-hoi">Đã ghi là nấu hôm nay. Món này cả nhà thấy thế nào?</p>` : ""}
+    <div class="dg-nut">
+      <button data-dg="nau" class="${hom ? "on" : ""}">✓ Đã nấu</button>
+      <button data-dg="ngon" class="${dg.y === 1 ? "on" : ""}" aria-pressed="${dg.y === 1}">👍 Ngon</button>
+      <button data-dg="khong" class="${dg.y === -1 ? "on xau" : ""}" aria-pressed="${dg.y === -1}">👎 Không hợp</button>
+      <button data-dg="tim" class="${dg.tim ? "on" : ""}" aria-pressed="${!!dg.tim}" aria-label="Yêu thích">${dg.tim ? "♥" : "♡"}</button>
+    </div>
+    ${hom && tlDung.length ? `<p class="dg-tl">🧊 Trong tủ còn ghi: ${esc(tlDung.map((c) => S.ing[c].ten).join(", "))}
+      <button class="link" data-dung="1">Đã dùng hết – bỏ khỏi tủ</button></p>` : ""}
+    <p class="src">${lan}${dg.y === -1 ? " · sẽ hầu như không được gợi ý nữa" : dg.y === 1 ? " · được ưu tiên gợi ý" : ""}</p>
+  </div>`;
+}
+
 // Món này có trong bữa nào hôm nay / ngày mai.
 function trongBua(ma) {
   for (const [day, ten] of [[0, "nay"], [1, "mai"]]) {
@@ -673,7 +763,7 @@ function trongBua(ma) {
 const steps = (d) => String(d.cach_lam || "").split("\n").map((s) => s.replace(/^\d+\.\s*/, "").trim()).filter(Boolean);
 const MUA_CHU = { 2: ["Rộ", "peak"], 1: ["Có hàng", ""], 0: ["Trái mùa", "muted"] };
 
-function pageRecipe(ma) {
+function pageRecipe(ma, moiXong = false) {
   const d = S.ranked.find((x) => x.ma_mon === ma);
   if (!d) { $app.innerHTML = `<p>Không tìm thấy món.</p><a href="#/">‹ Về trang chính</a>`; return; }
   const base = Number(d.khau_phan_goc) || 4;
@@ -684,6 +774,8 @@ function pageRecipe(ma) {
   const tab = S.tabMon || "nl";
   const bua = trongBua(ma);
   const [mua, muaCls] = MUA_CHU[d.season] || MUA_CHU[1];
+  const bqMon = [...new Set(rows.filter((r) => r.vai_tro === "chinh").flatMap((r) => String(r.ma_nguyen_lieu || "").split("|")))]
+    .filter((c) => S.bq[c] && !NL_CHUNG.has(c));
   const nhom = [["chinh", "Chính"], ["phu", "Thêm"], ["gia_vi", "Gia vị"]]
     .map(([v, t]) => [t, rows.filter((r) => (r.vai_tro || "phu") === v)]).filter(([, l]) => l.length);
   const body = {
@@ -695,7 +787,9 @@ function pageRecipe(ma) {
           ${price ? `<a class="go" href="${esc(price.url)}" target="_blank" rel="noopener">GO! ${Number(price.gia_vnd).toLocaleString("vi-VN")}đ</a>` : ""}</span>
           <span class="q">${esc(scaleQty(r, factor))}</span></div>`;
       }).join("")}`).join("")}</div>
-      <p class="note">Gia vị và nước dùng tăng chậm hơn số người – nêm lại cho vừa.</p>` : `<p class="note">Chưa có bảng nguyên liệu.</p>`,
+      <p class="note">Gia vị và nước dùng tăng chậm hơn số người – nêm lại cho vừa.</p>
+      ${bqMon.length ? `<h4 class="bq-h">💡 Bí quyết chọn nguyên liệu</h4><div class="bq">${bqMon.map((c, i) => bqBox(c, i === 0 && bqMon.length === 1)).join("")}</div>` : ""}`
+      : `<p class="note">Chưa có bảng nguyên liệu.</p>`,
     cl: hasRecipe(d) ? `<ol class="steps">${steps(d).map((s) => `<li>${esc(s)}</li>`).join("")}</ol>`
       : `<div class="box">Cá Chef chưa có cách làm chi tiết cho món này.<br><a class="btn" href="${esc(d.nguon)}" target="_blank" rel="noopener">Xem trên Cookpad ↗</a></div>`,
     mv: `${seasonBlock(d.ma_mon)}
@@ -713,12 +807,23 @@ function pageRecipe(ma) {
       <div><b>${LABEL.nhiet[d.nhiet] || "–"}</b>${LABEL.dau_mo[d.dau_mo]?.toLowerCase() || "món"}</div>
       <div><b class="${muaCls}">${mua}</b>tháng ${month()}</div>
     </div>
+    ${thanhDanhGia(d, moiXong)}
     <div class="tabs2">${[["nl", "Nguyên liệu"], ["cl", "Cách làm"], ["mv", "Mùa vụ"]].map(([k, t]) =>
       `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${t}</button>`).join("")}</div>
     ${body}
-    <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">Cookpad</a> · ${d.trang_thai === "da_nau_thu" ? "đã nấu thử" : "chưa nấu thử"}</p>
+    <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">Cookpad</a> · ${d.trang_thai === "da_nau_thu" || dgMon(d.ma_mon).nau?.length ? "đã nấu thử" : "chưa nấu thử"}</p>
     ${hasRecipe(d) ? `<a class="cta" href="#/nau/${d.ma_mon}">👩‍🍳 Bắt đầu nấu – từng bước</a>` : ""}`;
   document.getElementById("back").onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
+  $app.querySelectorAll("[data-dg]").forEach((b) => (b.onclick = () => {
+    const dg = dgMon(ma), hom = dayStr(0), k = b.dataset.dg;
+    if (k === "nau") saveDanhGia(ma, { nau: dg.nau?.includes(hom) ? dg.nau.filter((x) => x !== hom) : [...(dg.nau || []), hom] });
+    if (k === "ngon") saveDanhGia(ma, { y: dg.y === 1 ? 0 : 1 });
+    if (k === "khong") saveDanhGia(ma, { y: dg.y === -1 ? 0 : -1 });
+    if (k === "tim") saveDanhGia(ma, { tim: !dg.tim });
+    pageRecipe(ma);
+  }));
+  const dungHet = $app.querySelector("[data-dung]");
+  if (dungHet) dungHet.onclick = () => { for (const c of chinhCua(d)) delete tuLanh()[c]; saveTuLanh(); pageRecipe(ma); };
   $app.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tabMon = b.dataset.tab; pageRecipe(ma); }));
   if (tab !== "nl" || !rows.length) return;
   const set = (v) => { S.servings[ma] = Math.min(20, Math.max(1, v)); pageRecipe(ma); };
@@ -750,7 +855,7 @@ function pageCook(ma, i) {
     <p class="cook-step">${esc(list[i])}</p>
     <div class="cook-nav">
       ${i ? `<a class="btn" href="#/nau/${ma}/${i}">‹ Trước</a>` : "<span></span>"}
-      <a class="btn on" href="${cuoi ? `#/mon/${ma}` : `#/nau/${ma}/${i + 2}`}">${cuoi ? "Xong 🎉" : "Tiếp ›"}</a>
+      <a class="btn on" href="${cuoi ? `#/mon/${ma}/xong` : `#/nau/${ma}/${i + 2}`}">${cuoi ? "Xong 🎉" : "Tiếp ›"}</a>
     </div>`;
 }
 
@@ -774,7 +879,7 @@ function pageCalendar(mo) {
     const mon = monDung(n.ma).slice(0, 6);
     return `<details class="ni" id="nl-${n.ma}" ${S.calOpen === n.ma ? "open" : ""}>
       <summary><span class="nn">${esc(n.ten)}${n.vung && n.vung !== "chung" ? `<small>${esc(n.vung)}</small>` : ""}</span>${thangBar(n.thang, m)}</summary>
-      <div class="nd">${n.ghi_chu ? `<p>${esc(n.ghi_chu)}</p>` : ""}
+      <div class="nd">${n.ghi_chu ? `<p>${esc(n.ghi_chu)}</p>` : ""}${bqDl(n.ma)}
         <p class="src">Mua ở: ${esc(n.noi_mua || "chợ")} · tin cậy ${esc(n.tin_cay || "–")}${n.nguon ? ` · nguồn: ${String(n.nguon).split("|")
           .map((u, i) => `<a href="${esc(u.trim())}" target="_blank" rel="noopener">${i + 1}</a>`).join(", ")}` : ""}</p>
         ${mon.length ? `<div class="hs wrap">${mon.map((d) => `<a class="chip" href="#/mon/${d.ma_mon}">${esc(d.ten_mon)}</a>`).join("")}</div>` : ""}</div>
@@ -790,7 +895,7 @@ function pageCalendar(mo) {
     ${nhomBox("⏳ Sắp vào mùa", sap, `tháng ${sau[0] + 1}–${sau[1] + 1}`, true)}
     ${nhomBox("✓ Có hàng", coHang, "", coHang.some((n) => n.ma === S.calOpen))}
     ${nhomBox("✕ Trái mùa – nên tránh", traiMua, "", traiMua.some((n) => n.ma === S.calOpen))}
-    <p class="note">Chạm vào nguyên liệu để xem ghi chú, nguồn và món nấu được.</p>`;
+    <p class="note">Chạm vào nguyên liệu để xem cách chọn, cách cất, nguồn và món nấu được.</p>`;
   $app.querySelectorAll("[data-m]").forEach((b) => (b.onclick = () => { S.calMonth = Number(b.dataset.m); pageCalendar(); }));
   $app.querySelectorAll("[data-n]").forEach((b) => (b.onclick = () => { S.calNhom = b.dataset.n; pageCalendar(); }));
   $app.querySelector(".months .on")?.scrollIntoView({ inline: "center", block: "nearest" });
@@ -798,11 +903,14 @@ function pageCalendar(mo) {
 }
 
 // ---------- Tất cả món ----------
-const VAI_LOC = ["all", "man", "rau", "canh", "lau", "mot_to", "trang_mieng", "do_uong"];
+const VAI_LOC = ["all", "yt", "da_nau", "man", "rau", "canh", "lau", "mot_to", "trang_mieng", "do_uong"];
+const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã nấu" };
+const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgMon(d.ma_mon).y === 1
+  : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
 function pageAll() {
   $app.innerHTML = `<h1 class="ptitle">Món ăn<small>${S.ranked.length} món · sắp theo điểm hôm nay</small></h1>
     <input id="q" class="search" type="search" placeholder="Tìm món – gõ không dấu được (ca thu, canh chua)" value="${esc(S.query)}">
-    <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${v === "all" ? "Tất cả" : VAI_NGAN[v]}</button>`).join("")}</div>
+    <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${TEN_LOC[v] || VAI_NGAN[v]}</button>`).join("")}</div>
     <div id="all-list"></div>`;
   const q = document.getElementById("q");
   q.oninput = () => { S.query = q.value; renderAll(); };
@@ -812,71 +920,131 @@ function pageAll() {
 
 function renderAll() {
   const words = plain(S.query).split(/\s+/).filter(Boolean), v = S.vaiLoc || "all";
-  const list = S.ranked.filter((d) => (v === "all" || vaiOf(d) === v) && words.every((w) => plain(d.ten_mon).includes(w)));
+  const list = S.ranked.filter((d) => hopLoc(d, v) && words.every((w) => plain(d.ten_mon).includes(w)));
   document.getElementById("all-list").innerHTML = list.length ? `<div class="list">${list.map((d) => `
     <a class="row-link li" href="#/mon/${d.ma_mon}">${thumb(d)}
       <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}${d.season === 2 ? ' · <span class="peak">Đang rộ</span>' : d.season === 0 ? " · trái mùa" : ""}</span></span>
-      <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>` : `<p class="muted">Không thấy món nào.</p>`;
+      <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>` : `<p class="muted">${v === "yt" ? "Chưa có món yêu thích – bấm ♡ hoặc 👍 trên trang món." : v === "da_nau" ? "Chưa ghi món nào đã nấu." : "Không thấy món nào."}</p>`;
 }
 
 // ---------- Tủ lạnh: có gì trong tủ -> nấu được món gì ----------
 const TL_KEY = "cachef.tulanh";
 const TL_BO = new Set([...NL_CHUNG, "gao_nep", "dau_hat"]); // gia vị, đồ khô dùng chung: coi như luôn có
+// Tủ lạnh: { mã nguyên liệu: { n: ngày cho vào, da: 1 nếu để ngăn đá } }. Bản cũ lưu mảng mã – đổi sang dạng mới, coi như cho vào hôm nay.
 function tuLanh() {
   if (!S.tuLanh) {
-    try { S.tuLanh = new Set(JSON.parse(localStorage.getItem(TL_KEY) || "[]")); } catch { S.tuLanh = new Set(); }
+    let v;
+    try { v = JSON.parse(localStorage.getItem(TL_KEY) || "{}"); } catch { v = {}; }
+    if (Array.isArray(v)) v = Object.fromEntries(v.map((ma) => [ma, { n: dayStr(0) }]));
+    S.tuLanh = v && typeof v === "object" ? v : {};
   }
   return S.tuLanh;
 }
 function saveTuLanh() {
-  try { localStorage.setItem(TL_KEY, JSON.stringify([...S.tuLanh])); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  try { localStorage.setItem(TL_KEY, JSON.stringify(S.tuLanh)); } catch { /* chặn lưu: chỉ giữ trong phiên */ }
+  S.ranked = rankDishes(0); S.rankedTomorrow = rankDishes(1);
 }
+// Hạn dùng theo bí quyết bảo quản: de = số ngày đã để, con = số ngày còn ngon (âm là quá hạn).
+function hanTL(ma) {
+  const x = tuLanh()[ma];
+  if (!x) return null;
+  const bq = S.bq[ma] || {}, han = x.da ? Number(bq.da) || 30 : Number(bq.mat) || 3;
+  const de = Math.max(0, Math.round((Date.parse(dayStr(0)) - Date.parse(x.n)) / 864e5)) || 0;
+  return { de, con: han - de, da: !!x.da, hopDa: Number(bq.da) > 0 };
+}
+const canDungSom = (ma) => { const h = hanTL(ma); return !!h && !h.da && h.con <= 1; };
 // Mã nguyên liệu chính của món (bỏ gia vị, đồ dùng chung).
 const chinhCua = (d) => [...new Set(String(d.nguyen_lieu_chinh || "").split("|").filter((c) => c && S.ing[c] && !TL_BO.has(c)))];
 
+// Bí quyết chọn và bảo quản một nguyên liệu, dạng mở/thu.
+function bqBox(ma, mo = false) {
+  const bq = S.bq[ma], n = S.ing[ma];
+  if (!bq || !n) return "";
+  return `<details class="bq-d" ${mo ? "open" : ""}><summary>${esc(n.ten)}</summary>${bqDl(ma)}</details>`;
+}
+function bqDl(ma) {
+  const bq = S.bq[ma];
+  return bq ? `<dl class="bq-dl"><dt>Chọn</dt><dd>${esc(bq.chon)}</dd>${bq.tranh ? `<dt>Tránh</dt><dd>${esc(bq.tranh)}</dd>` : ""}
+    <dt>Cất</dt><dd>${esc(bq.bao_quan)}</dd></dl>` : "";
+}
+const hanChu = (h) => h.con < 0 ? `<span class="minus">quá ${-h.con} ngày – xem lại trước khi dùng</span>`
+  : h.con === 0 ? `<span class="minus">nên dùng hôm nay</span>` : h.con === 1 ? `<span class="hot">nên dùng trước mai</span>`
+  : h.con > 60 ? "còn để lâu" : `còn ~${h.con} ngày`;
+
 function pageFridge() {
-  const co = tuLanh(), loc = S.tlNhom || "all", q = plain(S.tlQuery || "");
+  const tl = tuLanh(), loc = S.tlNhom || "all", q = plain(S.tlQuery || "");
+  const co = Object.keys(tl).filter((c) => S.ing[c]).sort((a, b) => hanTL(a).con - hanTL(b).con);
   const dung = new Set(S.ranked.flatMap(chinhCua));
-  const nl = S.data.nguyen_lieu.filter((n) => dung.has(n.ma) && (loc === "all" || nhomLoc(n) === loc) && (!q || plain(n.ten).includes(q)))
+  const nl = S.data.nguyen_lieu.filter((n) => !tl[n.ma] && dung.has(n.ma) && (loc === "all" || nhomLoc(n) === loc) && (!q || plain(n.ten).includes(q)))
     .sort((a, b) => a.ten.localeCompare(b.ten, "vi"));
+  // Món dùng đồ trong tủ, đã sắp theo điểm hôm nay (đồ sắp quá hạn được cộng điểm nên lên trước).
   const mon = S.ranked.filter((d) => ["man", "rau", "canh", "lau", "mot_to"].includes(vaiOf(d)))
-    .map((d) => ({ d, c: chinhCua(d) })).filter((x) => x.c.length && x.c.some((c) => co.has(c)))
-    .map((x) => ({ ...x, thieu: x.c.filter((c) => !co.has(c)) }));
+    .map((d) => ({ d, c: chinhCua(d) })).filter((x) => x.c.length && x.c.some((c) => tl[c]))
+    .map((x) => ({ ...x, thieu: x.c.filter((c) => !tl[c]) }));
   const du = mon.filter((x) => !x.thieu.length).slice(0, 12), gan = mon.filter((x) => x.thieu.length === 1).slice(0, 8);
-  const monRow = (x) => `<a class="row-link li" href="#/mon/${x.d.ma_mon}">${thumb(x.d)}
-    <span class="tx"><b>${esc(x.d.ten_mon)}</b><span class="meta">${x.thieu.length ? `thiếu ${esc(x.thieu.map((c) => S.ing[c].ten).join(", "))}` : `${VAI_NGAN[vaiOf(x.d)]}${x.d.thoi_gian_phut ? ` · ${x.d.thoi_gian_phut}′` : ""}`}</span></span></a>`;
-  const chip = (n) => `<button class="chip ${co.has(n.ma) ? "on" : ""}" data-nl="${n.ma}" aria-pressed="${co.has(n.ma)}">${co.has(n.ma) ? "✓ " : ""}${esc(n.ten)}</button>`;
+  const nutBua = (d) => {
+    const o = trongBua(d.ma_mon);
+    if (/nay/.test(o)) return `<span class="pill">${o}</span>`;
+    const v = vaiOf(d);
+    if (!["man", "rau", "canh", "lau"].includes(v)) return "";
+    return `<span class="add">${v === "lau" ? "" : `<button data-add="trua" data-ma="${d.ma_mon}" aria-label="Đưa ${esc(d.ten_mon)} vào bữa trưa nay">＋Trưa</button>`}<button data-add="toi" data-ma="${d.ma_mon}" aria-label="Đưa ${esc(d.ten_mon)} vào bữa tối nay">＋Tối</button></span>`;
+  };
+  const monRow = (x) => `<div class="li tl-mon"><a class="row-link" href="#/mon/${x.d.ma_mon}">${thumb(x.d)}
+    <span class="tx"><b>${esc(x.d.ten_mon)}</b><span class="meta">${x.thieu.length ? `thiếu ${esc(x.thieu.map((c) => S.ing[c].ten).join(", "))}`
+      : `${VAI_NGAN[vaiOf(x.d)]}${x.d.thoi_gian_phut ? ` · ${x.d.thoi_gian_phut}′` : ""}${x.c.some(canDungSom) ? ' · <span class="hot">dùng đồ sắp hết hạn</span>' : ""}`}</span></span></a>
+    ${x.thieu.length ? "" : nutBua(x.d)}</div>`;
+  const itemRow = (c) => {
+    const h = hanTL(c), n = S.ing[c];
+    return `<div class="tli ${h.con <= 1 && !h.da ? "gap" : ""}">
+      <details><summary><b>${esc(n.ten)}</b><span class="meta">${h.da ? "❄ ngăn đá" : "ngăn mát"} · ${h.de ? `để ${h.de} ngày` : "mới cho vào"} · ${hanChu(h)}</span></summary>
+        ${S.bq[c] ? `<p class="bq-t">${esc(S.bq[c].bao_quan)}${h.da && !h.hopDa ? " <b>Loại này không hợp để ngăn đá.</b>" : ""}</p>` : ""}</details>
+      <button class="ngan ${h.da ? "on" : ""}" data-da="${c}" aria-pressed="${h.da}" title="${h.da ? "Chuyển xuống ngăn mát" : "Chuyển lên ngăn đá"}">❄</button>
+      <button class="bo" data-bo="${c}" aria-label="Bỏ ${esc(n.ten)} khỏi tủ">✕</button></div>`;
+  };
+  const chip = (n) => `<button class="chip" data-nl="${n.ma}">＋ ${esc(n.ten)}</button>`;
   $app.innerHTML = `
-    <h1 class="ptitle">Tủ lạnh<small>Chọn thứ đang có – Cá Chef gợi ý món nấu được</small></h1>
+    <h1 class="ptitle">Tủ lạnh<small>Ghi thứ đang có – Cá Chef ưu tiên món dùng đồ trong tủ, nhắc thứ cần dùng sớm</small></h1>
     ${thawBox()}
-    ${co.size ? `<div class="tl-head"><b>Trong tủ có (${co.size})</b><button class="link" id="xoa">Xóa hết</button></div>
-      <div class="hs wrap tl">${[...co].filter((c) => S.ing[c]).map((c) => chip(S.ing[c])).join("")}</div>
+    ${co.length ? `<div class="tl-head"><b>Trong tủ có (${co.length})</b><button class="link" id="xoa">Xóa hết</button></div>
+      <div class="tl-list">${co.map(itemRow).join("")}</div>
       <h4>Nấu được ngay (${du.length})</h4>${du.length ? `<div class="list">${du.map(monRow).join("")}</div>` : '<p class="muted">Chưa đủ nguyên liệu chính cho món nào.</p>'}
       ${gan.length ? `<h4>Thiếu 1 thứ</h4><div class="list">${gan.map(monRow).join("")}</div>` : ""}`
-      : '<p class="note">Chạm vào nguyên liệu bên dưới để đánh dấu đang có trong tủ, Cá Chef sẽ gợi ý món nấu được.</p>'}
-    <h4>${co.size ? "Thêm nguyên liệu" : "Trong tủ có gì?"}</h4>
+      : '<p class="note">Chạm vào nguyên liệu bên dưới để ghi là đang có trong tủ. Cá Chef sẽ gợi ý món nấu được, ưu tiên đồ trong tủ khi ghép bữa và nhắc thứ cần dùng sớm.</p>'}
+    <h4>${co.length ? "Thêm nguyên liệu" : "Trong tủ có gì?"}</h4>
     <input id="tlq" class="search" type="search" placeholder="Tìm nguyên liệu (ca, tom, bi…)" value="${esc(S.tlQuery || "")}">
     <div class="filt">${Object.entries(NHOM_LOC).map(([k, t]) => `<button data-n="${k}" class="${k === loc ? "on" : ""}">${t}</button>`).join("")}</div>
-    <div class="hs wrap tl">${nl.filter((n) => !co.has(n.ma)).map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>'}</div>`;
-  $app.querySelectorAll("[data-nl]").forEach((b) => (b.onclick = () => {
-    const ma = b.dataset.nl; if (co.has(ma)) co.delete(ma); else co.add(ma); saveTuLanh(); pageFridge();
+    <div class="hs wrap tl">${nl.map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>'}</div>`;
+  $app.querySelectorAll("[data-nl]").forEach((b) => (b.onclick = () => { tl[b.dataset.nl] = { n: dayStr(0) }; saveTuLanh(); pageFridge(); }));
+  $app.querySelectorAll("[data-bo]").forEach((b) => (b.onclick = () => { delete tl[b.dataset.bo]; saveTuLanh(); pageFridge(); }));
+  $app.querySelectorAll("[data-da]").forEach((b) => (b.onclick = () => {
+    const x = tl[b.dataset.da];
+    if (x.da) delete x.da; else x.da = 1;
+    saveTuLanh(); pageFridge();
   }));
+  $app.querySelectorAll("[data-add]").forEach((b) => (b.onclick = () => { duaVaoBua(b.dataset.ma, b.dataset.add); location.hash = "#/"; }));
   $app.querySelectorAll("[data-n]").forEach((b) => (b.onclick = () => { S.tlNhom = b.dataset.n; pageFridge(); }));
   const ip = document.getElementById("tlq");
   ip.oninput = () => { S.tlQuery = ip.value; pageFridge(); const e = document.getElementById("tlq"); e.focus(); e.setSelectionRange(e.value.length, e.value.length); };
-  const x = document.getElementById("xoa"); if (x) x.onclick = () => { co.clear(); saveTuLanh(); pageFridge(); };
+  const x = document.getElementById("xoa"); if (x) x.onclick = () => { if (!confirm("Xóa hết đồ trong tủ?")) return; for (const k of Object.keys(tl)) delete tl[k]; saveTuLanh(); pageFridge(); };
 }
 
 // ---------- Điều hướng ----------
 function route() {
   const h = location.hash.slice(1) || "/";
   const [, page, arg, arg2] = h.split("/");
-  const tab = page === "lich" ? "lich" : page === "mon" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "nau" ? "" : "home";
+  const tab = page === "lich" ? "lich" : page === "mon" || page === "yeu-thich" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "nau" ? "" : "home";
   document.querySelectorAll("[data-nav]").forEach((a) => a.classList.toggle("on", a.dataset.nav === tab));
   if (page !== "nau") { document.body.classList.remove("cook"); giuManHinh(false); }
   if (page === "lich") pageCalendar(arg && decodeURIComponent(arg));
   else if (page === "ngay-mai") pageHome(1);
-  else if (page === "mon" && arg) { if (S.lastMon !== arg) S.tabMon = "nl"; S.lastMon = arg; pageRecipe(decodeURIComponent(arg)); }
+  else if (page === "mon" && arg) {
+    if (S.lastMon !== arg) S.tabMon = "nl";
+    S.lastMon = arg;
+    const ma = decodeURIComponent(arg), xong = arg2 === "xong";
+    if (xong && !(dgMon(ma).nau || []).includes(dayStr(0))) saveDanhGia(ma, { nau: [...(dgMon(ma).nau || []), dayStr(0)] });
+    pageRecipe(ma, xong);
+  }
+  else if (page === "yeu-thich") { S.vaiLoc = "yt"; pageAll(); }
   else if (page === "mon") pageAll();
   else if (page === "tu-lanh") pageFridge();
   else if (page === "nau" && arg) pageCook(decodeURIComponent(arg), Number(arg2 || 1) - 1);
