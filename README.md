@@ -43,7 +43,7 @@ trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên
 
 ## Giao diện (điện thoại trước)
 
-Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`).
+Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`), **Đi chợ** (`#/di-cho`).
 - Nấu gì: bữa trưa, tối mỗi món một dòng; ✓ để chọn giữ món, "Đổi" xoay các món còn lại; nhắc rã đông cho ngày mai.
 - Chế độ nấu không thêm mục lịch sử (chuyển bước, Thoát, Xong thay mục hiện tại), nên "Quay lại" ở trang món về đúng trang trước.
 - Trang món: thông tin nhanh; thanh phản hồi ✓ Đã nấu / 👍 Ngon / 👎 Không hợp / ♥; 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng. Bấm "Xong" ở bước cuối thì ghi là đã nấu hôm nay và hỏi cả nhà thấy thế nào.
@@ -52,6 +52,12 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Tủ lạnh: ghi thứ đang có, ngày cho vào, ngăn mát hay ngăn đá (❄); tính hạn dùng theo bí quyết bảo quản, thứ sắp hết hạn tô màu và nhắc ở trang Nấu gì.
   Gợi ý món nấu được ngay (nút ＋Trưa / ＋Tối đưa thẳng vào bữa hôm nay, thành món đã chọn) và món thiếu 1 thứ.
   Nấu xong một món thì hỏi bỏ đồ đã dùng khỏi tủ. Thứ đang ghi ở ngăn mát không cần nhắc rã đông.
+- Đi chợ: chọn đi hôm nay / ngày mai, mua cho 3, 4 hoặc 5 ngày. App lên thực đơn các ngày đó (lưu lại, đến ngày đó gợi ý
+  đúng món đã mua; các ngày tính chống lặp với nhau; ngày thứ 3 trở đi có nút Đổi) và gộp nguyên liệu (trừ gia vị) thành danh sách
+  theo nhóm, cho 4 người, có phần nấu dư cho tối. Theo số ngày để được ở ngăn mát (`bi_quyet_nl.csv`): dùng muộn hơn thì ghi
+  "❄ cấp đông phần T…" (thịt, cá), còn thứ không cấp đông được (rau lá, bún tươi) xếp vào "Mua thêm gần ngày nấu". Đồ có trong
+  tủ tách riêng. Tick đồ đã mua (`cachef.di_cho`), bấm "Cất đồ đã mua vào tủ" để ghi vào Tủ lạnh (phần cần cấp đông ghi ngăn đá).
+  Dự báo thời tiết lấy 6 ngày để chấm điểm món các ngày tới.
 - Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
   mỡ heo luôn để ngăn mát nên không có trong danh sách.
 - Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
