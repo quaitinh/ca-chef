@@ -73,7 +73,7 @@ MAT = ["canh chua", "nấu chua", "gỏi", "nộm", "cuốn", "luộc", "hấp",
        "mồng tơi", "chè", "sinh tố", "trà", "sương sáo", "rau câu", "sữa chua", "thạch", "ngâm", "dưa"]
 NONG = ["lẩu", "hầm", "kho", "cháo", "om", "nướng", "rim", "rang", "phở", "bún bò", "sốt vang", "cà ri", "ram",
         "tiêu", "gừng", "chiên", "rán", "mì", "miến", "xôi", "súp"]
-CAY = ["sả ớt", "cay", "sa tế", "mắm nhĩ", "rang me", "bún bò huế", "lòng", "tai heo", "ếch xào", "dê", "tái chanh", "kim chi"]
+CAY = ["sả ớt", "cay", "sa tế", "mắm nhĩ", "rang me", "bún bò huế", "lòng", "tai heo", "ếch xào", "dê", "tái chanh", "kim chi", "krapao"]
 
 
 def bo_dau(s):
