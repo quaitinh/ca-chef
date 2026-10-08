@@ -38,7 +38,7 @@ RAU_THOM = r"hành lá|hành hoa|hành ngò|(^|\s)ngò|rau mùi|rau thơm|húng|
 
 # Tên nguyên liệu -> mã trong bảng nguyen_lieu (cụm dài/đặc thù trước)
 MA = [
-    (r"tôm khô|ruốc|chà bông|bánh phồng", ""), (r"tôm hùm", "tom_hum"), (r"tôm|tép", "tom_the"), (r"mực (khô|một nắng)", "muc_mot_nang"),
+    (r"tôm khô|ruốc|chà bông|bánh phồng", ""), (r"nước dừa", "dua"), (r"tôm hùm", "tom_hum"), (r"tôm|tép", "tom_the"), (r"mực (khô|một nắng)", "muc_mot_nang"),
     (r"mực", "muc_tuoi"), (r"cá cơm khô", "ca_com_kho"), (r"cá cơm", "ca_com"), (r"cá nục", "ca_nuc"), (r"cá thu", "ca_thu"),
     (r"cá ngừ", "ca_ngu_dd"), (r"cua đồng|rạm|riêu cua|cua xay|cà ra", "cua_dong"), (r"sứa", "sua"), (r"ếch", "ech"), (r"(^|\s)dê", "thit_de"),
     (r"cừu", "thit_cuu"), (r"(^|\s)(bò|bê)(\s|$)|bắp bò|nạm|gầu", "thit_bo"), (r"đậu (hũ|phụ) trứng", "dau_phu"), (r"trứng", "trung"),

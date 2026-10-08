@@ -92,7 +92,8 @@ def sua_lich_mua(tabs):
 def tach_nhanh(tabs):
     """Tách nguyên liệu cha thành các nhánh (thịt heo -> ba chỉ, sườn, nạc vai...) theo nhanh_nguyen_lieu.csv.
 
-    Nhánh mang lịch mùa vụ, nhóm của nguyên liệu cha và thêm cột cha. Dòng định lượng đang mang mã cha thì đổi
+    Nhánh mang lịch mùa vụ, nhóm (trừ khi khai nhóm riêng) của nguyên liệu cha và thêm cột cha; mac_dinh = 1 là nhánh
+    được hiểu khi món chỉ ghi chung mã cha (vd. "thịt heo" là thịt nạc hoặc ba chỉ). Dòng định lượng đang mang mã cha thì đổi
     sang mã nhánh đầu tiên có từ khóa khớp tên hiển thị; món có nguyên liệu chính là mã cha thì thay bằng các nhánh
     của dòng "chính" (không khớp nhánh nào thì giữ mã cha).
     """
@@ -105,7 +106,8 @@ def tach_nhanh(tabs):
     for n in nhanh:
         cha = theo_ma.get(n["cha"])
         if cha and n["ma"] not in theo_ma:
-            tabs["nguyen_lieu"].append({**cha, "ma": n["ma"], "ten": n["ten"], "cha": n["cha"], "ghi_chu": n["ghi_chu"] or cha.get("ghi_chu", "")})
+            tabs["nguyen_lieu"].append({**cha, "ma": n["ma"], "ten": n["ten"], "cha": n["cha"], "nhom": n.get("nhom") or cha["nhom"],
+                                        "mac_dinh": n.get("mac_dinh", ""), "ghi_chu": n["ghi_chu"] or cha.get("ghi_chu", "")})
     chinh = {}
     for r in tabs["mon_nguyen_lieu"]:
         ma = str(r.get("ma_nguyen_lieu") or "")

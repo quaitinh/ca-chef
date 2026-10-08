@@ -433,7 +433,7 @@ const NL_TEN = [
   [/hoa chuối/, "hoa_chuoi"], [/dứa|(^|\s)thơm(\s|$)/, "thom"], [/lòng (heo|lợn)|lưỡi heo/, "heo"],
 ];
 const NL_MA = { thit_heo: "heo", long_heo: "heo", ba_chi: "heo", suon_heo: "heo", chan_gio: "heo", xuong_heo: "heo", thit_bam: "heo",
-  nac_vai: "heo", thit_nac: "heo", mo_heo: "heo", vit: "ga", ngan: "ga", chim_cut: "ga", tom_the: "tom", tom_hum: "tom", muc_tuoi: "muc", muc_mot_nang: "muc",
+  nac_vai: "heo", thit_nac: "heo", mo_heo: "heo", tai_heo: "heo", luoi_heo: "heo", da_heo: "heo", vit: "ga", ngan: "ga", chim_cut: "ga", tom_the: "tom", tom_hum: "tom", muc_tuoi: "muc", muc_mot_nang: "muc",
   thit_bo: "bo", ga_ta: "ga", thit_de: "de", thit_cuu: "cuu", cua_dong: "cua", sup_lo_trang: "sup_lo", bo_booth: "bo_trai", bo_sap: "bo_trai",
   ghe: "cua", cua_bien: "cua", ngheu: "so_oc", oc: "so_oc", oc_dong: "so_oc", so_diep: "so_oc", gia_do: "gia" };
 const NL_CHUNG = new Set(["rau_thom", "sa_ot", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
@@ -541,7 +541,7 @@ function wmo(code) {
 
 // Đồ tươi sống (thịt, hải sản) của các món ngày mai – thường để ngăn đá, cần rã đông từ tối nay.
 const FROZEN_GROUPS = ["thịt", "hải sản"];
-const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang", "mo_heo"]; // rong khô, sứa ngâm, mực phơi: không cần rã đông lâu
+const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang", "mo_heo", "thit_hop"]; // rong khô, sứa ngâm, mực phơi: không cần rã đông lâu
 const FROZEN_WORDS = /chả cá|xương|sườn|giò heo/i;
 const NAU_THANG = new Set(["tom_the", "tom_hum", "muc_tuoi"]); // tôm, mực: lấy từ ngăn đá nấu thẳng, không rã đông
 const MO_HEO = /^mỡ/i; // mỡ heo (mỡ phần, mỡ nước) luôn để ngăn mát – không tính "thịt nửa nạc nửa mỡ"
@@ -1043,13 +1043,13 @@ function hanTL(ma) {
   return { de, con: han - de, da: !!x.da, hopDa: Number(bq.da) > 0 };
 }
 // Tủ có nguyên liệu c chưa – trả về mã đang ghi trong tủ: đúng mã; mã cha ghi chung (tủ ghi "Thịt heo" thì món cần
-// ba chỉ cũng tính là có); hoặc c là mã cha (món ghi chung "thịt heo") và tủ có một nhánh của nó.
+// ba chỉ cũng tính là có); hoặc c là mã cha (món ghi chung "thịt heo") và tủ có nhánh mặc định của nó (nạc, nạc vai, ba chỉ).
 function trongTu(c) {
   const tl = tuLanh();
   if (tl[c]) return c;
   const cha = S.ing[c]?.cha;
   if (cha && tl[cha]) return cha;
-  return Object.keys(tl).find((k) => S.ing[k]?.cha === c) || "";
+  return Object.keys(tl).find((k) => S.ing[k]?.cha === c && String(S.ing[k].mac_dinh) === "1") || "";
 }
 const canDungSom = (ma) => { const h = hanTL(ma); return !!h && !h.da && h.con <= 1; };
 // Mã nguyên liệu chính của món (bỏ gia vị, đồ dùng chung).
