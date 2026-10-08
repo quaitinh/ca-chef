@@ -66,6 +66,24 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
   Nguồn: `scripts/de_xuat/bi_quyet.py` → `data/de_xuat/bi_quyet_nl.csv` (cột `mat`, `da`: số ngày để ngon ở ngăn mát / ngăn đá).
 
+## Đồng bộ trong nhà (nhiều điện thoại dùng chung)
+
+Tủ lạnh, món đã chọn và bữa đang gợi ý, đánh giá (đã nấu / 👍 / 👎 / ♥), lịch sử gợi ý, đi chợ dùng chung giữa các máy,
+lưu ở tab `dong_bo` của Google Sheet Cá Chef qua Apps Script (`scripts/apps_script/dong_bo.gs`). Chưa cài thì app chỉ lưu trên máy như cũ.
+
+Cài một lần (người giữ Sheet):
+1. Mở Google Sheet "Cá Chef" › Tiện ích mở rộng › Apps Script, dán nội dung `scripts/apps_script/dong_bo.gs`, lưu.
+2. Triển khai › Tùy chọn triển khai mới › loại "Ứng dụng web"; Thực thi với tư cách: **Tôi**; Người có quyền truy cập: **Bất kỳ ai**.
+   Cấp quyền khi Google hỏi. Chép URL ứng dụng web (`https://script.google.com/macros/s/…/exec`).
+3. Trên app: chân trang › ☁ Đồng bộ › dán URL (mã nhà tự tạo) › Bật đồng bộ.
+4. Bấm "Gửi link" gửi cho người nhà; mở link trên máy đó, bấm Bật đồng bộ.
+
+Cách gộp (`app/static/dong_bo.js`): mỗi mục (một nguyên liệu trong tủ, một món đã đánh giá, bữa của một ngày...) mang giờ sửa;
+mục sửa sau cùng thắng, xóa cũng đồng bộ; lịch sử gợi ý trong ngày thì gộp. Dữ liệu có trên máy trước khi bật được gửi lên
+nhưng nhường bản trên Sheet nếu Sheet đã có. App lấy dữ liệu mới trước khi ghép bữa lúc mở, khi quay lại app và mỗi 45 giây;
+sửa xong gửi sau ~1 giây, mất mạng thì giữ lại gửi sau. URL và mã nhà chỉ lưu trên máy (không nằm trong kho);
+ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.gs` thì triển khai lại (Quản lý triển khai › Sửa › Phiên bản mới) để giữ URL.
+
 ## Quy tắc ghép bữa (`app/static/app.js`, phần "Ghép bữa")
 
 Đang áp dụng:

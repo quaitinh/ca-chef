@@ -317,3 +317,12 @@ body.cook main { padding-top: 12px; }
 .filt .muted { align-self: center; font-size: 13px; margin-right: 2px; }
 .cta2 { display: block; width: 100%; margin: 12px 0 4px; padding: 13px; border: 0; border-radius: 14px; background: var(--accent);
   color: #fff; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+
+/* Đồng bộ */
+.db-ok { background: var(--cool-soft); border-color: var(--cool); }
+.db-nut .cta2 { margin-bottom: 0; }
+.db-link { display: flex; gap: 8px; align-items: center; }
+.db-link .search { margin: 0; font-size: 12px; }
+.db-link .cta2 { width: auto; flex: none; margin: 0; padding: 11px 14px; }
+.db-lb { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.db-lb .search { margin-top: 4px; color: var(--ink); }
