@@ -1,13 +1,19 @@
-ma,ten,cha,tu_khoa,nhom,mac_dinh,ghi_chu
-mo_heo,Mỡ heo,thit_heo,^mỡ,,,Mỡ phần/mỡ nước – luôn để ngăn mát
-thit_bam,Thịt băm (nửa nạc nửa mỡ),thit_heo,băm|bằm|xay,,,Thịt băm thường xay từ phần nửa nạc nửa mỡ
-ba_chi,Thịt ba chỉ (ba rọi),thit_heo,ba chỉ|ba rọi|3 chỉ|nửa nạc nửa mỡ|mỡ mỡ nạc,,1,
-tai_heo,Tai heo,thit_heo,(^|\s)tai (heo|lợn),,,
-luoi_heo,Lưỡi heo,thit_heo,lưỡi,,,
-da_heo,Da heo (bì),thit_heo,(^|\s)(da|bì) (heo|lợn),,,
-thit_hop,Thịt hộp,thit_heo,thịt hộp|spam,khác,,Đồ hộp – không cần rã đông
-suon_heo,Sườn heo (sườn non / sườn già),thit_heo,sườn,,,
-chan_gio,Chân giò / móng giò,thit_heo,chân giò|móng giò|giò heo|bắp giò|giò lợn,,,
-xuong_heo,Xương heo (xương ống / xương sườn),thit_heo,xương,,,Dùng ninh nước dùng
-nac_vai,Nạc vai (nạc dăm),thit_heo,nạc vai|nạc dăm|thịt vai,,1,
-thit_nac,Thịt nạc (thăn / nạc đùi),thit_heo,thăn|nạc|thịt đùi,,1,
+ma,ten,cha,tu_khoa,nhom,mac_dinh,ghi_chu,bao_gom
+mo_heo,Mỡ heo,thit_heo,^mỡ,,,Mỡ phần/mỡ nước – luôn để ngăn mát,
+thit_bam,Thịt băm (nửa nạc nửa mỡ),thit_heo,băm|bằm|xay,,,Thịt băm thường xay từ phần nửa nạc nửa mỡ,
+ba_chi,Thịt ba chỉ (ba rọi),thit_heo,ba chỉ|ba rọi|3 chỉ|nửa nạc nửa mỡ|mỡ mỡ nạc,,1,,
+tai_heo,Tai heo,thit_heo,(^|\s)tai (heo|lợn),,,,
+luoi_heo,Lưỡi heo,thit_heo,lưỡi,,,,
+da_heo,Da heo (bì),thit_heo,(^|\s)(da|bì) (heo|lợn),,,,
+thit_hop,Thịt hộp,thit_heo,thịt hộp|spam,khác,,Đồ hộp – không cần rã đông,
+suon_heo,Sườn heo (sườn non / sườn già),thit_heo,sườn,,,,
+chan_gio,Chân giò / móng giò,thit_heo,chân giò|móng giò|giò heo|bắp giò|giò lợn,,,,
+xuong_heo,Xương heo (xương ống / xương sườn),thit_heo,xương,,,Dùng ninh nước dùng,
+nac_vai,Nạc vai (nạc dăm),thit_heo,nạc vai|nạc dăm|thịt vai,,1,,
+thit_nac,Thịt nạc (thăn / nạc đùi),thit_heo,thăn|nạc|thịt đùi,,1,,
+long_ga,"Lòng gà (mề, gan, tim)",ga_ta,lòng|mề|gan|(^|\s)tim,,,Gà mua nguyên con thường kèm bộ lòng,
+chan_co_ga,"Chân, cổ, xương gà",ga_ta,(^|\s)(chân|cổ|móng)|^xương|khung,,,"Hay để nấu canh, hầm, ninh nước dùng",
+canh_ga,Cánh gà,ga_ta,cánh,,,"Hay để chiên, nướng",
+uc_ga,Ức gà (lườn),ga_ta,ức|lườn|phi lê,,,"Nấu được nhiều kiểu: xào, xé phay, súp, cháo",
+ga_nguyen_con,Gà nguyên con / nửa con,ga_ta,nguyên con|nửa con|1/2 con|cả con,,1,"Món ghi chung ""gà"" (gà rang, hầm, om, luộc, phở gà...) hiểu là gà nguyên con hoặc nửa con; chặt ra được các phần",canh_ga|uc_ga|chan_co_ga|long_ga
+ba_chi_bo_my,Ba chỉ bò Mỹ,thit_bo,ba chỉ bò|ba rọi bò|bò mỹ,,,"Thái lát mỏng, cuộn sẵn – nướng, lẩu, canh kim chi",
