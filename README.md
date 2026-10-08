@@ -16,7 +16,7 @@ Dữ liệu Sheet được cache 5 phút; bấm "Tải lại dữ liệu" ở ch
 - `research/` – ghi chép kiểm chứng mùa vụ, danh mục GO!.
 
 ## Món đề xuất (`data/de_xuat/`)
-Kho món mở rộng (~270 món) theo khung mâm cơm, chưa đưa lên Sheet. Khi build, `app/server.py`
+Kho món mở rộng (~330 món) theo khung mâm cơm, chưa đưa lên Sheet. Khi build, `app/server.py`
 gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã – thì giữ bản Sheet):
 - `khung_mon.csv` – danh sách món: vai trong mâm, nhóm đạm, nguồn (link Cookpad).
 - `mon_an_moi.csv`, `mon_nguyen_lieu_moi.csv`, `nguyen_lieu_moi.csv` – cùng cột với bảng gốc;
@@ -24,7 +24,8 @@ gộp các file này vào dữ liệu (món đã có trên Sheet – trùng mã 
 - `mon_nhan.csv` – nhãn khung mâm (vai_mam, nhom_dam, cach_nau, hop_tre_em) cho mọi món.
 - `an_mon.csv` – món ẩn khỏi app (vd. món chủ nhà không thích).
 
-Sinh lại sau khi sửa `khung_mon.csv` hoặc `scripts/de_xuat/lo1_bac.py`:
+Sinh lại sau khi sửa `khung_mon.csv` hoặc các lô công thức `scripts/de_xuat/lo1_bac.py`, `lo2_bac.py`, `lo3_dam.py`
+(lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file):
 `python3 scripts/de_xuat/xuat_csv.py`
 
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
@@ -40,13 +41,16 @@ Thanh dưới có 4 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Tủ lạnh: ghi thứ đang có, ngày cho vào, ngăn mát hay ngăn đá (❄); tính hạn dùng theo bí quyết bảo quản, thứ sắp hết hạn tô màu và nhắc ở trang Nấu gì.
   Gợi ý món nấu được ngay (nút ＋Trưa / ＋Tối đưa thẳng vào bữa hôm nay, thành món đã chọn) và món thiếu 1 thứ.
   Nấu xong một món thì hỏi bỏ đồ đã dùng khỏi tủ. Thứ đang ghi ở ngăn mát không cần nhắc rã đông.
-- Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 139 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
+- Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
+  mỡ heo luôn để ngăn mát nên không có trong danh sách.
+- Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
   Nguồn: `scripts/de_xuat/bi_quyet.py` → `data/de_xuat/bi_quyet_nl.csv` (cột `mat`, `da`: số ngày để ngon ở ngăn mát / ngăn đá).
 
 ## Quy tắc ghép bữa (`app/static/app.js`, phần "Ghép bữa")
 
 Đang áp dụng:
-- Mỗi bữa: mặn + rau + canh. Lẩu chỉ buổi tối (tối đa 1 lần/7 ngày); hôm tối ăn lẩu thì trưa chọn món dễ nấu.
+- Mỗi bữa: mặn + rau + canh. Bữa một món (lẩu, nướng) chỉ buổi tối: mỗi loại tối đa 1 lần/7 ngày, lẩu và nướng cách nhau
+  ít nhất 3 ngày, được +3 điểm vào tối thứ 6, thứ 7, chủ nhật; hôm tối ăn lẩu/nướng thì trưa chọn món dễ nấu.
 - Món mặn kho/hầm/om/rim ở bữa trưa nấu thêm phần cho tối (tối dùng tiếp, chỉ nấu thêm rau + canh).
 - Không lặp nguyên liệu chính trong ngày; đạm món mặn tối khác trưa.
 - Trong một bữa: tối đa 1 món **nấu lâu** (kho, om, hầm, rim, ram, bung, sốt vang – lâu nhưng ít công)
