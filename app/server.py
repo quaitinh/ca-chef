@@ -74,6 +74,7 @@ def merge_de_xuat(tabs):
     tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
         [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
     tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
+    tabs.setdefault("anh_mon", read_de_xuat("anh_mon.csv"))  # ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py)
     return len(moi)
 
 

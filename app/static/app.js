@@ -18,7 +18,7 @@ const LABEL = {
     trang_mieng: "Tráng miệng, chè", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Dưa, đồ ăn kèm" },
 };
 
-const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], meals: [null, null], shown: [{ trua: new Set(), toi: new Set() }, { trua: new Set(), toi: new Set() }], servings: {}, chon: {} };
+const S = { data: null, weather: null, ing: {}, prices: {}, ingByDish: {}, nhan: {}, query: "", ranked: [], rankedTomorrow: [], meals: [null, null], shown: [{ trua: new Set(), toi: new Set() }, { trua: new Set(), toi: new Set() }], servings: {}, chon: {}, anh: {} };
 
 // Món đã chọn trong bữa (giữ nguyên khi bấm Đổi các món còn lại), lưu theo ngày để tải lại trang vẫn còn.
 function readChon() {
@@ -98,6 +98,7 @@ async function load() {
   for (const p of data.gia_go) S.prices[p.ma_nguyen_lieu] = p;
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
+  for (const r of data.anh_mon || []) if (r.anh_id) S.anh[r.ma_mon] = r;
   S.ranked = rankDishes(0);
   S.meals[0] = readBua(S.ranked, 0) || pickMeals(S.ranked, 0, monDaChon(S.ranked, 0));
   saveBua(0);
@@ -520,6 +521,12 @@ function iconOf(d) {
 }
 const VAI_NGAN = { man: "Mặn", rau: "Rau", canh: "Canh", lau: "Lẩu", mot_to: "Một tô", trang_mieng: "Tráng miệng", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Ăn kèm" };
 
+// Ảnh món: mã ảnh trên CDN Cookpad, ghép URL theo cỡ (CDN tự cắt, ảnh nhỏ chỉ vài KB).
+const anhUrl = (ma, w, h) => S.anh[ma] && `https://img-global.cpcdn.com/recipes/${S.anh[ma].anh_id}/${w}x${h}cq70/photo.webp`;
+// Ô vuông nhỏ: ảnh nếu có, biểu tượng nằm dưới để hiện khi ảnh lỗi/chưa tải.
+const thumb = (d, cls = "") => `<span class="ic ${cls}">${iconOf(d)}${S.anh[d.ma_mon]
+  ? `<img src="${anhUrl(d.ma_mon, 112, 112)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
+
 // Dòng phụ dưới tên món: chỉ những gì giúp quyết định nhanh.
 function metaMon(d, du) {
   const p = [];
@@ -549,7 +556,7 @@ function mealBlock(meals, k, chon) {
     ${meals[k].map((d) => {
       const on = chon[k].has(d.ma_mon), lai = anLai(d);
       return `<div class="row ${lai ? "ghost" : ""} ${on ? "picked" : ""}">
-        <a class="row-link" href="#/mon/${d.ma_mon}"><span class="ic">${iconOf(d)}</span>
+        <a class="row-link" href="#/mon/${d.ma_mon}">${thumb(d)}
           <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${lai ? "Phần để dành từ bữa trưa" : metaMon(d, d.ma_mon === meals.du)}</span></span></a>
         ${lai ? "" : `<button class="ck ${on ? "on" : ""}" data-chon="${k}" data-ma="${d.ma_mon}" aria-pressed="${on}"
           aria-label="${on ? "Bỏ chọn" : "Chọn"} ${esc(d.ten_mon)}" title="${on ? "Bỏ chọn" : "Chọn – giữ món này khi đổi các món còn lại"}">✓</button>`}
@@ -594,7 +601,8 @@ function pageHome(day = 0) {
     <h4>Đang vào mùa tháng ${m}</h4>
     <div class="hs">${inSeason.map((n) => `<a class="chip peak" href="#/lich/${n.ma}">${esc(n.ten)}</a>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
     <h4>Món khác cũng hợp</h4>
-    <div class="hs">${others.map((d) => `<a class="card2" href="#/mon/${d.ma_mon}"><span class="ic">${iconOf(d)}</span>
+    <div class="hs">${others.map((d) => `<a class="card2" href="#/mon/${d.ma_mon}">${S.anh[d.ma_mon]
+      ? `<span class="c2img"><img src="${anhUrl(d.ma_mon, 320, 200)}" alt="" loading="lazy" onerror="this.parentNode.remove()"></span>` : thumb(d)}
       <b>${esc(d.ten_mon)}</b><small>${VAI_NGAN[vaiOf(d)] || ""} · ${d.score > 0 ? "+" : ""}${d.score} điểm</small></a>`).join("")}</div>`;
   $app.querySelectorAll("[data-chon]").forEach((btn) => (btn.onclick = () => {
     const k = btn.dataset.chon, ma = btn.dataset.ma;
@@ -696,6 +704,8 @@ function pageRecipe(ma) {
   }[tab];
   $app.innerHTML = `
     <div class="rhead"><a class="back" href="#/" id="back">‹ Quay lại</a>${bua ? `<span class="pill">${bua}</span>` : ""}</div>
+    ${S.anh[ma] ? `<figure class="anh"><img src="${anhUrl(ma, 800, 520)}" alt="${esc(d.ten_mon)}" onerror="this.parentNode.remove()">
+      <figcaption>Ảnh: <a href="${esc(S.anh[ma].nguon_anh)}" target="_blank" rel="noopener">${esc(S.anh[ma].tac_gia || "Cookpad")} · Cookpad</a></figcaption></figure>` : ""}
     <div class="hero"><h1>${esc(d.ten_mon)}</h1>${d.mo_ta_ngan ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}</div>
     <div class="facts">
       <div><b>${d.thoi_gian_phut ? d.thoi_gian_phut + "′" : "–"}</b>thời gian</div>
@@ -803,7 +813,7 @@ function renderAll() {
   const words = plain(S.query).split(/\s+/).filter(Boolean), v = S.vaiLoc || "all";
   const list = S.ranked.filter((d) => (v === "all" || vaiOf(d) === v) && words.every((w) => plain(d.ten_mon).includes(w)));
   document.getElementById("all-list").innerHTML = list.length ? `<div class="list">${list.map((d) => `
-    <a class="row-link li" href="#/mon/${d.ma_mon}"><span class="ic">${iconOf(d)}</span>
+    <a class="row-link li" href="#/mon/${d.ma_mon}">${thumb(d)}
       <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}${d.season === 2 ? ' · <span class="peak">Đang rộ</span>' : d.season === 0 ? " · trái mùa" : ""}</span></span>
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>` : `<p class="muted">Không thấy món nào.</p>`;
 }
@@ -832,7 +842,7 @@ function pageFridge() {
     .map((d) => ({ d, c: chinhCua(d) })).filter((x) => x.c.length && x.c.some((c) => co.has(c)))
     .map((x) => ({ ...x, thieu: x.c.filter((c) => !co.has(c)) }));
   const du = mon.filter((x) => !x.thieu.length).slice(0, 12), gan = mon.filter((x) => x.thieu.length === 1).slice(0, 8);
-  const monRow = (x) => `<a class="row-link li" href="#/mon/${x.d.ma_mon}"><span class="ic">${iconOf(x.d)}</span>
+  const monRow = (x) => `<a class="row-link li" href="#/mon/${x.d.ma_mon}">${thumb(x.d)}
     <span class="tx"><b>${esc(x.d.ten_mon)}</b><span class="meta">${x.thieu.length ? `thiếu ${esc(x.thieu.map((c) => S.ing[c].ten).join(", "))}` : `${VAI_NGAN[vaiOf(x.d)]}${x.d.thoi_gian_phut ? ` · ${x.d.thoi_gian_phut}′` : ""}`}</span></span></a>`;
   const chip = (n) => `<button class="chip ${co.has(n.ma) ? "on" : ""}" data-nl="${n.ma}" aria-pressed="${co.has(n.ma)}">${co.has(n.ma) ? "✓ " : ""}${esc(n.ten)}</button>`;
   $app.innerHTML = `
