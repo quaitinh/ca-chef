@@ -47,6 +47,32 @@ function monDaChon(ranked, day) {
   const k = chonOf(day), tim = (ma) => ranked.find((d) => d.ma_mon === ma);
   return { trua: [...k.trua].map(tim).filter(Boolean), toi: [...k.toi].map(tim).filter(Boolean) };
 }
+// Bữa đang hiện (sau khi bấm Đổi) và các món đã xem, lưu theo ngày để F5 không gợi ý lại từ đầu.
+const BUA_KEY = "cachef.bua";
+function saveBua(day) {
+  const m = S.meals[day];
+  if (!m) return;
+  try {
+    const all = JSON.parse(localStorage.getItem(BUA_KEY) || "{}"), giu = new Set([dayStr(0), dayStr(1)]);
+    for (const d of Object.keys(all)) if (!giu.has(d)) delete all[d];
+    const ma = (l) => l.map((d) => d.ma_mon);
+    all[dayStr(day)] = { trua: ma(m.trua), toi: ma(m.toi), lau: m.lau, du: m.du,
+      shown: { trua: [...S.shown[day].trua], toi: [...S.shown[day].toi] } };
+    localStorage.setItem(BUA_KEY, JSON.stringify(all));
+  } catch { /* chặn lưu: F5 sẽ gợi ý lại */ }
+}
+// Khôi phục bữa đã lưu nếu mọi món còn trong dữ liệu; không thì null để ghép bữa mới.
+function readBua(ranked, day) {
+  try {
+    const b = JSON.parse(localStorage.getItem(BUA_KEY) || "{}")[dayStr(day)];
+    if (!b) return null;
+    const tim = (ma) => ranked.find((d) => d.ma_mon === ma);
+    const trua = b.trua.map(tim), toi = b.toi.map(tim);
+    if (!trua.length || [...trua, ...toi].some((d) => !d)) return null;
+    S.shown[day] = { trua: new Set(b.shown?.trua || []), toi: new Set(b.shown?.toi || []) };
+    return { trua, toi, lau: !!b.lau, du: b.du || null };
+  } catch { return null; }
+}
 const $app = document.getElementById("app");
 // Bỏ dấu tiếng Việt để tìm kiếm không cần gõ dấu.
 const plain = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
@@ -73,10 +99,12 @@ async function load() {
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   S.ranked = rankDishes(0);
-  S.meals[0] = pickMeals(S.ranked, 0, monDaChon(S.ranked, 0));
+  S.meals[0] = readBua(S.ranked, 0) || pickMeals(S.ranked, 0, monDaChon(S.ranked, 0));
+  saveBua(0);
   recordHistory(mealDishes(S.meals[0]).map((d) => d.ma_mon));
   S.rankedTomorrow = rankDishes(1); // sau recordHistory để không gợi ý lại món của hôm nay
-  S.meals[1] = pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
+  S.meals[1] = readBua(S.rankedTomorrow, 1) || pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
+  saveBua(1);
   document.getElementById("foot").innerHTML =
     `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
     `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
@@ -530,24 +558,22 @@ function mealBlock(meals, k, chon) {
   </section>`;
 }
 
-// Nhắc rã đông (trang Hôm nay): một dòng, chạm để xem chi tiết ở Ngày mai.
-function thawMini() {
+// Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
+function thawBox(moSan = false) {
   if (!S.meals[1]) return "";
   const list = thawList(S.meals[1]);
-  const sub = list.length ? list.slice(0, 3).map((x) => `${x.ten} ${x.qty}`).join(" · ") + (list.length > 3 ? ` · +${list.length - 3}` : "")
-    : "Món ngày mai không cần rã đông";
-  return `<a class="nhac" href="#/ngay-mai"><span class="ic">🧊</span>
-    <span class="tx"><b>${list.length ? "Rã đông tối nay cho mai" : "Ngày mai"}</b><span class="meta">${esc(sub)}</span></span><span class="chev">›</span></a>`;
-}
-
-function thawCard(meals) {
-  const list = thawList(meals);
-  if (!list.length) return `<div class="box"><b>🧊 Rã đông:</b> món ngày mai không cần rã đông thịt, cá.</div>`;
-  return `<div class="box">
-    <b>🧊 Tối nay chuyển từ ngăn đá xuống ngăn mát</b>
-    <ul class="thaw">${list.map((x) => `<li><span><b>${esc(x.ten)}</b><small>${esc(x.mon)}</small></span><span>${esc(x.qty)}</span></li>`).join("")}</ul>
-    <p class="note">Ngăn mát mất 12–24 giờ. Quên thì ngâm cả túi kín trong nước lạnh, 30 phút thay nước. Không rã đông ở nhiệt độ phòng.</p>
-  </div>`;
+  if (!list.length) return `<div class="nhac"><span class="ic">🧊</span><span class="tx"><b>Rã đông</b>
+    <span class="meta">Món ngày mai không cần rã đông thịt, cá</span></span></div>`;
+  const tom = list.slice(0, 3).map((x) => `${x.ten} ${x.qty}`).join(" · ") + (list.length > 3 ? ` · +${list.length - 3}` : "");
+  return `<details class="nhac-d" ${moSan ? "open" : ""}>
+    <summary class="nhac"><span class="ic">🧊</span>
+      <span class="tx"><b>Rã đông tối nay cho mai (${list.length})</b><span class="meta">${esc(tom)}</span></span><span class="chev">›</span></summary>
+    <div class="nhac-body">
+      <p class="note">Tối nay chuyển từ ngăn đá xuống ngăn mát:</p>
+      <ul class="thaw">${list.map((x) => `<li><span><b>${esc(x.ten)}</b><small>${esc(x.mon)}</small></span><span>${esc(x.qty)}</span></li>`).join("")}</ul>
+      <p class="note">Ngăn mát mất 12–24 giờ. Quên thì ngâm cả túi kín trong nước lạnh, 30 phút thay nước. Không rã đông ở nhiệt độ phòng.</p>
+    </div>
+  </details>`;
 }
 
 // ---------- Trang Nấu gì (hôm nay / ngày mai) ----------
@@ -564,7 +590,7 @@ function pageHome(day = 0) {
     ${weatherTip(day)}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
-    ${day ? thawCard(meals) : thawMini()}
+    ${thawBox(day === 1)}
     <h4>Đang vào mùa tháng ${m}</h4>
     <div class="hs">${inSeason.map((n) => `<a class="chip peak" href="#/lich/${n.ma}">${esc(n.ten)}</a>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
     <h4>Món khác cũng hợp</h4>
@@ -589,7 +615,17 @@ function pageHome(day = 0) {
     const moi = (b) => next[b].filter((d) => !chon[b].has(d.ma_mon)).length;
     if (!moi(k)) { S.shown[day][k].clear(); next = pickMeals(ranked, day, keep); } // hết món thì quay vòng
     S.meals[day] = next;
-    if (day === 0) recordHistory(mealDishes(next).map((d) => d.ma_mon));
+    saveBua(day);
+    if (day === 0) {
+      recordHistory(mealDishes(next).map((d) => d.ma_mon));
+      // Hôm nay vừa đổi sang món đang có trong bữa ngày mai: gợi ý lại ngày mai (giữ món đã chọn).
+      const homNay = new Set(mealDishes(next).map((d) => d.ma_mon));
+      if (S.meals[1] && mealDishes(S.meals[1]).some((d) => homNay.has(d.ma_mon) && !chonOf(1).trua.has(d.ma_mon) && !chonOf(1).toi.has(d.ma_mon))) {
+        S.rankedTomorrow = rankDishes(1);
+        S.meals[1] = pickMeals(S.rankedTomorrow, 1, monDaChon(S.rankedTomorrow, 1));
+        saveBua(1);
+      }
+    }
     pageHome(day);
   }));
 }
@@ -801,7 +837,7 @@ function pageFridge() {
   const chip = (n) => `<button class="chip ${co.has(n.ma) ? "on" : ""}" data-nl="${n.ma}" aria-pressed="${co.has(n.ma)}">${co.has(n.ma) ? "✓ " : ""}${esc(n.ten)}</button>`;
   $app.innerHTML = `
     <h1 class="ptitle">Tủ lạnh<small>Chọn thứ đang có – Cá Chef gợi ý món nấu được</small></h1>
-    ${thawMini()}
+    ${thawBox()}
     ${co.size ? `<div class="tl-head"><b>Trong tủ có (${co.size})</b><button class="link" id="xoa">Xóa hết</button></div>
       <div class="hs wrap tl">${[...co].filter((c) => S.ing[c]).map((c) => chip(S.ing[c])).join("")}</div>
       <h4>Nấu được ngay (${du.length})</h4>${du.length ? `<div class="list">${du.map(monRow).join("")}</div>` : '<p class="muted">Chưa đủ nguyên liệu chính cho món nào.</p>'}
