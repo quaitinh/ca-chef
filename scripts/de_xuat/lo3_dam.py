@@ -30,6 +30,7 @@ NGUYEN_LIEU = [
     ("thien_ly", "Hoa thiên lý", "rau củ", "chung", ro(5, 6, 7, 8), "chợ", "C", "Hoa nở rộ mùa hè – chưa có nguồn riêng"),
     ("dua_cai_chua", "Dưa cải muối chua", "khác", "chung", Q, "chợ/GO!", "A", "Dưa muối sẵn hoặc tự muối, có quanh năm"),
     ("kim_chi", "Kim chi cải thảo", "khác", "chung", Q, "GO!/siêu thị", "A", "Kim chi đóng hộp bán quanh năm ở siêu thị"),
+    ("tao_do", "Táo đỏ (táo tàu)", "hàng khô", "chung", Q, "chợ/GO!/tiệm thuốc bắc", "A", "Hàng khô, có quanh năm"),
 ]
 
 KHUNG = []
@@ -117,7 +118,17 @@ RECIPES = [
        "Nêm muối, hạt nêm vừa ăn; hớt bọt, rắc hành lá."],
       None, tk("gà tần hạt sen"),
       [("ga_ta", "Gà ta", 600, "g", "n", "chinh"), ("hat_sen", "Hạt sen", 150, "g", "n", "chinh"),
-       ("nam", "Nấm hương", 8, "tai", "n", "phu"), ("", "Táo đỏ", 8, "quả", "n", "phu"), GUNG(1), MUOI, HAT_NEM(1), HANH_LA]),
+       ("nam", "Nấm hương", 8, "tai", "n", "phu"), ("tao_do", "Táo đỏ", 8, "quả", "n", "phu"), GUNG(1), MUOI, HAT_NEM(1), HANH_LA]),
+    M("canh", "ga", "ga_tiem_thuoc_bac", "Gà tiềm thuốc bắc", "canh", "nong", "nhe", "it", "ga_ta|tao_do", "mua", 120, "de",
+      "Gà ác (hoặc gà ta) tiềm cách thủy với gói thuốc bắc, táo đỏ, kỷ tử – nước trong, ngọt thơm, bồi bổ ngày mưa.",
+      ["Gà làm sạch, xát muối và gừng cho bớt mùi, chần qua nước sôi; để nguyên con hoặc chặt đôi.",
+       "Gói thuốc bắc tiềm gà (đương quy, hoài sơn, kỷ tử, táo đỏ...) rửa nhanh qua nước; táo đỏ khứa nhẹ.",
+       "Cho gà vào thố hoặc nồi nhỏ cùng thuốc bắc, táo đỏ, vài lát gừng, đổ nước vừa ngập.",
+       "Chưng cách thủy hoặc hầm lửa thật nhỏ 90 phút đến khi gà mềm; cuối cùng nêm muối, chút hạt nêm (vị thanh, không nêm đậm).",
+       "Bé ăn thịt gà và nước dùng lượng vừa phải; múc ra thố ăn nóng."],
+      None, tk("gà tiềm thuốc bắc"),
+      [("ga_ta", "Gà ác hoặc gà ta", 1, "con", "n", "chinh"), ("tao_do", "Táo đỏ", 10, "quả", "x", "chinh"),
+       ("", "Gói thuốc bắc tiềm gà", 1, "gói", "x", "phu"), ("", "Kỷ tử", 1, MC, "x", "phu"), GUNG(1), MUOI, HAT_NEM(0.5)]),
     M("man", "ga", "me_ga_xao_dua_chua", "Mề gà xào dưa chua", "mon_chinh", "nong", "nhe", "vua", "ga_ta|dua_cai_chua", "moi", 30, "de",
       "Mề gà giòn sần sật xào với dưa cải chua, cà chua – chua nhẹ, đưa cơm (kiểu Bắc).",
       ["Mề gà bóc màng vàng, rửa muối và giấm, thái lát mỏng; ướp nước mắm, tiêu, hành băm 10 phút.",

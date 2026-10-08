@@ -43,7 +43,7 @@ MA = [
     (r"cá ngừ", "ca_ngu_dd"), (r"cua đồng|rạm|riêu cua|cua xay|cà ra", "cua_dong"), (r"sứa", "sua"), (r"ếch", "ech"), (r"(^|\s)dê", "thit_de"),
     (r"cừu", "thit_cuu"), (r"(^|\s)(bò|bê)(\s|$)|bắp bò|nạm|gầu", "thit_bo"), (r"đậu (hũ|phụ) trứng", "dau_phu"), (r"trứng", "trung"),
     (r"chim cút", "chim_cut"), (r"(^|\s)vịt", "vit"), (r"(^|\s)ngan(\s|$)", "ngan"), (r"(^|\s)gà", "ga_ta"),
-    (r"kim ?chi", "kim_chi"), (r"dưa (cải )?(chua|muối)|dưa cải", "dua_cai_chua"), (r"cá trắm", "ca_tram"), (r"cá chép", "ca_chep"), (r"đậu (hũ|phụ)|tàu hũ|đậu non", "dau_phu"), (r"lòng|dồi", "long_heo"),
+    (r"kim ?chi", "kim_chi"), (r"dưa (cải )?(chua|muối)|dưa cải", "dua_cai_chua"), (r"cá trắm", "ca_tram"), (r"táo (đỏ|tàu)", "tao_do"), (r"cá chép", "ca_chep"), (r"đậu (hũ|phụ)|tàu hũ|đậu non", "dau_phu"), (r"lòng|dồi", "long_heo"),
     (r"thịt|sườn|ba chỉ|ba rọi|nạc|giò heo|chân giò|móng giò|xương heo|xương ống|mỡ heo|(^|\s)heo|lợn|tai heo|da heo", "thit_heo"),
     (r"rau muống", "rau_muong"), (r"mồng tơi", "mong_toi"), (r"rau ngót", "rau_ngot"), (r"rau đay", "rau_day"),
     (r"măng tây", "mang_tay"), (r"bí đao|bí xanh", "bi_dao"), (r"bí đỏ|bí ngô", "bi_do"), (r"(^|\s)bầu", "bau"), (r"mướp", "muop"),

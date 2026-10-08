@@ -4,6 +4,7 @@ Dùng: CA_CHEF_KEY=/đường/dẫn/key.json python3 app/server.py [cổng]
 Không có key hoặc Sheet lỗi thì đọc data/*.csv.
 """
 import csv
+import re
 import json
 import os
 import sys
@@ -88,6 +89,44 @@ def sua_lich_mua(tabs):
     return n
 
 
+def tach_nhanh(tabs):
+    """Tách nguyên liệu cha thành các nhánh (thịt heo -> ba chỉ, sườn, nạc vai...) theo nhanh_nguyen_lieu.csv.
+
+    Nhánh mang lịch mùa vụ, nhóm của nguyên liệu cha và thêm cột cha. Dòng định lượng đang mang mã cha thì đổi
+    sang mã nhánh đầu tiên có từ khóa khớp tên hiển thị; món có nguyên liệu chính là mã cha thì thay bằng các nhánh
+    của dòng "chính" (không khớp nhánh nào thì giữ mã cha).
+    """
+    path = os.path.join(DE_XUAT, "nhanh_nguyen_lieu.csv")
+    if not os.path.exists(path):
+        return
+    with open(path, newline="", encoding="utf-8") as f:
+        nhanh = list(csv.DictReader(f))
+    theo_ma = {r["ma"]: r for r in tabs["nguyen_lieu"]}
+    for n in nhanh:
+        cha = theo_ma.get(n["cha"])
+        if cha and n["ma"] not in theo_ma:
+            tabs["nguyen_lieu"].append({**cha, "ma": n["ma"], "ten": n["ten"], "cha": n["cha"], "ghi_chu": n["ghi_chu"] or cha.get("ghi_chu", "")})
+    chinh = {}
+    for r in tabs["mon_nguyen_lieu"]:
+        ma = str(r.get("ma_nguyen_lieu") or "")
+        for n in nhanh:
+            if ma == n["cha"] and re.search(n["tu_khoa"], str(r.get("ten_hien_thi") or "").lower()):
+                r["ma_nguyen_lieu"] = n["ma"]
+                break
+        if r.get("vai_tro") == "chinh":
+            chinh.setdefault(r["ma_mon"], []).append(r["ma_nguyen_lieu"])
+    con = {}
+    for n in nhanh:
+        con.setdefault(n["cha"], set()).add(n["ma"])
+    for m in tabs["mon_an"]:
+        ma = [c for c in str(m.get("nguyen_lieu_chinh") or "").split("|") if c]
+        moi = []
+        for c in ma:
+            thay = [x for x in chinh.get(m["ma_mon"], []) if x in con.get(c, ())]
+            moi += thay or [c]
+        m["nguyen_lieu_chinh"] = "|".join(dict.fromkeys(moi))
+
+
 def merge_de_xuat(tabs):
     """Gộp món đề xuất (data/de_xuat/) vào dữ liệu Sheet/CSV và ẩn các món trong an_mon.csv.
 
@@ -104,6 +143,7 @@ def merge_de_xuat(tabs):
     tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
         [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
     tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
+    tach_nhanh(tabs)
     # Ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py). Đọc nguyên chuỗi: mã hex như "8e12…" không được đổi thành số.
     path = os.path.join(DE_XUAT, "anh_mon.csv")
     if "anh_mon" not in tabs and os.path.exists(path):

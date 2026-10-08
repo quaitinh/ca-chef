@@ -28,6 +28,12 @@ Sinh lại sau khi sửa `khung_mon.csv` hoặc các lô công thức `scripts/d
 (lô 3: món đạm gà/vịt/ngan/bò/lợn/cá biển, món dưa cải chua, kim chi, 3 bữa nướng; khung món khai báo ngay trong file):
 `python3 scripts/de_xuat/xuat_csv.py`
 
+Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): thịt heo tách thành ba chỉ, sườn, chân giò, xương, thịt băm,
+nạc vai, thịt nạc, mỡ heo. Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
+trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
+(trang Mùa vụ chỉ hiện mã cha). Tủ lạnh: có nhánh nào thì món dùng đúng nhánh đó (hoặc món ghi chung "thịt heo") được tính là có;
+tủ ghi chung "Thịt heo" thì tính là có mọi nhánh.
+
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
 trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên Sheet (khác lịch cũ) thì giữ theo Sheet.
 
