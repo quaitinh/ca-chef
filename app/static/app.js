@@ -156,6 +156,13 @@ function saveDanhGia(ma, sua) {
   S.rankedTomorrow = rankDishes(1);
 }
 const THUOC_BAC_CACH_NGAY = 14, RAU_CACH_NGAY = 4, NUONG_CACH_NGAY = 2;
+// Nguyên liệu quyết định món: trái mùa (lịch tháng = 0) thì món khó nấu đúng vị dù là nguyên liệu phụ.
+const NL_QUYET_DINH = { sau: "dùng sấu ngâm hoặc sấu đông lạnh", mang_rung: "dùng măng muối hoặc măng khô", sau_dau: "", thien_ly: "" };
+function quyetDinhTraiMua(dish, m) {
+  const ma = new Set((S.ingByDish[dish.ma_mon] || []).filter((r) => r.vai_tro !== "gia_vi")
+    .flatMap((r) => String(r.ma_nguyen_lieu || "").split("|")).filter((c) => c in NL_QUYET_DINH && S.ing[c]?.thang[m - 1] === 0));
+  return [...ma].map((c) => [c, NL_QUYET_DINH[c]]);
+}
 const laNuong = (d) => cachNau(d) === "nuong" || vaiOf(d) === "nuong";
 // Có món nướng trong NUONG_CACH_NGAY ngày trước ngày `day` (theo lịch sử gợi ý và món đã nấu).
 function ganNuong(day) {
@@ -249,6 +256,8 @@ function scoreDish(dish, weatherHits, day = 0) {
   if (vaiOf(dish) === "rau" && since <= RAU_CACH_NGAY) them("Món rau vừa ăn", -4);
   // Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng): 2 ngày gần nhất đã có món nướng thì trừ mạnh.
   if (laNuong(dish) && ganNuong(day)) them(`Vừa ăn nướng trong ${NUONG_CACH_NGAY} ngày`, -6);
+  // Nguyên liệu quyết định món (sấu, măng tươi...) trái mùa – kể cả khi là nguyên liệu phụ: trừ điểm, ghi cách thay.
+  for (const [c, thay] of quyetDinhTraiMua(dish, month(day))) them(`${S.ing[c].ten} trái mùa${thay ? ` – ${thay}` : ""}`, -3);
   // Món thuốc bắc (bồi bổ): cách nhau ít nhất 14 ngày – khoảng 2 lần/tháng.
   if (/thuốc bắc/i.test(dish.ten_mon) && since <= THUOC_BAC_CACH_NGAY) them(`Món thuốc bắc: ${THUOC_BAC_CACH_NGAY} ngày mới ăn lại`, -20);
   // Lẩu, nướng là bữa quây quần: ưu tiên tối thứ 6, thứ 7, chủ nhật.

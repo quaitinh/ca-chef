@@ -25,7 +25,7 @@ NGUYEN_LIEU = [
     ("chim_cut", "Chim cút", "thịt", "chung", Q, "chợ", "C", "Chim cút nuôi có quanh năm – chưa có nguồn riêng"),
     ("ca_chep", "Cá chép", "thủy sản", "chung", Q, "chợ/GO!", "C", "Cá nuôi nước ngọt; chợ Phan Rang ít gặp, siêu thị có cá làm sẵn"),
     ("ca_tram", "Cá trắm", "thủy sản", "chung", Q, "chợ/GO!", "C", "Cá nuôi nước ngọt; chợ Phan Rang ít gặp, siêu thị có cá cắt khúc"),
-    ("sau", "Sấu", "trái cây", "Miền Bắc", ro(5, 6, 7, 8), "chợ/online", "C",
+    ("sau", "Sấu", "trái cây", "Miền Bắc", [2 if t in (5, 6, 7, 8) else 0 for t in range(1, 13)], "chợ/online", "C",
      "Sấu tươi chỉ có ở miền Bắc mùa hè; ở Phan Rang mua sấu đông lạnh hoặc sấu ngâm"),
     ("thien_ly", "Hoa thiên lý", "rau củ", "chung", ro(5, 6, 7, 8), "chợ", "C", "Hoa nở rộ mùa hè – chưa có nguồn riêng"),
     ("dua_cai_chua", "Dưa cải muối chua", "khác", "chung", Q, "chợ/GO!", "A", "Dưa muối sẵn hoặc tự muối, có quanh năm"),

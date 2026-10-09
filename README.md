@@ -113,6 +113,8 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
 - Trưa món mặn đạm nhẹ thì tối bắt buộc có món mặn thịt/cá; món mặn đạm nhẹ không nấu dư cho tối.
 - Không 2 món rau lá trong một bữa (rau muống, mồng tơi, rau đay, rau ngót, cải, bắp cải...): canh rau lá thì rau là củ quả, và ngược lại.
 - Canh cua đồng ăn kèm cà pháo muối xổi (không tính vào giờ nấu).
+- Nguyên liệu quyết định món (sấu, măng tươi, sầu đâu, hoa thiên lý – `NL_QUYET_DINH`), kể cả là nguyên liệu phụ: tháng trái mùa
+  (lịch = 0) thì trừ 3 điểm và ghi cách thay (vd. "Sấu trái mùa – dùng sấu ngâm hoặc sấu đông lạnh"). Sấu tươi chỉ có tháng 5–8.
 - Lời khuyên thời tiết so tổng điểm quy tắc nghiêng món nóng / món mát và ghi lý do chính (mưa, nắng gắt...).
 - Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
 - Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1. Món rau trừ thêm 4 điểm nếu đã ăn trong 4 ngày
