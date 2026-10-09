@@ -89,6 +89,32 @@ def sua_lich_mua(tabs):
     return n
 
 
+def gan_ma(tabs):
+    """Gắn mã nguyên liệu cho dòng định lượng chỉ ghi tên (không phải gia vị) theo gan_ma.csv: từ khóa (regex, chữ thường)
+    khớp tên hiển thị thì lấy mã đó, dòng đầu tiên khớp được dùng. Dòng "chính" vừa có mã thì thêm vào nguyên liệu chính của món.
+    """
+    path = os.path.join(DE_XUAT, "gan_ma.csv")
+    if not os.path.exists(path):
+        return
+    with open(path, newline="", encoding="utf-8") as f:
+        luat = [(re.compile(r["tu_khoa"]), r["ma"]) for r in csv.DictReader(f)]
+    co_ma = {r["ma"] for r in tabs["nguyen_lieu"]} | {r["ma"] for r in read_de_xuat("nhanh_nguyen_lieu.csv")}
+    them = {}
+    for r in tabs["mon_nguyen_lieu"]:
+        if str(r.get("ma_nguyen_lieu") or "") or r.get("vai_tro") == "gia_vi":
+            continue
+        ten = str(r.get("ten_hien_thi") or "").strip().lower()
+        ma = next((m for rx, m in luat if rx.search(ten) and m in co_ma), "")
+        if ma:
+            r["ma_nguyen_lieu"] = ma
+            if r.get("vai_tro") == "chinh":
+                them.setdefault(r["ma_mon"], []).append(ma)
+    for m in tabs["mon_an"]:
+        if m["ma_mon"] in them:
+            ma = [c for c in str(m.get("nguyen_lieu_chinh") or "").split("|") if c]
+            m["nguyen_lieu_chinh"] = "|".join(dict.fromkeys(ma + them[m["ma_mon"]]))
+
+
 def tach_nhanh(tabs):
     """Tách nguyên liệu cha thành các nhánh (thịt heo -> ba chỉ, sườn, nạc vai...) theo nhanh_nguyen_lieu.csv.
 
@@ -150,6 +176,7 @@ def merge_de_xuat(tabs):
     tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
         [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
     tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
+    gan_ma(tabs)
     tach_nhanh(tabs)
     # Ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py). Đọc nguyên chuỗi: mã hex như "8e12…" không được đổi thành số.
     path = os.path.join(DE_XUAT, "anh_mon.csv")
@@ -189,6 +216,14 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         url = urlparse(self.path)
+        if url.path == "/version.json":  # bản demo đọc Sheet trực tiếp: không có mã phiên bản, app tải data.json mới mỗi lần
+            body = b'{"v": ""}'
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if url.path in ("/api/data", "/data.json"):
             body = get_data(refresh="refresh" in parse_qs(url.query))
             self.send_response(200)

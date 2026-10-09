@@ -84,9 +84,17 @@ const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOStri
 const month = (i = 0) => Number(dayStr(i).slice(5, 7));
 
 // ---------- Dữ liệu ----------
+// data.json (~1 MB) tải theo mã phiên bản trong version.json (vài chục byte): dữ liệu chưa đổi thì trình duyệt / service worker
+// dùng lại bản đã lưu. Không lấy được version.json (bản demo, mất mạng) hoặc vừa bấm "Tải lại dữ liệu" thì tải mới.
+async function taiDuLieu() {
+  let moi = false;
+  try { moi = !!sessionStorage.getItem("cachef.tai_lai"); sessionStorage.removeItem("cachef.tai_lai"); } catch { /* chặn lưu */ }
+  const v = moi ? "" : await fetch(`version.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json()).then((x) => x.v || "").catch(() => "");
+  return fetch(v ? `data.json?v=${v}` : `data.json?t=${Date.now()}`).then((r) => r.json());
+}
 async function load() {
   const [data, weather] = await Promise.all([
-    fetch(`data.json?t=${Date.now()}`).then((r) => r.json()),
+    taiDuLieu(),
     fetch(WEATHER_URL).then((r) => r.json()).catch(() => null),
   ]);
   S.data = data;
@@ -116,6 +124,7 @@ async function load() {
   document.getElementById("refresh").onclick = async (e) => {
     e.preventDefault();
     await fetch("data.json?refresh=1");
+    try { sessionStorage.setItem("cachef.tai_lai", "1"); } catch { /* chặn lưu */ }
     location.reload();
   };
 }
@@ -155,7 +164,22 @@ function saveDanhGia(ma, sua) {
   S.ranked = rankDishes(0);
   S.rankedTomorrow = rankDishes(1);
 }
-const THUOC_BAC_CACH_NGAY = 14;
+const THUOC_BAC_CACH_NGAY = 14, RAU_CACH_NGAY = 4, NUONG_CACH_NGAY = 2;
+// Nguyên liệu quyết định món: trái mùa (lịch tháng = 0) thì món khó nấu đúng vị dù là nguyên liệu phụ.
+const NL_QUYET_DINH = { sau: "dùng sấu ngâm hoặc sấu đông lạnh", mang_rung: "dùng măng muối hoặc măng khô", sau_dau: "", thien_ly: "" };
+function quyetDinhTraiMua(dish, m) {
+  const ma = new Set((S.ingByDish[dish.ma_mon] || []).filter((r) => r.vai_tro !== "gia_vi")
+    .flatMap((r) => String(r.ma_nguyen_lieu || "").split("|")).filter((c) => c in NL_QUYET_DINH && S.ing[c]?.thang[m - 1] === 0));
+  return [...ma].map((c) => [c, NL_QUYET_DINH[c]]);
+}
+const laNuong = (d) => cachNau(d) === "nuong" || vaiOf(d) === "nuong";
+// Có món nướng trong NUONG_CACH_NGAY ngày trước ngày `day` (theo lịch sử gợi ý và món đã nấu).
+function ganNuong(day) {
+  const ref = dayStr(day), tu = dayStr(day - NUONG_CACH_NGAY), mon = Object.fromEntries(S.data.mon_an.map((m) => [m.ma_mon, m]));
+  const coNuong = (ma) => mon[ma] && laNuong(mon[ma]);
+  if (Object.entries(readHistory()).some(([d, l]) => d >= tu && d < ref && l.some(coNuong))) return true;
+  return Object.entries(danhGia()).some(([ma, x]) => coNuong(ma) && (x.nau || []).some((d) => d >= tu && d < ref));
+}
 const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
 
 // ---------- Chấm điểm ----------
@@ -237,6 +261,12 @@ function scoreDish(dish, weatherHits, day = 0) {
   if (dg.y === 1) them("Nhà khen ngon", DIEM_DG.ngon);
   if (dg.y === -1) them("Nhà thấy không hợp", DIEM_DG.khongHop);
   if (dg.tim) them("Yêu thích", DIEM_DG.tim);
+  // Món rau dễ lặp (nhất là ngày nóng, ít món rau mát): trừ thêm trong 4 ngày.
+  if (vaiOf(dish) === "rau" && since <= RAU_CACH_NGAY) them("Món rau vừa ăn", -4);
+  // Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng): 2 ngày gần nhất đã có món nướng thì trừ mạnh.
+  if (laNuong(dish) && ganNuong(day)) them(`Vừa ăn nướng trong ${NUONG_CACH_NGAY} ngày`, -6);
+  // Nguyên liệu quyết định món (sấu, măng tươi...) trái mùa – kể cả khi là nguyên liệu phụ: trừ điểm, ghi cách thay.
+  for (const [c, thay] of quyetDinhTraiMua(dish, month(day))) them(`${S.ing[c].ten} trái mùa${thay ? ` – ${thay}` : ""}`, -3);
   // Món thuốc bắc (bồi bổ): cách nhau ít nhất 14 ngày – khoảng 2 lần/tháng.
   if (/thuốc bắc/i.test(dish.ten_mon) && since <= THUOC_BAC_CACH_NGAY) them(`Món thuốc bắc: ${THUOC_BAC_CACH_NGAY} ngày mới ăn lại`, -20);
   // Lẩu, nướng là bữa quây quần: ưu tiên tối thứ 6, thứ 7, chủ nhật.
@@ -303,7 +333,7 @@ const NUOC_TEN = /(^|\s)(om|bung|nấu|hầm|sốt vang|cà ri)(\s|$)|bò kho|ri
 // Mức đạm theo nguyên liệu chính của món: 2 có thịt/cá/hải sản, 1 chỉ có đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô),
 // 0 không có; null khi món chưa có bảng nguyên liệu.
 const NHOM_DAM = new Set(["thịt", "hải sản", "thủy sản"]);
-const NL_DAM_NHE = new Set(["cua_dong", "ca_com_kho", "ruoc_tuoi", "trung", "dau_phu", "xuong_heo"]);
+const NL_DAM_NHE = new Set(["cua_dong", "ca_com_kho", "ruoc_tuoi", "trung", "dau_phu", "xuong_heo", "tom_kho"]);
 const NL_KHONG_DAM = new Set(["rong_sun", "rong_nho", "sua", "mo_heo"]);
 const _damNL = {};
 function damNL(d) {
@@ -376,6 +406,7 @@ function hopBua(x, bua, ctx) {
   const dam = damOf(x), canhVsMan = (d) => (vaiOf(x) === "canh") !== (vaiOf(d) === "canh");
   if (dam && bua.some((d) => canhVsMan(d) && damOf(d) === dam)) return false;
   if (x.dau_mo === "nhieu" && ctx.mo >= 1) return false;
+  if (laNuong(x) && ctx.nuong) return false; // cả ngày tối đa một món nướng
   const vx = vaiOf(x);
   if ((vx === "rau" || vx === "canh") && rauLa(x) && bua.some((d) => ["rau", "canh"].includes(vaiOf(d)) && rauLa(d))) return false;
   if (vx === "man" && ctx.damChinh && damDiem(x) < 2) return false;
@@ -429,6 +460,7 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     if (!d) continue;
     out.push(d); bua.push(d); cam.add(d.ma_mon); dungNL(d, used);
     if (d.dau_mo === "nhieu") ctx.mo++;
+    if (laNuong(d)) ctx.nuong = true;
   }
   return { out, no };
 }
@@ -525,7 +557,7 @@ function phoTrua(ranked, day, kTrua, kToi, sh) {
 function pickMeals(ranked, day, keep = {}) {
   const sh = S.shown[day], used = new Set();
   const kTrua = keep.trua || [], kToi = keep.toi || [];
-  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length };
+  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong) };
   [...kTrua, ...kToi].forEach((d) => dungNL(d, used));
   // Bữa tối một món (lẩu, nướng): giữ nếu đã chọn; nếu tối chưa có món nào giữ thì xét gợi ý
   // (không trùng nguyên liệu bữa trưa, điểm không thua món mặn tốt nhất).
@@ -539,6 +571,7 @@ function pickMeals(ranked, day, keep = {}) {
     if (ung.length) { toi = [ung[0]]; dungNL(ung[0], used); }
   }
   if (toi) {
+    if (toi.some(laNuong)) ctx.nuong = true;
     if (!toi.some((d) => vaiOf(d) === "trang_mieng")) {
       const tm = pickRole(ranked, "trang_mieng", new Set([...sh.toi, ...kTrua.map((d) => d.ma_mon)]), (x) => khongTrung(x, used));
       if (tm) { toi.push(tm); dungNL(tm, used); }
@@ -589,9 +622,14 @@ const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang", "mo_heo", "thit_hop"]; //
 const FROZEN_WORDS = /chả cá|xương|sườn|giò heo/i;
 const NAU_THANG = new Set(["tom_the", "tom_hum", "muc_tuoi"]); // tôm, mực: lấy từ ngăn đá nấu thẳng, không rã đông
 const MO_HEO = /^mỡ/i; // mỡ heo (mỡ phần, mỡ nước) luôn để ngăn mát – không tính "thịt nửa nạc nửa mỡ"
+// Rã đông theo tủ lạnh: "tu" – tủ đang ghi đồ: chỉ nhắc thứ đang ghi ❄ ngăn đá; "mua_mai" – tủ trống và hẹn đi chợ
+// ngày mai: đồ cho bữa mai mua tươi, không nhắc; "chua_ro" – tủ trống: nhắc kèm "nếu có sẵn trong ngăn đá".
+const cheDoRaDong = () => Object.keys(tuLanh()).some((c) => S.ing[c]) ? "tu" : dcCaiDat().tu === 1 ? "mua_mai" : "chua_ro";
+const trongNganDa = (codes) => codes.some((c) => trongTu(c) && tuLanh()[trongTu(c)].da);
 // thang: nhận tên các thứ nấu thẳng từ ngăn đá (tôm, mực) để nhắc riêng.
-function thawList(meals, thang = []) {
+function thawList(meals, thang = [], cheDo = cheDoRaDong()) {
   const out = [];
+  if (cheDo === "mua_mai") return out;
   for (const d of mealDishes(meals)) {
     const f = d.ma_mon === meals.du ? 2 : 1; // nấu dư cho bữa tối
     for (const r of S.ingByDish[d.ma_mon] || []) {
@@ -599,11 +637,14 @@ function thawList(meals, thang = []) {
       if (motNoi(d) && r.vai_tro !== "chinh") continue; // lẩu, nướng: rau, bún đi kèm không tính là nguyên liệu chính
       if (MO_HEO.test(r.ten_hien_thi)) continue;
       const codes = String(r.ma_nguyen_lieu || "").split("|").filter(Boolean);
-      if (codes.length && codes.every((c) => NAU_THANG.has(c))) { if (!thang.includes(r.ten_hien_thi)) thang.push(r.ten_hien_thi); continue; }
+      if (codes.length && codes.every((c) => NAU_THANG.has(c))) {
+        if ((cheDo !== "tu" || trongNganDa(codes)) && !thang.includes(r.ten_hien_thi)) thang.push(r.ten_hien_thi);
+        continue;
+      }
       const frozen = codes.length
         ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
         : FROZEN_WORDS.test(r.ten_hien_thi);
-      if (frozen && codes.length && codes.every((c) => trongTu(c) && !tuLanh()[trongTu(c)].da)) continue; // tủ lạnh ghi đang ở ngăn mát
+      if (frozen && cheDo === "tu" && !trongNganDa(codes)) continue; // tủ không ghi thứ này ở ngăn đá (không có, hoặc ở ngăn mát)
       if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (gồm phần cho bữa tối)" : ""), qty: scaleQty(r, f) });
     }
   }
@@ -744,16 +785,17 @@ function mealBlock(meals, k, chon) {
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
 function thawBox(moSan = false) {
   if (!S.meals[1]) return "";
-  const thang = [], list = thawList(S.meals[1], thang);
+  const cheDo = cheDoRaDong(), thang = [], list = thawList(S.meals[1], thang, cheDo);
   const nhacThang = thang.length ? `${thang.join(", ")}: lấy từ ngăn đá nấu thẳng, không cần rã đông` : "";
   if (!list.length) return `<div class="nhac"><span class="ic">🧊</span><span class="tx"><b>Rã đông</b>
-    <span class="meta">${esc(nhacThang || "Món ngày mai không cần rã đông thịt, cá")}</span></span></div>`;
+    <span class="meta">${esc(nhacThang || (cheDo === "mua_mai" ? "Mai đi chợ mua tươi – không cần rã đông"
+      : cheDo === "tu" ? "Ngăn đá không có đồ cần rã đông cho món ngày mai" : "Món ngày mai không cần rã đông thịt, cá"))}</span></span></div>`;
   const tom = list.slice(0, 3).map((x) => `${x.ten} ${x.qty}`).join(" · ") + (list.length > 3 ? ` · +${list.length - 3}` : "");
   return `<details class="nhac-d" ${moSan ? "open" : ""}>
     <summary class="nhac"><span class="ic">🧊</span>
-      <span class="tx"><b>Rã đông tối nay cho mai (${list.length})</b><span class="meta">${esc(tom)}</span></span><span class="chev">›</span></summary>
+      <span class="tx"><b>Rã đông tối nay cho mai${cheDo === "tu" ? "" : " nếu có sẵn"} (${list.length})</b><span class="meta">${esc(tom)}</span></span><span class="chev">›</span></summary>
     <div class="nhac-body">
-      <p class="note">Tối nay chuyển từ ngăn đá xuống ngăn mát:</p>
+      <p class="note">${cheDo === "tu" ? "Tối nay chuyển từ ngăn đá xuống ngăn mát:" : "Nếu có sẵn trong ngăn đá, tối nay chuyển xuống ngăn mát:"}</p>
       <ul class="thaw">${list.map((x) => `<li><span><b>${esc(x.ten)}</b><small>${esc(x.mon)}</small></span><span>${esc(x.qty)}</span></li>`).join("")}</ul>
       ${nhacThang ? `<p class="note">🦐 ${esc(nhacThang)}.</p>` : ""}
       <p class="note">Ngăn mát mất 12–24 giờ. Quên thì ngâm cả túi kín trong nước lạnh, 30 phút thay nước. Không rã đông ở nhiệt độ phòng.</p>
@@ -774,6 +816,7 @@ function tlBox(meals) {
 }
 
 // ---------- Trang Nấu gì (hôm nay / ngày mai) ----------
+const KHAC_HOP = [[["man"], 2], [["rau"], 2], [["canh"], 2], [["lau", "nuong"], 2], [["trang_mieng"], 2]];
 function pageHome(day = 0) {
   const ranked = day ? S.rankedTomorrow : S.ranked;
   const meals = S.meals[day];
@@ -781,7 +824,8 @@ function pageHome(day = 0) {
   const m = month(day);
   const inSeason = S.data.nguyen_lieu.filter((n) => n.thang[m - 1] === 2);
   const shown = new Set(mealDishes(meals).map((p) => p.ma_mon));
-  const others = ranked.filter((d) => !shown.has(d.ma_mon) && ["man", "rau", "canh", "lau", "nuong", "mot_to"].includes(vaiOf(d))).slice(0, 10);
+  // Món khác cũng hợp: chia theo vai (mỗi vai 2 món) để cuối tuần không toàn lẩu/nướng.
+  const others = KHAC_HOP.flatMap(([vai, n]) => ranked.filter((d) => !shown.has(d.ma_mon) && vai.includes(vaiOf(d))).slice(0, n));
   $app.innerHTML = `
     <div class="seg"><a href="#/" class="${day ? "" : "on"}">Hôm nay</a><a href="#/ngay-mai" class="${day ? "on" : ""}">Ngày mai</a></div>
     ${weatherTip(day)}
@@ -922,9 +966,9 @@ function pageRecipe(ma, moiXong = false) {
     nl: rows.length ? `
       <div class="ppl"><span>Khẩu phần</span><span class="st"><button id="minus" aria-label="Bớt">−</button><b>${n} ${unitName}</b><button id="plus" aria-label="Thêm">+</button></span></div>
       <div class="ing">${nhom.map(([t, l]) => `<div class="grp">${t}</div>${l.map((r) => {
-        const c0 = String(r.ma_nguyen_lieu).split("|")[0], price = S.prices[c0] || S.prices[S.ing[c0]?.cha];
+        const g = giaGo(String(r.ma_nguyen_lieu).split("|")[0]);
         return `<div class="ir"><span class="${r.vai_tro === "chinh" ? "k" : ""}">${esc(r.ten_hien_thi)}
-          ${price ? `<a class="go" href="${esc(price.url)}" target="_blank" rel="noopener">GO! ${Number(price.gia_vnd).toLocaleString("vi-VN")}đ</a>` : ""}</span>
+          ${g ? `<a class="go" href="${esc(g.url)}" target="_blank" rel="noopener" title="${esc(g.san_pham_go)}">${esc(giaChu(g))}</a>` : ""}</span>
           <span class="q">${esc(scaleQty(r, factor))}</span></div>`;
       }).join("")}`).join("")}</div>
       <p class="note">Gia vị và nước dùng tăng chậm hơn số người – nêm lại cho vừa.</p>
@@ -1056,7 +1100,7 @@ const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã n�
 const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgMon(d.ma_mon).y === 1
   : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
 function pageAll() {
-  $app.innerHTML = `<h1 class="ptitle">Món ăn<small>${S.ranked.length} món · sắp theo điểm hôm nay</small></h1>
+  $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
     <input id="q" class="search" type="search" placeholder="Tìm món – gõ không dấu được (ca thu, canh chua)" value="${esc(S.query)}">
     <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${TEN_LOC[v] || VAI_NGAN[v]}</button>`).join("")}</div>
     <div id="all-list"></div>`;
@@ -1069,6 +1113,9 @@ function pageAll() {
 function renderAll() {
   const words = plain(S.query).split(/\s+/).filter(Boolean), v = S.vaiLoc || "all";
   const list = S.ranked.filter((d) => hopLoc(d, v) && words.every((w) => plain(d.ten_mon).includes(w)));
+  document.getElementById("dem-mon").textContent = words.length || v !== "all"
+    ? `${list.length} / ${S.ranked.length} món${words.length ? ` khớp "${S.query.trim()}"` : ""} · sắp theo điểm hôm nay`
+    : `${S.ranked.length} món · sắp theo điểm hôm nay`;
   document.getElementById("all-list").innerHTML = list.length ? `<div class="list">${list.map((d) => `
     <a class="row-link li" href="#/mon/${d.ma_mon}">${thumb(d)}
       <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}${d.season === 2 ? ' · <span class="peak">Đang rộ</span>' : d.season === 0 ? " · trái mùa" : ""}</span></span>
@@ -1251,6 +1298,25 @@ function nlBua(ngay) {
   return [...items.values()].map((it) => ({ ...it, coTu: it.c && trongTu(it.c) }))
     .sort((a, b) => nhomDc(a.nhom) - nhomDc(b.nhom) || a.ten.localeCompare(b.ten, "vi"));
 }
+// Giá GO! của nguyên liệu (nhánh dùng giá mã cha khi cùng nhóm – nấm khô không lấy giá nấm tươi) kèm quy cách gói
+// tách từ tên sản phẩm ("Tôm thẻ 31-40 Minh Phú 300g" -> 300g; "Cà rốt 800g-1kg" -> ~900 g) để ước tính tiền theo lượng cần mua.
+function giaGo(c) {
+  const n = S.ing[c];
+  if (!n) return null;
+  const p = S.prices[c] || (n.cha && S.ing[n.cha]?.nhom === n.nhom ? S.prices[n.cha] : null);
+  if (!p) return null;
+  const ten = String(p.san_pham_go || ""), ms = [...ten.matchAll(/(\d+(?:[.,]\d+)?)(?:\s*-\s*(\d+(?:[.,]\d+)?))?\s*(kg|g)(?![a-zà-ỹ])/gi)];
+  if (!ms.length) return { ...p, goi: "", gam: 0 };
+  const so = (x, u) => parseFloat(x.replace(",", ".")) * (u.toLowerCase() === "kg" ? 1000 : 1);
+  const vals = ms.flatMap((m) => [so(m[1], m[3]), ...(m[2] ? [so(m[2], m[3])] : [])]);
+  const z = ms[ms.length - 1], goi = ten.slice(ms[0].index, z.index + z[0].length).replace(/\s+/g, "").replace(/kg/gi, "kg");
+  return { ...p, goi: goi.length <= 14 ? goi : ms[0][0].replace(/\s+/g, ""), gam: vals.reduce((a, b) => a + b, 0) / vals.length };
+}
+const vnd = (v) => `${Math.round(v).toLocaleString("vi-VN")}đ`;
+// "GO! 139.000đ/300g", có lượng cần (gam) thì thêm "≈ 93.000đ".
+const giaChu = (g, can = 0) => `GO! ${vnd(g.gia_vnd)}${g.goi ? "/" + g.goi : ""}${can && g.gam ? ` · ≈ ${vnd(Math.round(g.gia_vnd * can / g.gam / 1000) * 1000)}` : ""}`;
+// Tổng lượng theo gam (chỉ khi mọi dòng ghi g/kg), không thì 0.
+const soGam = (dung) => dung.every((u) => u.q !== null && ["g", "kg"].includes(u.dv)) ? dung.reduce((a, u) => a + u.q * (u.dv === "kg" ? 1000 : 1), 0) : 0;
 // Cộng số lượng cùng đơn vị: "1,2 kg · 2 bó"; dòng không ghi số thì "vừa đủ".
 function tongSo(dung) {
   const t = new Map();
@@ -1327,12 +1393,12 @@ function pageDiCho() {
   const ngay = tu === 0 ? [0, 1] : [1], k = ngay.length;
   const nl = nlBua(ngay), mua = nl.filter((it) => !it.coTu), coTu = nl.filter((it) => it.coTu);
   const gio = gioMua(tu, k, n, new Set(nl.map((it) => it.c).filter(Boolean)));
-  const price = (c) => { const p = c && (S.prices[c] || S.prices[S.ing[c]?.cha]); return p
-    ? ` · <a class="go" href="${esc(p.url)}" target="_blank" rel="noopener">GO! ${Number(p.gia_vnd).toLocaleString("vi-VN")}đ</a>` : ""; };
+  const price = (c, dung) => { const g = giaGo(c); return g
+    ? ` · <a class="go" href="${esc(g.url)}" target="_blank" rel="noopener" title="${esc(g.san_pham_go)}">${esc(giaChu(g, dung && soGam(dung)))}</a>` : ""; };
   const ck = (key, ten) => `<button class="dc-ck" data-mua="${esc(key)}" aria-pressed="${da.has(key)}" aria-label="Đã mua ${esc(ten)}">✓</button>`;
   const dongNL = (it, coCk = true) => `<div class="dc-it ${da.has(it.key) ? "on" : ""}">${coCk ? ck(it.key, it.ten) : ""}
     <details><summary><b>${esc(it.ten)}</b><span class="q">${esc(tongSo(it.dung))}</span>
-      <span class="meta">${[...new Set(it.dung.map((u) => u.mon))].map(esc).join(", ")}${price(it.c)}</span></summary>
+      <span class="meta">${[...new Set(it.dung.map((u) => u.mon))].map(esc).join(", ")}${price(it.c, it.dung)}</span></summary>
       <ul class="dc-ct">${it.dung.map((u) => `<li><span>${thuGon(u.i)} · ${esc(u.mon)}${plain(u.ten) !== plain(it.ten) ? ` <small>(${esc(u.ten)})</small>` : ""}</span>
         <span>${esc(u.qty)}</span></li>`).join("")}</ul></details></div>`;
   const dongGio = (x, ghi) => {
@@ -1476,6 +1542,10 @@ function route() {
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);
 }
+
+// Service worker: lưu app và dữ liệu để mở được khi sóng yếu (ở chợ), cài lên màn hình chính.
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1"))
+  navigator.serviceWorker.register("sw.js").catch(() => { /* không hỗ trợ: chạy như trang web thường */ });
 
 load().then(() => { headerBar(); window.addEventListener("hashchange", route); route(); })
   .catch((e) => { $app.innerHTML = `<div class="box">Lỗi tải dữ liệu: ${esc(e.message)}</div>`; });

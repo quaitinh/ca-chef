@@ -8,7 +8,7 @@ KHUNG: (mã món, vai mâm, nhóm đạm). Mã trùng món đã có thì món đ
 """
 from urllib.parse import quote
 
-from lo1_bac import (DAU, DUONG, HANH, HANH_LA, HAT_NEM, MAM, MC, MCF, R, TIEU, TOI)
+from lo1_bac import (DAU, DUONG, HANH, HANH_LA, HAT_NEM, MAM, MC, MCF, Q, R, TIEU, TOI)
 
 CP = "https://cookpad.com/vn/cong-thuc/"
 TK = "https://cookpad.com/vn/tim-kiem/"
@@ -19,7 +19,29 @@ GUNG = lambda n: ("sa_ot", "Gừng", n, "nhánh", "x", "gia_vi")
 RAU_THOM = lambda ten: ("rau_thom", ten, 1, "bó", "x", "phu")
 MUOI = ("muoi_ca_na", "Muối", None, "vừa đủ", "x", "gia_vi")
 
-NGUYEN_LIEU = []
+# Nguyên liệu trước đây chưa có mã (dòng định lượng chỉ ghi tên) – app/server.py gắn mã theo data/de_xuat/gan_ma.csv.
+# (mã, tên, nhóm, vùng, lịch 12 tháng, nơi mua, tin cậy, ghi chú)
+NGUYEN_LIEU = [
+    ("ca_dieu_hong", "Cá diêu hồng", "thủy sản", "chung", Q, "chợ/GO!", "C", "Cá nuôi nước ngọt, có quanh năm"),
+    ("ca_ro_phi", "Cá rô phi", "thủy sản", "chung", Q, "chợ/GO!", "C", "Cá nuôi nước ngọt, có quanh năm"),
+    ("ca_hoi", "Cá hồi", "hải sản", "nhập khẩu", Q, "GO!/siêu thị", "C", "Cá hồi nhập (Na Uy) cắt khúc, phi lê – mua ở siêu thị"),
+    ("cha_ca", "Chả cá", "hải sản", "chung", Q, "chợ/GO!", "C", "Chả cá Nha Trang, Phan Rang làm sẵn"),
+    ("tom_kho", "Tôm khô", "hàng khô", "chung", Q, "chợ/GO!", "C", "Hàng khô, có quanh năm"),
+    ("gio_song", "Giò sống", "thịt", "chung", Q, "chợ", "C", "Thịt heo quết nhuyễn làm sẵn ở hàng giò chả"),
+    ("lap_xuong", "Lạp xưởng", "khác", "chung", Q, "chợ/GO!", "C", "Đồ khô đóng gói, có quanh năm"),
+    ("he", "Hẹ", "rau củ", "chung", Q, "chợ", "C", "Rau gia vị có quanh năm"),
+    ("la_chanh", "Lá chanh", "rau củ", "chung", Q, "chợ", "C", "Có quanh năm"),
+    ("ot_chuong", "Ớt chuông", "rau củ", "Đà Lạt", Q, "chợ/GO!", "C", "Rau Đà Lạt, có quanh năm"),
+    ("doc_mung", "Dọc mùng (bạc hà)", "rau củ", "chung", Q, "chợ", "C", "Có quanh năm"),
+    ("cu_dau", "Củ đậu (củ sắn)", "rau củ", "chung", Q, "chợ", "C", "Có quanh năm, nhiều nhất mùa khô"),
+    ("toi_tay", "Tỏi tây", "rau củ", "Đà Lạt", Q, "chợ/GO!", "C", "Rau Đà Lạt, có quanh năm"),
+    ("cu_den", "Củ dền", "rau củ", "Đà Lạt", Q, "chợ/GO!", "C", "Rau Đà Lạt, có quanh năm"),
+    ("mang_chua", "Măng chua", "khác", "chung", Q, "chợ", "C", "Măng muối chua làm sẵn, có quanh năm"),
+    ("ky_tu", "Kỷ tử", "hàng khô", "chung", Q, "chợ/tiệm thuốc bắc", "C", "Hàng khô, có quanh năm"),
+    ("sua_tuoi", "Sữa tươi", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
+    ("sua_dac", "Sữa đặc", "hàng khô", "chung", Q, "GO!/tạp hóa", "A", "Hộp, có quanh năm"),
+    ("sua_chua", "Sữa chua", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
+]
 DE_SHEET = {"goi_cuon"}  # món trên Sheet đổi sang công thức chủ nhà chọn
 KHUNG = []
 

@@ -37,7 +37,13 @@ function ghiLS(k, obj) {
   DB.hen = setTimeout(dbGui, 1200);
 }
 
+// Gửi các mục chờ; đang gửi dở thì đợi xong rồi gửi phần còn lại (Apps Script xử lý tuần tự, gửi chồng nhau chỉ chậm thêm).
 async function dbGui() {
+  while (DB.gui) await DB.gui;
+  DB.gui = dbGuiMot();
+  try { return await DB.gui; } finally { DB.gui = null; }
+}
+async function dbGuiMot() {
   const cfg = dbCfg(), ds = Object.keys(cfg.cho);
   if (!dbBat() || !ds.length) return true;
   const entries = ds.map((p) => {
@@ -83,7 +89,7 @@ async function dbKeo() {
     for (const [ls, obj] of doi) localStorage.setItem(ls, JSON.stringify(obj));
     cfg.since = Math.max(0, (res.now || 0) - 5000); // lùi 5 giây phòng lệch lúc ghi
     dbLuu(); DB.loi = ""; DB.luc = Date.now();
-    if (Object.keys(cfg.cho).length) dbGui();
+    if (Object.keys(cfg.cho).length && !DB.batDau) dbGui();
     return doi.size > 0;
   } catch (e) { DB.loi = "Chưa lấy được: " + e.message; return false; }
 }
@@ -96,7 +102,9 @@ async function dbBatDau(url, nha) {
   for (const [ls, ten] of Object.entries(DB_TEN))
     for (const muc of Object.keys(docLS(ls))) { const p = `${ten}/${muc}`; cfg.t[p] = cfg.t[p] || 1; cfg.cho[p] = 1; }
   dbLuu();
+  DB.batDau = true;
   const doi = await dbKeo();
+  DB.batDau = false;
   const ok = await dbGui();
   return { doi, ok: ok && !DB.loi };
 }

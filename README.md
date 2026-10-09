@@ -9,6 +9,10 @@ CA_CHEF_KEY=/đường/dẫn/key.json python3 app/server.py 8095
 Mở http://127.0.0.1:8095. Không có `CA_CHEF_KEY` thì app đọc `data/*.csv`.
 Dữ liệu Sheet được cache 5 phút; bấm "Tải lại dữ liệu" ở chân trang để lấy bản mới.
 
+Cài lên màn hình chính: mở trang trên điện thoại › Chia sẻ / menu › "Thêm vào màn hình chính". App có `manifest.json` và service worker
+(`app/static/sw.js`): `data.json` (~1 MB) tải theo mã phiên bản trong `version.json` (do `scripts/export_json.py` ghi, băm theo nội dung),
+dữ liệu chưa đổi thì dùng lại bản đã lưu; app, style mạng trước, mất mạng (sóng yếu ở chợ) thì mở bằng bản đã lưu.
+
 ## Dữ liệu
 - Google Sheet "Cá Chef" (id `1aoGQLY0g3UjnQRavXnufttwoigSb-Po4IkGB1z0fwno`) là nơi chỉnh sửa chính.
 - `scripts/build_data.py` + `scripts/recipes.py` → `data/*.csv`, `data/ca_chef_data.xlsx`.
@@ -32,13 +36,19 @@ lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã tr
 
 Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): gà tách lòng, chân cổ xương, cánh, ức và gà nguyên con / nửa con
 (mặc định cho món ghi chung "gà"; cột `bao_gom`: tủ có gà nguyên con thì món cánh, ức, chân cổ, lòng cũng tính là có), đùi gà
-tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào). Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
+tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào); nấm tách mộc nhĩ (nấm mèo) khô,
+nấm hương (đông cô) khô – nhóm hàng khô, bảo quản riêng – còn lại là nấm tươi. Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
 thịt nạc, sườn, chân giò, xương, mỡ heo, tai, lưỡi, da (bì), thịt hộp. Món chỉ ghi chung "thịt heo" hiểu là thịt nạc hoặc
 ba chỉ (cột `mac_dinh`). Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
 trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
 (trang Mùa vụ chỉ hiện mã cha). Tủ lạnh: có nhánh nào thì món dùng đúng nhánh đó được tính là có; món ghi chung "thịt heo" chỉ tính khi tủ có nạc, nạc vai
 hoặc ba chỉ;
 tủ ghi chung "Thịt heo" thì tính là có mọi nhánh.
+
+Gắn mã theo tên (`data/de_xuat/gan_ma.csv`): dòng định lượng (không phải gia vị) chỉ ghi tên được `app/server.py` gắn mã theo từ khóa
+(cá diêu hồng, mộc nhĩ, thơm/dứa, sữa, hẹ, lá chanh, tôm khô...) để tính trong Tủ lạnh, Mùa vụ, Đi chợ; dòng "chính" vừa có mã thì thêm
+vào nguyên liệu chính của món. Nguyên liệu mới cho các mã này khai báo ở `scripts/de_xuat/lo4_chu_nha.py`. Hành lá, hành tây, bột,
+đường... để trống (đồ luôn có).
 
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
 trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên Sheet (khác lịch cũ) thì giữ theo Sheet.
@@ -62,7 +72,8 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   "Cất vào tủ lạnh": đồ cho bữa gần để ngăn mát, đạm của giỏ mua dư để ngăn đá. Sau đó Cá Chef gợi ý món theo tủ.
 - Tủ sắp hết đồ (đã dùng tủ lạnh mà còn ≤ 1 thứ thịt, cá, trứng, đậu chưa quá hạn): trang Nấu gì nhắc nên đi chợ.
 - Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
-  mỡ heo luôn để ngăn mát nên không có trong danh sách.
+  mỡ heo luôn để ngăn mát nên không có trong danh sách. Theo tủ lạnh: tủ đang ghi đồ thì chỉ nhắc thứ đang ghi ❄ ngăn đá;
+  tủ trống mà hẹn đi chợ ngày mai thì không nhắc (mai mua tươi); tủ trống, không đi chợ mai thì nhắc "nếu có sẵn trong ngăn đá".
 - Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
   Nguồn: `scripts/de_xuat/bi_quyet.py` → `data/de_xuat/bi_quyet_nl.csv` (cột `mat`, `da`: số ngày để ngon ở ngăn mát / ngăn đá).
 
@@ -99,14 +110,19 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
   ăn như canh: xếp vào vai canh, bữa vẫn có một món mặn thịt/cá.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
+- Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng một nồi): cả ngày tối đa 1 món; 2 ngày trước đã có món nướng thì
+  trừ 6 điểm. Bữa nướng một nồi vẫn giữ quy tắc tối đa 1 lần/7 ngày.
 - Đủ đạm (tính theo nguyên liệu chính, món chưa có bảng nguyên liệu thì theo nhóm đạm): điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;
   canh hoặc rau có thịt/cá/tôm 1, có trứng/đậu 0,5; canh cua đồng, canh rau 0. Ví dụ trứng cút rim thì canh hoặc rau phải có thịt/cá/tôm.
 - Trưa món mặn đạm nhẹ thì tối bắt buộc có món mặn thịt/cá; món mặn đạm nhẹ không nấu dư cho tối.
 - Không 2 món rau lá trong một bữa (rau muống, mồng tơi, rau đay, rau ngót, cải, bắp cải...): canh rau lá thì rau là củ quả, và ngược lại.
 - Canh cua đồng ăn kèm cà pháo muối xổi (không tính vào giờ nấu).
+- Nguyên liệu quyết định món (sấu, măng tươi, sầu đâu, hoa thiên lý – `NL_QUYET_DINH`), kể cả là nguyên liệu phụ: tháng trái mùa
+  (lịch = 0) thì trừ 3 điểm và ghi cách thay (vd. "Sấu trái mùa – dùng sấu ngâm hoặc sấu đông lạnh"). Sấu tươi chỉ có tháng 5–8.
 - Lời khuyên thời tiết so tổng điểm quy tắc nghiêng món nóng / món mát và ghi lý do chính (mưa, nắng gắt...).
 - Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
-- Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1.
+- Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1. Món rau trừ thêm 4 điểm nếu đã ăn trong 4 ngày
+  (ít món rau mát nên ngày nóng hay lặp: trước đó 14 ngày nắng T4 ra mồng tơi xào tỏi 7 lần, nay tối đa 3 lần).
   Các món điểm gần nhau được xoay theo ngày (cộng thêm 0–1,5 điểm ngẫu nhiên cố định theo ngày) để không ngày nào cũng ra cùng một nhóm món.
   Mô phỏng 14 ngày liền (tháng 10, trời mưa): 52 món khác nhau / 69 lượt, trước đó 21 món.
 - Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +3, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
