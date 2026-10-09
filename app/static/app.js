@@ -155,7 +155,7 @@ function saveDanhGia(ma, sua) {
   S.ranked = rankDishes(0);
   S.rankedTomorrow = rankDishes(1);
 }
-const THUOC_BAC_CACH_NGAY = 14, NUONG_CACH_NGAY = 2;
+const THUOC_BAC_CACH_NGAY = 14, RAU_CACH_NGAY = 4, NUONG_CACH_NGAY = 2;
 const laNuong = (d) => cachNau(d) === "nuong" || vaiOf(d) === "nuong";
 // Có món nướng trong NUONG_CACH_NGAY ngày trước ngày `day` (theo lịch sử gợi ý và món đã nấu).
 function ganNuong(day) {
@@ -245,6 +245,8 @@ function scoreDish(dish, weatherHits, day = 0) {
   if (dg.y === 1) them("Nhà khen ngon", DIEM_DG.ngon);
   if (dg.y === -1) them("Nhà thấy không hợp", DIEM_DG.khongHop);
   if (dg.tim) them("Yêu thích", DIEM_DG.tim);
+  // Món rau dễ lặp (nhất là ngày nóng, ít món rau mát): trừ thêm trong 4 ngày.
+  if (vaiOf(dish) === "rau" && since <= RAU_CACH_NGAY) them("Món rau vừa ăn", -4);
   // Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng): 2 ngày gần nhất đã có món nướng thì trừ mạnh.
   if (laNuong(dish) && ganNuong(day)) them(`Vừa ăn nướng trong ${NUONG_CACH_NGAY} ngày`, -6);
   // Món thuốc bắc (bồi bổ): cách nhau ít nhất 14 ngày – khoảng 2 lần/tháng.

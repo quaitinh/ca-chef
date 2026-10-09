@@ -115,7 +115,8 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
 - Canh cua đồng ăn kèm cà pháo muối xổi (không tính vào giờ nấu).
 - Lời khuyên thời tiết so tổng điểm quy tắc nghiêng món nóng / món mát và ghi lý do chính (mưa, nắng gắt...).
 - Ưu tiên: bữa có rau xanh; món mặn khó ăn với trẻ (cay, nhiều xương) thì canh có đạm dễ ăn.
-- Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1.
+- Chống lặp: món gợi ý hoặc đã nấu trong 3 ngày −4, 4–7 ngày −2, 8–14 ngày −1. Món rau trừ thêm 4 điểm nếu đã ăn trong 4 ngày
+  (ít món rau mát nên ngày nóng hay lặp: trước đó 14 ngày nắng T4 ra mồng tơi xào tỏi 7 lần, nay tối đa 3 lần).
   Các món điểm gần nhau được xoay theo ngày (cộng thêm 0–1,5 điểm ngẫu nhiên cố định theo ngày) để không ngày nào cũng ra cùng một nhóm món.
   Mô phỏng 14 ngày liền (tháng 10, trời mưa): 52 món khác nhau / 69 lượt, trước đó 21 món.
 - Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +3, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
