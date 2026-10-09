@@ -779,7 +779,20 @@ function mealBlock(meals, k, chon) {
           aria-label="${on ? "Bỏ chọn" : "Chọn"} ${esc(d.ten_mon)}" title="${on ? "Bỏ chọn" : "Chọn – giữ món này khi đổi các món còn lại"}">✓</button>`}
       </div>`;
     }).join("")}
+    ${S.timBua?.k === k ? `<div class="tim-bua"><input id="tim-${k}" class="search" type="search" placeholder="Tìm món muốn nấu (ech om, canh chua…)" value="${esc(S.timBua.q)}">
+        <div class="tim-kq" id="tim-kq-${k}">${ketQuaTim(k)}</div><button class="link" data-tim-dong>Đóng</button></div>`
+      : `<button class="tim-mo" data-tim="${k}">🔍 Thèm món khác? Tìm và chọn</button>`}
   </section>`;
+}
+// Chọn món bằng tìm kiếm (thèm món, chắc chắn nấu): món chọn thành "đã chọn" của bữa, các món chưa chọn ghép lại theo quy tắc.
+const VAI_TIM = { trua: ["man", "rau", "canh", "mot_to"], toi: ["man", "rau", "canh", "mot_to", "lau", "nuong"] };
+function ketQuaTim(k) {
+  const words = plain(S.timBua?.q || "").split(/\s+/).filter(Boolean);
+  if (!words.length) return '<p class="note">Gõ tên món – không dấu cũng được.</p>';
+  const l = S.ranked.filter((d) => VAI_TIM[k].includes(vaiOf(d)) && words.every((w) => plain(d.ten_mon).includes(w))).slice(0, 8);
+  return l.length ? l.map((d) => `<button class="tim-mon" data-chon-tim="${d.ma_mon}">${thumb(d)}<span class="tx"><b>${esc(d.ten_mon)}</b>
+      <span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}</span></span><span class="add-tim">＋ Chọn</span></button>`).join("")
+    : '<p class="note">Không thấy món nào.</p>';
 }
 
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
@@ -846,6 +859,21 @@ function pageHome(day = 0) {
     saveChon(day, chon);
     pageHome(day);
   }));
+  $app.querySelectorAll("[data-tim]").forEach((b) => (b.onclick = () => {
+    S.timBua = { k: b.dataset.tim, q: "" }; pageHome(day);
+    document.getElementById(`tim-${b.dataset.tim}`)?.focus();
+  }));
+  const dong = $app.querySelector("[data-tim-dong]");
+  if (dong) dong.onclick = () => { S.timBua = null; pageHome(day); };
+  const ganChon = () => $app.querySelectorAll("[data-chon-tim]").forEach((b) => (b.onclick = () => {
+    const k = S.timBua.k;
+    S.timBua = null;
+    duaVaoBua(b.dataset.chonTim, k, day);
+    pageHome(day);
+  }));
+  const ip = S.timBua && document.getElementById(`tim-${S.timBua.k}`);
+  if (ip) ip.oninput = () => { S.timBua.q = ip.value; document.getElementById(`tim-kq-${S.timBua.k}`).innerHTML = ketQuaTim(S.timBua.k); ganChon(); };
+  ganChon();
   $app.querySelectorAll("[data-swap]").forEach((btn) => (btn.onclick = () => {
     const k = btn.dataset.swap;
     const giu = (b) => meals[b].filter((d) => chon[b].has(d.ma_mon));
@@ -992,6 +1020,8 @@ function pageRecipe(ma, moiXong = false) {
       <div><b class="${muaCls}">${mua}</b>tháng ${month()}</div>
     </div>
     ${thanhDanhGia(d, moiXong)}
+    ${!bua && ["man", "rau", "canh", "mot_to", "lau", "nuong"].includes(vaiOf(d)) ? `<div class="nau-nay"><span>Muốn nấu món này?</span>
+      ${MOT_NOI.includes(vaiOf(d)) ? "" : `<button data-nau-bua="trua">＋ Trưa nay</button>`}<button data-nau-bua="toi">＋ Tối nay</button></div>` : ""}
     <div class="tabs2">${[["nl", "Nguyên liệu"], ["cl", "Cách làm"], ["mv", "Mùa vụ"]].map(([k, t]) =>
       `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${t}</button>`).join("")}</div>
     ${body}
@@ -1011,6 +1041,7 @@ function pageRecipe(ma, moiXong = false) {
   const dungHet = $app.querySelector("[data-dung]");
   if (dungHet) dungHet.onclick = () => { for (const c of chinhCua(d).map(trongTu)) if (c) delete tuLanh()[c]; saveTuLanh(); pageRecipe(ma); };
   $app.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tabMon = b.dataset.tab; pageRecipe(ma); }));
+  $app.querySelectorAll("[data-nau-bua]").forEach((b) => (b.onclick = () => { duaVaoBua(ma, b.dataset.nauBua, 0); location.hash = "#/"; }));
   if (tab !== "nl" || !rows.length) return;
   const set = (v) => { S.servings[ma] = Math.min(20, Math.max(1, v)); pageRecipe(ma); };
   document.getElementById("minus").onclick = () => set(n - 1);

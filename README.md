@@ -57,6 +57,8 @@ trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên
 
 Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`), **Đi chợ** (`#/di-cho`).
 - Nấu gì: bữa trưa, tối mỗi món một dòng; ✓ để chọn giữ món, "Đổi" xoay các món còn lại; nhắc rã đông cho ngày mai.
+  Thèm món nào chắc chắn nấu: "🔍 Thèm món khác? Tìm và chọn" cuối mỗi bữa (gõ không dấu) – món chọn thành món đã chọn của bữa,
+  các món chưa chọn ghép lại theo quy tắc. Trang món cũng có nút "＋ Trưa nay / ＋ Tối nay" (lẩu, nướng chỉ tối).
 - Chế độ nấu không thêm mục lịch sử (chuyển bước, Thoát, Xong thay mục hiện tại), nên "Quay lại" ở trang món về đúng trang trước.
 - Trang món: thông tin nhanh; thanh phản hồi ✓ Đã nấu / 👍 Ngon / 👎 Không hợp / ♥; 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng. Bấm "Xong" ở bước cuối thì ghi là đã nấu hôm nay và hỏi cả nhà thấy thế nào.
 - Món: lọc ♥ Yêu thích (♥ hoặc 👍), ✓ Đã nấu, theo vai món; `#/yeu-thich` mở thẳng danh sách yêu thích.
