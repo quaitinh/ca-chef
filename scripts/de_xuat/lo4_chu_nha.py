@@ -41,6 +41,7 @@ NGUYEN_LIEU = [
     ("sua_tuoi", "Sữa tươi", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
     ("sua_dac", "Sữa đặc", "hàng khô", "chung", Q, "GO!/tạp hóa", "A", "Hộp, có quanh năm"),
     ("sua_chua", "Sữa chua", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
+    ("hanh_tay", "Hành tây", "rau củ", "Đà Lạt", Q, "chợ/GO!", "C", "Rau Đà Lạt, có quanh năm"),
     ("gac", "Gấc", "trái cây", "chung", [2 if t in (10, 11, 12, 1) else 1 for t in range(1, 13)], "chợ", "C",
      "Gấc chín rộ cuối thu sang Tết; ngoài mùa vẫn có ít ở chợ – chưa có nguồn riêng"),
 ]
