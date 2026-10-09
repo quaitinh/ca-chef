@@ -842,6 +842,7 @@ function pageHome(day = 0) {
   $app.innerHTML = `
     <div class="seg"><a href="#/" class="${day ? "" : "on"}">Hôm nay</a><a href="#/ngay-mai" class="${day ? "on" : ""}">Ngày mai</a></div>
     ${weatherTip(day)}
+    ${day ? "" : nhacCaiApp()}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
     ${day ? "" : tlBox(meals)}
@@ -1574,6 +1575,28 @@ function route() {
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);
 }
+
+// Cài lên màn hình chính: Android/Chrome có sự kiện beforeinstallprompt (bấm là cài); iPhone/iPad chỉ cài được bằng
+// Safari › Chia sẻ › "Thêm vào MH chính" nên hiện hướng dẫn. Đã mở dạng app hoặc đã bấm "Để sau" thì không nhắc.
+const CAI_KEY = "cachef.cai_app";
+let loiMoiCai = null;
+window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); loiMoiCai = e; if (location.hash.length <= 2) route(); });
+window.addEventListener("appinstalled", () => { loiMoiCai = null; try { localStorage.setItem(CAI_KEY, "da_cai"); } catch { /* chặn lưu */ } });
+const laApp = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const laIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+function nhacCaiApp() {
+  let bo = "";
+  try { bo = localStorage.getItem(CAI_KEY) || ""; } catch { /* chặn lưu */ }
+  if (laApp() || bo || (!loiMoiCai && !laIos())) return "";
+  return `<div class="nhac cai-app"><span class="ic"><img src="icon-192.png" alt=""></span><span class="tx"><b>Cài Cá Chef lên màn hình chính</b>
+    <span class="meta">${loiMoiCai ? "Mở nhanh như app, không cần gõ địa chỉ, mở được cả khi sóng yếu"
+      : "Trong Safari: bấm nút Chia sẻ <b>⎙</b> › <b>Thêm vào MH chính</b> › Thêm"}</span>
+    <span class="cai-nut">${loiMoiCai ? '<button class="cta2" id="caiApp">📲 Cài app</button>' : ""}<button class="link" id="caiSau">Để sau</button></span></span></div>`;
+}
+document.addEventListener("click", async (e) => {
+  if (e.target.id === "caiApp" && loiMoiCai) { loiMoiCai.prompt(); await loiMoiCai.userChoice; loiMoiCai = null; route(); }
+  if (e.target.id === "caiSau") { try { localStorage.setItem(CAI_KEY, "de_sau"); } catch { /* chặn lưu */ } e.target.closest(".cai-app")?.remove(); }
+});
 
 // Service worker: lưu app và dữ liệu để mở được khi sóng yếu (ở chợ), cài lên màn hình chính.
 if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1"))
