@@ -238,7 +238,7 @@ RECIPES = [
       None, tk("bí ngô non xào tỏi"),
       [("bi_do", "Bí ngô non", 2, "quả", "n", "chinh"), TOI(4), HAT_NEM(1), DAU(2)]),
     # ---------- Lô 2b: khổ qua, cá diêu hồng, nấm ----------
-    R("kho_qua_nhoi_thit_hap", "Khổ qua nhồi thịt hấp", "mon_chinh", "mat", "nhe", "it", "kho_qua|thit_heo", "nang", 45, "vua",
+    R("kho_qua_nhoi_thit_hap", "Khổ qua nhồi thịt hấp", "canh", "mat", "nhe", "it", "kho_qua|thit_heo", "nang", 45, "vua",
       "Khổ qua nhồi thịt băm, mộc nhĩ, miến rồi hấp chín – thanh mát, ít dầu (bản món mặn của canh khổ qua nhồi thịt).",
       ["Khổ qua cắt khúc 4–5 cm, bỏ ruột, ngâm nước muối loãng 15 phút cho bớt đắng.",
        "Trộn thịt băm với mộc nhĩ và miến băm nhỏ, hành tím, nước mắm, hạt nêm, tiêu.",

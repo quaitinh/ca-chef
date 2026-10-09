@@ -19,12 +19,22 @@ from chuyen_nguyen_lieu import GIA_VI, GV_MA, MA, MON_NL_HEADER, OUT, RAU_THOM, 
 
 DO_UONG = {"nuoc_ep_oi", "sinh_to_gac"}
 # Mã cho nguyên liệu bảng MA cũ chưa có (thêm sau này); dòng chưa khớp vẫn được server.py gắn mã theo gan_ma.csv.
-THEM_MA = [(r"lươn", "luon"), (r"cải chua|dưa chua|dưa cải", "dua_cai_chua"), (r"măng chua", "mang_chua"), (r"sấu", "sau"),
+THEM_MA = [(r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
+           (r"ốc (bưu|đồng|nhồi)", "oc_dong"), (r"bí ngòi", "bi_ngoi"), (r"gấc", "gac"), (r"hạt sen", "hat_sen"), (r"táo đỏ|táo tàu", "tao_do"), (r"lươn", "luon"), (r"cải chua|dưa chua|dưa cải", "dua_cai_chua"), (r"măng chua", "mang_chua"), (r"sấu", "sau"),
            (r"hoa chuối", "hoa_chuoi"), (r"chuối.*xanh", "chuoi_xanh"), (r"chuối", "chuoi_chin"), (r"khổ qua|mướp đắng", "kho_qua"),
            (r"thiên lý", "thien_ly"), (r"tim cật|cật", "long_heo"), (r"cá liệt", "ca_liet"), (r"cá hố", "ca_ho"), (r"cá chuồ", "ca_chuon"),
            (r"cá trích", "ca_trich"), (r"cá đục", "ca_duc"), (r"cá bớp", "ca_bop"), (r"cá đối", "ca_doi"), (r"(^|\s)hàu", "hau"),
            (r"(^|\s)ổi", "oi"), (r"đậu h[ủũ]", "dau_phu"), (r"cá rô phi", "ca_ro_phi"), (r"[dđ]iêu hồng", "ca_dieu_hong"),
            (r"(giò|dò) sống", "gio_song"), (r"hành tây", "hanh_tay"), (r"^(thơm|dứa)", "thom"), (r"^hẹ", "he"), (r"^xả", "sa")]
+# Dòng bài gốc ghi định lượng lẫn lời dặn – viết lại cho tách được (giữ đúng lượng của bài).
+SUA_DONG = {
+    "canh_tom_nau_thom": {" Tôm tươi: 2 lạng / khẩu phần cho khoảng 4 người ăn": "200 g tôm tươi",
+                          " Thơm: tùy khẩu vị nhà mình thích ăn chua nhiều hay ít thì mua": "Thơm (nhiều ít tùy thích chua)",
+                          " Cà: khoảng 1 quả lớn, hoặc 2 quả nhỏ": "1 quả cà chua lớn (hoặc 2 quả nhỏ)",
+                          "5-10.000 Đậu bắp: khoảng": "Đậu bắp (khoảng 5–10 nghìn đồng)"},
+    "canh_dau_phu_ca_chua": {}, "vit_om_sau": {"1 lit nước: 500ml nước lọc + 500ml nước dừa": ["500 ml nước lọc", "500 ml nước dừa"]},
+    "nuong_kieu_han_kim_chi": {},
+}
 KHONG_PHAI_NL = r"^(chảo|máy|giấy|nồi|khay|que|xiên)\b"
 
 
@@ -41,7 +51,13 @@ def main(src):
         goc = 2 if ma in DO_UONG else 4
         kp = khau_phan(rec.get("khau_phan"))
         hs = goc / kp if kp else 1.0
-        for dong in rec["nguyen_lieu"]:
+        ds = []
+        for d in rec["nguyen_lieu"]:
+            x = SUA_DONG.get(ma, {}).get(d, d)
+            ds += x if isinstance(x, list) else [x]
+        for dong in ds:
+            dong = re.sub(r"(?i)^(\d+ gói đậu hũ non):.*$", r"\1", dong)
+            dong = re.sub(r"^(\S+(?:-\S+)? gr thịt ba chỉ) tùy sức ăn\..*$", r"\1", dong)
             dong = re.sub(r"(?i)(?<![^\W\d_])tcfe?\b", " muỗng cà phê", re.sub(r"(?i)(?<![^\W\d_])tbs\b", " muỗng canh", dong))
             qty, unit, name, ghi = tach(dong)
             t = name.lower()
@@ -51,6 +67,8 @@ def main(src):
                 continue
             if "," in name and qty is None and re.search(GIA_VI, t):
                 vai, code = "gia_vi", ""
+            elif any(re.search(p, t) for p, _ in THEM_MA):  # trước rau thơm: "bí ngòi" chứa "ngò"
+                vai, code = "phu", next(c for p, c in THEM_MA if re.search(p, t))
             elif re.search(RAU_THOM, t):
                 vai, code = "phu", "rau_thom"
             elif t.startswith("gia vị") or (re.search(GIA_VI, t) and not re.search(r"thịt|cá|tôm|mực|gà|bò|trứng|đậu|rau|cải", t)):

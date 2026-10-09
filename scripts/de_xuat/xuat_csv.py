@@ -127,8 +127,9 @@ def dung_that(lo1, loi):
     for d in doc(os.path.join(OUT, "cong_thuc_that.csv")): dong.setdefault(d["ma_mon"], []).append(d)
     for ng in doc(path):
         ma = ng["ma_mon"]
-        if ma not in lo1 or ma not in CT:
-            loi.append(f"{ma}: công thức thật thiếu món trong lô hoặc thiếu cách làm"); continue
+        if ma not in lo1: continue  # món nhóm Cookpad: dung_that_cookpad
+        if ma not in CT:
+            loi.append(f"{ma}: công thức thật thiếu cách làm"); continue
         r, mo_ta, buoc = lo1[ma], *CT[ma]
         ten = ng["ten_moi"] or r["ten"]
         cu = set(filter(None, r["chinh"].split("|")))
@@ -144,13 +145,40 @@ def dung_that(lo1, loi):
                  phut=int(ng["thoi_gian_phut"]) if ng["thoi_gian_phut"] else r["phut"])
 
 
+def dung_that_cookpad(mon_rows, mon_nl_rows, lo1, loi):
+    """Như dung_that cho món nhóm Cookpad (không thuộc lô) mà cách làm trước đây tự soạn."""
+    path = os.path.join(OUT, "cong_thuc_that_nguon.csv")
+    if not os.path.exists(path):
+        return
+    from cach_lam_that import CT
+    ng = {r["ma_mon"]: r for r in doc(path) if r["ma_mon"] not in lo1}
+    if not ng:
+        return
+    dong = {}
+    for d in doc(os.path.join(OUT, "cong_thuc_that.csv")):
+        if d["ma_mon"] in ng: dong.setdefault(d["ma_mon"], []).append(d)
+    mon_nl_rows[:] = [r for r in mon_nl_rows if r[0] not in ng]
+    for r in mon_rows:
+        n = ng.get(r[0])
+        if not n: continue
+        if r[0] not in CT: loi.append(f"{r[0]}: thiếu cách làm thật"); continue
+        mo_ta, buoc = CT[r[0]]
+        r[1] = n["ten_moi"] or r[1]
+        r[11], r[12], r[14] = mo_ta, "\n".join(f"{i}. {b}" for i, b in enumerate(buoc, 1)), n["url"]
+        if n["thoi_gian_phut"]: r[9] = int(n["thoi_gian_phut"])
+        chinh = set(filter(None, r[6].split("|")))
+        for d in dong.get(r[0], []):
+            vai = "chinh" if d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"] and set(d["ma_nguyen_lieu"].split("|")) & chinh else d["vai_tro"]
+            mon_nl_rows.append([d[h] if h != "vai_tro" else vai for h in MON_NL_HEADER])
+
+
 def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
     goc_nl = {r["ma"] for r in doc(os.path.join(DATA, "nguyen_lieu.csv"))}
     NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
-    tat_ca_nl = goc_nl | moi_nl
+    tat_ca_nl = goc_nl | moi_nl | {r["ma"] for r in doc(os.path.join(OUT, "nhanh_nguyen_lieu.csv"))}  # nhánh: server.py tạo khi build
     lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES}
     dung_that(lo1, loi)
 
@@ -260,6 +288,8 @@ def main():
         if do_kho not in ("de", "vua", "kho"): loi.append(f"{r[0]}: do_kho lạ {do_kho}")
         r[9], r[10], r[11] = int(phut), do_kho, mo_ta
         r[12] = "\n".join(f"{i}. {b}" for i, b in enumerate(buoc, 1))
+
+    dung_that_cookpad(mon_rows, mon_nl_rows, lo1, loi)
 
     for r in mon_rows:
         rec = dict(zip(MON_AN_HEADER, r))

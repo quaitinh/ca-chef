@@ -47,6 +47,12 @@ trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên li�
 hoặc ba chỉ;
 tủ ghi chung mã cha (vd. "Thịt heo") thì tính là có các nhánh cùng nhóm (tủ có nấm tươi không tính là có nấm hương khô).
 
+Công thức thật (`scripts/de_xuat/cong_thuc_that.py`, `cach_lam_that.py`): 96 món trước đây Cá Chef tự soạn (nguồn chỉ là trang
+tìm kiếm) nay theo một bài Cookpad cụ thể (không lấy bài Premium): tên món theo bài, link bài, ảnh và tác giả của bài, định lượng
+theo bài (quy về 4 người; bài không ghi khẩu phần thì giữ số lượng gốc), cách làm viết lại bằng lời Cá Chef nhưng giữ đúng trình tự,
+kỹ thuật, nguyên liệu. `xuat_csv.py` dùng các file `cong_thuc_that*.csv` đè lên công thức trong lô. Món không có bài thật bị ẩn
+(`an_mon.csv`). Hiện không còn món nào nguồn là trang tìm kiếm.
+
 Gắn mã theo tên (`data/de_xuat/gan_ma.csv`): dòng định lượng (không phải gia vị) chỉ ghi tên được `app/server.py` gắn mã theo từ khóa
 (cá diêu hồng, mộc nhĩ, thơm/dứa, sữa, hẹ, lá chanh, tôm khô...) để tính trong Tủ lạnh, Mùa vụ, Đi chợ; dòng "chính" vừa có mã thì thêm
 vào nguyên liệu chính của món. Nguyên liệu mới cho các mã này khai báo ở `scripts/de_xuat/lo4_chu_nha.py`. Hành lá, hành tây, bột,
