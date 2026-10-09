@@ -113,6 +113,37 @@ def ghi(name, header, rows):
         w.writerows(rows)
 
 
+def dung_that(lo1, loi):
+    """Công thức thật trên Cookpad (cong_thuc_that.py, cach_lam_that.py) đè lên công thức tự soạn của các lô:
+    tên món theo bài, link bài, định lượng theo bài (đã quy về 4 người), cách làm viết lại theo bài.
+    Nguyên liệu chính: dòng có mã trùng mã chính cũ; không có thì dòng có nguyên liệu nằm trong tên món."""
+    path = os.path.join(OUT, "cong_thuc_that_nguon.csv")
+    if not os.path.exists(path):
+        return
+    from cach_lam_that import CT
+    from cong_thuc_that import THEM_MA
+    from chuyen_nguyen_lieu import MA
+    dong = {}
+    for d in doc(os.path.join(OUT, "cong_thuc_that.csv")): dong.setdefault(d["ma_mon"], []).append(d)
+    for ng in doc(path):
+        ma = ng["ma_mon"]
+        if ma not in lo1 or ma not in CT:
+            loi.append(f"{ma}: công thức thật thiếu món trong lô hoặc thiếu cách làm"); continue
+        r, mo_ta, buoc = lo1[ma], *CT[ma]
+        ten = ng["ten_moi"] or r["ten"]
+        cu = set(filter(None, r["chinh"].split("|")))
+        trong_ten = {c for p, c in THEM_MA + MA if c and re.search(p, ten.lower())}
+        rows = dong.get(ma, [])
+        la_chinh = [d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"] and set(d["ma_nguyen_lieu"].split("|")) & cu for d in rows]
+        if not any(la_chinh):
+            la_chinh = [d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"] and set(d["ma_nguyen_lieu"].split("|")) & trong_ten for d in rows]
+        nl = [(d["ma_nguyen_lieu"], d["ten_hien_thi"], float(d["so_luong"]) if d["so_luong"] else None, d["don_vi"],
+               "n" if d["kieu_tinh"] == "theo_nguoi" else "x", "chinh" if c else d["vai_tro"]) for d, c in zip(rows, la_chinh)]
+        chinh = "|".join(dict.fromkeys(x[0] for x in nl if x[5] == "chinh")) or r["chinh"]
+        r.update(ten=ten, nguon=ng["url"], mo_ta=mo_ta, cach_lam=buoc, nguyen_lieu=nl, chinh=chinh, pho_bien=None,
+                 phut=int(ng["thoi_gian_phut"]) if ng["thoi_gian_phut"] else r["phut"])
+
+
 def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
@@ -121,6 +152,7 @@ def main():
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl
     lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES}
+    dung_that(lo1, loi)
 
     # Nguyên liệu mới
     nl_rows = []
