@@ -290,7 +290,7 @@ canh_bo_kim_chi,canh,bo,nau,can_nhac,lo2
 nem_nam_dui_ga,man,khac,chien,co,lo2
 nam_dui_ga_xao_toi,rau,,xao,co,lo2
 bi_ngo_non_xao_toi,rau,,xao,co,lo2
-kho_qua_nhoi_thit_hap,man,heo,luoc_hap,co,lo2
+kho_qua_nhoi_thit_hap,canh,heo,nau,co,lo2
 ca_dieu_hong_sot_ca_chua,man,ca,kho_om,co,lo2
 canh_chua_ca_dieu_hong,canh,ca,nau,co,lo2
 ca_dieu_hong_om_dua,man,ca,kho_om,co,lo2
@@ -330,10 +330,10 @@ gia_cay_chan_gio,man,heo,kho_om,co,lo3
 mong_gio_ham_mang,man,heo,nau,co,lo3
 xiu_mai_sot_ca,man,heo,kho_om,co,lo3
 thit_kho_dua_cai,man,heo,kho_om,co,lo3
-tau_hu_ky_cuon_thit,man,heo,,co,lo3
+tau_hu_ky_cuon_thit,man,heo,tron_cuon,co,lo3
 ba_chi_xao_kim_chi,man,heo,xao,can_nhac,lo3
 canh_kim_chi_thit_dau_phu,canh,heo,nau,can_nhac,lo3
-ca_liet_chien_gion,man,ca,chien,co,lo3
+ca_liet_chien_gion,man,ca,chien,can_nhac,lo3
 ca_ho_chien_sa,man,ca,chien,co,lo3
 ca_chuon_kho_man,man,ca,kho_om,co,lo3
 ca_trich_chien_gion,man,ca,chien,co,lo3
