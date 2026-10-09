@@ -516,7 +516,10 @@ function pickRole(ranked, vai, exclude, ...conds) {
 
 // giu: món đã chọn của bữa – giữ nguyên; chỉ gợi ý các vai còn thiếu, phải hợp quy tắc với món đã chọn.
 const VAI_BUA = ["man", "rau", "canh"];
-const conThieu = (giu) => VAI_BUA.filter((v) => !giu.some((d) => vaiOf(d) === v));
+// Món nhiều nước ăn với bún thay cơm (như lẩu nhưng thiếu rau): bữa đó chỉ thêm 1 món rau, không canh; nấu một nồi ăn cả ngày.
+const AN_BUN = new Set(["ech_om_chuoi_dau"]);
+const anBun = (d) => AN_BUN.has(d?.ma_mon);
+const conThieu = (giu) => giu.some(anBun) ? (giu.some((d) => vaiOf(d) === "rau") ? [] : ["rau"]) : VAI_BUA.filter((v) => !giu.some((d) => vaiOf(d) === v));
 const THU_TU_VAI = ["lau", "nuong", "man", "rau", "canh", "mot_to", "dua_kem", "trang_mieng"];
 // Canh cua đồng ăn kèm cà pháo muối cho giòn miệng (nếu bữa chưa có đồ ăn kèm).
 const MA_CA_PHAO = "ca_phao_muoi_xoi";
@@ -531,7 +534,13 @@ const theoVai = (list) => [...list].sort((a, b) => THU_TU_VAI.indexOf(vaiOf(a)) 
 function pickTrua(ranked, daXem, cam, used, ctx, deThoi, giu = []) {
   const de = deThoi ? { man: deNau, rau: deNau, canh: deNau } : {};
   const ex = { da_xem: daXem, cam: [...cam, ...giu.map((d) => d.ma_mon), ...vuaHien(daXem)] };
-  return theoVai(themKem(ranked, [...giu, ...pickBua(ranked, conThieu(giu), ex, used, ctx, [...giu], de)], ex.cam));
+  const bua = [...giu, ...pickBua(ranked, conThieu(giu), ex, used, ctx, [...giu], de)];
+  // Món mặn vừa ghép là món ăn với bún: bỏ canh đã ghép, thay bằng rau nếu chưa có.
+  if (!giu.some(anBun) && bua.some(anBun)) {
+    const giuLai = bua.filter((d) => vaiOf(d) !== "canh" || giu.includes(d));
+    return theoVai(giuLai);
+  }
+  return theoVai(themKem(ranked, bua, ex.cam));
 }
 
 function pickToi(ranked, daXem, used, ctx, trua, du, giu = []) {
@@ -548,7 +557,7 @@ const NUOC_DUNG_DU = { pho_ga: ["mien_ga", "sup_ga_ngo_nam", "sup_ga_ngo_ngot"] 
 const PHO_CACH_NGAY = 7;
 function phoTrua(ranked, day, kTrua, kToi, sh) {
   const giu = kTrua.find((d) => NUOC_DUNG_DU[d.ma_mon]);
-  if (giu || kTrua.length) return giu || null;
+  if (giu || kTrua.length || kToi.some(anBun)) return giu || null;
   const bestMan = ranked.find((d) => d.score > -3 && vaiOf(d) === "man");
   return ranked.find((d) => NUOC_DUNG_DU[d.ma_mon] && !sh.trua.has(d.ma_mon) && d.score >= (bestMan?.score ?? -99) - 2 &&
     daysSinceSuggested(d.ma_mon, dayStr(day)) > PHO_CACH_NGAY && !kToi.some((x) => damOf(x) && damOf(x) === damOf(d) && vaiOf(x) === "man")) || null;
@@ -562,7 +571,7 @@ function pickMeals(ranked, day, keep = {}) {
   // Bữa tối một món (lẩu, nướng): giữ nếu đã chọn; nếu tối chưa có món nào giữ thì xét gợi ý
   // (không trùng nguyên liệu bữa trưa, điểm không thua món mặn tốt nhất).
   let toi = kToi.some(motNoi) ? [...kToi] : null;
-  if (!toi && !kToi.length && !kTrua.some((d) => NUOC_DUNG_DU[d.ma_mon])) {
+  if (!toi && !kToi.length && !kTrua.some((d) => NUOC_DUNG_DU[d.ma_mon] || anBun(d))) { // trưa nấu món ăn với bún thì tối ăn tiếp
     const bestMan = ranked.find((d) => d.score > -3 && vaiOf(d) === "man");
     const ung = MOT_NOI.filter((v) => duocMotNoi(day, v))
       .map((v) => pickRole(ranked, v, new Set([...sh.toi, ...kTrua.map((d) => d.ma_mon)]), (x) => khongTrung(x, used)))
@@ -759,7 +768,10 @@ function mealBlock(meals, k, chon) {
   const nau = meals[k].filter((d) => !anLai(d) && vaiOf(d) !== "dua_kem"); // đồ ăn kèm làm trước, không tính vào giờ nấu
   const phut = Math.max(0, ...nau.map((d) => Number(d.thoi_gian_phut) || 0));
   const conDoi = meals[k].some((d) => !anLai(d) && !chon[k].has(d.ma_mon));
-  const sub = meals.pho ? (k === "trua" ? ["một tô", phut && `~${phut}′`, "nấu dư nước dùng cho tối"]
+  const bun = meals[k].some(anBun);
+  const sub = bun ? (k === "trua" || !meals.du ? [`${nau.length} món`, phut && `~${phut}′`, "ăn với bún, không cần canh", k === "trua" && meals.du && "nấu một nồi ăn cả ngày"]
+    : ["ăn tiếp món trưa với bún", `nấu thêm ${nau.length} món rau`, phut && `~${phut}′`])
+    : meals.pho ? (k === "trua" ? ["một tô", phut && `~${phut}′`, "nấu dư nước dùng cho tối"]
     : [`${nau.length} món`, phut && `~${phut}′`, "canh thay bằng món nấu từ nước dùng trưa"])
     : k === "trua"
     ? [`${nau.length} món`, phut && `~${phut}′`, meals.lau && `dễ nấu, tối ăn ${tenMotNoi(meals)}`, meals.du && "nấu thêm phần cho tối"]
@@ -842,6 +854,7 @@ function pageHome(day = 0) {
   $app.innerHTML = `
     <div class="seg"><a href="#/" class="${day ? "" : "on"}">Hôm nay</a><a href="#/ngay-mai" class="${day ? "on" : ""}">Ngày mai</a></div>
     ${weatherTip(day)}
+    ${day ? "" : nhacCaiApp()}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
     ${day ? "" : tlBox(meals)}
@@ -1574,6 +1587,28 @@ function route() {
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);
 }
+
+// Cài lên màn hình chính: Android/Chrome có sự kiện beforeinstallprompt (bấm là cài); iPhone/iPad chỉ cài được bằng
+// Safari › Chia sẻ › "Thêm vào MH chính" nên hiện hướng dẫn. Đã mở dạng app hoặc đã bấm "Để sau" thì không nhắc.
+const CAI_KEY = "cachef.cai_app";
+let loiMoiCai = null;
+window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); loiMoiCai = e; if (location.hash.length <= 2) route(); });
+window.addEventListener("appinstalled", () => { loiMoiCai = null; try { localStorage.setItem(CAI_KEY, "da_cai"); } catch { /* chặn lưu */ } });
+const laApp = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const laIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+function nhacCaiApp() {
+  let bo = "";
+  try { bo = localStorage.getItem(CAI_KEY) || ""; } catch { /* chặn lưu */ }
+  if (laApp() || bo || (!loiMoiCai && !laIos())) return "";
+  return `<div class="nhac cai-app"><span class="ic"><img src="icon-192.png" alt=""></span><span class="tx"><b>Cài Cá Chef lên màn hình chính</b>
+    <span class="meta">${loiMoiCai ? "Mở nhanh như app, không cần gõ địa chỉ, mở được cả khi sóng yếu"
+      : "Trong Safari: bấm nút Chia sẻ <b>⎙</b> › <b>Thêm vào MH chính</b> › Thêm"}</span>
+    <span class="cai-nut">${loiMoiCai ? '<button class="cta2" id="caiApp">📲 Cài app</button>' : ""}<button class="link" id="caiSau">Để sau</button></span></span></div>`;
+}
+document.addEventListener("click", async (e) => {
+  if (e.target.id === "caiApp" && loiMoiCai) { loiMoiCai.prompt(); await loiMoiCai.userChoice; loiMoiCai = null; route(); }
+  if (e.target.id === "caiSau") { try { localStorage.setItem(CAI_KEY, "de_sau"); } catch { /* chặn lưu */ } e.target.closest(".cai-app")?.remove(); }
+});
 
 // Service worker: lưu app và dữ liệu để mở được khi sóng yếu (ở chợ), cài lên màn hình chính.
 if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1"))

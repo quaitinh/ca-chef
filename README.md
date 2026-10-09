@@ -9,7 +9,8 @@ CA_CHEF_KEY=/đường/dẫn/key.json python3 app/server.py 8095
 Mở http://127.0.0.1:8095. Không có `CA_CHEF_KEY` thì app đọc `data/*.csv`.
 Dữ liệu Sheet được cache 5 phút; bấm "Tải lại dữ liệu" ở chân trang để lấy bản mới.
 
-Cài lên màn hình chính: mở trang trên điện thoại › Chia sẻ / menu › "Thêm vào màn hình chính". App có `manifest.json` và service worker
+Cài lên màn hình chính: trang Nấu gì có lời mời cài (Android/Chrome: nút "📲 Cài app"; iPhone: hướng dẫn Safari › Chia sẻ ›
+"Thêm vào MH chính"; "Để sau" thì không nhắc nữa). App có `manifest.json` và service worker
 (`app/static/sw.js`): `data.json` (~1 MB) tải theo mã phiên bản trong `version.json` (do `scripts/export_json.py` ghi, băm theo nội dung),
 dữ liệu chưa đổi thì dùng lại bản đã lưu; app, style mạng trước, mất mạng (sóng yếu ở chợ) thì mở bằng bản đã lưu.
 
@@ -129,6 +130,8 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
   Các món điểm gần nhau được xoay theo ngày (cộng thêm 0–1,5 điểm ngẫu nhiên cố định theo ngày) để không ngày nào cũng ra cùng một nhóm món.
   Mô phỏng 14 ngày liền (tháng 10, trời mưa): 52 món khác nhau / 69 lượt, trước đó 21 món.
 - Đồ trong tủ lạnh: món dùng đủ nguyên liệu chính có trong tủ +3, một phần +1; có thứ cần dùng sớm (còn ≤1 ngày, ngăn mát) thêm +2.
+- Món nhiều nước ăn với bún thay cơm (`AN_BUN`, hiện có Ếch om chuối đậu): bữa đó chỉ thêm 1 món rau (ưu tiên rau xanh), không canh;
+  nấu một nồi ăn cả ngày – trưa nấu thì tối ăn tiếp với 1 rau khác (không ghép lẩu, phở); danh sách đi chợ có bún.
 - Phở gà trưa (một tô): nấu dư nước dùng, tối vẫn cơm đủ món – miến gà hoặc súp gà nấu từ nước dùng đó thay canh, món mặn
   tối không phải gà. Phở được chọn khi điểm không kém món mặn tốt nhất quá 2 điểm và cách lần trước hơn 7 ngày
   (mô phỏng 8 tuần trời mưa: 4 lần).

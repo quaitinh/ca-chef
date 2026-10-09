@@ -2,8 +2,8 @@
 // - data.json?v=<mã>: nội dung theo mã phiên bản không đổi -> lấy từ bộ nhớ trước, chỉ giữ bản mới nhất.
 // - Các file khác cùng trang (app.js, style.css, version.json...): mạng trước (luôn bản mới), mất mạng thì dùng bản đã lưu.
 // - Request khác trang (thời tiết, ảnh Cookpad, đồng bộ Apps Script): không can thiệp.
-const CACHE = "cachef-v1";
-const SHELL = ["./", "index.html", "app.js", "dong_bo.js", "style.css", "manifest.json", "icon-192.png", "icon-512.png"];
+const CACHE = "cachef-v2";
+const SHELL = ["./", "index.html", "app.js", "dong_bo.js", "style.css", "manifest.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
