@@ -1100,7 +1100,7 @@ const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã n�
 const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgMon(d.ma_mon).y === 1
   : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
 function pageAll() {
-  $app.innerHTML = `<h1 class="ptitle">Món ăn<small>${S.ranked.length} món · sắp theo điểm hôm nay</small></h1>
+  $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
     <input id="q" class="search" type="search" placeholder="Tìm món – gõ không dấu được (ca thu, canh chua)" value="${esc(S.query)}">
     <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${TEN_LOC[v] || VAI_NGAN[v]}</button>`).join("")}</div>
     <div id="all-list"></div>`;
@@ -1113,6 +1113,9 @@ function pageAll() {
 function renderAll() {
   const words = plain(S.query).split(/\s+/).filter(Boolean), v = S.vaiLoc || "all";
   const list = S.ranked.filter((d) => hopLoc(d, v) && words.every((w) => plain(d.ten_mon).includes(w)));
+  document.getElementById("dem-mon").textContent = words.length || v !== "all"
+    ? `${list.length} / ${S.ranked.length} món${words.length ? ` khớp "${S.query.trim()}"` : ""} · sắp theo điểm hôm nay`
+    : `${S.ranked.length} món · sắp theo điểm hôm nay`;
   document.getElementById("all-list").innerHTML = list.length ? `<div class="list">${list.map((d) => `
     <a class="row-link li" href="#/mon/${d.ma_mon}">${thumb(d)}
       <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}${d.season === 2 ? ' · <span class="peak">Đang rộ</span>' : d.season === 0 ? " · trái mùa" : ""}</span></span>
