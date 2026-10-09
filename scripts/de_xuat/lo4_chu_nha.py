@@ -41,6 +41,8 @@ NGUYEN_LIEU = [
     ("sua_tuoi", "Sữa tươi", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
     ("sua_dac", "Sữa đặc", "hàng khô", "chung", Q, "GO!/tạp hóa", "A", "Hộp, có quanh năm"),
     ("sua_chua", "Sữa chua", "khác", "chung", Q, "GO!/tạp hóa", "A", "Có quanh năm"),
+    ("gac", "Gấc", "trái cây", "chung", [2 if t in (10, 11, 12, 1) else 1 for t in range(1, 13)], "chợ", "C",
+     "Gấc chín rộ cuối thu sang Tết; ngoài mùa vẫn có ít ở chợ – chưa có nguồn riêng"),
 ]
 DE_SHEET = {"goi_cuon"}  # món trên Sheet đổi sang công thức chủ nhà chọn
 KHUNG = []
@@ -314,4 +316,28 @@ RECIPES = [
        ("", "Gia vị phở (hồi, quế, thảo quả, hạt mùi)", 1, "gói", "x", "gia_vi"), ("", "Lá chanh", 10, "lá", "x", "phu"),
        HANH_LA, RAU_THOM("Rau mùi"), ("", "Chanh", 2, "quả", "x", "gia_vi"), OT(2), MUOI, MAM(2),
        ("", "Đường phèn", 1, MC, "x", "gia_vi")]),
+
+    # ---------- Gấc ----------
+    M("mot_to", "", "xoi_gac", "Xôi gấc", "mon_chinh", "am", "nang", "vua", "gac|gao_nep", "moi", 60, "vua",
+      "Xôi nếp trộn ruột gấc đỏ cam, dẻo thơm, béo nhẹ – món sáng hoặc ngày giỗ Tết kiểu Bắc.",
+      ["Gạo nếp vo sạch, ngâm nước 6–8 tiếng (ngâm qua đêm), vớt ra để ráo, trộn 1 thìa cà phê muối.",
+       "Bổ đôi quả gấc, lấy phần ruột đỏ cả hạt; trộn ruột gấc với rượu trắng, bóp kỹ cho thịt gấc tách khỏi hạt rồi bỏ hạt.",
+       "Trộn đều ruột gấc với gạo nếp đến khi hạt gạo đỏ đều.",
+       "Hấp xôi lửa lớn khoảng 30 phút, giữa chừng xới đều cho chín đều.",
+       "Xôi chín thì trộn đường và mỡ gà hoặc dầu ăn (hoặc nước cốt dừa), hấp thêm 10 phút cho bóng, dẻo.",
+       "Có thể nén vào khuôn cho đẹp; ăn kèm muối vừng hoặc dừa nạo."],
+      None, tk("xôi gấc"),
+      [("gac", "Gấc chín", 1, "quả", "n", "chinh"), ("gao_nep", "Gạo nếp cái hoa vàng", 800, "g", "n", "chinh"),
+       ("", "Rượu trắng", 2, MC, "x", "gia_vi"), DUONG(4), MUOI, ("", "Mỡ gà hoặc dầu ăn", 2, MC, "x", "gia_vi"),
+       ("dua", "Nước cốt dừa (tùy thích)", 100, "ml", "x", "phu")]),
+    M("do_uong", "", "sinh_to_gac", "Sinh tố gấc chuối sữa", "do_uong", "mat", "nhe", "it", "gac", "nang", 10, "de",
+      "Ruột gấc xay cùng chuối chín và sữa tươi – màu cam đẹp, béo ngậy, bé dễ uống.",
+      ["Lấy ruột gấc, bỏ hạt (dùng thìa nạo lớp thịt đỏ quanh hạt).",
+       "Chuối bóc vỏ, cắt khúc.",
+       "Cho ruột gấc, chuối, sữa tươi, chút mật ong và đá vào máy xay, xay mịn.",
+       "Rót ra cốc, uống ngay (để lâu gấc tách lớp)."],
+      None, tk("sinh tố gấc"),
+      [("gac", "Ruột gấc", 0.5, "quả", "n", "chinh"), ("chuoi_chin", "Chuối chín", 2, "quả", "n", "phu"),
+       ("sua_tuoi", "Sữa tươi không đường", 400, "ml", "n", "phu"), ("", "Mật ong", 2, MC, "x", "gia_vi"),
+       ("", "Đá viên", 1, "bát", "x", "phu")]),
 ]
