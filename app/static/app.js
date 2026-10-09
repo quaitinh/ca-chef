@@ -84,9 +84,17 @@ const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOStri
 const month = (i = 0) => Number(dayStr(i).slice(5, 7));
 
 // ---------- Dữ liệu ----------
+// data.json (~1 MB) tải theo mã phiên bản trong version.json (vài chục byte): dữ liệu chưa đổi thì trình duyệt / service worker
+// dùng lại bản đã lưu. Không lấy được version.json (bản demo, mất mạng) hoặc vừa bấm "Tải lại dữ liệu" thì tải mới.
+async function taiDuLieu() {
+  let moi = false;
+  try { moi = !!sessionStorage.getItem("cachef.tai_lai"); sessionStorage.removeItem("cachef.tai_lai"); } catch { /* chặn lưu */ }
+  const v = moi ? "" : await fetch(`version.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json()).then((x) => x.v || "").catch(() => "");
+  return fetch(v ? `data.json?v=${v}` : `data.json?t=${Date.now()}`).then((r) => r.json());
+}
 async function load() {
   const [data, weather] = await Promise.all([
-    fetch(`data.json?t=${Date.now()}`).then((r) => r.json()),
+    taiDuLieu(),
     fetch(WEATHER_URL).then((r) => r.json()).catch(() => null),
   ]);
   S.data = data;
@@ -116,6 +124,7 @@ async function load() {
   document.getElementById("refresh").onclick = async (e) => {
     e.preventDefault();
     await fetch("data.json?refresh=1");
+    try { sessionStorage.setItem("cachef.tai_lai", "1"); } catch { /* chặn lưu */ }
     location.reload();
   };
 }
@@ -1530,6 +1539,10 @@ function route() {
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);
 }
+
+// Service worker: lưu app và dữ liệu để mở được khi sóng yếu (ở chợ), cài lên màn hình chính.
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1"))
+  navigator.serviceWorker.register("sw.js").catch(() => { /* không hỗ trợ: chạy như trang web thường */ });
 
 load().then(() => { headerBar(); window.addEventListener("hashchange", route); route(); })
   .catch((e) => { $app.innerHTML = `<div class="box">Lỗi tải dữ liệu: ${esc(e.message)}</div>`; });

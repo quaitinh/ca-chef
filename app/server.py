@@ -216,6 +216,14 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         url = urlparse(self.path)
+        if url.path == "/version.json":  # bản demo đọc Sheet trực tiếp: không có mã phiên bản, app tải data.json mới mỗi lần
+            body = b'{"v": ""}'
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if url.path in ("/api/data", "/data.json"):
             body = get_data(refresh="refresh" in parse_qs(url.query))
             self.send_response(200)

@@ -9,6 +9,10 @@ CA_CHEF_KEY=/đường/dẫn/key.json python3 app/server.py 8095
 Mở http://127.0.0.1:8095. Không có `CA_CHEF_KEY` thì app đọc `data/*.csv`.
 Dữ liệu Sheet được cache 5 phút; bấm "Tải lại dữ liệu" ở chân trang để lấy bản mới.
 
+Cài lên màn hình chính: mở trang trên điện thoại › Chia sẻ / menu › "Thêm vào màn hình chính". App có `manifest.json` và service worker
+(`app/static/sw.js`): `data.json` (~1 MB) tải theo mã phiên bản trong `version.json` (do `scripts/export_json.py` ghi, băm theo nội dung),
+dữ liệu chưa đổi thì dùng lại bản đã lưu; app, style mạng trước, mất mạng (sóng yếu ở chợ) thì mở bằng bản đã lưu.
+
 ## Dữ liệu
 - Google Sheet "Cá Chef" (id `1aoGQLY0g3UjnQRavXnufttwoigSb-Po4IkGB1z0fwno`) là nơi chỉnh sửa chính.
 - `scripts/build_data.py` + `scripts/recipes.py` → `data/*.csv`, `data/ca_chef_data.xlsx`.
