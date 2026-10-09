@@ -155,7 +155,15 @@ function saveDanhGia(ma, sua) {
   S.ranked = rankDishes(0);
   S.rankedTomorrow = rankDishes(1);
 }
-const THUOC_BAC_CACH_NGAY = 14;
+const THUOC_BAC_CACH_NGAY = 14, NUONG_CACH_NGAY = 2;
+const laNuong = (d) => cachNau(d) === "nuong" || vaiOf(d) === "nuong";
+// Có món nướng trong NUONG_CACH_NGAY ngày trước ngày `day` (theo lịch sử gợi ý và món đã nấu).
+function ganNuong(day) {
+  const ref = dayStr(day), tu = dayStr(day - NUONG_CACH_NGAY), mon = Object.fromEntries(S.data.mon_an.map((m) => [m.ma_mon, m]));
+  const coNuong = (ma) => mon[ma] && laNuong(mon[ma]);
+  if (Object.entries(readHistory()).some(([d, l]) => d >= tu && d < ref && l.some(coNuong))) return true;
+  return Object.entries(danhGia()).some(([ma, x]) => coNuong(ma) && (x.nau || []).some((d) => d >= tu && d < ref));
+}
 const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
 
 // ---------- Chấm điểm ----------
@@ -237,6 +245,8 @@ function scoreDish(dish, weatherHits, day = 0) {
   if (dg.y === 1) them("Nhà khen ngon", DIEM_DG.ngon);
   if (dg.y === -1) them("Nhà thấy không hợp", DIEM_DG.khongHop);
   if (dg.tim) them("Yêu thích", DIEM_DG.tim);
+  // Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng): 2 ngày gần nhất đã có món nướng thì trừ mạnh.
+  if (laNuong(dish) && ganNuong(day)) them(`Vừa ăn nướng trong ${NUONG_CACH_NGAY} ngày`, -6);
   // Món thuốc bắc (bồi bổ): cách nhau ít nhất 14 ngày – khoảng 2 lần/tháng.
   if (/thuốc bắc/i.test(dish.ten_mon) && since <= THUOC_BAC_CACH_NGAY) them(`Món thuốc bắc: ${THUOC_BAC_CACH_NGAY} ngày mới ăn lại`, -20);
   // Lẩu, nướng là bữa quây quần: ưu tiên tối thứ 6, thứ 7, chủ nhật.
@@ -376,6 +386,7 @@ function hopBua(x, bua, ctx) {
   const dam = damOf(x), canhVsMan = (d) => (vaiOf(x) === "canh") !== (vaiOf(d) === "canh");
   if (dam && bua.some((d) => canhVsMan(d) && damOf(d) === dam)) return false;
   if (x.dau_mo === "nhieu" && ctx.mo >= 1) return false;
+  if (laNuong(x) && ctx.nuong) return false; // cả ngày tối đa một món nướng
   const vx = vaiOf(x);
   if ((vx === "rau" || vx === "canh") && rauLa(x) && bua.some((d) => ["rau", "canh"].includes(vaiOf(d)) && rauLa(d))) return false;
   if (vx === "man" && ctx.damChinh && damDiem(x) < 2) return false;
@@ -429,6 +440,7 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     if (!d) continue;
     out.push(d); bua.push(d); cam.add(d.ma_mon); dungNL(d, used);
     if (d.dau_mo === "nhieu") ctx.mo++;
+    if (laNuong(d)) ctx.nuong = true;
   }
   return { out, no };
 }
@@ -525,7 +537,7 @@ function phoTrua(ranked, day, kTrua, kToi, sh) {
 function pickMeals(ranked, day, keep = {}) {
   const sh = S.shown[day], used = new Set();
   const kTrua = keep.trua || [], kToi = keep.toi || [];
-  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length };
+  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong) };
   [...kTrua, ...kToi].forEach((d) => dungNL(d, used));
   // Bữa tối một món (lẩu, nướng): giữ nếu đã chọn; nếu tối chưa có món nào giữ thì xét gợi ý
   // (không trùng nguyên liệu bữa trưa, điểm không thua món mặn tốt nhất).
@@ -539,6 +551,7 @@ function pickMeals(ranked, day, keep = {}) {
     if (ung.length) { toi = [ung[0]]; dungNL(ung[0], used); }
   }
   if (toi) {
+    if (toi.some(laNuong)) ctx.nuong = true;
     if (!toi.some((d) => vaiOf(d) === "trang_mieng")) {
       const tm = pickRole(ranked, "trang_mieng", new Set([...sh.toi, ...kTrua.map((d) => d.ma_mon)]), (x) => khongTrung(x, used));
       if (tm) { toi.push(tm); dungNL(tm, used); }

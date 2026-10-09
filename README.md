@@ -106,6 +106,8 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
   ăn như canh: xếp vào vai canh, bữa vẫn có một món mặn thịt/cá.
 - Bấm "Chọn" trên thẻ món để giữ món đó; "Đổi món còn lại" chỉ gợi ý lại các món chưa chọn.
 - Cả ngày tối đa 1 món nhiều dầu mỡ.
+- Món nướng (mọi vai: sườn nướng, cừu nướng, bữa nướng một nồi): cả ngày tối đa 1 món; 2 ngày trước đã có món nướng thì
+  trừ 6 điểm. Bữa nướng một nồi vẫn giữ quy tắc tối đa 1 lần/7 ngày.
 - Đủ đạm (tính theo nguyên liệu chính, món chưa có bảng nguyên liệu thì theo nhóm đạm): điểm đạm cả bữa ≥ 2. Món mặn thịt/cá/hải sản 2; đạm nhẹ (trứng, đậu phụ, cua đồng, đồ khô) 1;
   canh hoặc rau có thịt/cá/tôm 1, có trứng/đậu 0,5; canh cua đồng, canh rau 0. Ví dụ trứng cút rim thì canh hoặc rau phải có thịt/cá/tôm.
 - Trưa món mặn đạm nhẹ thì tối bắt buộc có món mặn thịt/cá; món mặn đạm nhẹ không nấu dư cho tối.
