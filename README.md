@@ -62,7 +62,8 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   "Cất vào tủ lạnh": đồ cho bữa gần để ngăn mát, đạm của giỏ mua dư để ngăn đá. Sau đó Cá Chef gợi ý món theo tủ.
 - Tủ sắp hết đồ (đã dùng tủ lạnh mà còn ≤ 1 thứ thịt, cá, trứng, đậu chưa quá hạn): trang Nấu gì nhắc nên đi chợ.
 - Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
-  mỡ heo luôn để ngăn mát nên không có trong danh sách.
+  mỡ heo luôn để ngăn mát nên không có trong danh sách. Theo tủ lạnh: tủ đang ghi đồ thì chỉ nhắc thứ đang ghi ❄ ngăn đá;
+  tủ trống mà hẹn đi chợ ngày mai thì không nhắc (mai mua tươi); tủ trống, không đi chợ mai thì nhắc "nếu có sẵn trong ngăn đá".
 - Bí quyết chọn nguyên liệu (chọn / tránh / cất) cho 148 nguyên liệu: trên trang món (tab Nguyên liệu, phần nguyên liệu chính) và khi chạm vào nguyên liệu ở Mùa vụ.
   Nguồn: `scripts/de_xuat/bi_quyet.py` → `data/de_xuat/bi_quyet_nl.csv` (cột `mat`, `da`: số ngày để ngon ở ngăn mát / ngăn đá).
 

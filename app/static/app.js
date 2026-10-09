@@ -589,9 +589,14 @@ const NOT_FROZEN = ["rong_sun", "sua", "muc_mot_nang", "mo_heo", "thit_hop"]; //
 const FROZEN_WORDS = /chả cá|xương|sườn|giò heo/i;
 const NAU_THANG = new Set(["tom_the", "tom_hum", "muc_tuoi"]); // tôm, mực: lấy từ ngăn đá nấu thẳng, không rã đông
 const MO_HEO = /^mỡ/i; // mỡ heo (mỡ phần, mỡ nước) luôn để ngăn mát – không tính "thịt nửa nạc nửa mỡ"
+// Rã đông theo tủ lạnh: "tu" – tủ đang ghi đồ: chỉ nhắc thứ đang ghi ❄ ngăn đá; "mua_mai" – tủ trống và hẹn đi chợ
+// ngày mai: đồ cho bữa mai mua tươi, không nhắc; "chua_ro" – tủ trống: nhắc kèm "nếu có sẵn trong ngăn đá".
+const cheDoRaDong = () => Object.keys(tuLanh()).some((c) => S.ing[c]) ? "tu" : dcCaiDat().tu === 1 ? "mua_mai" : "chua_ro";
+const trongNganDa = (codes) => codes.some((c) => trongTu(c) && tuLanh()[trongTu(c)].da);
 // thang: nhận tên các thứ nấu thẳng từ ngăn đá (tôm, mực) để nhắc riêng.
-function thawList(meals, thang = []) {
+function thawList(meals, thang = [], cheDo = cheDoRaDong()) {
   const out = [];
+  if (cheDo === "mua_mai") return out;
   for (const d of mealDishes(meals)) {
     const f = d.ma_mon === meals.du ? 2 : 1; // nấu dư cho bữa tối
     for (const r of S.ingByDish[d.ma_mon] || []) {
@@ -599,11 +604,14 @@ function thawList(meals, thang = []) {
       if (motNoi(d) && r.vai_tro !== "chinh") continue; // lẩu, nướng: rau, bún đi kèm không tính là nguyên liệu chính
       if (MO_HEO.test(r.ten_hien_thi)) continue;
       const codes = String(r.ma_nguyen_lieu || "").split("|").filter(Boolean);
-      if (codes.length && codes.every((c) => NAU_THANG.has(c))) { if (!thang.includes(r.ten_hien_thi)) thang.push(r.ten_hien_thi); continue; }
+      if (codes.length && codes.every((c) => NAU_THANG.has(c))) {
+        if ((cheDo !== "tu" || trongNganDa(codes)) && !thang.includes(r.ten_hien_thi)) thang.push(r.ten_hien_thi);
+        continue;
+      }
       const frozen = codes.length
         ? codes.some((c) => FROZEN_GROUPS.includes(S.ing[c]?.nhom) && !NOT_FROZEN.includes(c))
         : FROZEN_WORDS.test(r.ten_hien_thi);
-      if (frozen && codes.length && codes.every((c) => trongTu(c) && !tuLanh()[trongTu(c)].da)) continue; // tủ lạnh ghi đang ở ngăn mát
+      if (frozen && cheDo === "tu" && !trongNganDa(codes)) continue; // tủ không ghi thứ này ở ngăn đá (không có, hoặc ở ngăn mát)
       if (frozen) out.push({ ten: r.ten_hien_thi, mon: d.ten_mon + (f > 1 ? " (gồm phần cho bữa tối)" : ""), qty: scaleQty(r, f) });
     }
   }
@@ -744,16 +752,17 @@ function mealBlock(meals, k, chon) {
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
 function thawBox(moSan = false) {
   if (!S.meals[1]) return "";
-  const thang = [], list = thawList(S.meals[1], thang);
+  const cheDo = cheDoRaDong(), thang = [], list = thawList(S.meals[1], thang, cheDo);
   const nhacThang = thang.length ? `${thang.join(", ")}: lấy từ ngăn đá nấu thẳng, không cần rã đông` : "";
   if (!list.length) return `<div class="nhac"><span class="ic">🧊</span><span class="tx"><b>Rã đông</b>
-    <span class="meta">${esc(nhacThang || "Món ngày mai không cần rã đông thịt, cá")}</span></span></div>`;
+    <span class="meta">${esc(nhacThang || (cheDo === "mua_mai" ? "Mai đi chợ mua tươi – không cần rã đông"
+      : cheDo === "tu" ? "Ngăn đá không có đồ cần rã đông cho món ngày mai" : "Món ngày mai không cần rã đông thịt, cá"))}</span></span></div>`;
   const tom = list.slice(0, 3).map((x) => `${x.ten} ${x.qty}`).join(" · ") + (list.length > 3 ? ` · +${list.length - 3}` : "");
   return `<details class="nhac-d" ${moSan ? "open" : ""}>
     <summary class="nhac"><span class="ic">🧊</span>
-      <span class="tx"><b>Rã đông tối nay cho mai (${list.length})</b><span class="meta">${esc(tom)}</span></span><span class="chev">›</span></summary>
+      <span class="tx"><b>Rã đông tối nay cho mai${cheDo === "tu" ? "" : " nếu có sẵn"} (${list.length})</b><span class="meta">${esc(tom)}</span></span><span class="chev">›</span></summary>
     <div class="nhac-body">
-      <p class="note">Tối nay chuyển từ ngăn đá xuống ngăn mát:</p>
+      <p class="note">${cheDo === "tu" ? "Tối nay chuyển từ ngăn đá xuống ngăn mát:" : "Nếu có sẵn trong ngăn đá, tối nay chuyển xuống ngăn mát:"}</p>
       <ul class="thaw">${list.map((x) => `<li><span><b>${esc(x.ten)}</b><small>${esc(x.mon)}</small></span><span>${esc(x.qty)}</span></li>`).join("")}</ul>
       ${nhacThang ? `<p class="note">🦐 ${esc(nhacThang)}.</p>` : ""}
       <p class="note">Ngăn mát mất 12–24 giờ. Quên thì ngâm cả túi kín trong nước lạnh, 30 phút thay nước. Không rã đông ở nhiệt độ phòng.</p>
