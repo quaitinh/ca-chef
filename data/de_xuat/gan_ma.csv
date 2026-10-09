@@ -1,0 +1,32 @@
+tu_khoa,ma,ghi_chu
+mộc nhĩ|nấm mèo,nam_meo,Nấm khô
+(nấm hương|đông cô) khô,nam_huong,Nấm khô
+nước (cốt )?dừa,dua,
+^(quả |trái )?(thơm|dứa),thom,Thơm và dứa là một
+cá rô phi,ca_ro_phi,
+diêu hồng,ca_dieu_hong,
+cá hồi,ca_hoi,
+chả cá,cha_ca,
+sữa đặc|sữa ông thọ,sua_dac,
+sữa chua,sua_chua,
+sữa tươi|^sữa( không đường)?$,sua_tuoi,
+^(lá )?hẹ,he,
+lá chanh,la_chanh,
+tôm khô,tom_kho,
+kỷ tử,ky_tu,
+đu đủ,du_du,
+ớt chuông,ot_chuong,
+giò sống,gio_song,
+lạp xưởng,lap_xuong,
+dọc mùng,doc_mung,
+củ đậu|củ sắn,cu_dau,
+tỏi tây,toi_tay,
+củ dền,cu_den,
+măng chua,mang_chua,
+^dưa (leo|chuột),dua_leo,
+khoai môn,khoai_mon,
+^(đậu phụ|đậu hũ),dau_phu,
+^giá( đỗ)?$,gia_do,
+bánh đa nem,banh_trang,
+^miến,bun,
+^mỡ heo|^xương .*(heo|lợn),thit_heo,Nhánh mỡ/xương do nhanh_nguyen_lieu.csv tách tiếp

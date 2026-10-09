@@ -32,13 +32,19 @@ lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã tr
 
 Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): gà tách lòng, chân cổ xương, cánh, ức và gà nguyên con / nửa con
 (mặc định cho món ghi chung "gà"; cột `bao_gom`: tủ có gà nguyên con thì món cánh, ức, chân cổ, lòng cũng tính là có), đùi gà
-tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào). Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
+tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào); nấm tách mộc nhĩ (nấm mèo) khô,
+nấm hương (đông cô) khô – nhóm hàng khô, bảo quản riêng – còn lại là nấm tươi. Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
 thịt nạc, sườn, chân giò, xương, mỡ heo, tai, lưỡi, da (bì), thịt hộp. Món chỉ ghi chung "thịt heo" hiểu là thịt nạc hoặc
 ba chỉ (cột `mac_dinh`). Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
 trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
 (trang Mùa vụ chỉ hiện mã cha). Tủ lạnh: có nhánh nào thì món dùng đúng nhánh đó được tính là có; món ghi chung "thịt heo" chỉ tính khi tủ có nạc, nạc vai
 hoặc ba chỉ;
 tủ ghi chung "Thịt heo" thì tính là có mọi nhánh.
+
+Gắn mã theo tên (`data/de_xuat/gan_ma.csv`): dòng định lượng (không phải gia vị) chỉ ghi tên được `app/server.py` gắn mã theo từ khóa
+(cá diêu hồng, mộc nhĩ, thơm/dứa, sữa, hẹ, lá chanh, tôm khô...) để tính trong Tủ lạnh, Mùa vụ, Đi chợ; dòng "chính" vừa có mã thì thêm
+vào nguyên liệu chính của món. Nguyên liệu mới cho các mã này khai báo ở `scripts/de_xuat/lo4_chu_nha.py`. Hành lá, hành tây, bột,
+đường... để trống (đồ luôn có).
 
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
 trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên Sheet (khác lịch cũ) thì giữ theo Sheet.

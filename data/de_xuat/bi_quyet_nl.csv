@@ -106,6 +106,27 @@ canh_ga,"Cánh mập, da vàng căng, không trầy, không còn lông tơ.","Da
 uc_ga,"Ức dày, thịt hồng nhạt, mặt khô, ấn đàn hồi.","Thịt tái trắng rỉ nước, có sọc trắng dày (thịt bở), mùi lạ.","Thái hoặc để nguyên miếng, chia túi phẳng; ngăn mát 1–2 ngày, ngăn đá 3 tháng.",2,90
 chan_co_ga,"Chân to, da trắng ngà, không vết bầm; cổ, khung xương còn ít thịt bám, màu tươi.","Chân thâm, móng đen, da trầy nhớt; xương có mùi.","Chặt móng, chần sơ rồi cất; ngăn mát 1 ngày, ngăn đá 2–3 tháng – gom dần đủ một nồi canh hầm.",1,90
 long_ga,"Mề chắc, gan nâu đỏ bóng, tim đỏ tươi.","Gan tái xám hoặc có đốm xanh, mề nhớt, mùi hôi.","Sơ chế với muối, rượu trắng; nấu trong ngày, ngăn đá 1–2 tháng.",1,60
+nam_meo,"Tai mộc nhĩ khô đều, mặt trên nâu đen, mặt dưới xám, khô giòn, ngâm nở to và dai.","Tai vụn, ẩm mềm, có đốm mốc trắng hoặc mùi hắc.","Đồ khô: túi kín hoặc hũ kín chỗ khô ráo, để được 6–12 tháng; đã ngâm nở thì để ngăn mát, dùng trong 1–2 ngày.",180,0
+nam_huong,"Nấm hương khô mũ dày, nứt hoa trắng trên mặt, chân ngắn, thơm đậm.","Mũ mỏng, vụn, ẩm, có mọt hoặc mùi mốc.","Đồ khô: hũ kín chỗ khô ráo 6–12 tháng (mùa ẩm để ngăn mát); ngâm nở rồi thì dùng trong ngày, giữ nước ngâm để nêm.",180,0
+ca_dieu_hong,"Cá còn bơi khỏe, thân hồng tươi, mắt trong, mang đỏ; cá làm sẵn thịt trắng hồng, ấn đàn hồi.","Mang thâm, bụng phình, mùi bùn nồng.","Làm sạch, khứa, để ráo rồi chia túi; ngăn mát trong ngày, ngăn đá 2–3 tháng.",1,90
+ca_ro_phi,"Cá còn sống, vảy bám chắc, mắt trong, mang đỏ.","Vảy tróc, bụng mềm, mùi bùn.","Làm sạch, để ráo, chia túi; ngăn mát trong ngày, ngăn đá 2–3 tháng.",1,90
+ca_hoi,"Phi lê màu cam đỏ tươi, vân mỡ trắng rõ, mặt bóng, ấn đàn hồi; khay còn hạn, không đọng nước.","Thịt nhạt màu, khô mép, vân mỡ mờ, khay đọng nước, mùi tanh.",Để nguyên khay ngăn mát 1–2 ngày; ngăn đá 2–3 tháng (cắt phần từng bữa trước khi cấp đông).,1,90
+cha_ca,"Chả dai, mặt vàng đều, thơm mùi cá và thì là, ấn đàn hồi.","Chả bở, nhớt, chua hoặc có mùi lạ.",Ngăn mát 2–3 ngày; ngăn đá 1–2 tháng.,2,60
+tom_kho,"Tôm khô màu cam đỏ tự nhiên, thịt chắc, khô ráo, thơm ngọt.","Màu đỏ chói bất thường (nhuộm), ẩm, mốc, mùi khai.","Hũ kín chỗ khô hoặc ngăn mát, để được vài tháng.",120,180
+gio_song,"Giò sống hồng tươi, dẻo, quết mịn, thơm mùi nước mắm.","Màu tái, nhớt, chua.",Dùng trong ngày; ngăn đá 1 tháng (ép dẹt túi cho nhanh rã).,1,30
+lap_xuong,"Lạp xưởng khô, đỏ tươi tự nhiên, mỡ trắng trong, thơm mùi rượu.","Mỡ vàng, mốc, chảy dầu, mùi ôi.","Ngăn mát 1–2 tháng, ngăn đá 6 tháng.",30,180
+he,"Lá hẹ xanh đậm, thẳng, không dập, gốc trắng.","Lá vàng úa, nhũn gốc.","Bọc giấy, cho túi, ngăn mát 3–4 ngày.",3,0
+la_chanh,"Lá xanh đậm, dày, bóng, vò thơm.","Lá vàng, khô quắt.",Túi kín ngăn mát 1–2 tuần; ngăn đá được vài tháng.,10,120
+ot_chuong,"Quả chắc, vỏ bóng căng, cuống xanh tươi, cầm nặng tay.","Vỏ nhăn, có vết thâm mềm, cuống héo.","Ngăn mát 5–7 ngày, để nguyên quả, không rửa trước.",6,0
+doc_mung,"Dọc mùng thẳng, xanh nhạt, vỏ căng, bẻ giòn.","Dọc héo, nhũn, có vết thâm.","Bọc giấy ngăn mát 3–4 ngày; tước vỏ, bóp muối trước khi nấu cho đỡ ngứa.",3,0
+cu_dau,"Củ tròn, vỏ mỏng, căng, cầm nặng tay.","Vỏ nhăn, có vết nứt, thâm.",Để chỗ thoáng mát 1–2 tuần; đã gọt thì ngăn mát 2 ngày.,10,0
+toi_tay,"Thân trắng dài, lá xanh đậm thẳng, không dập.","Lá vàng, thân nhũn.",Bọc giấy ngăn mát 1 tuần.,7,0
+cu_den,"Củ tròn, chắc, vỏ đỏ sẫm trơn, còn cuống lá tươi.","Củ mềm, nhăn, có vết thâm.","Cắt bỏ lá, ngăn mát 2–3 tuần.",14,0
+mang_chua,"Măng vàng tươi, giòn, chua dịu, nước ngâm trong.","Màu trắng bệch (tẩy), nước đục, mùi hắc.","Ngâm trong nước muối chua, ngăn mát 1–2 tuần.",10,0
+ky_tu,"Hạt đỏ cam tự nhiên, khô, mềm dẻo, ngọt nhẹ.","Đỏ chói bất thường, dính bết, mốc.",Hũ kín ngăn mát vài tháng.,120,0
+sua_tuoi,"Hộp/chai còn hạn, không phồng, bao bì nguyên vẹn.","Hộp phồng, móp, quá hạn.",Ngăn mát; đã mở dùng trong 2–3 ngày.,5,0
+sua_dac,"Hộp nguyên vẹn, còn hạn.","Hộp phồng, rỉ sét.","Chưa mở để chỗ khô; đã mở đậy kín, ngăn mát 2 tuần.",180,0
+sua_chua,"Hũ còn hạn, mặt sữa chua mịn, mùi thơm chua nhẹ.","Hũ phồng, có nước vàng nhiều, mốc, mùi hăng.","Ngăn mát, dùng trước hạn in trên hũ.",7,0
 ba_chi_bo_my,"Lát ba chỉ bò Mỹ mỏng đều, thịt đỏ hồng xen mỡ trắng, cuộn còn đông cứng, khay không đọng nước.","Mỡ ngả vàng, thịt thâm, khay đọng nhiều nước hồng (đã rã đông rồi đông lại).","Để nguyên khay trong ngăn đá đến hôm nấu; rã đông rồi thì nấu trong ngày, không cấp đông lại.",1,90
 thit_bo,"Thịt đỏ tươi, thớ nhỏ mịn, mỡ vàng nhạt, mặt khô.","Thịt đỏ sẫm ngả tím, thớ to, nhớt, mùi lạ.","Bò xay ngăn mát 1 ngày, bò tảng 2–3 ngày; ngăn đá 4–5 tháng.",2,150
 ech,"Ếch sống nhanh nhẹn, da bóng, đùi mập; ếch làm sẵn thịt trắng hồng, chắc.","Ếch làm sẵn mùi tanh nồng, thịt bở.",Mua về làm ngay; ngăn đá 1–2 tháng.,1,60
