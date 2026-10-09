@@ -798,6 +798,7 @@ function tlBox(meals) {
 }
 
 // ---------- Trang Nấu gì (hôm nay / ngày mai) ----------
+const KHAC_HOP = [[["man"], 2], [["rau"], 2], [["canh"], 2], [["lau", "nuong"], 2], [["trang_mieng"], 2]];
 function pageHome(day = 0) {
   const ranked = day ? S.rankedTomorrow : S.ranked;
   const meals = S.meals[day];
@@ -805,7 +806,8 @@ function pageHome(day = 0) {
   const m = month(day);
   const inSeason = S.data.nguyen_lieu.filter((n) => n.thang[m - 1] === 2);
   const shown = new Set(mealDishes(meals).map((p) => p.ma_mon));
-  const others = ranked.filter((d) => !shown.has(d.ma_mon) && ["man", "rau", "canh", "lau", "nuong", "mot_to"].includes(vaiOf(d))).slice(0, 10);
+  // Món khác cũng hợp: chia theo vai (mỗi vai 2 món) để cuối tuần không toàn lẩu/nướng.
+  const others = KHAC_HOP.flatMap(([vai, n]) => ranked.filter((d) => !shown.has(d.ma_mon) && vai.includes(vaiOf(d))).slice(0, n));
   $app.innerHTML = `
     <div class="seg"><a href="#/" class="${day ? "" : "on"}">Hôm nay</a><a href="#/ngay-mai" class="${day ? "on" : ""}">Ngày mai</a></div>
     ${weatherTip(day)}
