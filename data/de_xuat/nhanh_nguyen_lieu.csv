@@ -19,3 +19,7 @@ ga_nguyen_con,Gà nguyên con / nửa con,ga_ta,nguyên con|nửa con|1/2 con|c�
 ba_chi_bo_my,Ba chỉ bò Mỹ,thit_bo,ba chỉ bò|ba rọi bò|bò mỹ,,,"Thái lát mỏng, cuộn sẵn – nướng, lẩu, canh kim chi",
 nam_meo,Mộc nhĩ (nấm mèo) khô,nam,mộc nhĩ|nấm mèo,hàng khô,,"Nấm khô: ngâm nở trước khi nấu, để được nhiều tháng",
 nam_huong,Nấm hương (đông cô) khô,nam,(nấm hương|đông cô)(?! tươi),hàng khô,,Nấm khô (nấm hương tươi vẫn tính là nấm tươi),
+ot_chuong,Ớt chuông,sa_ot,ớt chuông,rau củ,,"Mã ớt chuông đã có – chỉ đổi dòng ""Sả, ớt"" ghi ớt chuông",
+sa,Sả,sa_ot,sả,,,,
+gung,Gừng,sa_ot,gừng,,,,
+ot,Ớt tươi,sa_ot,^((vài|ít|1|một) )?(quả )?ớt(?! (bột|sa tế|xay|hàn)),,,"Tương ớt, ớt bột, sa tế giữ mã chung",

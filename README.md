@@ -37,13 +37,14 @@ lô 4 `lo4_chu_nha.py`: món chủ nhà chọn kèm link công thức – mã tr
 Nhánh nguyên liệu (`data/de_xuat/nhanh_nguyen_lieu.csv`): gà tách lòng, chân cổ xương, cánh, ức và gà nguyên con / nửa con
 (mặc định cho món ghi chung "gà"; cột `bao_gom`: tủ có gà nguyên con thì món cánh, ức, chân cổ, lòng cũng tính là có), đùi gà
 tính chung với gà; thịt bò tách ba chỉ bò Mỹ (bò ta mặc định là thăn, diềm thăn thái xào); nấm tách mộc nhĩ (nấm mèo) khô,
-nấm hương (đông cô) khô – nhóm hàng khô, bảo quản riêng – còn lại là nấm tươi. Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
+nấm hương (đông cô) khô – nhóm hàng khô, bảo quản riêng – còn lại là nấm tươi. "Sả, ớt, gừng" tách sả, gừng, ớt tươi
+(tương ớt, ớt bột, sa tế giữ mã chung; dòng ớt chuông về mã ớt chuông). Thịt heo tách thành thịt băm (nửa nạc nửa mỡ), ba chỉ, nạc vai,
 thịt nạc, sườn, chân giò, xương, mỡ heo, tai, lưỡi, da (bì), thịt hộp. Món chỉ ghi chung "thịt heo" hiểu là thịt nạc hoặc
 ba chỉ (cột `mac_dinh`). Khi build, `app/server.py` đổi mã các dòng định lượng đang ghi "thịt heo" sang nhánh theo từ khóa
 trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên liệu chính của món tương ứng. Nhánh dùng lịch mùa vụ của mã cha
 (trang Mùa vụ chỉ hiện mã cha). Tủ lạnh: có nhánh nào thì món dùng đúng nhánh đó được tính là có; món ghi chung "thịt heo" chỉ tính khi tủ có nạc, nạc vai
 hoặc ba chỉ;
-tủ ghi chung "Thịt heo" thì tính là có mọi nhánh.
+tủ ghi chung mã cha (vd. "Thịt heo") thì tính là có các nhánh cùng nhóm (tủ có nấm tươi không tính là có nấm hương khô).
 
 Gắn mã theo tên (`data/de_xuat/gan_ma.csv`): dòng định lượng (không phải gia vị) chỉ ghi tên được `app/server.py` gắn mã theo từ khóa
 (cá diêu hồng, mộc nhĩ, thơm/dứa, sữa, hẹ, lá chanh, tôm khô...) để tính trong Tủ lạnh, Mùa vụ, Đi chợ; dòng "chính" vừa có mã thì thêm
@@ -63,7 +64,7 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 - Trang món: thông tin nhanh; thanh phản hồi ✓ Đã nấu / 👍 Ngon / 👎 Không hợp / ♥; 3 tab Nguyên liệu / Cách làm / Mùa vụ; "Bắt đầu nấu" (`#/nau/<mã>`) hiện từng bước chữ to, giữ màn hình sáng. Bấm "Xong" ở bước cuối thì ghi là đã nấu hôm nay và hỏi cả nhà thấy thế nào.
 - Món: lọc ♥ Yêu thích (♥ hoặc 👍), ✓ Đã nấu, theo vai món; `#/yeu-thich` mở thẳng danh sách yêu thích.
 - Mùa vụ: chọn tháng và nhóm; Đang rộ / Sắp vào mùa / Có hàng / Trái mùa, chạm để xem nguồn và món nấu được.
-- Tủ lạnh: ghi thứ đang có, ngày cho vào, ngăn mát hay ngăn đá (❄); tính hạn dùng theo bí quyết bảo quản, thứ sắp hết hạn tô màu và nhắc ở trang Nấu gì.
+- Tủ lạnh: ghi được mọi nguyên liệu có trong món (kể cả sả, gừng, hành tây – trang Đi chợ biết là đã có); ghi thứ đang có, ngày cho vào, ngăn mát hay ngăn đá (❄); tính hạn dùng theo bí quyết bảo quản, thứ sắp hết hạn tô màu và nhắc ở trang Nấu gì.
   Gợi ý món nấu được ngay (nút ＋Trưa / ＋Tối đưa thẳng vào bữa hôm nay, thành món đã chọn) và món thiếu 1 thứ.
   Nấu xong một món thì hỏi bỏ đồ đã dùng khỏi tủ. Thứ đang ghi ở ngăn mát không cần nhắc rã đông.
 - Đi chợ: chọn đi hôm nay / ngày mai và mua cho 3, 4 hoặc 5 ngày. Chỉ bữa hôm nay, ngày mai có món cụ thể (sửa ở trang Nấu gì);

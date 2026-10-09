@@ -487,7 +487,7 @@ const NL_MA = { thit_heo: "heo", long_heo: "heo", ba_chi: "heo", suon_heo: "heo"
   nac_vai: "heo", thit_nac: "heo", ga_nguyen_con: "ga", canh_ga: "ga", uc_ga: "ga", chan_co_ga: "ga", long_ga: "ga", ba_chi_bo_my: "bo", mo_heo: "heo", tai_heo: "heo", luoi_heo: "heo", da_heo: "heo", vit: "ga", ngan: "ga", chim_cut: "ga", tom_the: "tom", tom_hum: "tom", muc_tuoi: "muc", muc_mot_nang: "muc",
   thit_bo: "bo", ga_ta: "ga", thit_de: "de", thit_cuu: "cuu", cua_dong: "cua", sup_lo_trang: "sup_lo", bo_booth: "bo_trai", bo_sap: "bo_trai",
   ghe: "cua", cua_bien: "cua", ngheu: "so_oc", oc: "so_oc", oc_dong: "so_oc", so_diep: "so_oc", gia_do: "gia" };
-const NL_CHUNG = new Set(["rau_thom", "sa_ot", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
+const NL_CHUNG = new Set(["rau_thom", "sa_ot", "sa", "gung", "ot", "hanh_tay", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
 const _keys = {};
 function nlChinh(d) {
   if (_keys[d.ma_mon]) return _keys[d.ma_mon];
@@ -1184,7 +1184,7 @@ function trongTu(c) {
   const tl = tuLanh();
   if (tl[c]) return c;
   const cha = S.ing[c]?.cha;
-  if (cha && tl[cha]) return cha;
+  if (cha && tl[cha] && S.ing[cha]?.nhom === S.ing[c].nhom) return cha; // tủ ghi "Nấm trồng" không tính là có nấm hương khô
   return Object.keys(tl).find((k) => S.ing[k]?.cha === c && String(S.ing[k].mac_dinh) === "1") ||
     Object.keys(tl).find((k) => String(S.ing[k]?.bao_gom || "").split("|").includes(c)) || ""; // gà nguyên con có cánh, ức, chân cổ
 }
@@ -1210,7 +1210,8 @@ const hanChu = (h) => h.con < 0 ? `<span class="minus">quá ${-h.con} ngày – 
 function pageFridge() {
   const tl = tuLanh(), loc = S.tlNhom || "all", q = plain(S.tlQuery || "");
   const co = Object.keys(tl).filter((c) => S.ing[c]).sort((a, b) => hanTL(a).con - hanTL(b).con);
-  const dung = new Set(S.ranked.flatMap(chinhCua));
+  // Ghi được mọi nguyên liệu có trong món (kể cả gia vị như sả, gừng, hành tây – để Đi chợ biết đã có).
+  const dung = new Set(S.data.mon_nguyen_lieu.flatMap((r) => String(r.ma_nguyen_lieu || "").split("|")).filter((c) => S.ing[c]));
   const nl = S.data.nguyen_lieu.filter((n) => !tl[n.ma] && dung.has(n.ma) && (loc === "all" || nhomLoc(n) === loc) && (!q || plain(n.ten).includes(q)))
     .sort((a, b) => a.ten.localeCompare(b.ten, "vi"));
   // Món dùng đồ trong tủ, đã sắp theo điểm hôm nay (đồ sắp quá hạn được cộng điểm nên lên trước).
