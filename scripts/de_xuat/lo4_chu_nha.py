@@ -45,6 +45,8 @@ NGUYEN_LIEU = [
     ("hanh_tay", "Hành tây", "rau củ", "Đà Lạt", Q, "chợ/GO!", "C", "Rau Đà Lạt, có quanh năm"),
     ("gac", "Gấc", "trái cây", "chung", [2 if t in (10, 11, 12, 1) else 1 for t in range(1, 13)], "chợ", "C",
      "Gấc chín rộ cuối thu sang Tết; ngoài mùa vẫn có ít ở chợ – chưa có nguồn riêng"),
+    ("ca_song_mui", "Cá sống mũi (cá đội đèn)", "hải sản", "biển", [2 if t in (7, 8) else 1 for t in range(1, 13)], "chợ", "C",
+     "Còn gọi cá đội đèn, cá chim đen, cá mỡ; hay bán tươi hoặc phơi một nắng. Mùa rộ tháng 7–8 (theo các trang bán hải sản)"),
 ]
 DE_SHEET = {"goi_cuon"}  # món trên Sheet đổi sang công thức chủ nhà chọn
 KHUNG = []
@@ -348,6 +350,10 @@ RECIPES = [
       "", [], None, tk("tôm nướng muối ớt"), [("tom_the", "Tôm", 500, "g", "n", "chinh")]),
     M("man", "ca", "ca_liet_kho_ca_chua", "Cá liệt kho cà chua", "mon_chinh", "am", "nhe", "it", "ca_liet", "moi", 30, "de",
       "", [], None, tk("cá kho cà chua"), [("ca_liet", "Cá liệt", 500, "g", "n", "chinh")]),
+    M("man", "ca", "ca_song_mui_chien", "Cá sống mũi chiên", "mon_chinh", "am", "nhe", "vua", "ca_song_mui", "moi", 20, "de",
+      "", [], None, tk("cá đội đèn chiên"), [("ca_song_mui", "Cá sống mũi", 500, "g", "n", "chinh")]),
+    M("man", "ca", "ca_song_mui_kho_tieu", "Cá sống mũi kho tiêu", "mon_chinh", "am", "nhe", "it", "ca_song_mui", "moi", 60, "de",
+      "", [], None, tk("cá kho tiêu"), [("ca_song_mui", "Cá sống mũi", 500, "g", "n", "chinh")]),
     M("canh", "bo", "canh_bo_nau_dua_ca_chua", "Canh bắp bò nấu dứa cà chua", "canh", "mat", "nhe", "it", "thit_bo", "nang", 30, "de",
       "", [], None, tk("canh bò nấu dứa cà chua"), [("thit_bo", "Bắp bò", 400, "g", "n", "chinh")]),
 ]
