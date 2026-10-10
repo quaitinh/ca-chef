@@ -86,7 +86,7 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
   "Cất vào tủ lạnh": đồ cho bữa gần để ngăn mát, đạm của giỏ mua dư để ngăn đá. Sau đó Cá Chef gợi ý món theo tủ.
 - Tủ sắp hết đồ (đã dùng tủ lạnh mà còn ≤ 1 thứ thịt, cá, trứng, đậu chưa quá hạn): trang Nấu gì nhắc nên đi chợ.
 - Trà hôm nay: mỗi ngày pha một loại uống cả ngày. Nước vối, trà gạo lứt đậu đen, nước chè xanh, trà hoa cúc xoay vòng đều lượt; táo đỏ kỷ tử thứ 3, thứ 6; trời mưa/mát pha trà gừng (cách ngày); atiso, râu ngô theo đợt 2 tuần rồi nghỉ 2 tuần (trong đợt: thứ 2, thứ 5). Cách pha theo bài thật (Cookpad, Vinmec, Điện máy XANH).
-- Trái cây hôm nay (dưới thẻ trà): 3 loại đang mùa, ưu tiên trồng ở Ninh Thuận rồi tỉnh lân cận (Khánh Hòa, Bình Thuận) và Tây Nguyên; trời nóng ưu tiên loại mát, nhiều nước; loại tính nóng (sầu riêng, chôm chôm, mít, nhãn, vải) nhắc ăn vừa phải; có trong tủ thì ưu tiên.
+- Trái cây hôm nay (dưới thẻ trà): 2 loại đang mùa, ưu tiên trồng ở Ninh Thuận rồi tỉnh lân cận (Khánh Hòa, Bình Thuận) và Tây Nguyên; trời nóng ưu tiên loại mát, nhiều nước; loại tính nóng (sầu riêng, chôm chôm, mít, nhãn, vải) nhắc ăn vừa phải; có trong tủ thì ưu tiên.
 - Rã đông cho ngày mai: thịt, cá rã đông từ tối hôm trước; tôm, mực lấy từ ngăn đá nấu thẳng (chỉ nhắc một dòng);
   mỡ heo luôn để ngăn mát nên không có trong danh sách. Theo tủ lạnh: tủ đang ghi đồ thì chỉ nhắc thứ đang ghi ❄ ngăn đá;
   tủ trống mà hẹn đi chợ ngày mai thì không nhắc (mai mua tươi); tủ trống, không đi chợ mai thì nhắc "nếu có sẵn trong ngăn đá".
