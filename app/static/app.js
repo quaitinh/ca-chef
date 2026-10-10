@@ -92,6 +92,7 @@ async function taiDuLieu() {
   let moi = false;
   try { moi = !!sessionStorage.getItem("cachef.tai_lai"); sessionStorage.removeItem("cachef.tai_lai"); } catch { /* chặn lưu */ }
   const v = moi ? "" : await fetch(`version.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json()).then((x) => x.v || "").catch(() => "");
+  S.ver = v;
   return fetch(v ? `data.json?v=${v}` : `data.json?t=${Date.now()}`).then((r) => r.json());
 }
 async function load() {
@@ -1254,7 +1255,8 @@ function pageAll() {
   $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
     <input id="q" class="search" type="search" placeholder="Tìm món – gõ không dấu được (ca thu, canh chua)" value="${esc(S.query)}">
     <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${TEN_LOC[v] || VAI_NGAN[v]}</button>`).join("")}</div>
-    <div id="all-list"></div>`;
+    <div id="all-list"></div>
+    <a class="nhac" href="#/duyet-mon"><span class="ic">📚</span><span class="tx"><b>Duyệt thêm món</b><span class="meta">Chọn món muốn thêm từ danh mục Món Ngon Mỗi Ngày</span></span><span class="chev">›</span></a>`;
   const q = document.getElementById("q");
   q.oninput = () => { S.query = q.value; renderAll(); };
   $app.querySelectorAll("[data-v]").forEach((b) => (b.onclick = () => { S.vaiLoc = b.dataset.v; pageAll(); }));
@@ -1271,6 +1273,8 @@ function renderAll() {
     <a class="row-link li" href="#/mon/${d.ma_mon}">${thumb(d)}
       <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}${d.season === 2 ? ' · <span class="peak">Đang rộ</span>' : d.season === 0 ? " · trái mùa" : ""}</span></span>
       <span class="score ${d.score < 0 ? "neg" : ""}">${d.score > 0 ? "+" : ""}${d.score}</span></a>`).join("")}</div>` : `<p class="muted">${v === "yt" ? "Chưa có món yêu thích – bấm ♡ hoặc 👍 trên trang món." : v === "da_nau" ? "Chưa ghi món nào đã nấu." : "Không thấy món nào."}</p>`;
+  if (!list.length && words.length) document.getElementById("all-list").innerHTML +=
+    `<a class="nhac" href="#/duyet-mon?q=${encodeURIComponent(S.query.trim())}"><span class="ic">🔎</span><span class="tx"><b>Tìm "${esc(S.query.trim())}" trên Món Ngon Mỗi Ngày</b><span class="meta">Chọn món để thêm vào app</span></span><span class="chev">›</span></a>`;
 }
 
 // ---------- Tủ lạnh: có gì trong tủ -> nấu được món gì ----------
@@ -1670,10 +1674,65 @@ function headerFoot() {
 }
 
 // ---------- Điều hướng ----------
+// ---------- Duyệt món từ Món Ngon Mỗi Ngày ----------
+// Danh mục (mnmn.json, tải khi mở trang) để chủ nhà chọn món muốn thêm; ✓/✗ lưu ở cachef.duyet (đồng bộ cả nhà).
+// Món ✓ được Claude đưa vào app sau: cách làm viết lại, gắn nhãn tay – trang này không tự thêm món.
+const DUYET_KEY = "cachef.duyet";
+const NHOM_DM = { man: "Mặn", canh: "Canh, súp", rau: "Rau", goi: "Gỏi", lau: "Lẩu", mot_to: "Một tô", banh_che: "Bánh, chè", do_uong: "Đồ uống", chay: "Chay", au: "Món Âu" };
+const NHOM_BUA = ["man", "canh", "rau", "goi", "lau", "mot_to"];
+function duyetLS() { try { return JSON.parse(localStorage.getItem(DUYET_KEY) || "{}") || {}; } catch { return {}; } }
+function datDuyet(ma, v) {
+  const d = duyetLS();
+  if (d[ma]?.v === v) delete d[ma]; else d[ma] = { v, t: dayStr(0) };
+  try { ghiLS(DUYET_KEY, d); } catch { /* chặn lưu */ }
+}
+async function taiDanhMuc() {
+  if (!S.dm) S.dm = (await fetch(`mnmn.json?v=${S.ver || Date.now()}`).then((x) => x.json())).mon || [];
+  return S.dm;
+}
+async function pageDuyet(q0) {
+  S.dmLoc = S.dmLoc || "bua";
+  if (q0 != null) S.dmQ = q0;
+  S.dmSo = S.dmSo || 40;
+  if (!S.dm) $app.innerHTML = '<p class="muted">Đang tải danh mục…</p>';
+  let ds;
+  try { ds = await taiDanhMuc(); } catch { $app.innerHTML = '<p class="muted">Chưa tải được danh mục – thử lại khi có mạng.</p>'; return; }
+  const loc = ["bua", ...NHOM_BUA, "khac", "chon", "bo"];
+  const tenLoc = { bua: "Hợp bữa cơm", khac: "Bánh · uống · chay · Âu", chon: "✓ Đã chọn", bo: "✗ Đã bỏ", ...NHOM_DM };
+  $app.innerHTML = `<h1 class="ptitle">Duyệt món mới<small id="dm-dem"></small></h1>
+    <p class="note">Danh mục ${ds.filter((m) => !m.trong_app).length} món của Món Ngon Mỗi Ngày chưa có trong app. Bấm ✓ món muốn thêm, ✗ món không hợp.
+      Chọn xong nhắn Claude "thêm món đã duyệt": món sẽ được phân loại, viết lại cách làm rồi mới vào gợi ý.</p>
+    <input id="dm-q" class="search" type="search" placeholder="Tìm món hoặc nguyên liệu – gõ không dấu được" value="${esc(S.dmQ || "")}">
+    <div class="filt">${loc.map((v) => `<button data-l="${v}" class="${v === S.dmLoc ? "on" : ""}">${tenLoc[v]}</button>`).join("")}</div>
+    <div id="dm-list"></div>`;
+  const q = document.getElementById("dm-q");
+  q.oninput = () => { S.dmQ = q.value; S.dmSo = 40; veDuyet(); };
+  $app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => { S.dmLoc = b.dataset.l; S.dmSo = 40; pageDuyet(); }));
+  veDuyet();
+}
+function veDuyet() {
+  const dd = duyetLS(), v = S.dmLoc, words = plain(S.dmQ || "").split(/\s+/).filter(Boolean);
+  const hop = (m) => v === "chon" ? dd[m.ma]?.v === 1 : v === "bo" ? dd[m.ma]?.v === -1
+    : !dd[m.ma] && (v === "bua" ? NHOM_BUA.includes(m.nhom) : v === "khac" ? !NHOM_BUA.includes(m.nhom) : m.nhom === v);
+  const list = S.dm.filter((m) => !m.trong_app && hop(m) && words.every((w) => plain(m.ten + " " + (m.nguyen_lieu || "")).includes(w)));
+  const soChon = Object.values(dd).filter((x) => x.v === 1).length;
+  document.getElementById("dm-dem").textContent = `${list.length} món · đã chọn ${soChon}`;
+  document.getElementById("dm-list").innerHTML = list.length ? `<div class="list">${list.slice(0, S.dmSo).map((m) => `
+    <div class="li dm-li">${m.anh ? `<img class="dm-img" src="${esc(m.anh)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">` : '<span class="dm-img"></span>'}
+      <span class="tx"><a href="${esc(m.url)}" target="_blank" rel="noopener"><b>${esc(m.ten)}</b></a>
+        <span class="meta">${NHOM_DM[m.nhom] || ""}${m.phut ? ` · ${m.phut}′` : ""}${m.nguyen_lieu ? ` · ${esc(m.nguyen_lieu.split("|").slice(0, 4).join(", "))}` : ""}</span></span>
+      <span class="dm-nut"><button data-ok="${m.ma}" class="${dd[m.ma]?.v === 1 ? "on" : ""}" aria-label="Chọn">✓</button><button data-bo="${m.ma}" class="${dd[m.ma]?.v === -1 ? "on bo" : ""}" aria-label="Bỏ">✗</button></span>
+    </div>`).join("")}</div>${list.length > S.dmSo ? `<button class="btn" id="dm-them">Xem thêm (${list.length - S.dmSo})</button>` : ""}`
+    : `<p class="muted">${v === "chon" ? "Chưa chọn món nào." : "Không thấy món nào."}</p>`;
+  document.getElementById("dm-them")?.addEventListener("click", () => { S.dmSo += 40; veDuyet(); });
+  document.querySelectorAll("[data-ok]").forEach((b) => (b.onclick = () => { datDuyet(b.dataset.ok, 1); veDuyet(); }));
+  document.querySelectorAll("[data-bo]").forEach((b) => (b.onclick = () => { datDuyet(b.dataset.bo, -1); veDuyet(); }));
+}
+
 function route() {
   const h = (location.hash.slice(1) || "/").split("?")[0];
   const [, page, arg, arg2] = h.split("/");
-  const tab = page === "lich" ? "lich" : page === "mon" || page === "yeu-thich" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "di-cho" ? "di-cho" : page === "nau" ? "" : "home";
+  const tab = page === "lich" ? "lich" : page === "mon" || page === "yeu-thich" || page === "duyet-mon" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "di-cho" ? "di-cho" : page === "nau" ? "" : "home";
   document.querySelectorAll("[data-nav]").forEach((a) => a.classList.toggle("on", a.dataset.nav === tab));
   if (page !== "nau") { document.body.classList.remove("cook"); giuManHinh(false); }
   if (page === "lich") pageCalendar(arg && decodeURIComponent(arg));
@@ -1690,6 +1749,7 @@ function route() {
   else if (page === "tu-lanh") pageFridge();
   else if (page === "di-cho") pageDiCho();
   else if (page === "dong-bo") pageDongBo();
+  else if (page === "duyet-mon") pageDuyet(new URLSearchParams(location.hash.split("?")[1] || "").get("q"));
   else if (page === "nau" && arg) pageCook(decodeURIComponent(arg), Number(arg2 || 1) - 1);
   else pageHome();
   if (!(page === "lich" && arg)) window.scrollTo(0, 0);

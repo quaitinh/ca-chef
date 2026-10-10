@@ -65,6 +65,11 @@ vào nguyên liệu chính của món. Nguyên liệu mới cho các mã này kh
 Lịch mùa vụ đã tra cứu (`data/de_xuat/de_xuat_sua_sheet.csv`, có nguồn) được `app/server.py` đè lên các dòng nguyên liệu
 trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên Sheet (khác lịch cũ) thì giữ theo Sheet.
 
+### Duyệt món từ Món Ngon Mỗi Ngày
+- `scripts/de_xuat/danh_muc_mnmn.py <jsonl>` → `data/de_xuat/mnmn_danh_muc.csv`: danh mục ~2.500 món (tên, link, ảnh, nhóm đoán theo tên, thời gian, khẩu phần, tên nguyên liệu – không lấy cách làm). JSONL lấy từ trang công khai, để ngoài kho.
+- `export_json.py` xuất thành `app/static/mnmn.json`; trang **Món › Duyệt thêm món** (`#/duyet-mon`) tải khi mở, lọc theo nhóm, tìm theo tên/nguyên liệu; ✓ chọn / ✗ bỏ lưu ở `cachef.duyet` (đồng bộ cả nhà). Tìm món không thấy trong app thì có lối sang tìm trong danh mục.
+- Món ✓ được đưa vào app bằng tay theo quy trình công thức thật (cách làm viết lại, gắn nhãn ghép bữa), không tự vào gợi ý.
+
 ## Giao diện (điện thoại trước)
 
 Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#/lich`), **Món** (`#/mon`), **Tủ lạnh** (`#/tu-lanh`), **Đi chợ** (`#/di-cho`).
