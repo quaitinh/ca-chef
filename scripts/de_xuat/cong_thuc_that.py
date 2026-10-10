@@ -1,6 +1,6 @@
 """Thay công thức Cá Chef tự soạn (lô 2, 3, 4 – nguồn chỉ là trang tìm kiếm) bằng công thức thật trên Cookpad.
 
-Vào : JSON các công thức đã chọn (mỗi món: ma_mon, ten_moi, url, tac_gia, anh, khau_phan, thoi_gian, nguyen_lieu[]),
+Vào : JSON các công thức đã chọn (Cookpad hoặc Món Ngon Mỗi Ngày – nguồn ưu tiên khi có bài) (mỗi món: ma_mon, ten_moi, url, tac_gia, anh, khau_phan, thoi_gian, nguyen_lieu[]),
       tải từ trang công thức công khai (không lấy bài Premium). File này để ngoài kho.
 Ra  : data/de_xuat/cong_thuc_that.csv       – định lượng (quy về 4 người, đồ uống 2) theo đúng bài gốc
       data/de_xuat/cong_thuc_that_nguon.csv – link bài, tên món theo bài, tác giả, mã ảnh, khẩu phần gốc, thời gian
@@ -57,6 +57,11 @@ def main(src):
             x = SUA_DONG.get(ma, {}).get(d, d)
             ds += x if isinstance(x, list) else [x]
         for dong in map(html.unescape, ds):
+            # Món Ngon Mỗi Ngày ghi "Sườn non: 400g", "Tỏi băm : 2M" (M = muỗng canh, m = muỗng cà phê) -> "400g Sườn non".
+            m = re.match(r"^\s*([^:\d][^:]*?)\s*:\s*(\d[\d.,/\-]*)\s*(?:(M|m)\b)?\s*(.*)$", dong)
+            if m:
+                don_vi = {"M": " muỗng canh", "m": " muỗng cà phê"}.get(m[3] or "", "")
+                dong = f"{m[2]}{don_vi} {m[4]} {m[1]}".replace("  ", " ")
             dong = re.sub(r"(?i)^(\d+ gói đậu hũ non):.*$", r"\1", dong)
             dong = re.sub(r"^(\S+(?:-\S+)? gr thịt ba chỉ) tùy sức ăn\..*$", r"\1", dong)
             dong = re.sub(r"(?i)(?<![^\W\d_])tcfe?\b", " muỗng cà phê", re.sub(r"(?i)(?<![^\W\d_])tbs\b", " muỗng canh", dong))
