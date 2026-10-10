@@ -1253,10 +1253,10 @@ const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgM
   : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
 function pageAll() {
   $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
+    <a class="nhac" href="#/duyet-mon"><span class="ic">📚</span><span class="tx"><b>Duyệt thêm món</b><span class="meta">Chọn món muốn thêm từ danh mục Món Ngon Mỗi Ngày</span></span><span class="chev">›</span></a>
     <input id="q" class="search" type="search" placeholder="Tìm món – gõ không dấu được (ca thu, canh chua)" value="${esc(S.query)}">
     <div class="filt">${VAI_LOC.map((v) => `<button data-v="${v}" class="${v === (S.vaiLoc || "all") ? "on" : ""}">${TEN_LOC[v] || VAI_NGAN[v]}</button>`).join("")}</div>
-    <div id="all-list"></div>
-    <a class="nhac" href="#/duyet-mon"><span class="ic">📚</span><span class="tx"><b>Duyệt thêm món</b><span class="meta">Chọn món muốn thêm từ danh mục Món Ngon Mỗi Ngày</span></span><span class="chev">›</span></a>`;
+    <div id="all-list"></div>`;
   const q = document.getElementById("q");
   q.oninput = () => { S.query = q.value; renderAll(); };
   $app.querySelectorAll("[data-v]").forEach((b) => (b.onclick = () => { S.vaiLoc = b.dataset.v; pageAll(); }));
