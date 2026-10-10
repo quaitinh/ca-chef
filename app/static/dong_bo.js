@@ -2,10 +2,10 @@
 // qua Apps Script gắn với Google Sheet (scripts/apps_script/dong_bo.gs). Chưa cài thì app chạy như cũ, chỉ lưu trên máy.
 //
 // Mỗi khóa localStorage là một object; đồng bộ theo từng mục cấp 1 ("tulanh/rau_muong", "bua/2026-10-08"...):
-// mục nào sửa sau cùng (theo giờ máy sửa) thì thắng; xóa mục ghi null. Lịch sử gợi ý thì gộp (hợp các món), không đè.
+// mục nào sửa sau cùng (theo giờ máy sửa) thì thắng; xóa mục ghi null. Lịch sử gợi ý cũ (lich_su) thì gộp; món đã ăn (da_an) đè như thường.
 const DB_KEY = "cachef.dong_bo"; // { url, nha, since, t: { "tên/mục": giờ sửa }, cho: { "tên/mục": 1 chờ gửi } }
 const DB_TEN = { "cachef.tulanh": "tulanh", "cachef.danh_gia": "danh_gia", "cachef.chon": "chon", "cachef.bua": "bua",
-  "cachef.history": "lich_su", "cachef.di_cho": "di_cho" };
+  "cachef.history": "lich_su", "cachef.da_an": "da_an", "cachef.di_cho": "di_cho" };
 const DB_LS = Object.fromEntries(Object.entries(DB_TEN).map(([k, v]) => [v, k]));
 const DB = { cfg: null, hen: null, dang: false, loi: "", luc: 0, onDoi: null };
 

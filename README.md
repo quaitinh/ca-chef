@@ -93,7 +93,7 @@ Thanh dưới có 5 mục: **Nấu gì** (`#/`, `#/ngay-mai`), **Mùa vụ** (`#
 
 ## Đồng bộ trong nhà (nhiều điện thoại dùng chung)
 
-Tủ lạnh, món đã chọn và bữa đang gợi ý, đánh giá (đã nấu / 👍 / 👎 / ♥), lịch sử gợi ý, đi chợ dùng chung giữa các máy,
+Tủ lạnh, món đã chọn và bữa đang gợi ý, đánh giá (đã nấu / 👍 / 👎 / ♥), món đã ăn mỗi ngày, đi chợ dùng chung giữa các máy,
 lưu ở tab `dong_bo` của Google Sheet Cá Chef qua Apps Script (`scripts/apps_script/dong_bo.gs`). Chưa cài thì app chỉ lưu trên máy như cũ.
 
 Cài một lần (người giữ Sheet):
@@ -104,7 +104,7 @@ Cài một lần (người giữ Sheet):
 4. Bấm "Gửi link" gửi cho người nhà; mở link trên máy đó, bấm Bật đồng bộ.
 
 Cách gộp (`app/static/dong_bo.js`): mỗi mục (một nguyên liệu trong tủ, một món đã đánh giá, bữa của một ngày...) mang giờ sửa;
-mục sửa sau cùng thắng, xóa cũng đồng bộ; lịch sử gợi ý trong ngày thì gộp. Dữ liệu có trên máy trước khi bật được gửi lên
+mục sửa sau cùng thắng, xóa cũng đồng bộ; món đã ăn trong ngày là bữa cuối cùng (món chỉ hiện lúc bấm Đổi không tính là đã ăn). Dữ liệu có trên máy trước khi bật được gửi lên
 nhưng nhường bản trên Sheet nếu Sheet đã có. App lấy dữ liệu mới trước khi ghép bữa lúc mở, khi quay lại app và mỗi 45 giây;
 sửa xong gửi sau ~1 giây, mất mạng thì giữ lại gửi sau. URL và mã nhà chỉ lưu trên máy (không nằm trong kho);
 ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.gs` thì triển khai lại (Quản lý triển khai › Sửa › Phiên bản mới) để giữ URL.
