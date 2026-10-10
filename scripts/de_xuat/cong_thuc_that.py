@@ -20,7 +20,7 @@ from chuyen_nguyen_lieu import GIA_VI, GV_MA, MA, MON_NL_HEADER, OUT, RAU_THOM, 
 
 DO_UONG = {"nuoc_ep_oi", "sinh_to_gac"}
 # Mã cho nguyên liệu bảng MA cũ chưa có (thêm sau này); dòng chưa khớp vẫn được server.py gắn mã theo gan_ma.csv.
-THEM_MA = [(r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
+THEM_MA = [(r"ớt chuông", "ot_chuong"), (r"(^|\s)vịt|thịt vit", "vit"), (r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
            (r"ốc (bưu|đồng|nhồi)", "oc_dong"), (r"bí ngòi", "bi_ngoi"), (r"gấc", "gac"), (r"hạt sen", "hat_sen"), (r"táo đỏ|táo tàu", "tao_do"), (r"lươn", "luon"), (r"cải chua|dưa chua|dưa cải", "dua_cai_chua"), (r"măng chua", "mang_chua"), (r"sấu", "sau"),
            (r"hoa chuối", "hoa_chuoi"), (r"chuối.*xanh", "chuoi_xanh"), (r"chuối", "chuoi_chin"), (r"khổ qua|mướp đắng", "kho_qua"),
            (r"thiên lý", "thien_ly"), (r"tim cật|cật", "long_heo"), (r"cá liệt", "ca_liet"), (r"cá hố", "ca_ho"), (r"cá chuồ", "ca_chuon"),
@@ -66,6 +66,7 @@ def main(src):
             dong = re.sub(r"^(\S+(?:-\S+)? gr thịt ba chỉ) tùy sức ăn\..*$", r"\1", dong)
             dong = re.sub(r"(?i)(?<![^\W\d_])tcfe?\b", " muỗng cà phê", re.sub(r"(?i)(?<![^\W\d_])tbs\b", " muỗng canh", dong))
             qty, unit, name, ghi = tach(dong)
+            name = re.sub(r"\s*(LISA|AJI-NO-MOTO®?|Aji-ngon®?|AJI-QUICK®?|“?Phú Sĩ”?|\"Phú Sĩ\"|Ajinomoto)\b", "", name, flags=re.I).strip()
             t = name.lower()
             if re.search(KHONG_PHAI_NL, t):
                 continue
