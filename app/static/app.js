@@ -854,12 +854,9 @@ function traBox(day = 0) {
   if (!ma) return "";
   const ten = (m) => S.data.mon_an.find((d) => d.ma_mon === m)?.ten_mon || "";
   const mai = day ? null : traNgay(1);
-  return `<a class="tra-card" href="#/mon/${ma}">
-    <span class="tra-ic">🍵</span>
-    <span class="tra-tx"><small>Trà ${day ? "ngày mai" : "hôm nay"}</small>
-      <b>${esc(ten(ma))}</b>
-      <span class="tra-ghi">${esc(TRA_GHI[ma] || "")}</span>
-      <span class="tra-mai">Pha một bình uống cả ngày · không đường${mai && mai !== ma ? ` · Mai: ${esc(ten(mai))}` : ""}</span></span>
+  return `<a class="tra-card" href="#/mon/${ma}"><span class="tra-ic">🍵</span>
+    <span class="tra-tx"><b><small>Trà ${day ? "mai" : "hôm nay"}:</small> ${esc(ten(ma))}</b>
+      <span class="tra-ghi">${esc(TRA_GHI[ma] || "")}${mai && mai !== ma ? ` · Mai: ${esc(ten(mai))}` : ""}</span></span>
     <span class="chev">›</span></a>`;
 }
 
