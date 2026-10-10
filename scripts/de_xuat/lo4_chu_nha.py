@@ -346,4 +346,8 @@ RECIPES = [
     # ---------- Món nhà vừa nấu (10/2026) – công thức theo bài Cookpad ở cong_thuc_that ----------
     M("man", "hai_san", "tom_nuong_muoi_ot", "Tôm nướng muối ớt", "mon_chinh", "am", "nhe", "it", "tom_the", "moi", 40, "de",
       "", [], None, tk("tôm nướng muối ớt"), [("tom_the", "Tôm", 500, "g", "n", "chinh")]),
+    M("man", "ca", "ca_liet_kho_ca_chua", "Cá liệt kho cà chua", "mon_chinh", "am", "nhe", "it", "ca_liet", "moi", 30, "de",
+      "", [], None, tk("cá kho cà chua"), [("ca_liet", "Cá liệt", 500, "g", "n", "chinh")]),
+    M("canh", "bo", "canh_bo_nau_dua_ca_chua", "Canh bắp bò nấu dứa cà chua", "canh", "mat", "nhe", "it", "thit_bo", "nang", 30, "de",
+      "", [], None, tk("canh bò nấu dứa cà chua"), [("thit_bo", "Bắp bò", 400, "g", "n", "chinh")]),
 ]
