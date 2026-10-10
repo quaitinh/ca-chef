@@ -881,7 +881,7 @@ function traiCay(day = 0) {
     d += ((n * 7 + x.ma.length * 13) % 5) / 2; // đổi thứ tự nhẹ theo ngày để không ngày nào cũng y hệt
     return { x, d, ly };
   }).sort((a, b) => b.d - a.d);
-  return ds.slice(0, 3);
+  return ds.slice(0, 2);
 }
 const tenNgan = (t) => t.replace(/ (Ninh Thuận|Phan Rang|Khánh Sơn|Đắk Lắk|Bảo Lộc|Đà Lạt|Cam Lâm)$/, "").replace(/ \(.*\)$/, "");
 // Danh sách tháng có hàng / đang rộ, gom thành khoảng: "rộ T10–12, có T4–9".
