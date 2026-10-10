@@ -816,35 +816,48 @@ function ketQuaTim(k) {
     : '<p class="note">Không thấy món nào.</p>';
 }
 
-// Trà, nước uống trong ngày: xoay vòng loại lành tính theo buổi; loại nên xen kẽ thì theo ngày/thời tiết/đợt.
-const TRA_DOT = [["tra_atiso", "Atiso"], null, ["nuoc_rau_ngo", "Râu ngô"], null]; // mỗi đợt 2 tuần: uống rồi nghỉ (uống lâu dễ mất khoáng)
+// Trà, nước uống: mỗi ngày pha một loại uống cả ngày. Loại uống hằng ngày được thì xoay vòng; loại nên xen kẽ
+// (táo đỏ kỷ tử, gừng, atiso/râu ngô) chỉ vào ngày riêng để không uống liên tục.
+const TRA_VONG = ["nuoc_voi", "tra_gao_lut_dau_den", "nuoc_che_xanh", "tra_hoa_cuc"];
+const TRA_DOT = [["tra_atiso", "atiso"], null, ["nuoc_rau_ngo", "râu ngô"], null]; // mỗi đợt 2 tuần rồi nghỉ (uống lâu dễ mất khoáng)
+const TRA_GHI = {
+  nuoc_voi: "Mát, dễ tiêu – uống thay một phần nước lọc.",
+  tra_gao_lut_dau_den: "Không caffeine, cả nhà uống được cả buổi tối.",
+  nuoc_che_xanh: "Có caffeine: trẻ nhỏ uống nước lọc; người lớn tránh uống lúc đói và buổi tối.",
+  tra_hoa_cuc: "Nhẹ, dịu, dễ ngủ.",
+  tra_tao_do_ky_tu: "Uống vài lần mỗi tuần là đủ.",
+  tra_gung_sa: "Trời mưa, mát nên pha gừng uống ấm. Người hay nóng trong thì hạn chế.",
+  tra_atiso: "Đang trong đợt atiso (2 tuần rồi nghỉ 2 tuần).",
+  nuoc_rau_ngo: "Đang trong đợt râu ngô (2 tuần rồi nghỉ 2 tuần).",
+};
+// Loại xen kẽ theo lịch của ngày thứ n (tính từ 1/1/1970): táo đỏ kỷ tử thứ 3, thứ 6; trong đợt atiso/râu ngô: thứ 2, thứ 5.
+function traLich(n) {
+  const thu = (n + 4) % 7, dot = TRA_DOT[Math.floor(n / 14) % 4];
+  return [2, 5].includes(thu) ? "tra_tao_do_ky_tu" : dot && [1, 4].includes(thu) ? dot[0] : null;
+}
 function traNgay(day = 0) {
-  const ds = dayStr(day), n = Math.floor(Date.parse(ds + "T00:00:00Z") / 864e5), thu = new Date(ds + "T00:00:00Z").getUTCDay();
+  const n = Math.floor(Date.parse(dayStr(day) + "T00:00:00Z") / 864e5);
   const w = S.weather?.daily, tmax = w?.temperature_2m_max?.[day], mua = w?.precipitation_probability_max?.[day];
-  const dot = TRA_DOT[Math.floor(n / 14) % 4];
-  const ds_ = [
-    ["Sáng", "nuoc_che_xanh", "người lớn, sau bữa sáng – có caffeine, không uống lúc đói hay buổi tối"],
-    ["Trong ngày", n % 2 ? "nuoc_voi" : "tra_gao_lut_dau_den", "thay một phần nước lọc"],
-    ["Tối", "tra_hoa_cuc", "nhẹ, dễ ngủ"],
-  ];
-  if ([1, 3, 5].includes(thu)) ds_.push(["Thêm hôm nay", "tra_tao_do_ky_tu", "vài lần mỗi tuần là đủ"]);
-  if (tmax != null && (tmax <= 27 || (mua >= 60 && tmax <= 30)))
-    ds_.push(["Trời mưa, mát", "tra_gung_sa", "uống ấm; người hay nóng trong thì hạn chế"]);
-  if (dot) ds_.push([`Đợt ${dot[1].toLowerCase()}`, dot[0], "uống đợt 2 tuần rồi nghỉ"]);
-  return ds_.filter(([, ma]) => S.data.mon_an.some((d) => d.ma_mon === ma));
+  const co = (ma) => S.data.mon_an.some((d) => d.ma_mon === ma);
+  let ma = traLich(n);
+  if (tmax != null && (tmax <= 27 || (mua >= 60 && tmax <= 30)) && n % 2 === 0) ma = "tra_gung_sa"; // mưa nhiều ngày liền: cách ngày
+  if (!ma || !co(ma)) {
+    // Vòng hằng ngày chỉ đếm ngày không có loại xen kẽ để bốn loại đều lượt.
+    let i = 0;
+    for (let k = 20454; k < n; k++) if (!traLich(k)) i++; // từ 1/1/2026
+    ma = TRA_VONG[i % TRA_VONG.length];
+  }
+  return co(ma) ? ma : null;
 }
 function traBox(day = 0) {
-  const ds = traNgay(day);
-  if (!ds.length) return "";
-  const ten = (ma) => S.data.mon_an.find((d) => d.ma_mon === ma).ten_mon;
-  return `<details class="nhac-d">
-    <summary class="nhac"><span class="ic">🍵</span>
-      <span class="tx"><b>Trà, nước uống ${day ? "ngày mai" : "hôm nay"}</b><span class="meta">${esc(ds.slice(0, 3).map(([, ma]) => ten(ma)).join(" · "))}</span></span><span class="chev">›</span></summary>
-    <div class="nhac-body">
-      <ul class="thaw">${ds.map(([k, ma, ghi]) => `<li><span><a href="#/mon/${ma}"><b>${esc(ten(ma))}</b></a><small>${esc(ghi)}</small></span><span>${esc(k)}</span></li>`).join("")}</ul>
-      <p class="note">Không thêm đường, uống ấm hay nguội đều được, vẫn uống đủ nước lọc. Đang dùng thuốc điều trị bệnh mãn tính thì hỏi bác sĩ trước khi uống đều đặn loại thảo mộc nào.</p>
-    </div>
-  </details>`;
+  const ma = traNgay(day);
+  if (!ma) return "";
+  const ten = (m) => S.data.mon_an.find((d) => d.ma_mon === m)?.ten_mon || "";
+  const mai = day ? null : traNgay(1);
+  return `<a class="nhac tra" href="#/mon/${ma}"><span class="ic">🍵</span>
+    <span class="tx"><b>Trà ${day ? "ngày mai" : "hôm nay"}: ${esc(ten(ma))}</b>
+      <span class="meta">Pha một bình uống cả ngày. ${esc(TRA_GHI[ma] || "")} Không thêm đường, vẫn uống đủ nước lọc; đang dùng thuốc điều trị lâu dài thì hỏi bác sĩ trước.${mai && mai !== ma ? ` Mai: ${esc(ten(mai))}.` : ""}</span></span>
+    <span class="chev">›</span></a>`;
 }
 
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
