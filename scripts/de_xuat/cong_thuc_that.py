@@ -34,7 +34,7 @@ SUA_DONG = {
                           " Cà: khoảng 1 quả lớn, hoặc 2 quả nhỏ": "1 quả cà chua lớn (hoặc 2 quả nhỏ)",
                           "5-10.000 Đậu bắp: khoảng": "Đậu bắp (khoảng 5–10 nghìn đồng)"},
     "canh_dau_phu_ca_chua": {}, "vit_om_sau": {"1 lit nước: 500ml nước lọc + 500ml nước dừa": ["500 ml nước lọc", "500 ml nước dừa"]},
-    "nuong_kieu_han_kim_chi": {},
+    "nuong_kieu_han_kim_chi": {}, "canh_bo_nau_dua_ca_chua": {"1 tô nước lọc": "Nước lọc (1 tô, 2 người)"},
 }
 KHONG_PHAI_NL = r"^(chảo|máy|giấy|nồi|khay|que|xiên)\b"
 

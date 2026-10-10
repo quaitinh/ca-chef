@@ -857,3 +857,19 @@ CT.update({'bo_kho': ('Thịt nạm bò ướp gia vị bò kho, xào săn rồi
                    'thì tắt bếp.',
                    'Múc vịt ra đĩa sâu lòng, rắc tiêu, trang trí ngò rí. Ăn kèm bánh mì, nước tương và ớt lát.',
                    'Mẹo: Khứa các đường song song trên da để mỡ chảy ra bớt khi chiên; thích béo thì giữ lại mỡ chiên để nấu.'])})
+
+# Món nhà nấu 10/2026. Cá liệt kho theo bài cá đối kho cà chua (chủ nhà: kho như mọi loại cá biển khác).
+CT["ca_liet_kho_ca_chua"] = ("Cá biển ướp nước mắm, giấm, hành tỏi rồi kho với cà chua phi thơm trong dầu điều – nước kho đỏ, chua ngọt, cá chắc thịt.",
+    ["Cá làm sạch, để nguyên con hoặc cắt đôi. Ướp với 1/2 muỗng canh muối, chút tiêu, 1 muỗng canh hành tỏi băm, "
+     "1 muỗng canh nước mắm, 1 muỗng canh giấm gạo (bài gốc thêm 1/2 muỗng canh bột ngọt).",
+     "Cà chua: 2 quả cắt múi cau, 1 quả cắt nhỏ. Ớt hiểm đập dập, hành lá cắt khúc.",
+     "Đun nóng 2 muỗng canh dầu điều, phi thơm phần hành tỏi băm còn lại, cho cà chua cắt nhỏ vào xào sơ cùng chút muối, đường.",
+     "Xếp cá vào, chế nước sôi ngập cá, nêm 2 muỗng canh nước mắm. Kho lửa lớn đến khi cá săn lại.",
+     "Cho cà chua múi cau và ớt vào, hạ lửa nhỏ kho tiếp cho cá chín, thấm gia vị. Nước sệt lại thì thêm hành lá, rắc tiêu, tắt bếp.",
+     "Mẹo: cà chua băm cho màu và vị, cà chua múi cho đẹp; giấm lúc ướp giúp cá thơm, chua nhẹ."])
+CT["canh_bo_nau_dua_ca_chua"] = ("Canh chua bò nấu dứa, cà chua, dọc mùng, me – thịt bò thả sau cùng nên mềm, nước canh chua thanh.",
+    ["Rửa sạch dọc mùng, dứa, cà chua, giá, rau ngổ, ớt. Dọc mùng tước vỏ, cắt khúc vắt ráo; cà chua bổ 4; dứa cắt miếng vừa ăn; ớt thái mỏng.",
+     "Me dầm với nửa bát nước lấy nước cốt. Thịt bò rửa nước muối, thái mỏng.",
+     "Đun nồi nước cùng nước cốt me, cho dọc mùng, dứa, cà chua vào nấu sôi 2–3 phút.",
+     "Thả thịt bò, nêm nước mắm, hạt nêm, đường.",
+     "Cho giá, rau ngổ, ớt, đun sôi lại một dạo, nêm lại cho vừa rồi tắt bếp."])
