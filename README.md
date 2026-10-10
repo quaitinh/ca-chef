@@ -47,6 +47,10 @@ trong tên (thứ tự trong file là thứ tự ưu tiên) và thay nguyên li�
 hoặc ba chỉ;
 tủ ghi chung mã cha (vd. "Thịt heo") thì tính là có các nhánh cùng nhóm (tủ có nấm tươi không tính là có nấm hương khô).
 
+Nguồn công thức ưu tiên: Món Ngon Mỗi Ngày (monngonmoingay.com, bếp chuyên nghiệp soạn, định lượng rõ) – món có bài trùng tên ở đó
+dùng bài đó (27 món), không có thì dùng Cookpad. Món chủ nhà tự gửi link giữ nguyên. Ảnh lấy URL ảnh của bài (app hiện thẳng),
+trang món ghi đúng nguồn.
+
 Công thức thật (`scripts/de_xuat/cong_thuc_that.py`, `cach_lam_that.py`): 96 món trước đây Cá Chef tự soạn (nguồn chỉ là trang
 tìm kiếm) nay theo một bài Cookpad cụ thể (không lấy bài Premium): tên món theo bài, link bài, ảnh và tác giả của bài, định lượng
 theo bài (quy về 4 người; bài không ghi khẩu phần thì giữ số lượng gốc), cách làm viết lại bằng lời Cá Chef nhưng giữ đúng trình tự,

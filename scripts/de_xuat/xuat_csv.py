@@ -295,7 +295,7 @@ def main():
         rec = dict(zip(MON_AN_HEADER, r))
         for f in ("loai", "nhiet", "do_nang", "dau_mo", "thoi_tiet_hop"):
             if rec[f] not in ENUM[f]: loi.append(f"{rec['ma_mon']}: {f} lạ '{rec[f]}'")
-        if not str(rec["nguon"]).startswith("https://cookpad.com/"): loi.append(f"{rec['ma_mon']}: nguồn lạ")
+        if not re.match(r"https://(cookpad\.com|monngonmoingay\.com)/", str(rec["nguon"])): loi.append(f"{rec['ma_mon']}: nguồn lạ")
     if loi:
         sys.exit("LỖI:\n  " + "\n  ".join(loi))
 

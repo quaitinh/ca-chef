@@ -605,3 +605,255 @@ CT["tom_nuong_muoi_ot"] = ("Tôm biển ướp muối hạt, ớt bột, tỏi, 
      "Trộn muối hạt, ớt bột, tỏi băm, nước cốt chanh, dầu ô liu, mật ong, đường và bột ngọt; cho tôm vào trộn đều, để 20 phút cho thấm rồi xiên que.",
      "Nướng trên bếp than hoặc bếp điện, trở đều tay; tôm chuyển đỏ là được, không nướng lâu kẻo thịt dính vỏ.",
      "Ăn với cơm nóng."])
+
+# Nguồn ưu tiên: Món Ngon Mỗi Ngày (monngonmoingay.com) – món có bài ở đó dùng bài đó (đè các mục trên).
+CT.update({'bo_kho': ('Thịt nạm bò ướp gia vị bò kho, xào săn rồi hầm mềm cùng sả, quế, hồi và cà rốt.',
+            ['Làm sạch thịt bò với rượu trắng và gừng, cắt khối vuông cạnh 4cm. Ướp với muối, đường, hạt nêm, bột bò kho và dầu điều trong '
+             '30 phút.',
+             'Rang sơ quế và tai vị bằng lửa nhỏ rồi cho vào túi vải nhỏ. Cắt cà rốt khúc 5-6cm, đập dập sả.',
+             'Phi thơm hành tím, tỏi, gừng và ớt băm, cho bò vào thêm dầu điều, xào lửa lớn cho săn. Rắc bột mì vào để thịt săn hơn.',
+             'Khi thịt săn, đổ nước vào cùng bó sả và túi gia vị, hầm đến khi bò gần chín.',
+             'Cho cà rốt, nêm thêm hạt nêm và thả lá thơm vào, nấu đến khi chín.',
+             'Múc bò kho ra, trang trí với hành tây cắt lát, ngò gai và rau quế.',
+             'Mẹo: Khử mùi bò bằng rượu trắng và gừng rồi rửa lại; dùng nạm bò sẽ nhanh mềm và ngon hơn bắp bò.']),
+ 'bo_nhung_giam': ('Bò thái mỏng nhúng nồi nước dừa giấm thơm sả hành, cuốn bánh tráng rau sống chấm mắm nêm.',
+                   ['Rửa sạch thịt bò, thấm khô, cắt lát mỏng ngang thớ, xếp ra dĩa.',
+                    'Hành tây cắt múi cau, hành tím đập dập. Sả đập dập, chừa một cây băm nhuyễn. Ớt, tỏi, thơm băm nhuyễn.',
+                    'Pha nước giấm: trộn nước dừa với giấm gạo, đường, muối, bột ngọt, hành tây, hành tím và sả đập dập.',
+                    'Pha mắm nêm: phi thơm sả, ớt, tỏi với dầu, cho mắm nêm, nước, đường vào đun sôi, hớt bọt. Để nguội rồi cho thơm băm '
+                    'vào.',
+                    'Đổ nước giấm vào nồi lẩu trên bếp, nhúng bò chín rồi cuốn bánh tráng với xà lách, rau thơm, dưa leo, khế, chuối chát, '
+                    'bún, chấm mắm nêm.',
+                    'Mẹo: Để thịt bò trong ngăn đá một ngày, rã đông khi còn hơi cứng sẽ dễ thái mỏng và mềm hơn.']),
+ 'bun_thit_nuong': ('Thịt nạc dăm ướp sả, mật ong nướng vàng, ăn cùng bún, rau sống, mỡ hành, đậu phộng và nước mắm chua ngọt.',
+                    ['Cắt thịt mỏng vừa ăn, ướp với đường, nước tương, hạt nêm, muối, hành, tỏi, sả băm, dầu ăn, dầu điều, rượu ngũ vị '
+                     'hương và mật ong trong 20 phút.',
+                     'Rửa sạch rau thơm, xà lách, giá rồi cắt nhỏ. Rang vàng đậu phộng, giã nhỏ. Hành lá cắt nhỏ, dưa leo cắt sợi.',
+                     'Xiên thịt, nướng trên than hoặc bếp gas đến khi chín vàng.',
+                     'Pha nước mắm chua ngọt từ giấm gạo, đường, nước mắm, nước lọc, tỏi ớt băm. Đun nóng mỡ nước, đổ vào chén hành lá, '
+                     'trộn đều làm mỡ hành.',
+                     'Xếp bún, xà lách, rau thơm, dưa leo, giá vào tô, đặt thịt nướng lên, rưới mỡ hành, rắc đậu phộng. Ăn kèm đồ chua và '
+                     'nước mắm.',
+                     'Mẹo: Làm mỡ hành bằng cách cho chút muối vào hành lá rồi đổ dầu sôi vào; khi nướng thỉnh thoảng phết nước ướp lên '
+                     'thịt cho thấm đều.']),
+ 'ca_chuon_kho_man': ('Cá chuồn kho cùng thịt ba chỉ, mít non, cà chua và nước mía, đậm vị cay mặn.',
+                      ['Giã nhuyễn 3 đầu hành lá với 2 trái ớt hiểm. Cắt đôi cá, thịt ba chỉ cắt khối 1cm, ướp với hỗn hợp vừa giã cùng '
+                       'bột ngọt, muối, ớt bột, nước mắm.',
+                       'Giã dập 2 đầu hành còn lại nhét vào bụng cá. Hành lá cắt khúc 1cm, mít cắt khối 3–4cm.',
+                       'Phi nóng dầu, xào một nửa cà chua hạt lựu với đường, muối đến khi mềm. Cho cá và thịt vào đảo đến khi săn lại, '
+                       'thêm nước màu điều.',
+                       'Đổ nước mía và nước vào sâm sấp mặt cá, cho mít, phần cà chua còn lại và 2 trái ớt hiểm đập dập vào.',
+                       'Kho lửa vừa đến khi nước sánh lại, thêm cà chua bi kho tiếp 2 phút, cuối cùng cho hành lá. Múc ra đĩa, ăn với cơm '
+                       'nóng.',
+                       'Mẹo: Nhét đầu hành đập dập vào bụng cá để cá thơm và không bị bể khi kho.']),
+ 'ca_duc_chien_gion': ('Cá đục nhỏ tẩm bột chiên giòn vàng, ăn kèm thơm và cà chua trộn sốt chua cay.',
+                       ['Hòa muối và rượu trắng vào nước lạnh, ngâm cá đục khoảng 15 phút rồi vớt ra thấm ráo.',
+                        'Cắt thơm, cà chua hạt lựu. Cắt nhỏ ngò rí.',
+                        'Đun nóng dầu, lăn cá qua bột tẩm khô chiên giòn rồi chiên vàng giòn, để ráo dầu.',
+                        'Pha sốt từ hành tím băm, ớt sừng, muối, đường, giấm gạo, tương ớt và dầu ăn. Cho thơm, cà chua, ngò rí vào trộn '
+                        'đều, để lạnh.',
+                        'Xếp cá ra đĩa, ăn kèm phần thơm cà chua trộn.',
+                        'Mẹo: Ngâm cá trong nước lạnh có muối và rượu để cá hết tanh, thấm vị và chắc thịt; tẩm bột chiên giòn giúp cá '
+                        'vàng đều, không bị khô.']),
+ 'canh_bo_kim_chi': ('Bắp bò nấu nồi áp suất với nước kim chi, nấm đông cô, thêm kim chi, boa rô và ớt.',
+                     ['Cắt bắp bò khối vuông 3cm, ướp với hạt nêm, tiêu và đường. Tỏi đập dập.',
+                      'Cắt kim chi khúc 5cm, giữ lại nước kim chi. Nấm đông cô ngâm nở, bỏ chân, trộn với hạt nêm. Boa rô cắt xéo, ớt sừng '
+                      'đập dập rồi cắt đôi.',
+                      'Cho nước vào nồi áp suất cùng bắp bò, tỏi, nước kim chi và nấm, nấu khoảng 20 phút cho bò mềm.',
+                      'Thêm kim chi, boa rô và ớt sừng, nấu thêm 5 phút rồi tắt bếp. Múc ra tô, dùng nóng với cơm, mì hoặc bún.',
+                      'Mẹo: Cho tỏi đập dập vào nấu để tăng hương vị cho món canh.']),
+ 'canh_ca_nau_ngot': ('Canh cá chim trắng nấu ngót với cà chua, chua nhẹ vị giấm, thơm hành lá và cần tàu.',
+                      ['Làm sạch cá, nhét hành lá và cần tàu đập dập vào bụng, ướp với giấm gạo, muối, bột ngọt.',
+                       'Cà chua một trái cắt múi, một trái băm nhỏ. Phi thơm tỏi với dầu, xào cà chua băm, nêm muối và đường. Hành lá, cần '
+                       'tàu cắt khúc 3cm, ớt sừng cắt lát.',
+                       'Đun sôi nước, cho cá vào. Khi sôi lại, cho cà chua múi vào, nêm muối, đường, giấm gạo, bột ngọt.',
+                       'Cho cà chua xào vào, tắt lửa, nêm nước mắm, thêm ớt và rau thơm. Múc ra tô, dùng nóng với cơm.',
+                       'Mẹo: Ướp giấm để khử tanh và tạo vị chua; mua cà chua trước 2–3 ngày để chín hẳn ở nhiệt độ thường thì xào lên màu '
+                       'đẹp.']),
+ 'canh_ca_ngu_nau_ca_thom': ('Canh cá ngừ ướp gia vị giã, nấu cùng cà chua, thơm, bắp chuối và sả dầu điều.',
+                             ['Giã chung muối, hạt nêm, đầu hành lá, ớt hiểm và ớt bột. Ướp cá với hỗn hợp này 15 phút.',
+                              'Cắt cà chua múi cau, thơm cắt lát, hành lá cắt khúc, sả đập dập cắt khúc.',
+                              'Đun nóng dầu điều, xào thơm sả, cho hành tỏi băm vào xào hơi vàng, thêm cá vào xóc đều rồi tắt lửa.',
+                              'Đun sôi nước, cho cá vào nấu sôi 4 phút. Thêm cà chua, thơm, nêm hạt nêm, đường, muối và khuấy đều.',
+                              'Cho bắp chuối vào rồi tắt lửa, nêm thêm nước mắm, rắc hành lá.',
+                              'Ăn với cơm trắng hoặc bún tươi, kèm nước mắm dầm ớt hoặc muối ớt.',
+                              'Mẹo: Giã gia vị rồi ướp cá giúp cá thơm và thấm vị sau khi nấu.']),
+ 'canh_chua_ca_dieu_hong': ('Canh chua cá diêu hồng rán vàng ninh nhỏ lửa với cà chua, dọc mùng, dứa và thì là.',
+                            ['Cắt khúc cá, rửa sạch, đầu cá bổ đôi. Thái dọc mùng, ngâm nước muối rồi rửa sạch. Bổ cau cà chua, thái miếng '
+                             'dứa, thái nhỏ hành và thì là.',
+                             'Rán cá vàng với dầu ăn rồi để riêng.',
+                             'Phi thơm hành, cho cà chua vào xào chín, đổ nước vào đun sôi.',
+                             'Thả cá vào ninh nhỏ lửa khoảng 30 phút cho nước ngọt.',
+                             'Nêm gia vị lẩu Thái nêm sẵn, cho dọc mùng và dứa vào đun sôi rồi tắt lửa. Múc ra bát, thêm rau thơm, ăn '
+                             'nóng.',
+                             'Mẹo: Nên nấu cả đầu cá vì phần này nhiều mỡ, giúp canh béo hơn; lượng dứa gia giảm theo độ chua mong muốn.']),
+ 'canh_khoai_so_suon': ('Canh sườn non xào săn nấu nồi áp suất cùng khoai sọ, cà rốt, rắc ngò gai ngò om.',
+                        ['Gọt sạch khoai sọ, củ lớn cắt đôi. Cà rốt tỉa hoa, cắt lát dày 3 li. Ngò gai, ngò om rửa sạch, cắt nhỏ. Đầu hành '
+                         'trắng băm, phần lá cắt khúc.',
+                         'Chặt sườn khúc 2cm, ướp với đầu hành trắng, hạt nêm và tiêu cho thấm.',
+                         'Phi thơm tỏi trong nồi áp suất, cho sườn vào xào săn.',
+                         'Thêm nước, khoai sọ, cà rốt, nêm hạt nêm, đậy nắp nấu sôi khoảng 7 phút.',
+                         'Múc canh ra tô, rắc ngò gai, ngò om, hành lá và tiêu, dùng nóng.',
+                         'Mẹo: Rửa khoai sọ bằng nước bột năng hoặc nước vo gạo để sạch cát, đỡ ngứa tay; xào sườn trước để thịt ngọt, mau '
+                         'nhừ.']),
+ 'canh_muc_nau_chua': ('Canh chua khế, thơm, cà chua thả viên mực trộn thịt heo, thơm ngò gai lá quế, ăn kèm bún.',
+                       ['Băm nhỏ mực. Khế cắt lát mỏng, thơm cắt rẻ quạt, hành tây và cà chua cắt múi cau, hành tím cắt lát, đầu hành lá '
+                        'băm, chanh vắt lấy nước, ngò gai và lá quế cắt khúc, ớt sừng cắt lát mỏng.',
+                        'Trộn đều mực băm với thịt xay, đầu hành lá, hạt nêm, tiêu, bột ngọt và dầu ăn.',
+                        'Phi thơm hành tím, cho thơm và cà chua vào xào mềm, thêm khế và hành tây xào tiếp, nêm bột ngọt và muối.',
+                        'Đổ nước vào đun sôi, nêm đường, hạt nêm, nước mắm, nước cốt chanh. Khi sôi lại, dùng muỗng múc nhân mực thành '
+                        'viên thả vào nồi.',
+                        'Đợi sôi lại, vớt bọt, cho ngò gai, lá quế, ớt vào rồi tắt lửa. Múc ra tô, trang trí ớt lát và húng quế, dùng với '
+                        'bún.',
+                        'Mẹo: Trộn thêm dầu vào mực để viên mực không bị khô.']),
+ 'canh_muop_mong_toi': ('Canh mồng tơi và mướp hương nấu với tôm băm xào hành phi, ngọt mát, dễ ăn.',
+                        ['Cắt mồng tơi thành khúc vừa ăn. Bào vỏ mướp hương, cắt miếng vừa ăn.',
+                         'Phi thơm hành tím băm với dầu ăn, cho tôm băm vào xào thơm.',
+                         'Đổ nước vào nồi, đun sôi rồi cho mướp và mồng tơi vào nấu chín.',
+                         'Nêm bột canh, hạt nêm và bột ngọt, khuấy đều rồi tắt lửa.',
+                         'Múc canh ra tô, ăn nóng với cơm trắng.',
+                         'Mẹo: Xào tôm với hành tím cho canh thơm hơn; chọn mướp hương để canh ngọt và ngon hơn.']),
+ 'cha_la_lot': ('Chả thịt heo trộn giò sống, mỡ và lá lốt thái nhuyễn, ép khuôn vuông chiên vàng.',
+                ['Thái lá lốt thành sợi nhuyễn. Cắt nhỏ mỡ heo.',
+                 'Trộn đều thịt băm, giò sống, mỡ heo, lá lốt, hành tỏi băm; nêm tiêu, đường, nước mắm, bột ngọt và để 15 phút cho thấm.',
+                 'Chia hỗn hợp thành 8 phần, dùng khuôn inox vuông để tạo hình.',
+                 'Đun nóng dầu, chiên chả đến khi vàng, vớt ra để ráo dầu.',
+                 'Xếp chả ra đĩa, rưới sốt mayonnaise, trang trí ớt băm; ăn cùng xôi đậu xanh và bắp cải cà rốt bóp chua.',
+                 'Mẹo: Cho lá lốt vào nhân để món thêm hương vị.']),
+ 'chao_ech': ('Cháo trắng gạo tẻ pha nếp nấu lá dứa, ăn kèm ếch kho sệt cay thơm gừng ớt.',
+              ['Nấu cháo từ hai phần gạo tẻ, một phần gạo nếp với chút muối và hai lá dứa.',
+               'Làm sạch ếch với rượu trắng và muối, cắt miếng vừa ăn. Ướp với ớt bột, bột ngọt, hạt nêm, rượu mai quế lộ và gừng trong 15 '
+               'phút.',
+               'Pha hỗn hợp kho gồm nước dùng gà, nước tương, hắc xì dầu, đường và hạt nêm.',
+               'Đun sôi hỗn hợp kho, thêm ớt khô, gừng băm, cho ếch vào kho lửa lớn đến khi săn. Hạ lửa vừa, kho đến khi ếch chín săn, '
+               'thấm vị và nước hơi sánh.',
+               'Cho dầu mè vào trộn đều, thêm hành lá rồi tắt lửa.',
+               'Múc cháo ra nồi đất, làm nóng, dọn kèm nồi ếch kho.',
+               'Mẹo: Kho ếch lửa lớn với nhiều gia vị để thịt chín săn và thấm vị.']),
+ 'chao_trung_thit_bam': ('Cháo gạo tẻ và nếp nấu nhừ với thịt heo băm xào tơi, kèm trứng gà chần nguyên quả.',
+                         ['Vo sạch gạo tẻ và nếp, nấu với nước đến khi cháo nở đặc sệt.',
+                          'Hành lá lấy đầu trắng băm nhuyễn, phần lá cắt nhỏ cùng ngò rí. Băm nhuyễn thịt heo, ướp với hành tím băm, hạt '
+                          'nêm, tiêu và chút nước lọc trong 15 phút.',
+                          'Đun sôi nước có pha giấm gạo, hạ lửa, đập trứng thả nhẹ cho lòng trắng bao quanh lòng đỏ. Luộc đến khi trứng '
+                          'nổi, vớt ra rửa nước lạnh, bóc bớt màng lòng trắng dính quanh.',
+                          'Thêm nước lạnh vào nồi cháo, nấu tiếp đến khi cháo nhừ.',
+                          'Phi thơm hành tím băm với dầu ăn, xào thịt vừa chín và tơi rồi cho vào nồi cháo. Nêm hạt nêm và nước mắm cho '
+                          'vừa ăn.',
+                          'Múc cháo ra tô, đặt trứng vào, rắc hành lá, ngò rí và tiêu, ăn nóng.',
+                          'Mẹo: Ướp thịt với ít nước lạnh để khi xào thịt tơi đều.']),
+ 'chim_cut_ro_ti': ('Chim cút chiên săn rồi rim lửa nhỏ với nước dừa, sả, hành tỏi và trứng cút.',
+                    ['Rửa cút với ít muối, để ráo, chặt đôi. Cắt hành tây múi cau 0.5cm, hành lá khúc 2cm, sả đập dập cắt khúc. Luộc chín '
+                     'trứng cút, bóc vỏ.',
+                     'Ướp cút với nước hành tỏi, bột ngọt, muối, hạt nêm, ngũ vị hương và nước tương cho thấm.',
+                     'Đun dầu, chiên sơ cút cho săn và vàng đều hai mặt. Cho dầu điều, xác hành tỏi và sả vào đảo đều.',
+                     'Thêm trứng cút và nước dừa, rim lửa nhỏ cho cút thấm gia vị.',
+                     'Khi cút gần chín, cho hành tây vào rim thêm 2 phút đến khi nước sánh, rắc hành lá, ngò rí rồi tắt bếp.',
+                     'Bày cút ra đĩa cùng xà lách, cà chua, rau răm; ăn với cơm, bánh mì hoặc xôi.',
+                     'Mẹo: Chiên sơ cút trước khi rô ti giúp thịt săn và thấm vị hơn; sả đập dập tạo mùi thơm cho món.']),
+ 'com_chien_kim_chi': ('Cơm chiên kim chi kiểu Hàn với bò, bắp, tương ớt gochujang, phủ trứng ốp la, mè và rong biển.',
+                       ['Nấu cơm khô ráo để chiên. Cắt bò khối 5mm, ướp gừng và nước tương. Kim chi cắt sợi ngang 3mm, vắt ráo, giữ nước. '
+                        'Hành lá cắt nhỏ, để riêng phần đầu. Chiên trứng ốp la.',
+                        'Phi thơm một phần tỏi với dầu, xào bò chín tái rồi trút ra.',
+                        'Thêm dầu, phi thơm phần tỏi còn lại với đầu hành. Cho kim chi, bắp vào xào thơm, thêm tương ớt Hàn Quốc và nước '
+                        'kim chi khuấy tan.',
+                        'Cho cơm, bột ngọt, nước tương vào trộn đều, nêm vừa ăn, chiên lửa vừa đến khi hạt cơm rám mặt. Cho bò, hành lá, '
+                        'dầu mè vào xóc đều.',
+                        'Nén cơm vào chén, úp ra đĩa, đặt trứng ốp la lên, rắc mè rang và rong biển. Dùng nóng, chan nước tương tùy thích.',
+                        'Mẹo: Xào kim chi đã vắt ráo trước để thơm, bớt chua gắt; cho dầu mè sau cùng để giữ mùi thơm và hạt cơm bóng.']),
+ 'ga_rang_muoi': ('Gà ta tẩm bột chiên vàng, xóc muối nếp đậu xanh rang xay, thêm sả, gừng, lá chanh chiên giòn.',
+                  ['Chặt gà miếng vừa ăn, ướp với hạt nêm, bột ngọt, nước mắm, tiêu, lòng đỏ trứng và dầu ăn, để tủ lạnh 30 phút. Sả cắt '
+                   'khúc đập dập, chẻ sợi mỏng; gừng và lá chanh thái sợi nhuyễn.',
+                   'Ngâm gạo nếp và đậu xanh 10–15 phút, để ráo, rang lần lượt đến chín thơm. Xay cùng muối hột cho nhỏ nhưng không quá '
+                   'mịn.',
+                   'Đun nóng dầu, chiên giòn lần lượt sả, gừng, lá chanh rồi vớt ra để ráo dầu.',
+                   'Tẩm gà qua bột năng, chiên chín vàng, vớt ra thấm dầu rồi cho muối vào xóc đều cho bám khắp miếng gà.',
+                   'Cho gà ra dĩa, rải sả, gừng, lá chanh lên trên, trộn đều khi ăn.',
+                   'Mẹo: Rang nếp và đậu xanh vừa thơm, không để vàng; xóc muối khi gà còn nóng để muối bám tốt hơn.']),
+ 'khoai_tay_xao_bo': ('Bò mềm ướp mayonnaise xào cùng khoai tây hấp áp chảo vàng, cà chua và rau cần tàu.',
+                      ['Cắt nhỏ thịt bò, ướp với hạt nêm, đường, tỏi băm, tiêu và xốt mayonnaise.',
+                       'Cắt khoai tây thành 6 múi, trộn với muối, bột ngọt và chút nước, bọc vải mùng quanh tô rồi hấp chín (hoặc dùng lò '
+                       'vi sóng). Cà chua cắt 6 múi, rau cần tàu cắt khúc khoảng 4cm.',
+                       'Đun nóng chút dầu, áp chảo nhanh khoai tây cho vàng nâu rồi lấy ra dĩa.',
+                       'Phi vàng tỏi, cho bò vào đảo đều, tiếp đến cà chua và khoai tây. Thêm nước, tương cà, mayonnaise, nước mắm, cuối '
+                       'cùng cho rau cần tàu vào rồi tắt lửa.',
+                       'Xếp khoai tây, cà chua quanh dĩa, bò ở giữa, trang trí ngò và dùng nóng.',
+                       'Mẹo: Ướp bò với mayonnaise giúp thịt mềm, thơm; hấp chín khoai trước khi xào để khoai mềm dẻo hơn.']),
+ 'long_ga_xao_gia_dua': ('Lòng gà khử mùi, ướp đậm, xào nhanh lửa lớn cùng giá, hẹ và cà rốt giòn ngọt.',
+                         ['Rửa lòng gà bằng nước muối, xả lại nước lạnh, chần qua nước sôi có rượu để khử tanh. Để ráo, cắt miếng vừa ăn; '
+                          'mề gà chẻ đôi, khứa caro mặt cắt.',
+                          'Ướp lòng gà với muối, tiêu, nước mắm và bột ngọt cho thấm.',
+                          'Rửa giá, hẹ bằng nước đá pha muối; hẹ cắt khúc 5cm. Cà rốt cắt sợi bằng cọng giá, ngò rí rửa để ráo, ớt cắt '
+                          'lát.',
+                          'Phi thơm một nửa hành tím với dầu ăn, xào lòng gà chín rồi trút ra đĩa.',
+                          'Phi thơm phần hành tím còn lại, xào cà rốt chín, thêm giá xào lửa lớn, nêm đường, muối, tiêu, bột ngọt. Cho hẹ '
+                          'và lòng gà vào đảo nhanh, nếm vừa ăn rồi tắt bếp.',
+                          'Múc ra đĩa, rắc tiêu và ngò rí, ăn nóng kèm nước tương và ớt.',
+                          'Mẹo: Khứa caro mề gà để dễ thấm và không dai; rửa giá, hẹ bằng nước đá có muối cho sạch và giòn hơn.']),
+ 'luon_om_chuoi_dau': ('Lươn om cùng thịt ba chỉ, chuối xanh, đậu hũ chiên với nghệ, mắm tôm, lá lốt và tía tô.',
+                       ['Cắt lươn khúc 3cm, ướp với nước nghệ, hành tỏi băm, bột ngọt, muối, tiêu và đường. Cắt thịt ba chỉ miếng vừa ăn, '
+                        'ướp giống lươn.',
+                        'Cắt khúc chuối xanh, ngâm nước, chần qua nước sôi có chanh hoặc muối, để ráo rồi trộn nước nghệ khi còn nóng.',
+                        'Thái sợi lá lốt, tía tô. Cắt đậu hũ chiên thành miếng vuông nhỏ.',
+                        'Phi thơm hành tỏi băm, cho thịt vào xào săn. Thêm lươn và chuối, om khoảng 5 phút.',
+                        'Cho đậu hũ, ớt hiểm, mắm tôm, giấm gạo và nước vào, đậy nắp om khoảng 10 phút. Trộn tía tô, lá lốt, ớt sợi rồi '
+                        'tắt lửa, ăn với cơm trắng.',
+                        'Mẹo: Trộn chuối với nghệ khi còn nóng cho chuối lên màu đẹp; xào thịt săn tươm mỡ để món hấp dẫn hơn.']),
+ 'nui_xao_bo': ('Nui xào se mặt chiên cùng trứng thành bánh nhỏ, phủ bò xào hành tây và cải ngọt.',
+                ['Luộc mềm nui trong nước có ít dầu, xả nước lạnh, để ráo rồi trộn với chút hạt nêm và xốt cà chua.',
+                 'Băm gừng, tỏi, thêm nước ấm vắt lấy nước; bột năng hòa với nước. Hành tây cắt múi cau, cải ngọt cắt khúc 7cm để riêng '
+                 'thân và lá, ngò rí cắt nhỏ.',
+                 'Thái mỏng thịt bò, ướp với nước gừng, nước tỏi, rượu ngũ vị, hạt nêm, nước tương, tiêu và nước bột năng.',
+                 'Đun nóng dầu, nêm hạt nêm, xào nui đến khi se mặt. Chia nui thành từng phần, đập trứng vào chiên thành bánh nhỏ, xếp ra '
+                 'dĩa, giữ nóng.',
+                 'Xào chín hành tây và cải ngọt rồi trút ra. Xào bò vừa chín tới, cho rau trở lại trộn đều, nêm hạt nêm, tiêu, tắt bếp.',
+                 'Cho bò lên nui, rắc tiêu, trang trí ngò rí, chấm nước tương pha tương ớt.',
+                 'Mẹo: Xào nui khi đã nguội để dễ rám mặt, không dính chảo; áo bột năng cho bò để thịt không khô, giữ vị ngọt.']),
+ 'pho_ga': ('Phở gà nước dùng hầm xương gà, xương heo trong ngọt, thịt gà xé, thơm lá chanh.',
+            ['Rửa sạch xương gà, xương heo, chần qua nước sôi rồi rửa lại bằng nước lạnh. Ướp thịt gà với muối, tiêu, bột ngọt và nước '
+             'mắm.',
+             'Nướng sơ gừng, hành tím, rễ ngò rồi bọc trong vải mùng, buộc lại.',
+             'Cho xương vào nồi nước lạnh, đun sôi rồi hạ lửa, hớt bọt kỹ. Thêm cần tây, hành boaro và túi gia vị nướng, ninh nhỏ lửa 2-3 '
+             'giờ rồi lọc lấy nước dùng.',
+             'Hành lá lấy đầu trắng trụng nước sôi, phần lá cắt nhỏ. Hành tây thái mỏng, lá chanh thái sợi nhỏ, ngò gai rửa sạch để ráo.',
+             'Đun sôi nước dùng, nêm muối hột, nước mắm, hạt nêm, đường phèn và bột ngọt. Cho thịt gà vào luộc chín, vớt ngâm nước đá rồi '
+             'xé sợi.',
+             'Trụng bánh phở qua nước nóng, vẩy ráo cho vào tô, xếp gà, hành lá, hành tây, ngò gai, lá chanh lên. Chan nước dùng đang sôi, '
+             'ăn nóng kèm nước mắm, ớt và chanh.',
+             'Mẹo: Nêm muối hột và đường phèn để nước dùng ngọt thanh.']),
+ 'suon_ram_man_ngot': ('Sườn non ướp hành tỏi, xào săn trong nước màu rồi ram lửa vừa đến mềm, sốt sánh mặn ngọt.',
+                       ['Rửa sạch sườn, chặt miếng dài khoảng 3cm, ướp với hạt nêm, đường, muối, hành tỏi băm, nước mắm, đảo đều và để 15 '
+                        'phút.',
+                        'Cắt sợi hành lá và ớt sừng, dưa leo cắt lát.',
+                        'Thắng nước màu với dầu và chút đường, nêm ít nước mắm rồi cho sườn vào xào săn.',
+                        'Thêm nước, đậy vung, nấu lửa vừa đến khi sườn mềm và nước sánh lại.',
+                        'Cho sườn ra dĩa, trang trí ớt, dưa leo và chút ngò. Ăn kèm cơm, rau, dưa.',
+                        'Mẹo: Thắng nước màu trực tiếp với dầu trong chảo rồi thêm nước mắm để có sốt sánh, thơm; chọn sườn có sụn nhỏ, '
+                        'nhiều thịt.']),
+ 'suon_xao_chua_ngot': ('Sườn non áo bột năng chiên vàng, sốt chua ngọt cùng hành tây và ớt chuông ba màu.',
+                        ['Cắt hành tây, ớt chuông thành miếng vuông cạnh 3cm. Chẻ dọc sườn non, chặt khúc dài 4cm.',
+                         'Ướp sườn với đường, muối, bột ngọt, nước tương, tiêu và hành tím băm khoảng 10 phút, rồi trộn lòng trắng trứng '
+                         'và lăn qua một lớp bột năng mỏng.',
+                         'Pha nước sốt gồm giấm gạo, đường, nước tương, hạt nêm, nước và tương cà.',
+                         'Xào sơ hành tây, ớt chuông rồi trút ra đĩa. Đun nóng dầu, chiên sườn vàng, vớt ra để ráo dầu.',
+                         'Phi thơm tỏi, đổ nước sốt vào, cho sườn vào xào lửa nhỏ khoảng 5 phút đến khi chín mềm. Thêm chút nước bột năng '
+                         'cho sốt sệt, cho hành tây, ớt chuông vào, nêm lại cho vị chua ngọt dịu.',
+                         'Bày sườn ra đĩa, rắc tiêu, trang trí ngò rí, ăn nóng với cơm.',
+                         'Mẹo: Áo bột năng sau khi ướp giúp gia vị thấm, giữ nước ngọt trong thịt nên sườn xào xong không bị khô.']),
+ 'tom_nuong_muoi_ot': ('Tôm sú ướp sốt ớt và gấc xay nhuyễn, nướng lò 220 độ C đỏ đẹp, cay thơm.',
+                       ['Cắt bỏ chân, phần nhọn ở đầu và đuôi tôm, dùng kéo xẻ dọc lưng tôm.',
+                        'Xay nhuyễn cơm gấc, ớt sừng, ớt Ba Tri, tỏi băm, đường, muối, nước mắm, ớt bột, dầu điều và bột ngọt thành sốt.',
+                        'Cho sốt vào tôm, ướp 20 phút cho thấm.',
+                        'Xếp tôm lên vỉ, nướng lò 220 độ C trong 15 phút, thường xuyên phết sốt lên tôm.',
+                        'Bày tôm ra đĩa, ăn nóng với bánh mì.',
+                        'Mẹo: Xay thật nhuyễn sốt để dễ bám và thấm vào tôm; cơm gấc tạo màu đỏ đẹp khi tôm chín.']),
+ 'vit_nau_thom': ('Vịt chiên bớt mỡ rồi nấu cùng thơm, nước dừa, quế, đinh hương đến chín mềm, nước sốt sánh nhẹ.',
+                  ['Rửa da vịt bằng gừng giã và rượu cho hết mùi hôi, xả sạch, để ráo. Khứa vài đường trên da rồi chiên cho ra bớt mỡ; '
+                   'khứa dọc phía trong má đùi và đùi cho dễ thấm.',
+                   'Ướp vịt với nước cốt hành tím, nước tương, muối, tiêu, hạt nêm trong 30 phút. Thơm gọt vỏ, tỉa sọc, bỏ lõi, cắt miếng '
+                   'vừa ăn rồi ướp chút đường, muối; dừa chặt lấy nước; hành tây cắt múi, ớt sừng cắt lát; bột năng hòa với nước.',
+                   'Cho vịt vào nồi không cần dầu, thêm dầu điều, quế, đinh hương, lá thơm, nước ép thơm và nước dừa. Nấu lửa to đến khi '
+                   'sôi rồi giảm lửa.',
+                   'Nêm hạt nêm, cho thơm và hành tây vào, nấu đến khi vịt chín mềm. Rót từ từ nước bột năng, khuấy đến khi nước sánh vừa '
+                   'thì tắt bếp.',
+                   'Múc vịt ra đĩa sâu lòng, rắc tiêu, trang trí ngò rí. Ăn kèm bánh mì, nước tương và ớt lát.',
+                   'Mẹo: Khứa các đường song song trên da để mỡ chảy ra bớt khi chiên; thích béo thì giữ lại mỡ chiên để nấu.'])})

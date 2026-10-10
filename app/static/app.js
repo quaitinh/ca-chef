@@ -742,7 +742,10 @@ function iconOf(d) {
 const VAI_NGAN = { man: "Mặn", rau: "Rau", canh: "Canh", lau: "Lẩu", nuong: "Nướng", mot_to: "Một tô", trang_mieng: "Tráng miệng", do_uong: "Đồ uống", an_vat: "Ăn vặt", dua_kem: "Ăn kèm" };
 
 // Ảnh món: mã ảnh trên CDN Cookpad, ghép URL theo cỡ (CDN tự cắt, ảnh nhỏ chỉ vài KB).
-const anhUrl = (ma, w, h) => S.anh[ma] && `https://img-global.cpcdn.com/recipes/${S.anh[ma].anh_id}/${w}x${h}cq70/photo.webp`;
+// anh_id là mã ảnh CDN Cookpad (ghép URL theo cỡ) hoặc URL ảnh đầy đủ (Món Ngon Mỗi Ngày).
+const anhUrl = (ma, w, h) => S.anh[ma] && (/^https?:/.test(S.anh[ma].anh_id) ? S.anh[ma].anh_id
+  : `https://img-global.cpcdn.com/recipes/${S.anh[ma].anh_id}/${w}x${h}cq70/photo.webp`);
+const tenNguon = (url) => /monngonmoingay/.test(url || "") ? "Món Ngon Mỗi Ngày" : "Cookpad";
 // Ô vuông nhỏ: ảnh nếu có, biểu tượng nằm dưới để hiện khi ảnh lỗi/chưa tải.
 const thumb = (d, cls = "") => `<span class="ic ${cls}">${iconOf(d)}${S.anh[d.ma_mon]
   ? `<img src="${anhUrl(d.ma_mon, 112, 112)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
@@ -1024,7 +1027,7 @@ function pageRecipe(ma, moiXong = false) {
   $app.innerHTML = `
     <div class="rhead"><a class="back" href="#/" id="back">‹ Quay lại</a>${bua ? `<span class="pill">${bua}</span>` : ""}</div>
     ${S.anh[ma] ? `<figure class="anh"><img src="${anhUrl(ma, 800, 520)}" alt="${esc(d.ten_mon)}" onerror="this.parentNode.remove()">
-      <figcaption>Ảnh: <a href="${esc(S.anh[ma].nguon_anh)}" target="_blank" rel="noopener">${esc(S.anh[ma].tac_gia || "Cookpad")} · Cookpad</a></figcaption></figure>` : ""}
+      <figcaption>Ảnh: <a href="${esc(S.anh[ma].nguon_anh)}" target="_blank" rel="noopener">${esc(S.anh[ma].tac_gia && S.anh[ma].tac_gia !== tenNguon(S.anh[ma].nguon_anh) ? S.anh[ma].tac_gia + " · " : "")}${tenNguon(S.anh[ma].nguon_anh)}</a></figcaption></figure>` : ""}
     <div class="hero"><h1>${esc(d.ten_mon)}</h1>${d.mo_ta_ngan ? `<p>${esc(d.mo_ta_ngan)}</p>` : ""}</div>
     <div class="facts">
       <div><b>${d.thoi_gian_phut ? d.thoi_gian_phut + "′" : "–"}</b>thời gian</div>
@@ -1038,7 +1041,7 @@ function pageRecipe(ma, moiXong = false) {
     <div class="tabs2">${[["nl", "Nguyên liệu"], ["cl", "Cách làm"], ["mv", "Mùa vụ"]].map(([k, t]) =>
       `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${t}</button>`).join("")}</div>
     ${body}
-    <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">Cookpad</a> · ${d.trang_thai === "da_nau_thu" || dgMon(d.ma_mon).nau?.length ? "đã nấu thử" : "chưa nấu thử"}</p>
+    <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">${tenNguon(d.nguon)}</a> · ${d.trang_thai === "da_nau_thu" || dgMon(d.ma_mon).nau?.length ? "đã nấu thử" : "chưa nấu thử"}</p>
     ${hasRecipe(d) ? `<a class="cta" href="#/nau/${d.ma_mon}">👩‍🍳 Bắt đầu nấu – từng bước</a>` : ""}`;
   document.getElementById("back").onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
   const cta = $app.querySelector(".cta");
