@@ -854,9 +854,12 @@ function traBox(day = 0) {
   if (!ma) return "";
   const ten = (m) => S.data.mon_an.find((d) => d.ma_mon === m)?.ten_mon || "";
   const mai = day ? null : traNgay(1);
-  return `<a class="nhac tra" href="#/mon/${ma}"><span class="ic">🍵</span>
-    <span class="tx"><b>Trà ${day ? "ngày mai" : "hôm nay"}: ${esc(ten(ma))}</b>
-      <span class="meta">Pha một bình uống cả ngày. ${esc(TRA_GHI[ma] || "")} Không thêm đường, vẫn uống đủ nước lọc; đang dùng thuốc điều trị lâu dài thì hỏi bác sĩ trước.${mai && mai !== ma ? ` Mai: ${esc(ten(mai))}.` : ""}</span></span>
+  return `<a class="tra-card" href="#/mon/${ma}">
+    <span class="tra-ic">🍵</span>
+    <span class="tra-tx"><small>Trà ${day ? "ngày mai" : "hôm nay"}</small>
+      <b>${esc(ten(ma))}</b>
+      <span class="tra-ghi">${esc(TRA_GHI[ma] || "")}</span>
+      <span class="tra-mai">Pha một bình uống cả ngày · không đường${mai && mai !== ma ? ` · Mai: ${esc(ten(mai))}` : ""}</span></span>
     <span class="chev">›</span></a>`;
 }
 
@@ -908,11 +911,11 @@ function pageHome(day = 0) {
     <div class="seg"><a href="#/" class="${day ? "" : "on"}">Hôm nay</a><a href="#/ngay-mai" class="${day ? "on" : ""}">Ngày mai</a></div>
     ${weatherTip(day)}
     ${day ? "" : nhacCaiApp()}
+    ${traBox(day)}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
     ${day ? "" : tlBox(meals)}
     ${thawBox(day === 1)}
-    ${traBox(day)}
     ${nhacDiCho()}
     <h4>Đang vào mùa tháng ${m}</h4>
     <div class="hs">${inSeason.map((n) => `<a class="chip peak" href="#/lich/${n.ma}">${esc(n.ten)}</a>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>
@@ -1092,6 +1095,7 @@ function pageRecipe(ma, moiXong = false) {
     <div class="tabs2">${[["nl", "Nguyên liệu"], ["cl", "Cách làm"], ["mv", "Mùa vụ"]].map(([k, t]) =>
       `<button data-tab="${k}" class="${k === tab ? "on" : ""}">${t}</button>`).join("")}</div>
     ${body}
+    ${TRA_GHI[d.ma_mon] ? `<p class="note">🍵 ${esc(TRA_GHI[d.ma_mon])} Không thêm đường, vẫn uống đủ nước lọc. Đang dùng thuốc điều trị lâu dài thì hỏi bác sĩ trước khi uống đều đặn loại thảo mộc nào.</p>` : ""}
     <p class="src">Tham khảo: <a href="${esc(d.nguon)}" target="_blank" rel="noopener">${tenNguon(d.nguon)}</a> · ${d.trang_thai === "da_nau_thu" || dgMon(d.ma_mon).nau?.length ? "đã nấu thử" : "chưa nấu thử"}</p>
     ${hasRecipe(d) ? `<a class="cta" href="#/nau/${d.ma_mon}">👩‍🍳 Bắt đầu nấu – từng bước</a>` : ""}`;
   document.getElementById("back").onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
