@@ -10,6 +10,7 @@ Cách làm viết lại bằng lời của Cá Chef ở cach_lam_that.py. xuat_c
 Dùng: python3 scripts/de_xuat/cong_thuc_that.py <file JSON>
 """
 import csv
+import html
 import json
 import os
 import re
@@ -55,7 +56,7 @@ def main(src):
         for d in rec["nguyen_lieu"]:
             x = SUA_DONG.get(ma, {}).get(d, d)
             ds += x if isinstance(x, list) else [x]
-        for dong in ds:
+        for dong in map(html.unescape, ds):
             dong = re.sub(r"(?i)^(\d+ gói đậu hũ non):.*$", r"\1", dong)
             dong = re.sub(r"^(\S+(?:-\S+)? gr thịt ba chỉ) tùy sức ăn\..*$", r"\1", dong)
             dong = re.sub(r"(?i)(?<![^\W\d_])tcfe?\b", " muỗng cà phê", re.sub(r"(?i)(?<![^\W\d_])tbs\b", " muỗng canh", dong))
