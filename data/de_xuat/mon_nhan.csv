@@ -375,4 +375,6 @@ xoi_gac,mot_to,,,co,lo4
 sinh_to_gac,do_uong,,,co,lo4
 tom_nuong_muoi_ot,man,hai_san,nuong,co,lo4
 ca_liet_kho_ca_chua,man,ca,kho_om,co,lo4
+ca_song_mui_chien,man,ca,chien,co,lo4
+ca_song_mui_kho_tieu,man,ca,kho_om,co,lo4
 canh_bo_nau_dua_ca_chua,canh,bo,nau,co,lo4

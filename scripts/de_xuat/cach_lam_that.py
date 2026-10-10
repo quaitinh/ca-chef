@@ -873,3 +873,10 @@ CT["canh_bo_nau_dua_ca_chua"] = ("Canh chua bò nấu dứa, cà chua, dọc mù
      "Đun nồi nước cùng nước cốt me, cho dọc mùng, dứa, cà chua vào nấu sôi 2–3 phút.",
      "Thả thịt bò, nêm nước mắm, hạt nêm, đường.",
      "Cho giá, rau ngổ, ớt, đun sôi lại một dạo, nêm lại cho vừa rồi tắt bếp."])
+CT["ca_song_mui_chien"] = ("Cá sống mũi (cá đội đèn) chiên vàng trong dầu hoặc mỡ – đơn giản, thịt dày ngọt.",
+    ["Cá làm sạch, rửa với muối và giấm, để ráo.",
+     "Đun chảo thật nóng, cho dầu ăn (hoặc mỡ lợn), rắc chút muối lên mặt chảo để chiên không bắn dầu.",
+     "Thả cá vào chiên vàng chín hai mặt, gắp ra đĩa."])
+# Cá sống mũi kho theo bài cá đối kho tiêu (chủ nhà: cá này kho, chiên đều được).
+CT["ca_song_mui_kho_tieu"] = ("Cá kho tiêu trong nồi đất với nước màu đường thắng, hành và ớt, kho lửa nhỏ lâu cho thấm.",
+    list(CT["ca_doi_kho_tieu"][1]))
