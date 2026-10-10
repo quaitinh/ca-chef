@@ -860,6 +860,38 @@ function traBox(day = 0) {
     <span class="chev">›</span></a>`;
 }
 
+// Trái cây trong ngày: đang mùa, trồng quanh Phan Rang trước, hợp thời tiết, có sẵn trong tủ thì ưu tiên.
+// Tính nóng/mát theo Đông y dân gian (Vinmec, Long Châu, Pharmacity) – chỉ ghi loại có nguồn nói rõ.
+const TC_BO = new Set(["chuoi_xanh", "sau", "gac", "chanh_day"]); // dùng nấu ăn, không ăn tráng miệng
+const TC_NONG = /sầu riêng|chôm chôm|mít|nhãn|vải/i, TC_MAT = /bưởi|thanh long|dứa|(^|\s)cam(\s|$)|hồng xiêm/i, TC_NUOC = /dưa hấu|dừa|nho/i;
+const TC_VUNG = [[/Ninh Thuận|Phan Rang/, 3, "của Ninh Thuận"], [/Khánh Hòa|Bình Thuận/, 2, "tỉnh lân cận"], [/Lâm Đồng|Đà Lạt|Đắk Lắk/, 1, "Tây Nguyên"]];
+function traiCay(day = 0) {
+  const m = month(day), n = Math.floor(Date.parse(dayStr(day) + "T00:00:00Z") / 864e5);
+  const w = S.weather?.daily, tmax = w?.temperature_2m_max?.[day], mua = w?.precipitation_probability_max?.[day];
+  const nong = tmax >= 33, mat = tmax != null && (tmax <= 27 || mua >= 60);
+  const ds = S.data.nguyen_lieu.filter((x) => x.nhom === "trái cây" && !TC_BO.has(x.ma) && x.thang[m - 1] > 0).map((x) => {
+    let d = x.thang[m - 1] === 2 ? 3 : 1;
+    const ly = x.thang[m - 1] === 2 ? ["đang rộ"] : [];
+    const v = TC_VUNG.find(([re]) => re.test(x.vung || ""));
+    if (v) { d += v[1]; ly.push(v[2]); }
+    if (trongTu(x.ma)) { d += 4; ly.unshift("có trong tủ"); }
+    if (nong && (TC_MAT.test(tenNgan(x.ten)) || TC_NUOC.test(x.ten))) { d += 2; ly.push("mát, nhiều nước – hợp trời nóng"); }
+    if (TC_NONG.test(x.ten)) { d -= nong ? 3 : 1; ly.push("tính nóng – ăn vừa phải"); }
+    if (mat && TC_NUOC.test(x.ten)) d -= 1;
+    d += ((n * 7 + x.ma.length * 13) % 5) / 2; // đổi thứ tự nhẹ theo ngày để không ngày nào cũng y hệt
+    return { x, d, ly };
+  }).sort((a, b) => b.d - a.d);
+  return ds.slice(0, 3);
+}
+const tenNgan = (t) => t.replace(/ (Ninh Thuận|Phan Rang|Khánh Sơn|Đắk Lắk|Bảo Lộc|Đà Lạt|Cam Lâm)$/, "").replace(/ \(.*\)$/, "");
+function traiCayBox(day = 0) {
+  const ds = traiCay(day);
+  if (!ds.length) return "";
+  return `<div class="tc-card"><span class="tra-ic">🍎</span>
+    <span class="tra-tx"><b><small>Trái cây ${day ? "mai" : "hôm nay"}:</small> ${ds.map(({ x }) => `<a href="#/lich/${x.ma}">${esc(tenNgan(x.ten))}</a>`).join(" · ")}</b>
+      <span class="tra-ghi">${esc(ds.map(({ x, ly }) => `${tenNgan(x.ten)}: ${ly.join(", ") || "đang có"}`).join(" · "))}</span></span></div>`;
+}
+
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
 function thawBox(moSan = false) {
   if (!S.meals[1]) return "";
@@ -909,6 +941,7 @@ function pageHome(day = 0) {
     ${weatherTip(day)}
     ${day ? "" : nhacCaiApp()}
     ${traBox(day)}
+    ${traiCayBox(day)}
     ${mealBlock(meals, "trua", chon)}
     ${mealBlock(meals, "toi", chon)}
     ${day ? "" : tlBox(meals)}
