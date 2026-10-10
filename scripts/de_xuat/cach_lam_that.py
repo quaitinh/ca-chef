@@ -880,3 +880,37 @@ CT["ca_song_mui_chien"] = ("Cá sống mũi (cá đội đèn) chiên vàng tron
 # Cá sống mũi kho theo bài cá đối kho tiêu (chủ nhà: cá này kho, chiên đều được).
 CT["ca_song_mui_kho_tieu"] = ("Cá kho tiêu trong nồi đất với nước màu đường thắng, hành và ớt, kho lửa nhỏ lâu cho thấm.",
     list(CT["ca_doi_kho_tieu"][1]))
+
+# Trà, nước uống hằng ngày (10/2026).
+CT["nuoc_che_xanh"] = ("Lá chè xanh tươi hãm nước sôi – nước vàng nhạt, hơi ngọt, thơm nhẹ.",
+    ["Nhặt lá chè, bỏ cành già và lá hư, rửa sạch vài lần. Ngâm lá trong nước 10 phút rồi vớt ra để ráo.",
+     "Vò nhẹ lá rồi cho vào bình. Rót 0,5 lít nước sôi, lắc nhẹ rồi chắt nước này ra ly để tráng trà.",
+     "Rót tiếp 2,5 lít nước sôi vào bình, để 10–20 phút cho trà ngấm.",
+     "Đổ nước tráng lúc nãy vào lại cho đầy bình. Uống nóng hoặc để nguội thêm đá."])
+CT["nuoc_voi"] = ("Lá vối (hoặc nụ vối) đun hay hãm như trà – vị đắng nhẹ, hơi ngọt, uống thay trà trong ngày.",
+    ["Lá vối khô rửa sạch, cho vào ấm.",
+     "Đổ nước vào đun đến khi sôi. Có nụ vối thì đun sôi hoặc hãm nước sôi giống hãm trà xanh (15–20 g nụ vối cho cả ngày).",
+     "Uống nóng hoặc để nguội. Nước từ lá khô màu đỏ nâu nhạt; hãm lá tươi thì xanh như nước chè."])
+CT["tra_gao_lut_dau_den"] = ("Gạo lứt và đậu đen rang thơm rồi nấu hoặc ủ lấy nước – thơm, không caffeine, uống tối được.",
+    ["Gạo lứt vo sạch, ngâm 12 tiếng, để ráo rồi rang thơm.",
+     "Đậu đen rửa sạch, để ráo, rang đến khi chín giòn.",
+     "Cứ 100 g hỗn hợp với 1 lít nước: nấu sôi 15 phút, hoặc ủ nước sôi trong bình giữ nhiệt 1 tiếng, đậy nắp.",
+     "Chắt lấy nước, để tủ lạnh uống dần trong ngày. Phần đậu gạo hôm sau pha tiếp được, hoặc nấu cháo."])
+CT["tra_hoa_cuc"] = ("Hoa cúc khô và kỷ tử hãm nước sôi 5 phút – nhẹ, thơm, hợp uống buổi tối.",
+    ["Cho hoa cúc khô và kỷ tử vào ấm trà, châm nước sôi.",
+     "Đậy nắp hãm 5 phút là uống được (bài gốc cho thêm đường phèn tùy thích)."])
+CT["tra_tao_do_ky_tu"] = ("Táo đỏ, kỷ tử ngâm sạch rồi hãm nước sôi 15 phút – ngọt tự nhiên.",
+    ["Kỷ tử, táo đỏ rửa sạch, ngâm 15 phút, vớt ra cho vào ly hoặc hũ thủy tinh.",
+     "Đun nước vừa sôi thì chế ngay vào, đậy kín 15 phút là dùng được."])
+CT["tra_gung_sa"] = ("Gừng thái mỏng và sả đập dập hãm nước sôi, hòa mật ong khi nước còn ấm – ấm bụng ngày mưa, mới cảm.",
+    ["Gừng, sả rửa sạch. Gừng thái thật mỏng hoặc đập dập; sả đập dập.",
+     "Cho gừng, sả vào bình, đổ 500 ml nước sôi, ủ ít nhất 15 phút (nước khá đặc, thích loãng thì thêm nước).",
+     "Rót ra cốc, đợi nước còn khoảng 40–50 độ thì hòa 10 ml mật ong. Uống khi còn ấm."])
+CT["tra_atiso"] = ("Atiso khô nấu với nước – nước mát, để tủ lạnh uống dần.",
+    ["Atiso khô rửa thật sạch.",
+     "Cho vào nồi với 1,5 lít nước, đun sôi thêm 5 phút rồi hạ nhỏ lửa, đậy nắp nấu tiếp 20 phút.",
+     "Để nguội, rót chai cất tủ lạnh. Bã atiso nấu thêm được nước thứ hai (nhạt hơn)."])
+CT["nuoc_rau_ngo"] = ("Râu ngô và bắp non nấu nhỏ lửa 30 phút – uống thay nước, giải nhiệt.",
+    ["Rửa râu ngô và bắp non, để ráo.",
+     "Cho vào nồi với 2 lít nước, đun sôi rồi nấu thật nhỏ lửa khoảng 30 phút (bài gốc: thích ngọt thì thêm nắm đường phèn).",
+     "Tắt bếp, để nguội rồi rót ra uống."])

@@ -23,7 +23,7 @@ DO_UONG = {"nuoc_ep_oi", "sinh_to_gac"}
 THEM_MA = [(r"ớt chuông", "ot_chuong"), (r"(^|\s)vịt|thịt vit", "vit"), (r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
            (r"ốc (bưu|đồng|nhồi)", "oc_dong"), (r"bí ngòi", "bi_ngoi"), (r"gấc", "gac"), (r"hạt sen", "hat_sen"), (r"táo đỏ|táo tàu", "tao_do"), (r"lươn", "luon"), (r"cải chua|dưa chua|dưa cải", "dua_cai_chua"), (r"măng chua", "mang_chua"), (r"sấu", "sau"),
            (r"hoa chuối", "hoa_chuoi"), (r"chuối.*xanh", "chuoi_xanh"), (r"chuối", "chuoi_chin"), (r"khổ qua|mướp đắng", "kho_qua"),
-           (r"thiên lý", "thien_ly"), (r"tim cật|cật", "long_heo"), (r"cá liệt", "ca_liet"), (r"cá (sống mũi|đội đèn)", "ca_song_mui"), (r"cá hố", "ca_ho"), (r"cá chuồ", "ca_chuon"),
+           (r"thiên lý", "thien_ly"), (r"tim cật|cật", "long_heo"), (r"cá liệt", "ca_liet"), (r"cá (sống mũi|đội đèn)", "ca_song_mui"), (r"lá chè|chè xanh", "che_xanh"), (r"vối", "la_voi"), (r"gạo lứt", "gao_lut"), (r"đậu đen", "dau_den"), (r"hoa cúc|bông cúc|cúc khô", "hoa_cuc"), (r"atiso khô", "atiso_kho"), (r"kỷ tử|kỉ tử", "ky_tu"), (r"râu (bắp|ngô)", "ngo"), (r"cá hố", "ca_ho"), (r"cá chuồ", "ca_chuon"),
            (r"cá trích", "ca_trich"), (r"cá đục", "ca_duc"), (r"cá bớp", "ca_bop"), (r"cá đối", "ca_doi"), (r"(^|\s)hàu", "hau"),
            (r"(^|\s)ổi", "oi"), (r"đậu h[ủũ]", "dau_phu"), (r"cá rô phi", "ca_ro_phi"), (r"[dđ]iêu hồng", "ca_dieu_hong"),
            (r"(giò|dò) sống", "gio_song"), (r"hành tây", "hanh_tay"), (r"^(thơm|dứa)", "thom"), (r"^hẹ", "he"), (r"^xả", "sa")]

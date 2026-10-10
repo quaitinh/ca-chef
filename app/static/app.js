@@ -750,7 +750,8 @@ const VAI_NGAN = { man: "Mặn", rau: "Rau", canh: "Canh", lau: "Lẩu", nuong: 
 // anh_id là mã ảnh CDN Cookpad (ghép URL theo cỡ) hoặc URL ảnh đầy đủ (Món Ngon Mỗi Ngày).
 const anhUrl = (ma, w, h) => S.anh[ma] && (/^https?:/.test(S.anh[ma].anh_id) ? S.anh[ma].anh_id
   : `https://img-global.cpcdn.com/recipes/${S.anh[ma].anh_id}/${w}x${h}cq70/photo.webp`);
-const tenNguon = (url) => /monngonmoingay/.test(url || "") ? "Món Ngon Mỗi Ngày" : "Cookpad";
+const tenNguon = (url) => /monngonmoingay/.test(url || "") ? "Món Ngon Mỗi Ngày" : /vinmec/.test(url || "") ? "Vinmec"
+  : /dienmayxanh/.test(url || "") ? "Điện máy XANH – Vào bếp" : "Cookpad";
 // Ô vuông nhỏ: ảnh nếu có, biểu tượng nằm dưới để hiện khi ảnh lỗi/chưa tải.
 const thumb = (d, cls = "") => `<span class="ic ${cls}">${iconOf(d)}${S.anh[d.ma_mon]
   ? `<img src="${anhUrl(d.ma_mon, 112, 112)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
@@ -815,6 +816,37 @@ function ketQuaTim(k) {
     : '<p class="note">Không thấy món nào.</p>';
 }
 
+// Trà, nước uống trong ngày: xoay vòng loại lành tính theo buổi; loại nên xen kẽ thì theo ngày/thời tiết/đợt.
+const TRA_DOT = [["tra_atiso", "Atiso"], null, ["nuoc_rau_ngo", "Râu ngô"], null]; // mỗi đợt 2 tuần: uống rồi nghỉ (uống lâu dễ mất khoáng)
+function traNgay(day = 0) {
+  const ds = dayStr(day), n = Math.floor(Date.parse(ds + "T00:00:00Z") / 864e5), thu = new Date(ds + "T00:00:00Z").getUTCDay();
+  const w = S.weather?.daily, tmax = w?.temperature_2m_max?.[day], mua = w?.precipitation_probability_max?.[day];
+  const dot = TRA_DOT[Math.floor(n / 14) % 4];
+  const ds_ = [
+    ["Sáng", "nuoc_che_xanh", "người lớn, sau bữa sáng – có caffeine, không uống lúc đói hay buổi tối"],
+    ["Trong ngày", n % 2 ? "nuoc_voi" : "tra_gao_lut_dau_den", "thay một phần nước lọc"],
+    ["Tối", "tra_hoa_cuc", "nhẹ, dễ ngủ"],
+  ];
+  if ([1, 3, 5].includes(thu)) ds_.push(["Thêm hôm nay", "tra_tao_do_ky_tu", "vài lần mỗi tuần là đủ"]);
+  if (tmax != null && (tmax <= 27 || (mua >= 60 && tmax <= 30)))
+    ds_.push(["Trời mưa, mát", "tra_gung_sa", "uống ấm; người hay nóng trong thì hạn chế"]);
+  if (dot) ds_.push([`Đợt ${dot[1].toLowerCase()}`, dot[0], "uống đợt 2 tuần rồi nghỉ"]);
+  return ds_.filter(([, ma]) => S.data.mon_an.some((d) => d.ma_mon === ma));
+}
+function traBox(day = 0) {
+  const ds = traNgay(day);
+  if (!ds.length) return "";
+  const ten = (ma) => S.data.mon_an.find((d) => d.ma_mon === ma).ten_mon;
+  return `<details class="nhac-d">
+    <summary class="nhac"><span class="ic">🍵</span>
+      <span class="tx"><b>Trà, nước uống ${day ? "ngày mai" : "hôm nay"}</b><span class="meta">${esc(ds.slice(0, 3).map(([, ma]) => ten(ma)).join(" · "))}</span></span><span class="chev">›</span></summary>
+    <div class="nhac-body">
+      <ul class="thaw">${ds.map(([k, ma, ghi]) => `<li><span><a href="#/mon/${ma}"><b>${esc(ten(ma))}</b></a><small>${esc(ghi)}</small></span><span>${esc(k)}</span></li>`).join("")}</ul>
+      <p class="note">Không thêm đường, uống ấm hay nguội đều được, vẫn uống đủ nước lọc. Đang dùng thuốc điều trị bệnh mãn tính thì hỏi bác sĩ trước khi uống đều đặn loại thảo mộc nào.</p>
+    </div>
+  </details>`;
+}
+
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
 function thawBox(moSan = false) {
   if (!S.meals[1]) return "";
@@ -867,6 +899,7 @@ function pageHome(day = 0) {
     ${mealBlock(meals, "toi", chon)}
     ${day ? "" : tlBox(meals)}
     ${thawBox(day === 1)}
+    ${traBox(day)}
     ${nhacDiCho()}
     <h4>Đang vào mùa tháng ${m}</h4>
     <div class="hs">${inSeason.map((n) => `<a class="chip peak" href="#/lich/${n.ma}">${esc(n.ten)}</a>`).join("") || '<span class="muted">Chưa có dữ liệu</span>'}</div>

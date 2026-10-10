@@ -47,6 +47,13 @@ NGUYEN_LIEU = [
      "Gấc chín rộ cuối thu sang Tết; ngoài mùa vẫn có ít ở chợ – chưa có nguồn riêng"),
     ("ca_song_mui", "Cá sống mũi (cá đội đèn)", "hải sản", "biển", [2 if t in (7, 8) else 1 for t in range(1, 13)], "chợ", "C",
      "Còn gọi cá đội đèn, cá chim đen, cá mỡ; hay bán tươi hoặc phơi một nắng. Mùa rộ tháng 7–8 (theo các trang bán hải sản)"),
+    # Trà, nước uống hằng ngày
+    ("che_xanh", "Lá chè xanh tươi", "rau củ", "chung", Q, "chợ", "C", "Bó lá chè tươi bán ở chợ, có quanh năm"),
+    ("la_voi", "Lá vối / nụ vối khô", "hàng khô", "chung", Q, "chợ/tiệm thuốc bắc", "C", "Hàng khô, có quanh năm"),
+    ("gao_lut", "Gạo lứt", "tinh bột", "chung", Q, "chợ/GO!", "A", "Có quanh năm"),
+    ("dau_den", "Đậu đen", "hàng khô", "chung", Q, "chợ/GO!", "A", "Hàng khô, có quanh năm"),
+    ("hoa_cuc", "Hoa cúc khô", "hàng khô", "chung", Q, "chợ/tiệm thuốc bắc", "C", "Hàng khô, có quanh năm"),
+    ("atiso_kho", "Atiso khô (bông, thân, rễ)", "hàng khô", "Đà Lạt", Q, "chợ/GO!", "C", "Hàng khô Đà Lạt, có quanh năm"),
 ]
 DE_SHEET = {"goi_cuon"}  # món trên Sheet đổi sang công thức chủ nhà chọn
 KHUNG = []
@@ -350,6 +357,23 @@ RECIPES = [
       "", [], None, tk("tôm nướng muối ớt"), [("tom_the", "Tôm", 500, "g", "n", "chinh")]),
     M("man", "ca", "ca_liet_kho_ca_chua", "Cá liệt kho cà chua", "mon_chinh", "am", "nhe", "it", "ca_liet", "moi", 30, "de",
       "", [], None, tk("cá kho cà chua"), [("ca_liet", "Cá liệt", 500, "g", "n", "chinh")]),
+    # ---------- Trà, nước uống hằng ngày – công thức theo bài thật ở cong_thuc_that ----------
+    M("do_uong", "", "nuoc_che_xanh", "Nước chè xanh", "do_uong", "mat", "nhe", "it", "che_xanh", "nang", 30, "de",
+      "", [], None, tk("nước chè xanh"), [("che_xanh", "Lá chè xanh", 1, "bó", "n", "chinh")]),
+    M("do_uong", "", "nuoc_voi", "Nước vối", "do_uong", "mat", "nhe", "it", "la_voi", "nang", 20, "de",
+      "", [], None, tk("nước vối"), [("la_voi", "Lá vối", 20, "g", "n", "chinh")]),
+    M("do_uong", "", "tra_gao_lut_dau_den", "Trà gạo lứt đậu đen", "do_uong", "mat", "nhe", "it", "gao_lut|dau_den", "moi", 30, "de",
+      "", [], None, tk("trà gạo lứt đậu đen"), [("gao_lut", "Gạo lứt", 100, "g", "n", "chinh"), ("dau_den", "Đậu đen", 100, "g", "n", "chinh")]),
+    M("do_uong", "", "tra_hoa_cuc", "Trà hoa cúc kỷ tử", "do_uong", "am", "nhe", "it", "hoa_cuc", "moi", 10, "de",
+      "", [], None, tk("trà hoa cúc"), [("hoa_cuc", "Hoa cúc khô", 2, "muỗng canh", "n", "chinh")]),
+    M("do_uong", "", "tra_tao_do_ky_tu", "Trà táo đỏ kỷ tử", "do_uong", "am", "nhe", "it", "tao_do|ky_tu", "moi", 30, "de",
+      "", [], None, tk("trà táo đỏ kỷ tử"), [("tao_do", "Táo đỏ", 3, "quả", "n", "chinh")]),
+    M("do_uong", "", "tra_gung_sa", "Trà gừng sả mật ong", "do_uong", "nong", "nhe", "it", "gung", "mua", 20, "de",
+      "", [], None, tk("trà gừng"), [("gung", "Gừng", 1, "nhánh", "n", "chinh")]),
+    M("do_uong", "", "tra_atiso", "Trà atiso", "do_uong", "mat", "nhe", "it", "atiso_kho", "nang", 30, "de",
+      "", [], None, tk("trà atiso"), [("atiso_kho", "Atiso khô", 40, "g", "n", "chinh")]),
+    M("do_uong", "", "nuoc_rau_ngo", "Nước râu ngô", "do_uong", "mat", "nhe", "it", "ngo", "nang", 40, "de",
+      "", [], None, tk("nước râu bắp"), [("ngo", "Râu ngô và bắp non", 1, "kg", "n", "chinh")]),
     M("man", "ca", "ca_song_mui_chien", "Cá sống mũi chiên", "mon_chinh", "am", "nhe", "vua", "ca_song_mui", "moi", 20, "de",
       "", [], None, tk("cá đội đèn chiên"), [("ca_song_mui", "Cá sống mũi", 500, "g", "n", "chinh")]),
     M("man", "ca", "ca_song_mui_kho_tieu", "Cá sống mũi kho tiêu", "mon_chinh", "am", "nhe", "it", "ca_song_mui", "moi", 60, "de",
