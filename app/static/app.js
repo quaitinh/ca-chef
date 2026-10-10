@@ -5,7 +5,9 @@ const WEATHER_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&long
   "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum," +
   "precipitation_probability_max,wind_speed_10m_max,uv_index_max" +
   "&timezone=Asia%2FHo_Chi_Minh&forecast_days=6"; // hôm nay + 5 ngày: gợi ý đi chợ theo thời tiết mấy ngày tới
-const HISTORY_KEY = "cachef.history";
+// Món thực có trong bữa mỗi ngày (bữa cuối cùng sau khi Đổi/chọn) – dùng chống lặp. Khóa cũ cachef.history ghi cả
+// món chỉ hiện lúc bấm Đổi nên trừ điểm nhầm (gần hết rau xanh bị coi là "vừa ăn"); không đọc nữa.
+const HISTORY_KEY = "cachef.da_an";
 const CHON_KEY = "cachef.chon";
 
 const LABEL = {
@@ -183,7 +185,7 @@ function ganNuong(day) {
 const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
 
 // ---------- Chấm điểm ----------
-// Số ngày từ lần gợi ý gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
+// Số ngày từ lần món có trong bữa gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
 function readHistory() {
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch { return {}; }
 }
@@ -204,7 +206,7 @@ function daysSinceSuggested(ma, ref = today()) {
 function recordHistory(list) {
   try {
     const hist = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}");
-    hist[today()] = [...new Set([...(hist[today()] || []), ...list])]; // mọi món đã hiện trong ngày
+    hist[today()] = [...new Set(list)]; // bữa hiện tại của hôm nay (đè lên lần trước)
     const keep = Object.keys(hist).sort().slice(-14);
     ghiLS(HISTORY_KEY, Object.fromEntries(keep.map((k) => [k, hist[k]])));
   } catch {}
