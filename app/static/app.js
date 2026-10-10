@@ -884,12 +884,31 @@ function traiCay(day = 0) {
   return ds.slice(0, 3);
 }
 const tenNgan = (t) => t.replace(/ (Ninh Thuận|Phan Rang|Khánh Sơn|Đắk Lắk|Bảo Lộc|Đà Lạt|Cam Lâm)$/, "").replace(/ \(.*\)$/, "");
+// Danh sách tháng có hàng / đang rộ, gom thành khoảng: "rộ T10–12, có T4–9".
+function khoangThang(thang, muc) {
+  const ts = thang.map((v, i) => (v === muc ? i + 1 : 0)).filter(Boolean), out = [];
+  for (const t of ts) { const l = out[out.length - 1]; if (l && l[1] === t - 1) l[1] = t; else out.push([t, t]); }
+  if (ts.length === 12) return "quanh năm";
+  if (out.length > 1 && out[0][0] === 1 && out[out.length - 1][1] === 12) out[0][0] = out.pop()[0]; // T10–12 + T1–3 -> T10–3
+  return out.map(([a, b]) => (a === b ? `T${a}` : `T${a}–${b}`)).join(", ");
+}
 function traiCayBox(day = 0) {
   const ds = traiCay(day);
   if (!ds.length) return "";
-  return `<div class="tc-card"><span class="tra-ic">🍎</span>
-    <span class="tra-tx"><b><small>Trái cây ${day ? "mai" : "hôm nay"}:</small> ${ds.map(({ x }) => `<a href="#/lich/${x.ma}">${esc(tenNgan(x.ten))}</a>`).join(" · ")}</b>
-      <span class="tra-ghi">${esc(ds.map(({ x, ly }) => `${tenNgan(x.ten)}: ${ly.join(", ") || "đang có"}`).join(" · "))}</span></span></div>`;
+  const dong = ({ x, ly }) => {
+    const ro = khoangThang(x.thang, 2), co = khoangThang(x.thang, 1), bq = S.bq[x.ma];
+    return `<li><b>${esc(x.ten)}</b><small>${esc(ly.join(" · ") || "đang có")}</small>
+      <span class="tc-mua">Mùa: ${ro ? `rộ ${ro}` : ""}${ro && co ? "; " : ""}${co ? (co === "quanh năm" ? co : `có ${co}`) : ""} · ${esc(x.vung || "")} · mua ở ${esc(String(x.noi_mua || "").replace(/\|/g, "/"))}</span>
+      ${x.ghi_chu ? `<span class="tc-mua">${esc(x.ghi_chu)}</span>` : ""}
+      ${bq?.chon ? `<span class="tc-mua">Chọn: ${esc(bq.chon)}</span>` : ""}</li>`;
+  };
+  return `<details class="tc-card">
+    <summary><span class="tra-ic">🍎</span>
+      <span class="tra-tx"><b><small>Trái cây ${day ? "mai" : "hôm nay"}:</small> ${esc(ds.map(({ x }) => tenNgan(x.ten)).join(" · "))}</b>
+        <span class="tra-ghi">${esc(ds.map(({ x, ly }) => `${tenNgan(x.ten)}: ${ly.join(", ") || "đang có"}`).join(" · "))}</span></span>
+      <span class="chev">›</span></summary>
+    <ul class="tc-ds">${ds.map(dong).join("")}</ul>
+  </details>`;
 }
 
 // Rã đông cho ngày mai: một dòng, chạm để mở danh sách ngay tại chỗ, chạm lần nữa để thu lại.
