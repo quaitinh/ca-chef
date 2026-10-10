@@ -671,3 +671,11 @@ canh_tom_nau_thom,thom,Thơm,,vừa đủ,theo_nguoi,phu,nhiều ít tùy thích
 canh_tom_nau_thom,ca_chua,Cà chua lớn,1,quả,theo_nguoi,phu,hoặc 2 quả nhỏ
 canh_tom_nau_thom,dau_bap,Đậu bắp,,vừa đủ,theo_nguoi,phu,khoảng 5–10 nghìn đồng
 canh_tom_nau_thom,rau_thom,"Giá, hành lá",,vừa đủ,theo_nguoi,phu,
+tom_nuong_muoi_ot,tom_the,Tôm biển,250,g,theo_nguoi,phu,
+tom_nuong_muoi_ot,sa_ot,Ớt bột,,vừa đủ,theo_noi,gia_vi,tuỳ theo độ ăn cay
+tom_nuong_muoi_ot,toi_pr,Tỏi băm hoặc xay,3,tép,theo_noi,gia_vi,
+tom_nuong_muoi_ot,khe_me,Nước cốt chanh,1,muỗng canh,theo_noi,gia_vi,
+tom_nuong_muoi_ot,,Dầu ôliu,1,muỗng canh,theo_noi,phu,
+tom_nuong_muoi_ot,,Mật ong,1,muỗng canh,theo_noi,gia_vi,
+tom_nuong_muoi_ot,muoi_ca_na,Muối hạt,2,muỗng canh,theo_noi,gia_vi,
+tom_nuong_muoi_ot,,Đường & bột ngọt,1,muỗng cà phê,theo_noi,gia_vi,

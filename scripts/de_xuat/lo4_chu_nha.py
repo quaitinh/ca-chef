@@ -342,4 +342,8 @@ RECIPES = [
       [("gac", "Ruột gấc", 0.5, "quả", "n", "chinh"), ("chuoi_chin", "Chuối chín", 2, "quả", "n", "phu"),
        ("sua_tuoi", "Sữa tươi không đường", 400, "ml", "n", "phu"), ("", "Mật ong", 2, MC, "x", "gia_vi"),
        ("", "Đá viên", 1, "bát", "x", "phu")]),
+
+    # ---------- Món nhà vừa nấu (10/2026) – công thức theo bài Cookpad ở cong_thuc_that ----------
+    M("man", "hai_san", "tom_nuong_muoi_ot", "Tôm nướng muối ớt", "mon_chinh", "am", "nhe", "it", "tom_the", "moi", 40, "de",
+      "", [], None, tk("tôm nướng muối ớt"), [("tom_the", "Tôm", 500, "g", "n", "chinh")]),
 ]

@@ -599,3 +599,9 @@ CT["kho_qua_nhoi_thit_hap"] = ("Khổ qua nhồi thịt nạc dăm trộn nấm 
      "Đun sôi nước, thả khổ qua vào, cho thêm thân và rễ ngò, hầm lửa nhỏ.",
      "Nêm đường, nước mắm, hạt nêm vừa ăn; hầm tiếp đến khi khổ qua mềm.",
      "Múc ra, rắc hành lá và ngò rí thái nhỏ."])
+
+CT["tom_nuong_muoi_ot"] = ("Tôm biển ướp muối hạt, ớt bột, tỏi, chanh, mật ong rồi xiên que nướng đến khi đỏ vỏ – mặn cay, thơm.",
+    ["Cắt đầu tôm, rửa sạch, để ráo.",
+     "Trộn muối hạt, ớt bột, tỏi băm, nước cốt chanh, dầu ô liu, mật ong, đường và bột ngọt; cho tôm vào trộn đều, để 20 phút cho thấm rồi xiên que.",
+     "Nướng trên bếp than hoặc bếp điện, trở đều tay; tôm chuyển đỏ là được, không nướng lâu kẻo thịt dính vỏ.",
+     "Ăn với cơm nóng."])
