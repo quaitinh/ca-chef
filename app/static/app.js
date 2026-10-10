@@ -1714,7 +1714,8 @@ function veDuyet() {
   const dd = duyetLS(), v = S.dmLoc, words = plain(S.dmQ || "").split(/\s+/).filter(Boolean);
   const hop = (m) => v === "chon" ? dd[m.ma]?.v === 1 : v === "bo" ? dd[m.ma]?.v === -1
     : !dd[m.ma] && (v === "bua" ? NHOM_BUA.includes(m.nhom) : v === "khac" ? !NHOM_BUA.includes(m.nhom) : m.nhom === v);
-  const list = S.dm.filter((m) => !m.trong_app && hop(m) && words.every((w) => plain(m.ten + " " + (m.nguyen_lieu || "")).includes(w)));
+  const list = S.dm.filter((m) => !m.trong_app && hop(m) && words.every((w) => plain(m.ten + " " + (m.nguyen_lieu || "")).includes(w)))
+    .sort((a, b) => !a.anh - !b.anh); // bài đọc được đủ (có ảnh, nguyên liệu) lên trước
   const soChon = Object.values(dd).filter((x) => x.v === 1).length;
   document.getElementById("dm-dem").textContent = `${list.length} món · đã chọn ${soChon}`;
   document.getElementById("dm-list").innerHTML = list.length ? `<div class="list">${list.slice(0, S.dmSo).map((m) => `
