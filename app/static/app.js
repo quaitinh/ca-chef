@@ -416,7 +416,7 @@ function hopBua(x, bua, ctx) {
   return true;
 }
 const RAU_XANH = new Set(["rau_muong", "mong_toi", "rau_day", "rau_ngot", "cai_xanh", "cai_thao", "bap_cai", "rau_bi", "rau_den",
-  "rau_lang", "rau_ma", "sup_lo", "mang_tay", "dau_co_ve", "kho_qua", "su_hao", "gia"]);
+  "rau_lang", "rau_ma", "sup_lo", "mang_tay", "dau_co_ve", "kho_qua", "su_hao", "gia", "su_su"]);
 const coRauXanh = (d) => [...nlChinh(d)].some((k) => RAU_XANH.has(k));
 // Ưu tiên mềm: rau xanh; món mặn không hợp trẻ thì canh có đạm dễ ăn (trứng, đậu, thịt heo, gà) và hợp trẻ.
 function uaThich(x, bua, vai) {
@@ -453,6 +453,9 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     const t = them[vai] || (() => true), cung = (x) => khongTrung(x, used) && hopBua(x, bua, ctx);
     const pool2 = ranked.filter((d) => d.score > -3 && vaiOf(d) === vai && !cam.has(d.ma_mon));
     const pool1 = pool2.filter((d) => !ex.da_xem.has(d.ma_mon));
+    // Hết món chưa xem: lấy lại món xem đã lâu nhất trước (xoay vòng hết lượt), không chỉ mấy món điểm cao nhất.
+    const thuTu = [...ex.da_xem], xemLau = (d) => (thuTu.indexOf(d.ma_mon) + 1) || 0;
+    pool2.sort((a, b) => xemLau(a) - xemLau(b));
     const muc = [(x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
