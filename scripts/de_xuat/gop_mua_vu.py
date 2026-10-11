@@ -53,10 +53,12 @@ def main():
     hien_tai = {**moi, **goc}
 
     muc = {}
-    for ten_file in ("hai_san", "nong_san", "da_lat", "moi"):
-        for x in json.load(open(os.path.join(SRC, ten_file + ".json"), encoding="utf-8")):
+    for ten_file in ("hai_san", "nong_san", "da_lat", "moi", "moi2"):  # moi2: nguyên liệu món duyệt + trái cây Thái (10/2026)
+        p = os.path.join(SRC, ten_file + ".json")
+        if not os.path.exists(p): continue
+        for x in json.load(open(p, encoding="utf-8")):
             if "ma" not in x: continue  # khối "de_xuat_moi" phụ
-            if x["ma"] in muc and ten_file != "moi": continue  # trùng giữa các nhóm: giữ bản đầu
+            if x["ma"] in muc and ten_file not in ("moi", "moi2"): continue  # trùng giữa các nhóm: giữ bản đầu
             muc[x["ma"]] = {**x, **CHINH_TAY.get(x["ma"], {})}
 
     rows, nguon_rows, sua_sheet = [], [], []
