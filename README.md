@@ -70,6 +70,7 @@ trên Sheet khi build data.json. Dòng nào chủ dự án đã tự sửa trên
 - `export_json.py` xuất thành `app/static/mnmn.json`; trang **Món › Duyệt thêm món** (`#/duyet-mon`) tải khi mở, lọc theo nhóm, tìm theo tên/nguyên liệu; ✓ chọn / ✗ bỏ lưu ở `cachef.duyet` (đồng bộ cả nhà). Tìm món không thấy trong app thì có lối sang tìm trong danh mục.
 - Món ✓ được đưa vào app bằng tay theo quy trình công thức thật (cách làm viết lại, gắn nhãn ghép bữa), không tự vào gợi ý.
 - Đợt 1 (`mnmn_duyet_1`, 363 món): khung + nhãn ghép bữa ở `data/de_xuat/mnmn_duyet.csv` (cột `dot`), cách làm viết lại ở `scripts/de_xuat/cach_lam_mnmn.py`, nạp qua `lo5_mnmn.py`; nhãn đợt nằm ở cột `nguon_loai` của `mon_nhan.csv`. Tab Món có bộ lọc "🆕 Đợt duyệt"; gỡ cả đợt: xóa dòng trong `mnmn_duyet.csv` rồi chạy lại `xuat_csv.py`.
+- Tên nguyên liệu chuẩn: `data/de_xuat/nl_quy_doi.csv` (tên gọn → tên chuẩn; gộp đồng nghĩa như ba rọi → thịt ba chỉ, thơm → dứa, boaro → tỏi tây; "a|b" tách dòng gộp; rỗng = không phải nguyên liệu). `export_json.py` ghi `nl_chuan_mon` (tên chuẩn của từng món) vào data.json.
 - Trang Duyệt món › **Nguyên liệu**: gộp tên nguyên liệu (gọn) từ danh mục, chủ nhà chấm Dễ/Khó mua (`cachef.nl_mua`, đồng bộ). Món có nguyên liệu "khó" xếp sau khi duyệt, và bị trừ 4 điểm khi gợi ý bữa ("Nguyên liệu khó mua: …").
 
 ## Giao diện (điện thoại trước)
