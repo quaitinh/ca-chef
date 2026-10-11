@@ -39,6 +39,29 @@ def nhom(ten, tu_khoa):
     return "man"
 
 
+# Tên nguyên liệu gọn để chủ nhà chấm dễ/khó mua (trang Nguyên liệu): bỏ cách sơ chế, thương hiệu, cỡ.
+CHE_BIEN = r"\b(băm|bằm|cắt|xắt|thái|lột|bóc|bỏ|ngâm|luộc|rang|chiên|giã|đập|bào|nạo|xay|nghiền|ép|vắt|sơ chế|làm sạch|phi lê|nguyên miếng|nguyên con|nguyên trái|để ráo|pha|hấp chín|trụng|tách)\b.*$"
+THUONG_HIEU = r"\b(lisa|aji-ngon|aji-no-moto|ajinomoto|aji-quick|phú sĩ|tasty|mayonnaise aji-mayo|aji-mayo|knorr|maggi|vị hảo)\b|®"
+BO = {"trang trí", "sản phẩm", "nước", "nước lạnh", "nước sôi", "nước lọc", "đá", "đá viên", "ăn kèm", "gia vị", "nước ấm", "nước nóng"}
+def chuan(s):
+    s = s.lower().strip()
+    s = re.split(r"[(,/:;+]| - | – |\bhoặc\b|\bvà\b", s)[0]
+    s = re.sub(THUONG_HIEU, "", s)
+    s = re.sub(CHE_BIEN, "", s)
+    s = re.sub(r"\b(loại|cỡ|size)\b.*$", "", s)
+    s = re.sub(r"\b(nhỏ|lớn|to|vừa|nhuyễn|sợi|lát|hạt lựu|khúc|miếng|trái|quả|củ|cây|nhánh|tép|lá)$", "", s.strip())
+    s = re.sub(r"\s+", " ", s).strip(" .-*")
+    return "" if len(s) < 2 or s in BO else s
+
+
+def tach_nl(ds):
+    """Dòng gộp nhiều thứ ("Tiêu, đường, muối, dầu ăn") tách ra từng thứ; dòng có một dấu phẩy là lời tả, giữ nguyên."""
+    out = []
+    for x in ds:
+        out += re.split(r",|\s+và\s+", x) if x.count(",") >= 2 else [x]
+    return out
+
+
 def plain(s):
     return re.sub(r"\s+", " ", unicodedata.normalize("NFD", s.lower()).encode("ascii", "ignore").decode().replace("đ", "d")).strip()
 
@@ -77,16 +100,16 @@ def main(src):
         nl = [x for x in dict.fromkeys(ten_nl(x) for x in r.get("nl", [])) if x]
         trong = co_ten.get(plain(r["ten"]), "") or ("co" if r["url"].rstrip("/") in co_url else "")
         rows.append([slug, r["ten"], r["url"], r.get("anh", ""), nhom(r["ten"], r.get("tu_khoa", "")), phut(r.get("thoi_gian")),
-                     r.get("khau_phan", ""), "|".join(nl[:12]), trong, "" if r.get("co_buoc", True) else "thieu_buoc"])
+                     r.get("khau_phan", ""), "|".join(nl[:12]), "|".join(dict.fromkeys(x for x in map(chuan, tach_nl(r.get("nl", []))) if x)), trong, "" if r.get("co_buoc", True) else "thieu_buoc"])
     rows.sort(key=lambda x: plain(x[1]))
     with open(os.path.join(OUT, "mnmn_danh_muc.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\r\n")
-        w.writerow(["ma", "ten", "url", "anh", "nhom", "phut", "khau_phan", "nguyen_lieu", "trong_app", "ghi_chu"])
+        w.writerow(["ma", "ten", "url", "anh", "nhom", "phut", "khau_phan", "nguyen_lieu", "nl_chuan", "trong_app", "ghi_chu"])
         w.writerows(rows)
     dem = {}
     for x in rows:
         dem[x[4]] = dem.get(x[4], 0) + 1
-    print(len(rows), "món |", dem, "| đã có trong app:", sum(1 for x in rows if x[8]))
+    print(len(rows), "món |", dem, "| đã có trong app:", sum(1 for x in rows if x[9]))
 
 
 if __name__ == "__main__":

@@ -1680,6 +1680,19 @@ function headerFoot() {
 const DUYET_KEY = "cachef.duyet";
 const NHOM_DM = { man: "Mặn", canh: "Canh, súp", rau: "Rau", goi: "Gỏi", lau: "Lẩu", mot_to: "Một tô", banh_che: "Bánh, chè", do_uong: "Đồ uống", chay: "Chay", au: "Món Âu" };
 const NHOM_BUA = ["man", "canh", "rau", "goi", "lau", "mot_to"];
+const NL_MUA_KEY = "cachef.nl_mua"; // chủ nhà chấm nguyên liệu: { "tên gọn": { v: 1 dễ mua | -1 khó mua } }
+function nlMuaLS() { try { return JSON.parse(localStorage.getItem(NL_MUA_KEY) || "{}") || {}; } catch { return {}; } }
+function datNlMua(ten, v) {
+  const d = nlMuaLS();
+  if (d[ten]?.v === v) delete d[ten]; else d[ten] = { v, t: dayStr(0) };
+  try { ghiLS(NL_MUA_KEY, d); } catch { /* chặn lưu */ }
+}
+const nlCua = (m) => (m.nl_chuan || "").split("|").filter(Boolean);
+// Độ dễ mua của món theo nguyên liệu chủ nhà đã chấm: món có thứ khó mua xếp sau.
+function deMua(m, nm) {
+  const nl = nlCua(m), kho = nl.filter((x) => nm[x]?.v === -1), de = nl.filter((x) => nm[x]?.v === 1).length;
+  return { kho, diem: kho.length * 10 - (nl.length ? de / nl.length : 0) };
+}
 function duyetLS() { try { return JSON.parse(localStorage.getItem(DUYET_KEY) || "{}") || {}; } catch { return {}; } }
 function datDuyet(ma, v) {
   const d = duyetLS();
@@ -1699,7 +1712,9 @@ async function pageDuyet(q0) {
   try { ds = await taiDanhMuc(); } catch { $app.innerHTML = '<p class="muted">Chưa tải được danh mục – thử lại khi có mạng.</p>'; return; }
   const loc = ["bua", ...NHOM_BUA, "khac", "chon", "bo"];
   const tenLoc = { bua: "Hợp bữa cơm", khac: "Bánh · uống · chay · Âu", chon: "✓ Đã chọn", bo: "✗ Đã bỏ", ...NHOM_DM };
+  if (S.dmXem === "nl") return pageDuyetNl(ds);
   $app.innerHTML = `<h1 class="ptitle">Duyệt món mới<small id="dm-dem"></small></h1>
+    <div class="seg"><a href="#/duyet-mon" class="on">Món</a><a href="#/duyet-mon" data-xem="nl">Nguyên liệu</a></div>
     <p class="note">Danh mục ${ds.filter((m) => !m.trong_app).length} món của Món Ngon Mỗi Ngày chưa có trong app. Bấm ✓ món muốn thêm, ✗ món không hợp.
       Chọn xong nhắn Claude "thêm món đã duyệt": món sẽ được phân loại, viết lại cách làm rồi mới vào gợi ý.</p>
     <input id="dm-q" class="search" type="search" placeholder="Tìm món hoặc nguyên liệu – gõ không dấu được" value="${esc(S.dmQ || "")}">
@@ -1708,20 +1723,60 @@ async function pageDuyet(q0) {
   const q = document.getElementById("dm-q");
   q.oninput = () => { S.dmQ = q.value; S.dmSo = 40; veDuyet(); };
   $app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => { S.dmLoc = b.dataset.l; S.dmSo = 40; pageDuyet(); }));
+  $app.querySelector("[data-xem]").onclick = (e) => { e.preventDefault(); S.dmXem = "nl"; pageDuyet(); };
   veDuyet();
 }
+// Nguyên liệu gộp từ danh mục: chủ nhà chấm dễ mua / khó mua; trang Món dùng để xếp món dễ nấu lên trước.
+function pageDuyetNl(ds) {
+  S.nlPham = S.nlPham || "chon"; S.nlLoc = S.nlLoc || "chua"; S.nlSo = S.nlSo || 60;
+  const pham = { chon: "Món đã ✓", bua: "Món hợp bữa chưa duyệt", tat: "Cả danh mục" }, loc = { chua: "Chưa chấm", de: "Dễ mua", kho: "Khó mua", tat: "Tất cả" };
+  $app.innerHTML = `<h1 class="ptitle">Duyệt món mới<small id="nl-dem"></small></h1>
+    <div class="seg"><a href="#/duyet-mon" data-xem="mon">Món</a><a href="#/duyet-mon" class="on">Nguyên liệu</a></div>
+    <p class="note">Nguyên liệu gộp từ các món, xếp theo số món dùng. Bấm <b>Dễ</b> nếu mua dễ ở Phan Rang, <b>Khó</b> nếu phải đặt, đi xa hay khó kiếm.
+      Món có nguyên liệu khó sẽ xếp sau ở trang Món và hiện "Cần: …".</p>
+    <input id="nl-q" class="search" type="search" placeholder="Tìm nguyên liệu – gõ không dấu được" value="${esc(S.nlQ || "")}">
+    <div class="filt">${Object.entries(pham).map(([k, t]) => `<button data-p="${k}" class="${k === S.nlPham ? "on" : ""}">${t}</button>`).join("")}</div>
+    <div class="filt">${Object.entries(loc).map(([k, t]) => `<button data-c="${k}" class="${k === S.nlLoc ? "on" : ""}">${t}</button>`).join("")}</div>
+    <div id="nl-list"></div>`;
+  $app.querySelector("[data-xem]").onclick = (e) => { e.preventDefault(); S.dmXem = "mon"; pageDuyet(); };
+  const q = document.getElementById("nl-q");
+  q.oninput = () => { S.nlQ = q.value; S.nlSo = 60; veNl(ds); };
+  $app.querySelectorAll("[data-p]").forEach((b) => (b.onclick = () => { S.nlPham = b.dataset.p; S.nlSo = 60; pageDuyetNl(ds); }));
+  $app.querySelectorAll("[data-c]").forEach((b) => (b.onclick = () => { S.nlLoc = b.dataset.c; S.nlSo = 60; pageDuyetNl(ds); }));
+  veNl(ds);
+}
+function veNl(ds) {
+  const dd = duyetLS(), nm = nlMuaLS(), words = plain(S.nlQ || "").split(/\s+/).filter(Boolean);
+  const trongPham = (m) => !m.trong_app && (S.nlPham === "chon" ? dd[m.ma]?.v === 1 : S.nlPham === "bua" ? !dd[m.ma] && NHOM_BUA.includes(m.nhom) : true);
+  const dem = new Map();
+  for (const m of ds) if (trongPham(m)) for (const x of nlCua(m)) { const e = dem.get(x) || { n: 0, mon: [] }; e.n++; if (e.mon.length < 3) e.mon.push(m.ten); dem.set(x, e); }
+  const hop = ([x]) => (S.nlLoc === "tat" || (S.nlLoc === "chua" ? !nm[x] : S.nlLoc === "de" ? nm[x]?.v === 1 : nm[x]?.v === -1)) && words.every((w) => plain(x).includes(w));
+  const list = [...dem].filter(hop).sort((a, b) => b[1].n - a[1].n);
+  const daCham = [...dem.keys()].filter((x) => nm[x]).length;
+  document.getElementById("nl-dem").textContent = `${dem.size} nguyên liệu · đã chấm ${daCham}`;
+  document.getElementById("nl-list").innerHTML = list.length ? `<div class="list">${list.slice(0, S.nlSo).map(([x, e]) => `
+    <div class="li dm-li"><span class="tx"><b>${esc(x)}</b><span class="meta">${e.n} món · ${esc(e.mon.join(", "))}${e.n > 3 ? "…" : ""}</span></span>
+      <span class="dm-nut nl-nut"><button data-de="${esc(x)}" class="${nm[x]?.v === 1 ? "on" : ""}">Dễ</button><button data-kho="${esc(x)}" class="${nm[x]?.v === -1 ? "on bo" : ""}">Khó</button></span></div>`).join("")}</div>
+    ${list.length > S.nlSo ? `<button class="btn" id="nl-them">Xem thêm (${list.length - S.nlSo})</button>` : ""}`
+    : '<p class="muted">Không còn nguyên liệu nào ở mục này.</p>';
+  document.getElementById("nl-them")?.addEventListener("click", () => { S.nlSo += 60; veNl(ds); });
+  document.querySelectorAll("[data-de]").forEach((b) => (b.onclick = () => { datNlMua(b.dataset.de, 1); veNl(ds); }));
+  document.querySelectorAll("[data-kho]").forEach((b) => (b.onclick = () => { datNlMua(b.dataset.kho, -1); veNl(ds); }));
+}
 function veDuyet() {
-  const dd = duyetLS(), v = S.dmLoc, words = plain(S.dmQ || "").split(/\s+/).filter(Boolean);
+  const dd = duyetLS(), nm = nlMuaLS(), v = S.dmLoc, words = plain(S.dmQ || "").split(/\s+/).filter(Boolean);
   const hop = (m) => v === "chon" ? dd[m.ma]?.v === 1 : v === "bo" ? dd[m.ma]?.v === -1
     : !dd[m.ma] && (v === "bua" ? NHOM_BUA.includes(m.nhom) : v === "khac" ? !NHOM_BUA.includes(m.nhom) : m.nhom === v);
   const list = S.dm.filter((m) => !m.trong_app && hop(m) && words.every((w) => plain(m.ten + " " + (m.nguyen_lieu || "")).includes(w)))
-    .sort((a, b) => !a.anh - !b.anh); // bài đọc được đủ (có ảnh, nguyên liệu) lên trước
+    .map((m) => ({ ...m, _de: deMua(m, nm) }))
+    .sort((a, b) => !a.anh - !b.anh || a._de.diem - b._de.diem); // bài đọc được đủ lên trước, rồi món dễ mua nguyên liệu
   const soChon = Object.values(dd).filter((x) => x.v === 1).length;
   document.getElementById("dm-dem").textContent = `${list.length} món · đã chọn ${soChon}`;
   document.getElementById("dm-list").innerHTML = list.length ? `<div class="list">${list.slice(0, S.dmSo).map((m) => `
     <div class="li dm-li">${m.anh ? `<img class="dm-img" src="${esc(m.anh)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">` : '<span class="dm-img"></span>'}
       <span class="tx"><a href="${esc(m.url)}" target="_blank" rel="noopener"><b>${esc(m.ten)}</b></a>
-        <span class="meta">${NHOM_DM[m.nhom] || ""}${m.phut ? ` · ${m.phut}′` : ""}${m.nguyen_lieu ? ` · ${esc(m.nguyen_lieu.split("|").slice(0, 4).join(", "))}` : ""}</span></span>
+        <span class="meta">${NHOM_DM[m.nhom] || ""}${m.phut ? ` · ${m.phut}′` : ""}${m.nguyen_lieu ? ` · ${esc(m.nguyen_lieu.split("|").slice(0, 4).join(", "))}` : ""}</span>
+        ${m._de.kho.length ? `<span class="meta can">⚠ Cần: ${esc(m._de.kho.join(", "))}</span>` : ""}</span>
       <span class="dm-nut"><button data-ok="${m.ma}" class="${dd[m.ma]?.v === 1 ? "on" : ""}" aria-label="Chọn">✓</button><button data-bo="${m.ma}" class="${dd[m.ma]?.v === -1 ? "on bo" : ""}" aria-label="Bỏ">✗</button></span>
     </div>`).join("")}</div>${list.length > S.dmSo ? `<button class="btn" id="dm-them">Xem thêm (${list.length - S.dmSo})</button>` : ""}`
     : `<p class="muted">${v === "chon" ? "Chưa chọn món nào." : "Không thấy món nào."}</p>`;
