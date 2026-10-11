@@ -381,3 +381,6 @@ body.cook main { padding-top: 12px; }
 .dm-nut button.on.bo { background: var(--muted); border-color: var(--muted); }
 .nl-nut button { width: auto; padding: 0 12px; border-radius: 18px; font-size: 13px; }
 .dm-li .meta.can { color: var(--warm); }
+.tim-nut { display: flex; flex-wrap: wrap; border-top: 1px dashed var(--line); }
+.tim-nut .tim-mo { flex: 1 1 auto; width: auto; border-top: 0; }
+.tim-mo.them { color: var(--green); }

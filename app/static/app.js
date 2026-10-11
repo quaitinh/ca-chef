@@ -581,12 +581,23 @@ function pickTrua(ranked, daXem, cam, used, ctx, deThoi, giu = []) {
   return theoVai(themKem(ranked, bua, ex.cam));
 }
 
+// Số người ăn: trưa 2 người lớn, tối thêm 2 bé đi học về. Tối cơm đủ 4 món (thêm một món mặn hợp bé).
+const SO_NGUOI = { trua: 2, toi: 4 };
+const MON_TOI = 4;
+const monChinhBua = (bua) => bua.filter((d) => !["dua_kem", "trang_mieng", "do_uong"].includes(vaiOf(d)));
+function themManToi(ranked, bua, ex, used, ctx) {
+  if (bua.some(motNoi) || bua.some(anBun) || monChinhBua(bua).length >= MON_TOI) return bua;
+  const damCo = new Set(bua.filter((d) => vaiOf(d) === "man").map(damOf));
+  const them = pickBua(ranked, ["man"], { ...ex, cam: [...ex.cam, ...bua.map((d) => d.ma_mon)] }, used, ctx, [...bua],
+    { man: (x) => hopTre(x) && !damCo.has(damOf(x)) && !coNuoc(x) });
+  return [...bua, ...them];
+}
 function pickToi(ranked, daXem, used, ctx, trua, du, giu = []) {
   const coSan = du ? [du, ...giu] : giu;
   const ex = { da_xem: daXem, cam: [...trua.map((d) => d.ma_mon), ...giu.map((d) => d.ma_mon), ...vuaHien(daXem)] };
   const damTrua = damOf(trua.find((d) => vaiOf(d) === "man") || {});
-  return theoVai(themKem(ranked, [...coSan, ...pickBua(ranked, conThieu(coSan), ex, used, ctx, [...coSan],
-    { man: (x) => !damTrua || damOf(x) !== damTrua })], ex.cam));
+  const bua = [...coSan, ...pickBua(ranked, conThieu(coSan), ex, used, ctx, [...coSan], { man: (x) => !damTrua || damOf(x) !== damTrua })];
+  return theoVai(themKem(ranked, themManToi(ranked, bua, ex, used, ctx), ex.cam));
 }
 
 // Phở trưa nấu dư nước dùng, tối nấu súp/miến thay canh. Phở được chọn khi điểm không kém món mặn tốt nhất quá 2 điểm,
@@ -637,7 +648,7 @@ function pickMeals(ranked, day, keep = {}) {
     ctx.damChinh = true;
     const ex = { da_xem: sh.toi, cam: [pho.ma_mon, ...giu.map((d) => d.ma_mon), ...vuaHien(sh.toi)] };
     const vais = ["man", "rau"].filter((v) => !giu.some((d) => vaiOf(d) === v));
-    const toi = theoVai([...giu, ...pickBua(ranked, vais, ex, used, ctx, [...giu], { man: (x) => damOf(x) !== damOf(pho) })]);
+    const toi = theoVai(themManToi(ranked, [...giu, ...pickBua(ranked, vais, ex, used, ctx, [...giu], { man: (x) => damOf(x) !== damOf(pho) })], ex, used, ctx));
     return { trua: [pho], toi, lau: false, du: null, pho: pho.ma_mon, kem: kem?.ma_mon || null };
   }
   const trua = pickTrua(ranked, sh.trua, kToi.map((d) => d.ma_mon), used, ctx, false, kTrua);
@@ -646,6 +657,12 @@ function pickMeals(ranked, day, keep = {}) {
   ctx.damChinh = !manTrua || damDiem(manTrua) < 2; // trưa đạm nhẹ: tối phải có thịt/cá
   const toiMoi = pickToi(ranked, sh.toi, used, ctx, trua, du, kToi);
   return { trua, toi: toiMoi, lau: false, du: du?.ma_mon ?? null };
+}
+// Số người ăn món trong ngày: trưa 2, tối 4, món nấu dư trưa ăn tiếp tối 6; món một tô / ăn với bún nấu cả ngày tính theo bữa có món.
+function soNguoiMon(m, ma) {
+  if (!m) return 4;
+  if (ma === m.du) return SO_NGUOI.trua + SO_NGUOI.toi;
+  return (m.trua.some((d) => d.ma_mon === ma) ? SO_NGUOI.trua : 0) + (m.toi.some((d) => d.ma_mon === ma) ? SO_NGUOI.toi : 0) || 4;
 }
 // Món phải nấu (món ăn lại từ trưa không tính 2 lần).
 const mealDishes = (m) => [...m.trua, ...m.toi.filter((d) => d.ma_mon !== m.du)];
@@ -833,17 +850,25 @@ function mealBlock(meals, k, chon) {
           aria-label="${on ? "Bỏ chọn" : "Chọn"} ${esc(d.ten_mon)}" title="${on ? "Bỏ chọn" : "Chọn – giữ món này khi đổi các món còn lại"}">✓</button>`}
       </div>`;
     }).join("")}
-    ${S.timBua?.k === k ? `<div class="tim-bua"><input id="tim-${k}" class="search" type="search" placeholder="Tìm món muốn nấu (ech om, canh chua…)" value="${esc(S.timBua.q)}">
+    ${S.timBua?.k === k ? `<div class="tim-bua">${S.timBua.them ? '<p class="note">Thêm một món vào bữa (giữ các món đang có). Gợi ý sẵn món hợp bữa, hoặc gõ để tìm.</p>' : ""}<input id="tim-${k}" class="search" type="search" placeholder="Tìm món muốn nấu (ech om, canh chua…)" value="${esc(S.timBua.q)}">
         <div class="tim-kq" id="tim-kq-${k}">${ketQuaTim(k)}</div><button class="link" data-tim-dong>Đóng</button></div>`
-      : `<button class="tim-mo" data-tim="${k}">🔍 Thèm món khác? Tìm và chọn</button>`}
+      : `<div class="tim-nut"><button class="tim-mo" data-tim="${k}">🔍 Thèm món khác? Tìm và chọn</button><button class="tim-mo them" data-them="${k}">＋ Thêm món (có khách)</button></div>`}
   </section>`;
 }
 // Chọn món bằng tìm kiếm (thèm món, chắc chắn nấu): món chọn thành "đã chọn" của bữa, các món chưa chọn ghép lại theo quy tắc.
 const VAI_TIM = { trua: ["man", "rau", "canh", "mot_to"], toi: ["man", "rau", "canh", "mot_to", "lau", "nuong"] };
 function ketQuaTim(k) {
   const words = plain(S.timBua?.q || "").split(/\s+/).filter(Boolean);
-  if (!words.length) return '<p class="note">Gõ tên món – không dấu cũng được.</p>';
-  const l = S.ranked.filter((d) => VAI_TIM[k].includes(vaiOf(d)) && words.every((w) => plain(d.ten_mon).includes(w))).slice(0, 8);
+  const day = S.ngayXem || 0, bua = S.meals[day]?.[k] || [];
+  let l;
+  if (!words.length) {
+    if (!S.timBua?.them) return '<p class="note">Gõ tên món – không dấu cũng được.</p>';
+    // Thêm món khi có khách: gợi ý món mặn / rau hợp với các món đang có trong bữa.
+    const ranked = day ? S.rankedTomorrow : S.ranked, co = new Set([...(S.meals[day]?.trua || []), ...(S.meals[day]?.toi || [])].map((d) => d.ma_mon));
+    const damCo = new Set(bua.filter((d) => vaiOf(d) === "man").map(damOf));
+    l = ranked.filter((d) => d.score > -3 && ["man", "rau"].includes(vaiOf(d)) && !co.has(d.ma_mon) && !(vaiOf(d) === "man" && damCo.has(damOf(d))) &&
+      hopBua(d, bua, { mo: 0, nuong: bua.some(laNuong) })).slice(0, 6);
+  } else l = S.ranked.filter((d) => VAI_TIM[k].includes(vaiOf(d)) && words.every((w) => plain(d.ten_mon).includes(w))).slice(0, 8);
   return l.length ? l.map((d) => `<button class="tim-mon" data-chon-tim="${d.ma_mon}">${thumb(d)}<span class="tx"><b>${esc(d.ten_mon)}</b>
       <span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}</span></span><span class="add-tim">＋ Chọn</span></button>`).join("")
     : '<p class="note">Không thấy món nào.</p>';
@@ -980,6 +1005,7 @@ function tlBox(meals) {
 // ---------- Trang Nấu gì (hôm nay / ngày mai) ----------
 const KHAC_HOP = [[["man"], 2], [["rau"], 2], [["canh"], 2], [["lau", "nuong"], 2], [["trang_mieng"], 2]];
 function pageHome(day = 0) {
+  S.ngayXem = day;
   const ranked = day ? S.rankedTomorrow : S.ranked;
   const meals = S.meals[day];
   const chon = chonOf(day);
@@ -1011,6 +1037,7 @@ function pageHome(day = 0) {
     saveChon(day, chon);
     pageHome(day);
   }));
+  $app.querySelectorAll("[data-them]").forEach((b) => (b.onclick = () => { S.timBua = { k: b.dataset.them, q: "", them: true }; pageHome(day); }));
   $app.querySelectorAll("[data-tim]").forEach((b) => (b.onclick = () => {
     S.timBua = { k: b.dataset.tim, q: "" }; pageHome(day);
     document.getElementById(`tim-${b.dataset.tim}`)?.focus();
@@ -1018,9 +1045,9 @@ function pageHome(day = 0) {
   const dong = $app.querySelector("[data-tim-dong]");
   if (dong) dong.onclick = () => { S.timBua = null; pageHome(day); };
   const ganChon = () => $app.querySelectorAll("[data-chon-tim]").forEach((b) => (b.onclick = () => {
-    const k = S.timBua.k;
+    const { k, them } = S.timBua;
     S.timBua = null;
-    duaVaoBua(b.dataset.chonTim, k, day);
+    if (them) themVaoBua(b.dataset.chonTim, k, day); else duaVaoBua(b.dataset.chonTim, k, day);
     pageHome(day);
   }));
   const ip = S.timBua && document.getElementById(`tim-${S.timBua.k}`);
@@ -1068,6 +1095,16 @@ function duaVaoBua(ma, k, day = 0) {
     const vx = vaiOf(ranked.find((y) => y.ma_mon === x) || {});
     if (vx === v || MOT_NOI.includes(vx) || (MOT_NOI.includes(v) && vx !== "trang_mieng")) chon[k].delete(x);
   }
+  chon[k === "trua" ? "toi" : "trua"].delete(ma);
+  chon[k].add(ma);
+  saveChon(day, chon);
+  datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
+}
+
+// Thêm món vào bữa (có khách): giữ mọi món đang có trong bữa, món thêm thành "đã chọn".
+function themVaoBua(ma, k, day = 0) {
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = S.meals[day];
+  for (const d of m[k]) if (!(k === "toi" && d.ma_mon === m.du)) chon[k].add(d.ma_mon);
   chon[k === "trua" ? "toi" : "trua"].delete(ma);
   chon[k].add(ma);
   saveChon(day, chon);
@@ -1131,7 +1168,8 @@ function pageRecipe(ma, moiXong = false) {
   const d = S.ranked.find((x) => x.ma_mon === ma);
   if (!d) { $app.innerHTML = `<p>Không tìm thấy món.</p><a href="#/">‹ Về trang chính</a>`; return; }
   const base = Number(d.khau_phan_goc) || 4;
-  const n = S.servings[ma] ?? base;
+  const nBua = [0, 1].map((i) => S.meals[i] && [...S.meals[i].trua, ...S.meals[i].toi].some((x) => x.ma_mon === ma) ? soNguoiMon(S.meals[i], ma) : 0).find(Boolean);
+  const n = S.servings[ma] ?? nBua ?? base; // món đang trong bữa: mặc định theo số người ăn bữa đó
   const factor = n / base;
   const rows = S.ingByDish[ma] || [];
   const unitName = d.loai === "do_uong" || d.loai === "trang_mieng" ? "phần" : "người";
@@ -1472,7 +1510,7 @@ function nlBua(ngay) {
   for (const i of ngay) {
     const m = S.meals[i];
     for (const d of mealDishes(m)) {
-      const f = (d.ma_mon === m.du ? 2 : 1) * 4 / (Number(d.khau_phan_goc) || 4);
+      const f = soNguoiMon(m, d.ma_mon) / (Number(d.khau_phan_goc) || 4);
       for (const r of S.ingByDish[d.ma_mon] || []) {
         if (r.vai_tro === "gia_vi" || BO_QUA_MUA.test(String(r.ten_hien_thi).trim())) continue;
         const c = String(r.ma_nguyen_lieu || "").split("|").filter((x) => S.ing[x])[0] || "";

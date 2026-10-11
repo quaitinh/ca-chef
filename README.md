@@ -120,6 +120,10 @@ ai có cả hai mới đọc/ghi được dữ liệu nhà đó. Sửa `dong_bo.
 
 ## Quy tắc ghép bữa (`app/static/app.js`, phần "Ghép bữa")
 
+- Trưa 2 người lớn: mặn + rau + canh. Tối thêm 2 bé: 4 món – thêm một món mặn hợp trẻ, khác nhóm đạm, không phải món nhiều nước (`themManToi`, `MON_TOI`). Lẩu/nướng/ăn với bún giữ như cũ.
+- Khẩu phần theo bữa (`SO_NGUOI`): trưa 2, tối 4, món nấu dư trưa ăn tiếp tối 6 – dùng cho Đi chợ và số người mặc định ở trang món đang trong bữa.
+- Nút "＋ Thêm món (có khách)" ở mỗi bữa: gợi ý món mặn/rau hợp bữa (mặn khác nhóm đạm món đang có) hoặc tìm theo tên; món thêm được giữ cùng các món đang có.
+
 Đang áp dụng:
 - Mỗi bữa: mặn + rau + canh. Bữa một món (lẩu, nướng) chỉ buổi tối: mỗi loại tối đa 1 lần/7 ngày, lẩu và nướng cách nhau
   ít nhất 3 ngày, được +3 điểm vào tối thứ 6, thứ 7, chủ nhật; hôm tối ăn lẩu/nướng thì trưa chọn món dễ nấu.
