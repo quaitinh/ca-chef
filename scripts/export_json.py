@@ -11,6 +11,16 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
 from server import STATIC, get_data  # noqa: E402
 
 payload = get_data(refresh=True)
+# Tên nguyên liệu chuẩn của từng món (theo bảng quy đổi ở trang Duyệt › Nguyên liệu) để trừ điểm món có thứ chủ nhà chấm "khó mua".
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "de_xuat"))
+from danh_muc_mnmn import ten_chuan  # noqa: E402
+_d = json.loads(payload)
+_nl = {}
+for r in _d.get("mon_nguyen_lieu", []):
+    if r.get("vai_tro") != "gia_vi":
+        _nl.setdefault(r["ma_mon"], []).extend(ten_chuan(str(r.get("ten_hien_thi") or "")))
+_d["nl_chuan_mon"] = {k: list(dict.fromkeys(v)) for k, v in _nl.items() if v}
+payload = json.dumps(_d, ensure_ascii=False).encode()
 with open(os.path.join(STATIC, "data.json"), "wb") as f:
     f.write(payload)
 # Mã phiên bản theo nội dung (bỏ giờ lấy dữ liệu): app tải data.json?v=<mã>, dữ liệu không đổi thì dùng lại bản đã lưu.

@@ -68,6 +68,22 @@ def tach_nl(ds):
     return out
 
 
+# Bảng quy đổi tên gọn -> tên chuẩn (gộp đồng nghĩa, bỏ dòng không phải nguyên liệu; "a|b" = dòng gộp nhiều thứ).
+QUY_DOI_P = os.path.join(OUT, "nl_quy_doi.csv")
+QUY_DOI = {}
+if os.path.exists(QUY_DOI_P):
+    QUY_DOI = {unicodedata.normalize("NFC", r["ten"]): r["chuan"] for r in csv.DictReader(open(QUY_DOI_P, newline="", encoding="utf-8"))}
+
+
+def ten_chuan(x):
+    """Tên nguyên liệu như ghi trong bài -> danh sách tên chuẩn (rỗng nếu không phải nguyên liệu)."""
+    g = unicodedata.normalize("NFC", chuan(x))
+    if not g:
+        return []
+    c = QUY_DOI.get(g, g)
+    return [t.strip() for t in c.split("|") if t.strip()]
+
+
 def plain(s):
     return re.sub(r"\s+", " ", unicodedata.normalize("NFD", s.lower()).encode("ascii", "ignore").decode().replace("đ", "d")).strip()
 
@@ -106,7 +122,7 @@ def main(src):
         nl = [x for x in dict.fromkeys(ten_nl(x) for x in r.get("nl", [])) if x]
         trong = co_ten.get(plain(r["ten"]), "") or ("co" if r["url"].rstrip("/") in co_url else "")
         rows.append([slug, r["ten"], r["url"], r.get("anh", ""), nhom(r["ten"], r.get("tu_khoa", "")), phut(r.get("thoi_gian")),
-                     r.get("khau_phan", ""), "|".join(nl[:12]), "|".join(dict.fromkeys(x for x in map(chuan, tach_nl(r.get("nl", []))) if x)), trong, "" if r.get("co_buoc", True) else "thieu_buoc"])
+                     r.get("khau_phan", ""), "|".join(nl[:12]), "|".join(dict.fromkeys(t for x in tach_nl(r.get("nl", [])) for t in ten_chuan(x))), trong, "" if r.get("co_buoc", True) else "thieu_buoc"])
     rows.sort(key=lambda x: plain(x[1]))
     with open(os.path.join(OUT, "mnmn_danh_muc.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\r\n")
