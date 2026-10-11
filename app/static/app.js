@@ -80,7 +80,13 @@ const $app = document.getElementById("app");
 const plain = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
 const hasRecipe = (d) => String(d.cach_lam ?? "").trim() !== "";
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const today = () => new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Ho_Chi_Minh" });
+// Ngày hôm nay giờ Việt Nam – định dạng theo múi giờ khá chậm và bị gọi hàng nghìn lần mỗi lượt chấm điểm: nhớ trong 1 phút.
+let homNay = { phut: -1, ngay: "" };
+const today = () => {
+  const p = Math.floor(Date.now() / 60000);
+  if (p !== homNay.phut) homNay = { phut: p, ngay: new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Ho_Chi_Minh" }) };
+  return homNay.ngay;
+};
 // Ngày (YYYY-MM-DD, giờ Việt Nam) cách hôm nay `i` ngày; tháng tương ứng.
 const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOString().slice(0, 10);
 const month = (i = 0) => Number(dayStr(i).slice(5, 7));
@@ -157,7 +163,7 @@ function danhGia() {
   if (!S.dg) { try { S.dg = JSON.parse(localStorage.getItem(DG_KEY) || "{}"); } catch { S.dg = {}; } }
   return S.dg;
 }
-const dgMon = (ma) => danhGia()[ma] || {};
+const dgMon = (ma) => (S.memo?.dg || danhGia())[ma] || {};
 function saveDanhGia(ma, sua) {
   const all = danhGia();
   all[ma] = { ...(all[ma] || {}), ...sua };
@@ -178,6 +184,10 @@ function quyetDinhTraiMua(dish, m) {
 const laNuong = (d) => cachNau(d) === "nuong" || vaiOf(d) === "nuong";
 // Có món nướng trong NUONG_CACH_NGAY ngày trước ngày `day` (theo lịch sử gợi ý và món đã nấu).
 function ganNuong(day) {
+  if (S.memo) return (S.memo.nuong ??= {})[day] ??= ganNuong0(day);
+  return ganNuong0(day);
+}
+function ganNuong0(day) {
   const ref = dayStr(day), tu = dayStr(day - NUONG_CACH_NGAY), mon = Object.fromEntries(S.data.mon_an.map((m) => [m.ma_mon, m]));
   const coNuong = (ma) => mon[ma] && laNuong(mon[ma]);
   if (Object.entries(readHistory()).some(([d, l]) => d >= tu && d < ref && l.some(coNuong))) return true;
@@ -188,6 +198,7 @@ const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
 // ---------- Chấm điểm ----------
 // Số ngày từ lần món có trong bữa gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
 function readHistory() {
+  if (S.memo?.hist) return S.memo.hist;
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch { return {}; }
 }
 
@@ -274,6 +285,8 @@ function scoreDish(dish, weatherHits, day = 0) {
   if (/thuốc bắc/i.test(dish.ten_mon) && since <= THUOC_BAC_CACH_NGAY) them(`Món thuốc bắc: ${THUOC_BAC_CACH_NGAY} ngày mới ăn lại`, -20);
   // Lẩu, nướng là bữa quây quần: ưu tiên tối thứ 6, thứ 7, chủ nhật.
   if (MOT_NOI.includes(vaiOf(dish)) && [0, 5, 6].includes(new Date(dayStr(day) + "T00:00:00Z").getUTCDay())) them("Cuối tuần, cả nhà quây quần", 3);
+  const kho = khoMuaCua(dish, S.nmKho);
+  if (kho.length) them(`Nguyên liệu khó mua: ${kho.join(", ")}`, -4);
   // Đồ có sẵn trong tủ (mua về rồi nấu theo tủ): món dùng hết nguyên liệu chính trong tủ +3, dùng một phần +1; có thứ sắp quá hạn thêm +2.
   const c = chinhCua(dish), co = c.filter(trongTu);
   if (co.length) {
@@ -291,12 +304,31 @@ function dayHash(s, day = 0) {
   return h;
 }
 
+// Tên nguyên liệu gọn như trang chấm Nguyên liệu (scripts/de_xuat/danh_muc_mnmn.py chuan): bỏ cách sơ chế, thương hiệu, cỡ.
+function chuanNl(t) {
+  let s = String(t || "").toLowerCase().trim().split(/[(,/:;+]| - | – |\bhoặc\b|\svà\s/)[0];
+  s = s.replace(/\b(lisa|aji-ngon|aji-no-moto|ajinomoto|aji-quick|phú sĩ|knorr|maggi)\b|®/g, "")
+    .replace(/\s(băm|bằm|cắt|xắt|thái|lột|bóc|bỏ|ngâm|luộc|rang|chiên|giã|đập|bào|nạo|xay|nghiền|ép|vắt|sơ chế|làm sạch|phi lê|nguyên miếng|nguyên con|để ráo|trụng|tách)(\s.*)?$/, "")
+    .replace(/\s(loại|cỡ|size)(\s.*)?$/, "").replace(/\s+/g, " ").trim();
+  return s.replace(/^\d[\d.,/\s]*(g|gr|kg|ml|lít|muỗng canh|muỗng cà phê|quả|trái|củ|cây|bó|con)?\s+/, "");
+}
+// Món có nguyên liệu chủ nhà chấm "khó mua" (trang Duyệt món › Nguyên liệu).
+function khoMuaCua(d, nm) {
+  if (!nm) return [];
+  return [...new Set((S.ingByDish[d.ma_mon] || []).filter((r) => r.vai_tro !== "gia_vi").map((r) => chuanNl(r.ten_hien_thi))
+    .filter((x) => nm[x]?.v === -1))];
+}
 function rankDishes(day = 0) {
   const hits = weatherRulesHit(day);
-  return S.data.mon_an
-    .map((d) => scoreDish(d, hits, day))
-    .map((d) => ({ ...d, xep: d.score + XAO_DIEM * ((dayHash(d.ma_mon, day) >>> 0) % 1000) / 1000 }))
-    .sort((a, b) => b.xep - a.xep);
+  const nm = nlMuaLS();
+  S.nmKho = Object.values(nm).some((x) => x.v === -1) ? nm : null;
+  S.memo = { dg: danhGia(), hist: readHistory() }; // đọc localStorage một lần cho cả lượt chấm (hơn 700 món)
+  try {
+    return S.data.mon_an
+      .map((d) => scoreDish(d, hits, day))
+      .map((d) => ({ ...d, xep: d.score + XAO_DIEM * ((dayHash(d.ma_mon, day) >>> 0) % 1000) / 1000 }))
+      .sort((a, b) => b.xep - a.xep);
+  } finally { S.memo = null; }
 }
 
 // Bữa một món (lẩu, nướng) là bữa lớn: mỗi loại tối đa 1 lần/7 ngày, hai loại cách nhau ít nhất 3 ngày.
@@ -1247,10 +1279,12 @@ function pageCalendar(mo) {
 }
 
 // ---------- Tất cả món ----------
-const VAI_LOC = ["all", "yt", "da_nau", "man", "rau", "canh", "lau", "nuong", "mot_to", "trang_mieng", "do_uong"];
-const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã nấu" };
+const VAI_LOC = ["all", "yt", "da_nau", "dot", "man", "rau", "canh", "lau", "nuong", "mot_to", "trang_mieng", "do_uong"];
+const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã nấu", dot: "🆕 Đợt duyệt" };
+// Món thêm theo đợt chủ nhà duyệt (nhãn nguon_loai mnmn_duyet_1...) – lọc lại cả đợt khi cần.
+const laDotDuyet = (d) => /^mnmn_duyet/.test(S.nhan[d.ma_mon]?.nguon_loai || "");
 const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgMon(d.ma_mon).y === 1
-  : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
+  : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : v === "dot" ? laDotDuyet(d) : vaiOf(d) === v);
 function pageAll() {
   $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
     <a class="nhac" href="#/duyet-mon"><span class="ic">📚</span><span class="tx"><b>Duyệt thêm món</b><span class="meta">Chọn món muốn thêm từ danh mục Món Ngon Mỗi Ngày</span></span><span class="chev">›</span></a>
