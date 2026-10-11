@@ -914,3 +914,10 @@ CT["nuoc_rau_ngo"] = ("Râu ngô và bắp non nấu nhỏ lửa 30 phút – u�
     ["Rửa râu ngô và bắp non, để ráo.",
      "Cho vào nồi với 2 lít nước, đun sôi rồi nấu thật nhỏ lửa khoảng 30 phút (bài gốc: thích ngọt thì thêm nắm đường phèn).",
      "Tắt bếp, để nguội rồi rót ra uống."])
+
+# Món đợt duyệt từ danh mục Món Ngon Mỗi Ngày (lo5_mnmn.py).
+try:
+    from cach_lam_mnmn import CT_MNMN
+    CT.update(CT_MNMN)
+except ImportError:
+    pass

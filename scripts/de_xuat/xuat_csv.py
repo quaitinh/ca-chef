@@ -30,6 +30,7 @@ import lo1_bac  # noqa: E402
 import lo2_bac  # noqa: E402
 import lo3_dam  # noqa: E402
 import lo4_chu_nha  # noqa: E402
+import lo5_mnmn  # noqa: E402
 from cach_lam_viet_lai import CL  # noqa: E402
 from phan_loai import classify  # noqa: E402
 
@@ -179,7 +180,7 @@ def main():
     NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl | {r["ma"] for r in doc(os.path.join(OUT, "nhanh_nguyen_lieu.csv"))}  # nhánh: server.py tạo khi build
-    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES}
+    lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES + lo5_mnmn.RECIPES}
     dung_that(lo1, loi)
 
     # Nguyên liệu mới
@@ -209,6 +210,10 @@ def main():
         dong = {"ma_mon": ma, "ten_mon": lo1[ma]["ten"], "vai_mam": vai, "nhom_dam": dam, "nguon_loai": "lo4", "nguon": lo1[ma]["nguon"]}
         if ma in theo_khung: theo_khung[ma].update(dong)
         else: khung.append(dong)
+    # Lô 5: món chủ nhà duyệt từ danh mục Món Ngon Mỗi Ngày, nguon_loai là nhãn đợt (mnmn_duyet_1...) để lọc/gỡ lại.
+    for ma, vai, dam, dot in lo5_mnmn.KHUNG:
+        if ma in theo_khung: loi.append(f"{ma}: món đợt {dot} trùng mã món đã có"); continue
+        khung.append({"ma_mon": ma, "ten_mon": lo1[ma]["ten"], "vai_mam": vai, "nhom_dam": dam, "nguon_loai": dot, "nguon": lo1[ma]["nguon"]})
     for k in khung:
         ten, vai, dam, nguon_loai, url = k["ten_mon"], k["vai_mam"], k["nhom_dam"], k["nguon_loai"], k["nguon"]
         if vai not in ENUM["vai_mam"]: loi.append(f"{ten}: vai_mam lạ {vai}")
@@ -216,7 +221,7 @@ def main():
         if nguon_loai == "dang_co":
             ma = k["ma_mon"]
             if ma not in goc_mon: loi.append(f"{ten}: không thấy {ma} trong data/mon_an.csv")
-        elif nguon_loai in ("lo1", "lo2", "lo3", "lo4"):
+        elif nguon_loai in ("lo1", "lo2", "lo3", "lo4") or nguon_loai.startswith("mnmn_duyet"):
             ma = k["ma_mon"]
             r = lo1[ma]
             if ma in dung and ma not in lo4_chu_nha.DE_SHEET: loi.append(f"trùng ma_mon {ma}")

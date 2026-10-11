@@ -1247,10 +1247,12 @@ function pageCalendar(mo) {
 }
 
 // ---------- Tất cả món ----------
-const VAI_LOC = ["all", "yt", "da_nau", "man", "rau", "canh", "lau", "nuong", "mot_to", "trang_mieng", "do_uong"];
-const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã nấu" };
+const VAI_LOC = ["all", "yt", "da_nau", "dot", "man", "rau", "canh", "lau", "nuong", "mot_to", "trang_mieng", "do_uong"];
+const TEN_LOC = { all: "Tất cả", yt: "♥ Yêu thích", da_nau: "✓ Đã nấu", dot: "🆕 Đợt duyệt" };
+// Món thêm theo đợt chủ nhà duyệt (nhãn nguon_loai mnmn_duyet_1...) – lọc lại cả đợt khi cần.
+const laDotDuyet = (d) => /^mnmn_duyet/.test(S.nhan[d.ma_mon]?.nguon_loai || "");
 const hopLoc = (d, v) => v === "all" || (v === "yt" ? dgMon(d.ma_mon).tim || dgMon(d.ma_mon).y === 1
-  : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : vaiOf(d) === v);
+  : v === "da_nau" ? (dgMon(d.ma_mon).nau || []).length > 0 : v === "dot" ? laDotDuyet(d) : vaiOf(d) === v);
 function pageAll() {
   $app.innerHTML = `<h1 class="ptitle">Món ăn<small id="dem-mon"></small></h1>
     <a class="nhac" href="#/duyet-mon"><span class="ic">📚</span><span class="tx"><b>Duyệt thêm món</b><span class="meta">Chọn món muốn thêm từ danh mục Món Ngon Mỗi Ngày</span></span><span class="chev">›</span></a>
