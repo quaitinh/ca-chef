@@ -20,7 +20,12 @@ from chuyen_nguyen_lieu import GIA_VI, GV_MA, MA, MON_NL_HEADER, OUT, RAU_THOM, 
 
 DO_UONG = {"nuoc_ep_oi", "sinh_to_gac"}
 # Mã cho nguyên liệu bảng MA cũ chưa có (thêm sau này); dòng chưa khớp vẫn được server.py gắn mã theo gan_ma.csv.
-THEM_MA = [(r"ớt chuông", "ot_chuong"), (r"(^|\s)vịt|thịt vit", "vit"), (r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
+THEM_MA = [(r"cá nục", "ca_nuc"), (r"bắp cải", "bap_cai"), (r"^(thịt )?(nghêu|ngao|hến|sò huyết)", "ngheu"), (r"^(thịt )?(hào|hàu)(\s|$)", "hau"),
+           (r"basa", "ca_basa"), (r"cá lăng", "ca_lang"), (r"cá kèo", "ca_keo"), (r"cá hú", "ca_hu"), (r"tai tượng", "ca_tai_tuong"),
+           (r"cá gáy", "ca_gay"), (r"cá cam", "ca_cam"), (r"bông lau", "ca_bong_lau"), (r"saba", "ca_saba"), (r"cá khoai", "ca_khoai"),
+           (r"thác lác", "ca_thac_lac"), (r"cá chẽm|cá vược", "ca_chem"), (r"cá tầm", "ca_tam"), (r"^cá rô(?! phi)", "ca_ro_dong"),
+           (r"bạch tuộc", "bach_tuoc"), (r"bồ câu", "bo_cau"), (r"đậu rồng", "dau_rong"), (r"khoai mỡ", "khoai_mo"),
+           (r"ớt chuông", "ot_chuong"), (r"(^|\s)vịt|thịt vit", "vit"), (r"nấm", "nam"), (r"phèo|ruột (heo|lợn|non)|lòng (heo|lợn)|(^|\s)gan |^gan$|cật|tim heo|dạ dày|bao tử", "long_heo"),
            (r"ốc (bưu|đồng|nhồi)", "oc_dong"), (r"bí ngòi", "bi_ngoi"), (r"gấc", "gac"), (r"hạt sen", "hat_sen"), (r"táo đỏ|táo tàu", "tao_do"), (r"lươn", "luon"), (r"cải chua|dưa chua|dưa cải", "dua_cai_chua"), (r"măng chua", "mang_chua"), (r"sấu", "sau"),
            (r"hoa chuối", "hoa_chuoi"), (r"chuối.*xanh", "chuoi_xanh"), (r"chuối", "chuoi_chin"), (r"khổ qua|mướp đắng", "kho_qua"),
            (r"thiên lý", "thien_ly"), (r"tim cật|cật", "long_heo"), (r"cá liệt", "ca_liet"), (r"cá (sống mũi|đội đèn)", "ca_song_mui"), (r"lá chè|chè xanh", "che_xanh"), (r"vối", "la_voi"), (r"gạo lứt", "gao_lut"), (r"đậu đen", "dau_den"), (r"hoa cúc|bông cúc|cúc khô", "hoa_cuc"), (r"atiso khô", "atiso_kho"), (r"kỷ tử|kỉ tử", "ky_tu"), (r"râu (bắp|ngô)", "ngo"), (r"cá hố", "ca_ho"), (r"cá chuồ", "ca_chuon"),

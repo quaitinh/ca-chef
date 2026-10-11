@@ -139,6 +139,9 @@ def dung_that(lo1, loi):
         la_chinh = [d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"] and set(d["ma_nguyen_lieu"].split("|")) & cu for d in rows]
         if not any(la_chinh):
             la_chinh = [d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"] and set(d["ma_nguyen_lieu"].split("|")) & trong_ten for d in rows]
+        if not any(la_chinh) and not cu:  # món đợt duyệt (chưa khai mã chính): dòng nguyên liệu có mã đầu tiên
+            dau = next((i for i, d in enumerate(rows) if d["vai_tro"] != "gia_vi" and d["ma_nguyen_lieu"]), None)
+            la_chinh = [i == dau for i in range(len(rows))]
         nl = [(d["ma_nguyen_lieu"], d["ten_hien_thi"], float(d["so_luong"]) if d["so_luong"] else None, d["don_vi"],
                "n" if d["kieu_tinh"] == "theo_nguoi" else "x", "chinh" if c else d["vai_tro"]) for d, c in zip(rows, la_chinh)]
         chinh = "|".join(dict.fromkeys(x[0] for x in nl if x[5] == "chinh")) or r["chinh"]
@@ -177,7 +180,7 @@ def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
     goc_nl = {r["ma"] for r in doc(os.path.join(DATA, "nguyen_lieu.csv"))}
-    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU
+    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU + lo5_mnmn.NGUYEN_LIEU
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl | {r["ma"] for r in doc(os.path.join(OUT, "nhanh_nguyen_lieu.csv"))}  # nhánh: server.py tạo khi build
     lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES + lo5_mnmn.RECIPES}
