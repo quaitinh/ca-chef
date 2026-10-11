@@ -43,8 +43,14 @@ def nhom(ten, tu_khoa):
 CHE_BIEN = r"\b(băm|bằm|cắt|xắt|thái|lột|bóc|bỏ|ngâm|luộc|rang|chiên|giã|đập|bào|nạo|xay|nghiền|ép|vắt|sơ chế|làm sạch|phi lê|nguyên miếng|nguyên con|nguyên trái|để ráo|pha|hấp chín|trụng|tách)\b.*$"
 THUONG_HIEU = r"\b(lisa|aji-ngon|aji-no-moto|ajinomoto|aji-quick|phú sĩ|tasty|mayonnaise aji-mayo|aji-mayo|knorr|maggi|vị hảo)\b|®"
 BO = {"trang trí", "sản phẩm", "nước", "nước lạnh", "nước sôi", "nước lọc", "đá", "đá viên", "ăn kèm", "gia vị", "nước ấm", "nước nóng"}
+DON_VI = r"(cm|g|gr|gram|kg|ml|l|lít|m|muỗng( canh| cà phê)?|thìa|chén|bát|tô|trái|quả|củ|cây|nhánh|tép|lá|con|miếng|lát|bó|nắm|gói|hộp|lon|tai|cọng|nụ|hoa|bông|khúc|cái|ít|chút)"
+
+
 def chuan(s):
     s = s.lower().strip()
+    s = re.sub(r"\s{2,}.*$", "", s)  # "thịt ba chỉ   300g" -> "thịt ba chỉ"
+    s = re.sub(r"^[\d.,/½¼\-–\s]+" + DON_VI + r"?\b\s*", "", s)  # "3 miếng quế" -> "quế"
+    s = re.sub(r"\s+[\d.,/½¼\-–]+\s*" + DON_VI + r"?\b.*$", "", s)  # "cà rốt 100g", "hành tây 1 củ" -> bỏ
     s = re.split(r"[(,/:;+]| - | – |\bhoặc\b|\bvà\b", s)[0]
     s = re.sub(THUONG_HIEU, "", s)
     s = re.sub(CHE_BIEN, "", s)

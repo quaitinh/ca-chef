@@ -1781,7 +1781,8 @@ function pageDuyetNl(ds) {
 }
 function veNl(ds) {
   const dd = duyetLS(), nm = nlMuaLS(), words = plain(S.nlQ || "").split(/\s+/).filter(Boolean);
-  const trongPham = (m) => !m.trong_app && (S.nlPham === "chon" ? dd[m.ma]?.v === 1 : S.nlPham === "bua" ? !dd[m.ma] && NHOM_BUA.includes(m.nhom) : true);
+  // Món đã ✓ thì tính cả khi đã thêm vào app (đợt duyệt) – chủ nhà chấm nguyên liệu cho chính các món đó.
+  const trongPham = (m) => S.nlPham === "chon" ? dd[m.ma]?.v === 1 : !m.trong_app && (S.nlPham === "bua" ? !dd[m.ma] && NHOM_BUA.includes(m.nhom) : true);
   const dem = new Map();
   for (const m of ds) if (trongPham(m)) for (const x of nlCua(m)) { const e = dem.get(x) || { n: 0, mon: [] }; e.n++; if (e.mon.length < 3) e.mon.push(m.ten); dem.set(x, e); }
   const hop = ([x]) => (S.nlLoc === "tat" || (S.nlLoc === "chua" ? !nm[x] : S.nlLoc === "de" ? nm[x]?.v === 1 : nm[x]?.v === -1)) && words.every((w) => plain(x).includes(w));
