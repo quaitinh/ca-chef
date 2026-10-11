@@ -315,7 +315,8 @@ function chuanNl(t) {
 // Món có nguyên liệu chủ nhà chấm "khó mua" (trang Duyệt món › Nguyên liệu).
 function khoMuaCua(d, nm) {
   if (!nm) return [];
-  return [...new Set((S.ingByDish[d.ma_mon] || []).filter((r) => r.vai_tro !== "gia_vi").map((r) => chuanNl(r.ten_hien_thi))
+  const ds = S.data.nl_chuan_mon?.[d.ma_mon] || (S.ingByDish[d.ma_mon] || []).filter((r) => r.vai_tro !== "gia_vi").map((r) => chuanNl(r.ten_hien_thi));
+  return [...new Set(ds
     .filter((x) => nm[x]?.v === -1))];
 }
 function rankDishes(day = 0) {
