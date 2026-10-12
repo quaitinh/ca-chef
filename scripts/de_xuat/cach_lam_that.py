@@ -921,3 +921,16 @@ try:
     CT.update(CT_MNMN)
 except ImportError:
     pass
+
+# Món nhà thêm 10/2026.
+CT["canh_hau_nau_chua"] = ("Hàu đảo với cà chua phi hành rồi nấu chua với dứa và me, thêm hành răm – chua thanh, ngọt hàu.",
+    ["Hàu ngâm nước muối, rửa lại 2–3 lần cho sạch.",
+     "Phi thơm hành khô thái nhỏ, cho cà chua bổ múi cau vào đảo, rồi cho hàu vào đảo sơ.",
+     "Thêm nước, đậy nắp đun sôi.",
+     "Cho dứa và nửa quả me vào nấu cùng, nêm bột nêm vừa ăn.",
+     "Thả hành lá, rau răm thái nhỏ rồi tắt bếp."])
+CT["tom_hap_sa"] = ("Tôm hấp trên lớp sả với chút nước dừa đến khi đỏ – ngọt thịt, thơm sả, nấu nhanh.",
+    ["Tôm, sả rửa sạch, để ráo; sả cắt lát.",
+     "Cho 50 ml nước dừa và một nửa số sả vào nồi, xếp tôm lên rồi phủ phần sả còn lại, đậy nắp.",
+     "Hấp đến khi tôm chuyển đỏ là chín (khoảng 12 phút, tùy cỡ tôm).",
+     "Bày ra đĩa, trang trí lá ngò."])
