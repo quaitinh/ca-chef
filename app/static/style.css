@@ -386,3 +386,6 @@ body.cook main { padding-top: 12px; }
 .tim-mo.them { color: var(--green); }
 .row .xoa { flex: none; width: 30px; height: 30px; border: 0; background: none; color: var(--muted); font-size: 15px; border-radius: 50%; opacity: .6; }
 .row .xoa:active { background: var(--none); opacity: 1; }
+.row .du-nut { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px dashed var(--line); background: none; border-radius: 12px; font-size: 16px; line-height: 1; color: var(--muted); padding: 0; }
+.row .du-nut small { font-size: 9px; margin-top: 2px; white-space: nowrap; }
+.row .du-nut.on { border-style: solid; border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
