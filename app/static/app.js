@@ -92,22 +92,38 @@ const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOStri
 const month = (i = 0) => Number(dayStr(i).slice(5, 7));
 
 // ---------- Dữ liệu ----------
-// data.json (~1 MB) tải theo mã phiên bản trong version.json (vài chục byte): dữ liệu chưa đổi thì trình duyệt / service worker
-// dùng lại bản đã lưu. Không lấy được version.json (bản demo, mất mạng) hoặc vừa bấm "Tải lại dữ liệu" thì tải mới.
+// Mở app nhanh: dữ liệu, thời tiết, đồng bộ đều dùng bản đã lưu trên máy để hiện ngay, cập nhật ngầm sau rồi vẽ lại.
+// - data.json theo mã phiên bản lần trước (service worker trả từ bộ nhớ), song song hỏi version.json; có bản mới thì tải và vẽ lại.
+// - Thời tiết lưu 6 giờ (cùng ngày); chưa có thì chờ tối đa 3 giây.
+// - Đồng bộ trong nhà (Apps Script trả lời mất ~3 giây) chạy ngầm, máy khác có sửa thì vẽ lại.
+const VER_KEY = "cachef.ver", TT_KEY = "cachef.thoi_tiet";
+const docLS1 = (k) => { try { return localStorage.getItem(k) || ""; } catch { return ""; } };
+const ghiLS1 = (k, v) => { try { localStorage.setItem(k, v); } catch { /* chặn lưu */ } };
+const layVer = () => fetch(`version.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json()).then((x) => x.v || "").catch(() => "");
 async function taiDuLieu() {
   let moi = false;
   try { moi = !!sessionStorage.getItem("cachef.tai_lai"); sessionStorage.removeItem("cachef.tai_lai"); } catch { /* chặn lưu */ }
-  const v = moi ? "" : await fetch(`version.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json()).then((x) => x.v || "").catch(() => "");
-  S.ver = v;
+  const cu = moi ? "" : docLS1(VER_KEY);
+  if (cu) { // có bản đã lưu: dùng ngay, kiểm tra phiên bản ngầm
+    S.ver = cu; S.kiemVer = layVer();
+    const d = await fetch(`data.json?v=${cu}`).then((r) => r.json()).catch(() => null);
+    if (d) return d;
+  }
+  const v = moi ? "" : await layVer();
+  S.ver = v; S.kiemVer = null;
+  if (v) ghiLS1(VER_KEY, v);
   return fetch(v ? `data.json?v=${v}` : `data.json?t=${Date.now()}`).then((r) => r.json());
 }
-async function load() {
-  const [data, weather] = await Promise.all([
-    taiDuLieu(),
-    fetch(WEATHER_URL).then((r) => r.json()).catch(() => null),
-  ]);
-  S.data = data;
-  S.weather = weather;
+function docThoiTiet() {
+  try { const x = JSON.parse(docLS1(TT_KEY) || "null"); return x && x.ngay === today() && Date.now() - x.luc < 6 * 3600e3 ? x.w : null; } catch { return null; }
+}
+const taiThoiTiet = () => fetch(WEATHER_URL).then((r) => r.json()).then((w) => {
+  if (w?.daily) ghiLS1(TT_KEY, JSON.stringify({ luc: Date.now(), ngay: today(), w }));
+  return w?.daily ? w : null;
+}).catch(() => null);
+const choToiDa = (p, ms) => Promise.race([p, new Promise((ok) => setTimeout(() => ok(null), ms))]);
+function apDungDuLieu(data) {
+  S.data = data; S.ing = {}; S.prices = {}; S.ingByDish = {}; S.nhan = {}; S.anh = {}; S.bq = {};
   for (const n of data.nguyen_lieu) {
     n.thang = Array.from({ length: 12 }, (_, i) => Number(n[`T${i + 1}`]) || 0);
     S.ing[n.ma] = n;
@@ -117,8 +133,19 @@ async function load() {
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   for (const r of data.anh_mon || []) if (r.anh_id) S.anh[r.ma_mon] = r;
   for (const r of data.bi_quyet || []) S.bq[r.ma] = r;
-  // Đồng bộ trong nhà: lấy dữ liệu máy khác đã sửa trước khi ghép bữa (chờ tối đa 4 giây, mạng chậm thì dùng bản trên máy).
-  if (dbBat()) await Promise.race([dbKeo(), new Promise((ok) => setTimeout(ok, 4000))]);
+  for (const k of Object.keys(_keys)) delete _keys[k];
+}
+// Vẽ lại sau khi có dữ liệu mới (trừ khi đang nấu từng bước hoặc đang gõ tìm).
+function veLai() {
+  if (location.hash.startsWith("#/nau/") || document.activeElement?.tagName === "INPUT") return;
+  headerBar(); route();
+}
+async function load() {
+  const ttCu = docThoiTiet();
+  const ttMoi = taiThoiTiet();
+  const [data, weather] = await Promise.all([taiDuLieu(), ttCu || choToiDa(ttMoi, 3000)]);
+  apDungDuLieu(data);
+  S.weather = weather;
   khoiTaoBua();
   DB.onDoi = () => { // máy khác vừa sửa: đọc lại dữ liệu, vẽ lại trang (trừ khi đang nấu từng bước)
     S.tuLanh = null; S.dg = null; S.dc = null; S.chon = {};
@@ -126,6 +153,19 @@ async function load() {
     if (!location.hash.startsWith("#/nau/")) route();
   };
   dbTuDong();
+  // Cập nhật ngầm sau khi đã hiện trang.
+  setTimeout(async () => {
+    if (dbBat()) { const doi = await dbKeo(); if (doi) DB.onDoi(); }
+  }, 0);
+  if (ttCu || !weather) ttMoi.then((w) => { if (w) { S.weather = w; S.tuLanh = null; khoiTaoBua(); veLai(); } });
+  if (S.kiemVer) S.kiemVer.then(async (v) => {
+    if (!v || v === S.ver) return;
+    const d = await fetch(`data.json?v=${v}`).then((r) => r.json()).catch(() => null);
+    if (!d) return;
+    ghiLS1(VER_KEY, v); S.ver = v; S.dm = null;
+    apDungDuLieu(d); khoiTaoBua(); veLai();
+  });
+  else if (S.ver) ghiLS1(VER_KEY, S.ver);
   document.getElementById("foot").innerHTML =
     `Dữ liệu: ${data.source === "sheet" ? "Google Sheet" : "file CSV"} (${esc(data.fetched_at)})` +
     `${data.error ? " – Sheet lỗi, đang dùng CSV" : ""} · Thời tiết: Open-Meteo · ` +
