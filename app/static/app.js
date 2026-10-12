@@ -655,6 +655,11 @@ function phoTrua(ranked, day, kTrua, kToi, sh) {
 // keep.trua / keep.toi: các món giữ nguyên (món đã chọn, hoặc cả bữa còn lại khi bấm Đổi một bữa).
 // keep.khoa.trua / .toi: chủ nhà đã bỏ bớt món (nút ✕) – bữa đó chỉ gồm đúng các món giữ, không tự lấp món khác.
 function pickMeals(ranked, day, keep = {}) {
+  const r = pickMeals1(ranked, day, keep);
+  if (!r.du && !r.lau) r.du = r.toi.find((d) => r.trua.some((t) => t.ma_mon === d.ma_mon))?.ma_mon || null; // có ở cả hai bữa: trưa nấu dư ăn tiếp tối
+  return r;
+}
+function pickMeals1(ranked, day, keep) {
   const kh = keep.khoa || {};
   if (!kh.trua && !kh.toi) return pickMeals0(ranked, day, keep);
   const r = pickMeals0(ranked, day, { trua: keep.trua, toi: keep.toi });
@@ -1147,6 +1152,11 @@ function datBua(day, next) {
   }
 }
 
+// Món kho/hầm/om đang có ở bữa kia: nấu một lần ăn cả ngày (trưa nấu dư cho tối) – giữ ở cả hai bữa, không gỡ khỏi bữa kia.
+function giuBuaKia(chon, m, d, k) {
+  const kia = k === "trua" ? "toi" : "trua";
+  if (khoHam(d) && m?.[kia].some((x) => x.ma_mon === d.ma_mon)) chon[kia].add(d.ma_mon); else chon[kia].delete(d.ma_mon);
+}
 // Đưa một món vào bữa (từ tab Tủ lạnh): món thành "đã chọn", thay món đã chọn cùng vai; các món chưa chọn ghép lại theo quy tắc.
 // Lẩu chỉ vào bữa tối và thay cả bữa tối (giữ tráng miệng).
 function duaVaoBua(ma, k, day = 0) {
@@ -1156,7 +1166,7 @@ function duaVaoBua(ma, k, day = 0) {
     const vx = vaiOf(ranked.find((y) => y.ma_mon === x) || {});
     if (vx === v || MOT_NOI.includes(vx) || (MOT_NOI.includes(v) && vx !== "trang_mieng")) chon[k].delete(x);
   }
-  chon[k === "trua" ? "toi" : "trua"].delete(ma);
+  giuBuaKia(chon, S.meals[day], d, k);
   chon[k].add(ma);
   saveChon(day, chon);
   datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
@@ -1166,7 +1176,7 @@ function duaVaoBua(ma, k, day = 0) {
 function themVaoBua(ma, k, day = 0) {
   const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = S.meals[day];
   for (const d of m[k]) if (!(k === "toi" && d.ma_mon === m.du)) chon[k].add(d.ma_mon);
-  chon[k === "trua" ? "toi" : "trua"].delete(ma);
+  giuBuaKia(chon, m, ranked.find((x) => x.ma_mon === ma) || {}, k);
   chon[k].add(ma);
   saveChon(day, chon);
   datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
