@@ -534,6 +534,9 @@ const dungDoSom = (d) => d.reasons?.some((r) => r.text === "Đồ trong tủ c�
 // chưa có món nào dùng tới – mỗi thứ chỉ cần dùng một lần, món sau ưu tiên thứ khác.
 const doTuCua = (d) => chinhCua(d).map(trongTu).filter(Boolean);
 const dungDoSomMoi = (d, ctx) => dungDoSom(d) && doTuCua(d).some((c) => canDungSom(c) && !ctx.tlDung?.has(c));
+// Đồ tươi (ngăn mát) còn trong tủ chưa món nào dùng tới – ưu tiên sau đồ sắp hết hạn, trước món phải đi chợ.
+const TU_TUOI_NGAY = 7;
+const dungDoTuoiMoi = (d, ctx) => doTuCua(d).some((c) => { const h = hanTL(c); return h && !h.da && h.con <= TU_TUOI_NGAY && !ctx.tlDung?.has(c); });
 // no: số món phải nới quy tắc cứng (trùng nguyên liệu hoặc phạm quy tắc bữa).
 function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
   const cam = new Set(ex.cam), out = [];
@@ -548,11 +551,12 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     // Hết món chưa xem: lấy lại món xem đã lâu nhất trước (xoay vòng hết lượt), không chỉ mấy món điểm cao nhất.
     const thuTu = [...ex.da_xem], xemLau = (d) => (thuTu.indexOf(d.ma_mon) + 1) || 0;
     pool2.sort((a, b) => xemLau(a) - xemLau(b));
-    const muc = [(x) => dungDoSomMoi(x, ctx) && cung(x) && t(x) && (vai !== "rau" || coRauXanh(x)), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
+    const tuOk = (x) => cung(x) && t(x) && (vai !== "rau" || coRauXanh(x));
+    const muc = [(x) => dungDoSomMoi(x, ctx) && tuOk(x), (x) => dungDoTuoiMoi(x, ctx) && tuOk(x), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
-      const c = i ? pool1.filter(muc[i]).concat(pool2.filter(muc[i])) : pool1.filter(muc[i]); // ưu tiên đồ trong tủ chỉ trong món được gợi ý lại
-      if (c.length) { d = c.find((x) => hopTre(x) && pool1.includes(x)) || c.find(hopTre) || c[0]; if (i >= 4) no += i - 3; }
+      const c = i > 1 ? pool1.filter(muc[i]).concat(pool2.filter(muc[i])) : pool1.filter(muc[i]); // ưu tiên đồ trong tủ chỉ trong món được gợi ý lại
+      if (c.length) { d = c.find((x) => hopTre(x) && pool1.includes(x)) || c.find(hopTre) || c[0]; if (i >= 5) no += i - 4; }
     }
     if (!d) continue;
     out.push(d); bua.push(d); cam.add(d.ma_mon); dungNL(d, used);
