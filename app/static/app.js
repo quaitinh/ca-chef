@@ -31,7 +31,7 @@ function chonOf(day) {
   const ngay = dayStr(day);
   if (!S.chon[ngay]) {
     const k = readChon()[ngay] || {};
-    S.chon[ngay] = { trua: new Set(k.trua || []), toi: new Set(k.toi || []) };
+    S.chon[ngay] = { trua: new Set(k.trua || []), toi: new Set(k.toi || []), khoa: { trua: !!k.khoa?.trua, toi: !!k.khoa?.toi } };
   }
   return S.chon[ngay];
 }
@@ -40,14 +40,14 @@ function saveChon(day, chon) {
   try {
     const all = readChon(), giu = new Set([dayStr(0), dayStr(1)]);
     for (const d of Object.keys(all)) if (!giu.has(d)) delete all[d];
-    all[dayStr(day)] = { trua: [...chon.trua], toi: [...chon.toi] };
+    all[dayStr(day)] = { trua: [...chon.trua], toi: [...chon.toi], ...(chon.khoa?.trua || chon.khoa?.toi ? { khoa: chon.khoa } : {}) };
     ghiLS(CHON_KEY, all);
   } catch { /* trình duyệt chặn lưu: lựa chọn chỉ còn trong phiên này */ }
 }
 // Món đã chọn của một ngày, lấy từ danh sách đã chấm điểm (bỏ qua mã không còn trong dữ liệu).
 function monDaChon(ranked, day) {
   const k = chonOf(day), tim = (ma) => ranked.find((d) => d.ma_mon === ma);
-  return { trua: [...k.trua].map(tim).filter(Boolean), toi: [...k.toi].map(tim).filter(Boolean) };
+  return { trua: [...k.trua].map(tim).filter(Boolean), toi: [...k.toi].map(tim).filter(Boolean), khoa: k.khoa || {} };
 }
 // Bữa đang hiện (sau khi bấm Đổi) và các món đã xem, lưu theo ngày để F5 không gợi ý lại từ đầu.
 const BUA_KEY = "cachef.bua";
@@ -653,7 +653,24 @@ function phoTrua(ranked, day, kTrua, kToi, sh) {
     daysSinceSuggested(d.ma_mon, dayStr(day)) > PHO_CACH_NGAY && !kToi.some((x) => damOf(x) && damOf(x) === damOf(d) && vaiOf(x) === "man")) || null;
 }
 // keep.trua / keep.toi: các món giữ nguyên (món đã chọn, hoặc cả bữa còn lại khi bấm Đổi một bữa).
+// keep.khoa.trua / .toi: chủ nhà đã bỏ bớt món (nút ✕) – bữa đó chỉ gồm đúng các món giữ, không tự lấp món khác.
 function pickMeals(ranked, day, keep = {}) {
+  const kh = keep.khoa || {};
+  if (!kh.trua && !kh.toi) return pickMeals0(ranked, day, keep);
+  const r = pickMeals0(ranked, day, { trua: keep.trua, toi: keep.toi });
+  if (kh.trua) {
+    r.trua = theoVai(keep.trua || []);
+    if (r.pho && !r.trua.some((d) => d.ma_mon === r.pho)) { r.pho = null; r.kem = null; }
+    if (r.du && !r.trua.some((d) => d.ma_mon === r.du)) { r.toi = r.toi.filter((d) => d.ma_mon !== r.du); r.du = null; }
+  }
+  if (kh.toi) {
+    r.toi = theoVai(keep.toi || []);
+    r.du = r.toi.find((d) => r.trua.some((t) => t.ma_mon === d.ma_mon))?.ma_mon || null; // món trưa ăn tiếp tối
+    r.kem = null; r.lau = r.toi.some(motNoi);
+  }
+  return r;
+}
+function pickMeals0(ranked, day, keep = {}) {
   const sh = S.shown[day], used = new Set();
   const kTrua = keep.trua || [], kToi = keep.toi || [];
   const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong) };
@@ -690,7 +707,7 @@ function pickMeals(ranked, day, keep = {}) {
     const ex = { da_xem: sh.toi, cam: [pho.ma_mon, ...giu.map((d) => d.ma_mon), ...vuaHien(sh.toi)] };
     const vais = ["man", "rau"].filter((v) => !giu.some((d) => vaiOf(d) === v));
     const toi = theoVai(themManToi(ranked, [...giu, ...pickBua(ranked, vais, ex, used, ctx, [...giu], { man: (x) => damOf(x) !== damOf(pho) })], ex, used, ctx));
-    return { trua: [pho], toi, lau: false, du: null, pho: pho.ma_mon, kem: kem?.ma_mon || null };
+    return { trua: theoVai([pho, ...kTrua.filter((d) => d.ma_mon !== pho.ma_mon)]), toi, lau: false, du: null, pho: pho.ma_mon, kem: kem?.ma_mon || null };
   }
   const trua = pickTrua(ranked, sh.trua, kToi.map((d) => d.ma_mon), used, ctx, false, kTrua);
   const manTrua = trua.find((d) => vaiOf(d) === "man");
@@ -887,6 +904,7 @@ function mealBlock(meals, k, chon) {
           <span class="tx"><b>${esc(d.ten_mon)}</b><span class="meta">${lai ? "Phần để dành từ bữa trưa"
             : k === "toi" && d.ma_mon === meals.kem ? "Nấu từ nước dùng phở trưa · thay canh"
             : metaMon(d, d.ma_mon === meals.du)}</span></span></a>
+        <button class="xoa" data-xoa="${k}" data-ma="${d.ma_mon}" aria-label="Bỏ ${esc(d.ten_mon)} khỏi bữa" title="Bỏ món này khỏi bữa">✕</button>
         ${lai ? "" : `<button class="ck ${on ? "on" : ""}" data-chon="${k}" data-ma="${d.ma_mon}" aria-pressed="${on}"
           aria-label="${on ? "Bỏ chọn" : "Chọn"} ${esc(d.ten_mon)}" title="${on ? "Bỏ chọn" : "Chọn – giữ món này khi đổi các món còn lại"}">✓</button>`}
       </div>`;
@@ -1074,10 +1092,11 @@ function pageHome(day = 0) {
       <b>${esc(d.ten_mon)}</b><small>${VAI_NGAN[vaiOf(d)] || ""} · ${d.score > 0 ? "+" : ""}${d.score} điểm</small></a>`).join("")}</div>`;
   $app.querySelectorAll("[data-chon]").forEach((btn) => (btn.onclick = () => {
     const k = btn.dataset.chon, ma = btn.dataset.ma;
-    if (chon[k].has(ma)) chon[k].delete(ma); else chon[k].add(ma);
+    if (chon[k].has(ma)) { chon[k].delete(ma); if (chon.khoa?.[k]) chon.khoa[k] = false; } else chon[k].add(ma);
     saveChon(day, chon);
     pageHome(day);
   }));
+  $app.querySelectorAll("[data-xoa]").forEach((btn) => (btn.onclick = () => { xoaKhoiBua(btn.dataset.ma, btn.dataset.xoa, day); pageHome(day); }));
   $app.querySelectorAll("[data-them]").forEach((b) => (b.onclick = () => { S.timBua = { k: b.dataset.them, q: "", them: true }; pageHome(day); }));
   $app.querySelectorAll("[data-tim]").forEach((b) => (b.onclick = () => {
     S.timBua = { k: b.dataset.tim, q: "" }; pageHome(day);
@@ -1102,7 +1121,8 @@ function pageHome(day = 0) {
       .forEach((d) => { S.shown[day][k].delete(d.ma_mon); S.shown[day][k].add(d.ma_mon); });
     // Đổi trưa: giữ món đã chọn của trưa; tối giữ lẩu (nếu có) hoặc món đã chọn, phần còn lại tính lại theo trưa mới.
     // Đổi tối: giữ nguyên trưa và món đã chọn của tối.
-    const keep = k === "trua" ? { trua: giu("trua"), toi: meals.lau ? meals.toi : giu("toi") } : { trua: meals.trua, toi: giu("toi") };
+    const keep = k === "trua" ? { trua: giu("trua"), toi: meals.lau ? meals.toi : giu("toi"), khoa: { toi: chon.khoa?.toi } }
+      : { trua: meals.trua, toi: giu("toi"), khoa: { trua: chon.khoa?.trua } };
     let next = pickMeals(ranked, day, keep);
     const moi = (b) => next[b].filter((d) => !chon[b].has(d.ma_mon)).length;
     if (!moi(k)) { S.shown[day][k].clear(); next = pickMeals(ranked, day, keep); } // hết món thì quay vòng
@@ -1148,6 +1168,18 @@ function themVaoBua(ma, k, day = 0) {
   for (const d of m[k]) if (!(k === "toi" && d.ma_mon === m.du)) chon[k].add(d.ma_mon);
   chon[k === "trua" ? "toi" : "trua"].delete(ma);
   chon[k].add(ma);
+  saveChon(day, chon);
+  datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
+}
+
+// Bỏ một món khỏi bữa (nút ✕): giữ các món còn lại, khóa bữa để không tự lấp món khác (bấm bỏ ✓ một món thì mở khóa).
+function xoaKhoiBua(ma, k, day = 0) {
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = S.meals[day];
+  for (const d of m[k]) if (d.ma_mon !== ma && !(k === "toi" && d.ma_mon === m.du)) chon[k].add(d.ma_mon);
+  if (k === "toi" && m.du && m.du !== ma) chon.toi.add(m.du); // phần ăn lại từ trưa vẫn giữ
+  chon[k].delete(ma);
+  S.shown[day]?.[k]?.delete(ma); S.shown[day]?.[k]?.add(ma); // bữa trống thì gợi ý lại, không ra lại món vừa bỏ
+  chon.khoa = { ...(chon.khoa || {}), [k]: chon[k].size > 0 };
   saveChon(day, chon);
   datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
 }
