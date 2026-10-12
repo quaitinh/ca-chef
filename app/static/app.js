@@ -130,6 +130,7 @@ function apDungDuLieu(data) {
     n.thang = Array.from({ length: 12 }, (_, i) => Number(n[`T${i + 1}`]) || 0);
     S.ing[n.ma] = n;
   }
+  if (S.ing.mang_rung) S.ing.mang_rung.ten = "Măng tươi (măng rừng)"; // măng rừng, măng tươi, măng luộc… quy về một loại
   for (const p of data.gia_go) S.prices[p.ma_nguyen_lieu] = p;
   for (const r of data.mon_nguyen_lieu) (S.ingByDish[r.ma_mon] ??= []).push(r);
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
@@ -1037,6 +1038,17 @@ function khoangThang(thang, muc) {
   if (out.length > 1 && out[0][0] === 1 && out[out.length - 1][1] === 12) out[0][0] = out.pop()[0]; // T10–12 + T1–3 -> T10–3
   return out.map(([a, b]) => (a === b ? `T${a}` : `T${a}–${b}`)).join(", ");
 }
+// Tủ có sữa chua: gợi ý món sữa chua trộn trái cây có trong dữ liệu (hồng giòn trộn sữa chua…), ưu tiên trái cây đang chọn hôm nay rồi trái đang mùa.
+function suaChuaTC(ds, day) {
+  if (!trongTu("sua_chua")) return "";
+  const thang = month(day), chon = new Set(ds.map(({ x }) => x.ma));
+  const mon = S.data.mon_an.map((d) => ({ d, tc: (S.ingByDish[d.ma_mon] || []).map((r) => r.ma_nguyen_lieu).filter((c) => S.ing[c]?.nhom === "trái cây") }))
+    .filter(({ d, tc }) => tc.length && (S.ingByDish[d.ma_mon] || []).some((r) => r.ma_nguyen_lieu === "sua_chua"))
+    .map((m) => ({ ...m, diem: m.tc.some((c) => chon.has(c)) * 4 + m.tc.some((c) => trongTu(c)) * 2 + m.tc.some((c) => S.ing[c].thang[thang - 1]) }))
+    .filter((m) => m.diem > 0).sort((a, b) => b.diem - a.diem);
+  if (!mon.length) return "";
+  return `<li><b>🥛 Có sữa chua trong tủ</b><small>ăn kèm trái cây: ${mon.slice(0, 2).map(({ d }) => `<a href="#/mon/${d.ma_mon}">${esc(d.ten_mon)}</a>`).join(", ")}</small></li>`;
+}
 function traiCayBox(day = 0) {
   const ds = traiCay(day);
   if (!ds.length) return "";
@@ -1052,7 +1064,7 @@ function traiCayBox(day = 0) {
       <span class="tra-tx"><b><small>Trái cây ${day ? "mai" : "hôm nay"}:</small> ${esc(ds.map(({ x }) => tenNgan(x.ten)).join(" · "))}</b>
         <span class="tra-ghi">${esc(ds.map(({ x, ly }) => `${tenNgan(x.ten)}: ${ly.join(", ") || "đang có"}`).join(" · "))}</span></span>
       <span class="chev">›</span></summary>
-    <ul class="tc-ds">${ds.map(dong).join("")}</ul>
+    <ul class="tc-ds">${ds.map(dong).join("")}${suaChuaTC(ds, day)}</ul>
   </details>`;
 }
 
@@ -1519,7 +1531,12 @@ function trongTu(c) {
 }
 const canDungSom = (ma) => { const h = hanTL(ma); return !!h && !h.da && h.con <= 1; };
 // Mã nguyên liệu chính của món (bỏ gia vị, đồ dùng chung).
-const chinhCua = (d) => [...new Set(String(d.nguyen_lieu_chinh || "").split("|").filter((c) => c && S.ing[c] && !TL_BO.has(c)))];
+// Món măng (tên có "măng", trừ măng tây/cụt; công thức không dùng măng khô hay măng chua) tính là cần măng tươi (mã mang_rung):
+// bài gốc ghi măng tươi, măng luộc, măng le… nhưng chưa gắn mã.
+const laMonMang = (d) => /(^|\s)măng(?! (tây|cụt))/i.test(d.ten_mon) &&
+  !(S.ingByDish[d.ma_mon] || []).some((r) => r.ma_nguyen_lieu === "mang_chua" || /măng (khô|chua)/i.test(r.ten_hien_thi || ""));
+const chinhCua = (d) => [...new Set([...String(d.nguyen_lieu_chinh || "").split("|"), ...(laMonMang(d) ? ["mang_rung"] : [])]
+  .filter((c) => c && S.ing[c] && !TL_BO.has(c)))];
 
 // Bí quyết chọn và bảo quản một nguyên liệu, dạng mở/thu.
 function bqBox(ma, mo = false) {
