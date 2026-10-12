@@ -330,10 +330,12 @@ function scoreDish(dish, weatherHits, day = 0) {
   const kho = khoMuaCua(dish, S.nmKho);
   if (kho.length) them(`Nguyên liệu khó mua: ${kho.join(", ")}`, -4);
   // Đồ có sẵn trong tủ (mua về rồi nấu theo tủ): món dùng hết nguyên liệu chính trong tủ +3, dùng một phần +1; có thứ sắp quá hạn thêm +2.
-  const c = chinhCua(dish), co = c.filter(trongTu);
+  // Đồ ngăn mát còn 2–3 ngày: +1 để kịp xoay vòng trước khi tới hạn.
+  const c = chinhCua(dish), co = c.filter((x) => { const m = trongTu(x); return m && !S.memo?.dungNay?.has(m); });
   if (co.length) {
     them(co.length === c.length ? "Có sẵn trong tủ" : "Có một phần trong tủ", co.length === c.length ? 3 : 1);
     if (co.some((x) => canDungSom(trongTu(x)))) them("Đồ trong tủ cần dùng sớm", 2);
+    else if (co.some((x) => { const h = hanTL(trongTu(x)); return h && !h.da && h.con <= 3; })) them("Đồ trong tủ nên dùng trong vài ngày", 1);
   }
   return { ...dish, score, reasons, season };
 }
@@ -366,6 +368,8 @@ function rankDishes(day = 0) {
   const nm = nlMuaLS();
   S.nmKho = Object.values(nm).some((x) => x.v === -1) ? nm : null;
   S.memo = { dg: danhGia(), hist: readHistory() }; // đọc localStorage một lần cho cả lượt chấm (hơn 700 món)
+  // Chấm cho ngày mai: đồ tươi (ngăn mát) mà bữa hôm nay đã dùng coi như hết, không cộng điểm "có trong tủ" nữa.
+  if (day && S.meals?.[0]) S.memo.dungNay = new Set(mealDishes(S.meals[0]).flatMap(doTuCua).filter((c) => !tuLanh()[c]?.da));
   try {
     return S.data.mon_an
       .map((d) => scoreDish(d, hits, day))
@@ -513,7 +517,7 @@ function pickBua(ranked, vais, ex, used, ctx, bua = [], them = {}) {
   let best = null;
   const boQua = new Set();
   for (let lan = 0; lan < 4; lan++) {
-    const u = new Set(used), c = { ...ctx }, b = [...bua];
+    const u = new Set(used), c = { ...ctx, tlDung: new Set(ctx.tlDung || []) }, b = [...bua];
     const r = ghepBua(ranked, vais, { da_xem: ex.da_xem, cam: [...ex.cam, ...boQua] }, u, c, b, them);
     if (!best || r.no < best.no) best = { ...r, u, c, b };
     if (!r.no || !r.out[0]) break;
@@ -525,6 +529,10 @@ function pickBua(ranked, vais, ex, used, ctx, bua = [], them = {}) {
   return best.out;
 }
 const dungDoSom = (d) => d.reasons?.some((r) => r.text === "Đồ trong tủ cần dùng sớm");
+// Đồ trong tủ của món (mã đang ghi trong tủ); món dùng đồ sắp hết hạn mà trong ngày (và hôm nay, nếu đang xếp ngày mai)
+// chưa có món nào dùng tới – mỗi thứ chỉ cần dùng một lần, món sau ưu tiên thứ khác.
+const doTuCua = (d) => chinhCua(d).map(trongTu).filter(Boolean);
+const dungDoSomMoi = (d, ctx) => dungDoSom(d) && doTuCua(d).some((c) => canDungSom(c) && !ctx.tlDung?.has(c));
 // no: số món phải nới quy tắc cứng (trùng nguyên liệu hoặc phạm quy tắc bữa).
 function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
   const cam = new Set(ex.cam), out = [];
@@ -535,11 +543,11 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     // Món dùng đồ trong tủ cần dùng sớm (hải sản tươi, rau…) được ưu tiên trước, và gợi ý lại dù đã xem
     // (trừ khi vừa hiện trong ~4 lần Đổi gần nhất) để không bỏ phí đồ.
     const gan = new Set([...ex.da_xem].slice(-16));
-    const pool1 = pool2.filter((d) => !ex.da_xem.has(d.ma_mon) || (dungDoSom(d) && !gan.has(d.ma_mon)));
+    const pool1 = pool2.filter((d) => !ex.da_xem.has(d.ma_mon) || (dungDoSomMoi(d, ctx) && !gan.has(d.ma_mon)));
     // Hết món chưa xem: lấy lại món xem đã lâu nhất trước (xoay vòng hết lượt), không chỉ mấy món điểm cao nhất.
     const thuTu = [...ex.da_xem], xemLau = (d) => (thuTu.indexOf(d.ma_mon) + 1) || 0;
     pool2.sort((a, b) => xemLau(a) - xemLau(b));
-    const muc = [(x) => dungDoSom(x) && cung(x) && t(x) && (vai !== "rau" || coRauXanh(x)), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
+    const muc = [(x) => dungDoSomMoi(x, ctx) && cung(x) && t(x) && (vai !== "rau" || coRauXanh(x)), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
       const c = i ? pool1.filter(muc[i]).concat(pool2.filter(muc[i])) : pool1.filter(muc[i]); // ưu tiên đồ trong tủ chỉ trong món được gợi ý lại
@@ -549,6 +557,7 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     out.push(d); bua.push(d); cam.add(d.ma_mon); dungNL(d, used);
     if (d.dau_mo === "nhieu") ctx.mo++;
     if (laNuong(d)) ctx.nuong = true;
+    doTuCua(d).forEach((c) => ctx.tlDung?.add(c));
   }
   return { out, no };
 }
@@ -686,7 +695,8 @@ function pickMeals(ranked, day, keep = {}) {
 function pickMeals0(ranked, day, keep = {}) {
   const sh = S.shown[day], used = new Set();
   const kTrua = keep.trua || [], kToi = keep.toi || [];
-  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong) };
+  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong),
+    tlDung: new Set([...kTrua, ...kToi, ...(day && S.meals[0] ? mealDishes(S.meals[0]) : [])].flatMap(doTuCua)) };
   [...kTrua, ...kToi].forEach((d) => dungNL(d, used));
   // Bữa tối một món (lẩu, nướng): giữ nếu đã chọn; nếu tối chưa có món nào giữ thì xét gợi ý
   // (không trùng nguyên liệu bữa trưa, điểm không thua món mặn tốt nhất).
