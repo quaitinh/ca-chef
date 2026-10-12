@@ -134,7 +134,7 @@ function apDungDuLieu(data) {
   for (const r of data.mon_nhan || []) S.nhan[r.ma_mon] = r;
   for (const r of data.anh_mon || []) if (r.anh_id) S.anh[r.ma_mon] = r;
   for (const r of data.bi_quyet || []) S.bq[r.ma] = r;
-  for (const k of Object.keys(_keys)) delete _keys[k];
+  for (const kho of [_keys, _keysAll]) for (const k of Object.keys(kho)) delete kho[k];
 }
 // Vẽ lại sau khi có dữ liệu mới (trừ khi đang nấu từng bước hoặc đang gõ tìm).
 function veLai() {
@@ -474,14 +474,17 @@ function rauLa(d) {
     NL_TEN.some(([re, key]) => RAU_LA.has(key) && re.test(t));
 }
 // Món x có hợp với các món đã có trong bữa không (bua gồm cả món ăn lại từ trưa).
+// Canh và món mặn không cùng loại đạm; hải sản tách theo con (tôm, mực, cua, nghêu/sò, hàu…): tôm hấp đi với canh hàu được.
+const HAI_SAN = ["tom", "muc", "cua", "so_oc", "hau", "sua", "bach_tuoc"];
+const damCanh = (d) => { const n = damOf(d); return n === "hai_san" ? "hs_" + (HAI_SAN.find((k) => nlChinh(d).has(k)) || "") : n; };
 function hopBua(x, bua, ctx) {
   if (vaiOf(x) === "canh" && !canhNhe(x) && bua.some(coNuoc)) return false;
   if (coNuoc(x) && bua.some((d) => vaiOf(d) === "canh" && !canhNhe(d))) return false;
   if (nauLau(x) && bua.some(nauLau)) return false;
   if (cauKi(x) && bua.some(cauKi)) return false;
   if (CACH_KHONG_LAP.has(cachNau(x)) && bua.some((d) => cachNau(d) === cachNau(x))) return false;
-  const dam = damOf(x), canhVsMan = (d) => (vaiOf(x) === "canh") !== (vaiOf(d) === "canh");
-  if (dam && bua.some((d) => canhVsMan(d) && damOf(d) === dam)) return false;
+  const dam = damCanh(x), canhVsMan = (d) => (vaiOf(x) === "canh") !== (vaiOf(d) === "canh");
+  if (dam && bua.some((d) => canhVsMan(d) && damCanh(d) === dam)) return false;
   if (x.dau_mo === "nhieu" && ctx.mo >= 1) return false;
   if (laNuong(x) && ctx.nuong) return false; // cả ngày tối đa một món nướng
   const vx = vaiOf(x);
@@ -492,7 +495,7 @@ function hopBua(x, bua, ctx) {
 }
 const RAU_XANH = new Set(["rau_muong", "mong_toi", "rau_day", "rau_ngot", "cai_xanh", "cai_thao", "bap_cai", "rau_bi", "rau_den",
   "rau_lang", "rau_ma", "sup_lo", "mang_tay", "dau_co_ve", "kho_qua", "su_hao", "gia", "su_su"]);
-const coRauXanh = (d) => [...nlChinh(d)].some((k) => RAU_XANH.has(k));
+const coRauXanh = (d) => [...nlChinh(d, true)].some((k) => RAU_XANH.has(k));
 // Ưu tiên mềm: rau xanh; món mặn không hợp trẻ thì canh có đạm dễ ăn (trứng, đậu, thịt heo, gà) và hợp trẻ.
 function uaThich(x, bua, vai) {
   if (vai === "rau" && !coRauXanh(x)) return false;
@@ -520,6 +523,7 @@ function pickBua(ranked, vais, ex, used, ctx, bua = [], them = {}) {
   bua.splice(0, bua.length, ...best.b);
   return best.out;
 }
+const dungDoSom = (d) => d.reasons?.some((r) => r.text === "Đồ trong tủ cần dùng sớm");
 // no: số món phải nới quy tắc cứng (trùng nguyên liệu hoặc phạm quy tắc bữa).
 function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
   const cam = new Set(ex.cam), out = [];
@@ -527,15 +531,18 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
   for (const vai of vais) {
     const t = them[vai] || (() => true), cung = (x) => khongTrung(x, used) && hopBua(x, bua, ctx);
     const pool2 = ranked.filter((d) => d.score > -3 && vaiOf(d) === vai && !cam.has(d.ma_mon));
-    const pool1 = pool2.filter((d) => !ex.da_xem.has(d.ma_mon));
+    // Món dùng đồ trong tủ cần dùng sớm (hải sản tươi, rau…) được ưu tiên trước, và gợi ý lại dù đã xem
+    // (trừ khi vừa hiện trong ~4 lần Đổi gần nhất) để không bỏ phí đồ.
+    const gan = new Set([...ex.da_xem].slice(-16));
+    const pool1 = pool2.filter((d) => !ex.da_xem.has(d.ma_mon) || (dungDoSom(d) && !gan.has(d.ma_mon)));
     // Hết món chưa xem: lấy lại món xem đã lâu nhất trước (xoay vòng hết lượt), không chỉ mấy món điểm cao nhất.
     const thuTu = [...ex.da_xem], xemLau = (d) => (thuTu.indexOf(d.ma_mon) + 1) || 0;
     pool2.sort((a, b) => xemLau(a) - xemLau(b));
-    const muc = [(x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
+    const muc = [(x) => dungDoSom(x) && cung(x) && t(x) && (vai !== "rau" || coRauXanh(x)), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
-      const c = pool1.filter(muc[i]).concat(pool2.filter(muc[i]));
-      if (c.length) { d = c.find((x) => hopTre(x) && pool1.includes(x)) || c.find(hopTre) || c[0]; if (i >= 3) no += i - 2; }
+      const c = i ? pool1.filter(muc[i]).concat(pool2.filter(muc[i])) : pool1.filter(muc[i]); // ưu tiên đồ trong tủ chỉ trong món được gợi ý lại
+      if (c.length) { d = c.find((x) => hopTre(x) && pool1.includes(x)) || c.find(hopTre) || c[0]; if (i >= 4) no += i - 3; }
     }
     if (!d) continue;
     out.push(d); bua.push(d); cam.add(d.ma_mon); dungNL(d, used);
@@ -568,18 +575,21 @@ const NL_MA = { thit_heo: "heo", long_heo: "heo", ba_chi: "heo", suon_heo: "heo"
   thit_bo: "bo", ga_ta: "ga", thit_de: "de", thit_cuu: "cuu", cua_dong: "cua", sup_lo_trang: "sup_lo", bo_booth: "bo_trai", bo_sap: "bo_trai",
   ghe: "cua", cua_bien: "cua", ngheu: "so_oc", oc: "so_oc", oc_dong: "so_oc", so_diep: "so_oc", gia_do: "gia" };
 const NL_CHUNG = new Set(["rau_thom", "sa_ot", "sa", "gung", "ot", "hanh_tay", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
-const _keys = {};
-function nlChinh(d) {
-  if (_keys[d.ma_mon]) return _keys[d.ma_mon];
+// Không trùng nguyên liệu giữa các món trong ngày chỉ xét nguyên liệu chính (theo tên món và dòng "chinh"):
+// cà chua, dứa… nấu kèm (vai "phu") không chặn món khác. tatCa: kể cả nguyên liệu phụ (để biết món có rau xanh không).
+const _keys = {}, _keysAll = {};
+function nlChinh(d, tatCa = false) {
+  const kho = tatCa ? _keysAll : _keys;
+  if (kho[d.ma_mon]) return kho[d.ma_mon];
   const k = new Set(), t = d.ten_mon.toLowerCase();
   for (const [re, key] of NL_TEN) if (re.test(t)) k.add(key);
   for (const r of S.ingByDish[d.ma_mon] || []) {
-    if (r.vai_tro === "gia_vi") continue;
+    if (r.vai_tro === "gia_vi" || (!tatCa && r.vai_tro === "phu")) continue;
     if (motNoi(d) && r.vai_tro !== "chinh") continue; // lẩu, nướng: rau, bún đi kèm không tính là nguyên liệu chính
     for (const c of String(r.ma_nguyen_lieu || "").split("|").filter(Boolean))
       if (!NL_CHUNG.has(c)) k.add(NL_MA[c] || (c.startsWith("ca_") && !["ca_rot", "ca_chua", "ca_tim", "ca_phao"].includes(c) ? "ca" : c));
   }
-  return (_keys[d.ma_mon] = k);
+  return (kho[d.ma_mon] = k);
 }
 const khongTrung = (d, used) => ![...nlChinh(d)].some((k) => used.has(k));
 const dungNL = (d, used) => nlChinh(d).forEach((k) => used.add(k));
