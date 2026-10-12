@@ -383,6 +383,8 @@ tra_tao_do_ky_tu,do_uong,,,co,lo4
 tra_gung_sa,do_uong,,,co,lo4
 tra_atiso,do_uong,,,co,lo4
 nuoc_rau_ngo,do_uong,,,co,lo4
+canh_hau_nau_chua,canh,hai_san,nau,co,lo4
+tom_hap_sa,man,hai_san,luoc_hap,co,lo4
 ca_song_mui_chien,man,ca,chien,co,lo4
 ca_song_mui_kho_tieu,man,ca,kho_om,co,lo4
 canh_bo_nau_dua_ca_chua,canh,bo,nau,co,lo4
