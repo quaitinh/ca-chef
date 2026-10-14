@@ -93,6 +93,8 @@ body.cook .tabbar, body.cook .topbar, body.cook .foot { display: none; }
 .tx { flex: 1; min-width: 0; }
 .tx b { display: block; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .meta { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta b { display: inline; font-size: inherit; } /* chữ đậm trong dòng phụ (hướng dẫn cài trên iPhone) không tách dòng */
+.cai-app .meta { white-space: normal; }
 .peak { color: var(--peak); font-weight: 700; }
 .hot { color: var(--warm); }
 .cool { color: var(--cool); }
@@ -226,6 +228,7 @@ h4 { margin: 16px 2px 8px; font-size: 14px; }
 
 /* Danh sách món, tủ lạnh */
 .search { width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; font: inherit; margin-bottom: 10px; background: var(--card); }
+input, select, textarea, .search { font-size: 16px; } /* dưới 16px iOS Safari tự phóng to khi chạm vào ô nhập */
 .list { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 .li { padding-right: 12px; border-top: 1px solid var(--line); }
 .list .li:first-child { border-top: 0; }
