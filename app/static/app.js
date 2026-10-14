@@ -977,11 +977,19 @@ function ketQuaTim(k) {
     const damCo = new Set(bua.filter((d) => vaiOf(d) === "man").map(damOf));
     l = ranked.filter((d) => d.score > -3 && ["man", "rau"].includes(vaiOf(d)) && !co.has(d.ma_mon) && !(vaiOf(d) === "man" && damCo.has(damOf(d))) &&
       hopBua(d, bua, { mo: 0, nuong: bua.some(laNuong) })).slice(0, 6);
-  } else l = S.ranked.filter((d) => VAI_TIM[k].includes(vaiOf(d)) && words.every((w) => plain(d.ten_mon).includes(w))).slice(0, 8);
-  return l.length ? l.map((d) => `<button class="tim-mon" data-chon-tim="${d.ma_mon}">${thumb(d)}<span class="tx"><b>${esc(d.ten_mon)}</b>
-      <span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}</span></span><span class="add-tim">＋ Chọn</span></button>`).join("")
+  } else {
+    // Gõ tìm: hiện số món khớp, mỗi lần 10 món, bấm "Xem thêm" để hiện tiếp.
+    const tat = S.ranked.filter((d) => VAI_TIM[k].includes(vaiOf(d)) && words.every((w) => plain(d.ten_mon).includes(w)));
+    const so = S.timBua.so || 10, con = tat.length - so;
+    l = tat.slice(0, so);
+    if (l.length) return `<p class="note">${tat.length} món</p>` + hangTim(l) +
+      (con > 0 ? `<button class="link xem-them" data-xem-them>Xem thêm ${Math.min(con, 10)} món (còn ${con})</button>` : "");
+  }
+  return l.length ? hangTim(l)
     : '<p class="note">Không thấy món nào.</p>';
 }
+const hangTim = (l) => l.map((d) => `<button class="tim-mon" data-chon-tim="${d.ma_mon}">${thumb(d)}<span class="tx"><b>${esc(d.ten_mon)}</b>
+      <span class="meta">${VAI_NGAN[vaiOf(d)] || ""}${d.thoi_gian_phut ? ` · ${d.thoi_gian_phut}′` : ""}</span></span><span class="add-tim">＋ Chọn</span></button>`).join("");
 
 // Trà, nước uống: mỗi ngày pha một loại uống cả ngày. Loại uống hằng ngày được thì xoay vòng; loại nên xen kẽ
 // (táo đỏ kỷ tử, gừng, atiso/râu ngô) chỉ vào ngày riêng để không uống liên tục.
@@ -1180,8 +1188,12 @@ function pageHome(day = 0) {
     pageHome(day);
   }));
   const ip = S.timBua && document.getElementById(`tim-${S.timBua.k}`);
-  if (ip) ip.oninput = () => { S.timBua.q = ip.value; document.getElementById(`tim-kq-${S.timBua.k}`).innerHTML = ketQuaTim(S.timBua.k); ganChon(); };
-  ganChon();
+  const veKq = () => {
+    document.getElementById(`tim-kq-${S.timBua.k}`).innerHTML = ketQuaTim(S.timBua.k); ganChon();
+    const x = $app.querySelector("[data-xem-them]"); if (x) x.onclick = () => { S.timBua.so = (S.timBua.so || 10) + 10; veKq(); };
+  };
+  if (ip) { ip.oninput = () => { S.timBua.q = ip.value; S.timBua.so = 10; veKq(); }; veKq(); }
+  else ganChon();
   $app.querySelectorAll("[data-swap]").forEach((btn) => (btn.onclick = () => {
     const k = btn.dataset.swap;
     const giu = (b) => meals[b].filter((d) => giuMon(meals, chon, b, d));
