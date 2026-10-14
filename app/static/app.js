@@ -1349,44 +1349,86 @@ function giuBuaKia(chon, m, d, k) {
   const kia = k === "trua" ? "toi" : "trua";
   if (khoHam(d) && m?.[kia].some((x) => x.ma_mon === d.ma_mon)) chon[kia].add(d.ma_mon); else chon[kia].delete(d.ma_mon);
 }
-// Đưa một món vào bữa (từ tab Tủ lạnh): món thành "đã chọn", thay món đã chọn cùng vai; các món chưa chọn ghép lại theo quy tắc.
-// Lẩu chỉ vào bữa tối và thay cả bữa tối (giữ tráng miệng).
+// Sửa bữa theo thao tác của chủ nhà: chỉ đụng tới đúng bữa đang thao tác, bữa kia giữ y nguyên (chỉ nút Đổi mới ghép lại
+// món chưa chọn). Bữa trống hẳn, hoặc tối vừa bỏ lẩu, mất phần ăn tiếp thì ghép lại riêng bữa đó.
+const banBua = (m) => ({ ...m, trua: [...m.trua], toi: [...m.toi], du: [...(m.du || [])] });
+function ghepMotBua(day, k, giuK, m = S.meals[day]) {
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), kia = k === "trua" ? "toi" : "trua";
+  const r = pickMeals(ranked, day, { [k]: giuK, [kia]: m[kia], bo: chon.bo, du: chon.du });
+  r[kia] = m[kia];
+  if (k === "toi") { r.pho = m.pho; r.du = r.du.filter((ma) => m.trua.some((d) => d.ma_mon === ma)); }
+  else { r.lau = m.lau; r.kem = m.kem; r.du = m.du.filter((ma) => r.trua.some((d) => d.ma_mon === ma)); }
+  datBua(day, r);
+}
+// Món có ở cả trưa và tối là món nấu dư trưa ăn tiếp tối; món nấu dư không còn ở trưa thì bỏ phần ở tối.
+function chinhDu(m) {
+  const cu = new Set(m.du);
+  m.du = [...new Set([...m.du, ...m.toi.filter((d) => m.trua.some((x) => x.ma_mon === d.ma_mon)).map((d) => d.ma_mon)])]
+    .filter((ma) => m.trua.some((d) => d.ma_mon === ma));
+  m.toi = m.toi.filter((d) => !cu.has(d.ma_mon) || m.du.includes(d.ma_mon));
+  m.lau = m.toi.some(motNoi);
+  if (m.pho && !m.trua.some((d) => d.ma_mon === m.pho)) m.pho = null;
+  if (m.kem && !m.toi.some((d) => d.ma_mon === m.kem)) m.kem = null;
+  return m;
+}
+// Đưa một món vào bữa (Tìm và chọn, tab Tủ lạnh, trang món): món thành "đã chọn", thay món CHƯA chọn cùng vai trong bữa đó
+// (món đã chọn cùng vai giữ lại – chọn thêm). Lẩu/nướng thay cả bữa tối (giữ tráng miệng); món thường thì bỏ lẩu/nướng.
 function duaVaoBua(ma, k, day = 0) {
-  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day);
-  const d = ranked.find((x) => x.ma_mon === ma), v = vaiOf(d);
-  for (const x of [...chon[k]]) {
-    const vx = vaiOf(ranked.find((y) => y.ma_mon === x) || {});
-    if (vx === v || MOT_NOI.includes(vx) || (MOT_NOI.includes(v) && vx !== "trang_mieng")) chon[k].delete(x);
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = banBua(S.meals[day]);
+  const d = ranked.find((x) => x.ma_mon === ma); if (!d) return;
+  const v = vaiOf(d), lauCu = m.lau;
+  giuBuaKia(chon, m, d, k);
+  // Món đổi kiểu bữa: món ăn với bún (nấu một nồi ăn cả ngày) – ghép lại cả ngày, giữ món đã chọn;
+  // trưa đổi giữa một tô và bữa cơm – ghép lại riêng trưa, giữ món đã chọn.
+  if (k === "trua" && anBun(d)) {
+    chon.trua.add(ma); saveChon(day, chon);
+    return datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
   }
-  giuBuaKia(chon, S.meals[day], d, k);
+  const motTo = (x) => vaiOf(x) === "mot_to";
+  if (k === "trua" && (motTo(d) || m.trua.some((x) => motTo(x) && !chon.trua.has(x.ma_mon)))) {
+    chon.trua.add(ma); saveChon(day, chon);
+    return ghepMotBua(day, "trua", [...m.trua.filter((x) => chon.trua.has(x.ma_mon) && x.ma_mon !== ma && (!motTo(d) || !motTo(x))), d], m);
+  }
+  const bo = (x) => x.ma_mon !== ma && (MOT_NOI.includes(v) ? vaiOf(x) !== "trang_mieng" : motNoi(x) ||
+    (vaiOf(x) === v && !chon[k].has(x.ma_mon) && !(k === "toi" && laDu(m, x.ma_mon))));
+  for (const x of m[k]) if (bo(x)) chon[k].delete(x.ma_mon);
+  m[k] = theoVai([...m[k].filter((x) => !bo(x)), ...(m[k].some((x) => x.ma_mon === ma) ? [] : [d])]);
   chon[k].add(ma);
   saveChon(day, chon);
-  datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
+  chinhDu(m);
+  if (k === "toi" && lauCu && !m.lau) return ghepMotBua(day, "toi", m.toi, m); // tối đổi từ lẩu sang cơm: ghép thêm món cho đủ bữa
+  datBua(day, m);
 }
 
-// Thêm món vào bữa (có khách): giữ mọi món đang có trong bữa, món thêm thành "đã chọn".
+// Thêm món vào bữa (có khách): giữ mọi món đang có, chỉ món thêm thành "đã chọn"; bữa kia không đổi.
 function themVaoBua(ma, k, day = 0) {
-  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = S.meals[day];
-  for (const d of m[k]) if (!(k === "toi" && laDu(m, d.ma_mon))) chon[k].add(d.ma_mon);
-  giuBuaKia(chon, m, ranked.find((x) => x.ma_mon === ma) || {}, k);
+  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = banBua(S.meals[day]);
+  const d = ranked.find((x) => x.ma_mon === ma); if (!d) return;
+  giuBuaKia(chon, m, d, k);
+  if (!m[k].some((x) => x.ma_mon === ma)) m[k] = theoVai([...m[k], d]);
   chon[k].add(ma);
   saveChon(day, chon);
-  datBua(day, pickMeals(ranked, day, monDaChon(ranked, day)));
+  datBua(day, chinhDu(m));
 }
 
-// Nút "dư tối" ở món trưa (chọn được nhiều món): bật thì nấu dư món đó, tối ăn tiếp (tối bớt một món chưa chọn cùng loại); bấm lại thì thôi, tối ghép lại món thay.
-// Các món khác của hai bữa giữ nguyên.
+// Nút "dư tối" ở món trưa (chọn được nhiều món): bật thì tối ăn tiếp món đó (tối bớt một món chưa chọn cùng loại);
+// bấm lại thì bỏ phần ăn tiếp, tối ghép món thay cho đủ bữa. Bữa trưa không đổi.
 function nauDu(ma, day = 0) {
-  const ranked = day ? S.rankedTomorrow : S.ranked, chon = chonOf(day), m = S.meals[day];
+  const chon = chonOf(day), m = banBua(S.meals[day]);
+  const d = m.trua.find((x) => x.ma_mon === ma); if (!d) return;
   const bat = !laDu(m, ma);
   chon.du = bat ? [...chon.du.filter((x) => x !== ma), ma] : chon.du.filter((x) => x !== ma);
+  chon.toi.delete(ma);
   if (bat) chon.bo.toi.delete(ma);
-  else chon.toi.delete(ma);
-  const toi = m.toi.filter((d) => !laDu(m, d.ma_mon) && d.ma_mon !== ma && (!bat || chon.toi.has(d.ma_mon) || vaiOf(d) !== vaiOf(m.trua.find((x) => x.ma_mon === ma) || {})));
   saveChon(day, chon);
-  const r = pickMeals(ranked, day, { trua: m.trua, toi, bo: chon.bo, du: chon.du });
-  if (!bat && r.du.includes(ma)) { r.toi = r.toi.filter((d) => d.ma_mon !== ma); r.du = r.du.filter((x) => x !== ma); }
-  datBua(day, r);
+  if (bat) {
+    m.toi = theoVai([d, ...m.toi.filter((x) => x.ma_mon !== ma && (chon.toi.has(x.ma_mon) || laDu(m, x.ma_mon) || vaiOf(x) !== vaiOf(d)))]);
+    m.du = [...m.du, ma];
+    return datBua(day, m);
+  }
+  m.du = m.du.filter((x) => x !== ma);
+  m.toi = m.toi.filter((x) => x.ma_mon !== ma);
+  ghepMotBua(day, "toi", m.toi, m);
 }
 // Bỏ một món khỏi bữa (nút ✕): chỉ gỡ đúng món đó, các món khác giữ nguyên (không tự chốt, không tự lấp);
 // món đã bỏ không gợi ý lại trong ngày. Bỏ món kho ở trưa thì bỏ luôn phần ăn tiếp ở tối; bỏ phần ăn tiếp ở tối thì trưa vẫn nấu.
@@ -1402,12 +1444,7 @@ function xoaKhoiBua(ma, k, day = 0) {
   if (k === "trua" && ma === m.pho) m.pho = null;
   if (k === "toi") { if (ma === m.kem) m.kem = null; m.lau = m.toi.some(motNoi); }
   saveChon(day, chon);
-  if (!monChinhBua(m[k]).length) { // bỏ hết món chính của bữa (chỉ còn đồ ăn kèm, tráng miệng): gợi ý lại bữa đó (không ra lại món đã bỏ); như bấm Đổi – trưa mới thì tối chỉ giữ món đã chọn
-    const ranked = day ? S.rankedTomorrow : S.ranked;
-    datBua(day, pickMeals(ranked, day, k === "trua" ? { trua: [], toi: m.toi.filter((d) => chon.toi.has(d.ma_mon)), bo: chon.bo, du: chon.du }
-      : { trua: m.trua, toi: [], bo: chon.bo, du: chon.du }));
-    return;
-  }
+  if (!monChinhBua(m[k]).length) return ghepMotBua(day, k, [], m); // bỏ hết món chính của bữa: gợi ý lại riêng bữa đó (không ra lại món đã bỏ)
   datBua(day, m);
 }
 
