@@ -1360,6 +1360,13 @@ function ghepMotBua(day, k, giuK, m = S.meals[day]) {
   else { r.lau = m.lau; r.kem = m.kem; r.du = m.du.filter((ma) => r.trua.some((d) => d.ma_mon === ma)); }
   datBua(day, r);
 }
+// Tối vừa mất phần ăn tiếp (bỏ/đổi món dư ở trưa): thiếu vai nào thì ghép lấp đúng vai đó, các món còn lại của tối giữ nguyên.
+function lapToi(day, vaiTruoc) {
+  const m = S.meals[day];
+  if (!m || m.lau || !vaiTruoc.some((v) => !m.toi.some((d) => vaiOf(d) === v))) return;
+  ghepMotBua(day, "toi", m.toi, m);
+}
+const vaiToi = (m) => [...new Set(m.toi.filter((d) => !["dua_kem", "trang_mieng"].includes(vaiOf(d))).map(vaiOf))];
 // Món có ở cả trưa và tối là món nấu dư trưa ăn tiếp tối; món nấu dư không còn ở trưa thì bỏ phần ở tối.
 function chinhDu(m) {
   const cu = new Set(m.du);
@@ -1397,7 +1404,9 @@ function duaVaoBua(ma, k, day = 0) {
   saveChon(day, chon);
   chinhDu(m);
   if (k === "toi" && lauCu && !m.lau) return ghepMotBua(day, "toi", m.toi, m); // tối đổi từ lẩu sang cơm: ghép thêm món cho đủ bữa
+  const vt = vaiToi(S.meals[day]);
   datBua(day, m);
+  if (k === "trua") lapToi(day, vt);
 }
 
 // Thêm món vào bữa (có khách): giữ mọi món đang có, chỉ món thêm thành "đã chọn"; bữa kia không đổi.
@@ -1422,7 +1431,9 @@ function nauDu(ma, day = 0) {
   if (bat) chon.bo.toi.delete(ma);
   saveChon(day, chon);
   if (bat) {
-    m.toi = theoVai([d, ...m.toi.filter((x) => x.ma_mon !== ma && (chon.toi.has(x.ma_mon) || laDu(m, x.ma_mon) || vaiOf(x) !== vaiOf(d)))]);
+    // Phần ăn tiếp thay MỘT món chưa chọn cùng loại (tối 4 người vẫn đủ món, ví dụ món mặn thứ hai hợp bé).
+    const thay = m.toi.find((x) => x.ma_mon !== ma && vaiOf(x) === vaiOf(d) && !chon.toi.has(x.ma_mon) && !laDu(m, x.ma_mon));
+    m.toi = theoVai([d, ...m.toi.filter((x) => x.ma_mon !== ma && x !== thay)]);
     m.du = [...m.du, ma];
     return datBua(day, m);
   }
@@ -1433,7 +1444,7 @@ function nauDu(ma, day = 0) {
 // Bỏ một món khỏi bữa (nút ✕): chỉ gỡ đúng món đó, các món khác giữ nguyên (không tự chốt, không tự lấp);
 // món đã bỏ không gợi ý lại trong ngày. Bỏ món kho ở trưa thì bỏ luôn phần ăn tiếp ở tối; bỏ phần ăn tiếp ở tối thì trưa vẫn nấu.
 function xoaKhoiBua(ma, k, day = 0) {
-  const chon = chonOf(day), m = { ...S.meals[day] };
+  const chon = chonOf(day), m = { ...S.meals[day] }, vt = vaiToi(m);
   chon[k].delete(ma); chon.bo[k].add(ma);
   if (laDu(m, ma)) {
     chon.du = chon.du.filter((x) => x !== ma);
@@ -1444,8 +1455,9 @@ function xoaKhoiBua(ma, k, day = 0) {
   if (k === "trua" && ma === m.pho) m.pho = null;
   if (k === "toi") { if (ma === m.kem) m.kem = null; m.lau = m.toi.some(motNoi); }
   saveChon(day, chon);
-  if (!monChinhBua(m[k]).length) return ghepMotBua(day, k, [], m); // bỏ hết món chính của bữa: gợi ý lại riêng bữa đó (không ra lại món đã bỏ)
-  datBua(day, m);
+  if (!monChinhBua(m[k]).length) ghepMotBua(day, k, [], m); // bỏ hết món chính của bữa: gợi ý lại riêng bữa đó (không ra lại món đã bỏ)
+  else datBua(day, m);
+  if (k === "trua") lapToi(day, vt); // bỏ món dư ở trưa: tối lấp lại vai vừa mất
 }
 
 // ---------- Trang món ----------
