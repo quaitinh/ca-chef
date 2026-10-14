@@ -1775,7 +1775,7 @@ function deDuoc(c) {
 // tính lại khi đổi ngày, đổi tủ lạnh, lịch sử ăn, thời tiết hay dữ liệu.
 const _rankNho = {};
 function rankNho(i) {
-  const khoa = [today(), S.ver, S.weather?.daily?.time?.[0], docLS1(HISTORY_KEY), JSON.stringify(tuLanh()), S.meals[0] ? mealDishes(S.meals[0]).map((d) => d.ma_mon) : ""].join("|");
+  const khoa = [today(), S.ver, S.weather?.daily?.time?.[0], docLS1(HISTORY_KEY), JSON.stringify(tuLanh()), JSON.stringify(S.dg || {}), docLS1(NL_MUA_KEY), S.meals[0] ? mealDishes(S.meals[0]).map((d) => d.ma_mon) : ""].join("|");
   if (_rankNho[i]?.khoa !== khoa) _rankNho[i] = { khoa, r: rankDishes(i) };
   return _rankNho[i].r;
 }
