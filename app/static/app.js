@@ -582,7 +582,7 @@ const vuaHien = (daXem) => [...daXem].slice(-3);
 const NL_TEN = [
   [/tôm|hải sản/, "tom"], [/mực|hải sản/, "muc"], [/cua|ghẹ/, "cua"], [/nghêu|ngao|sò|ốc|hến/, "so_oc"], [/sứa/, "sua"],
   [/(^|\s)cá(\s|$)|chả cá/, "ca"], [/ếch/, "ech"], [/(^|\s)dê(\s|$)/, "de"], [/cừu/, "cuu"], [/(^|\s)(bò|bê)(\s|$)/, "bo"],
-  [/(^|\s)(gà|vịt|ngan)(\s|$)/, "ga"], [/trứng/, "trung"], [/đậu (phụ|hũ)|tàu hũ/, "dau_phu"],
+  [/(^|\s)(gà|vịt|ngan)(\s|$)/, "ga"], [/(?<!cá )trứng/, "trung"], [/đậu (phụ|hũ)|tàu hũ/, "dau_phu"],
   [/thịt(?! (bò|gà|vịt|dê|cừu|ếch))|sườn|ba chỉ|ba rọi|(^|\s)giò(\s|$)|(^|\s)heo|lợn|nem|chả lá lốt|chả giò/, "heo"],
   [/khoai tây/, "khoai_tay"], [/cà rốt/, "ca_rot"], [/bí đỏ|bí ngô/, "bi_do"], [/bí đao|bí xanh/, "bi_dao"], [/(^|\s)bầu/, "bau"],
   [/mướp/, "muop"], [/cà tím|cà bung/, "ca_tim"], [/cà chua|sốt cà/, "ca_chua"], [/su su|đọt su/, "su_su"], [/su hào/, "su_hao"],
@@ -1200,15 +1200,38 @@ function pageHome(day = 0) {
 }
 
 // Lưu bữa mới của một ngày; ngày sau (đã lên thực đơn) có món trùng món mới thì gợi ý lại ngày đó (giữ món đã chọn).
-// Thông báo nhỏ có nút Hoàn tác (bấm nhầm ✕ trên điện thoại), tự ẩn sau 6 giây.
+// Thông báo nhỏ có nút Hoàn tác (bấm nhầm ✕ trên điện thoại). Tự ẩn sau 4 giây; đóng sớm bằng ✕,
+// vuốt ngang/xuống, chạm ra ngoài hoặc cuộn trang.
 function baoHoanTac(text, hoan) {
-  document.querySelector(".bao")?.remove();
+  document.querySelector(".bao")?.dong();
   const el = document.createElement("div");
   el.className = "bao"; el.setAttribute("role", "status");
-  el.innerHTML = `<span>${esc(text)}</span><button>↶ Hoàn tác</button>`;
-  el.querySelector("button").onclick = () => { el.remove(); hoan(); };
+  el.innerHTML = `<span>${esc(text)}</span><button class="hoan">↶ Hoàn tác</button><button class="dong" aria-label="Đóng">✕</button>`;
+  const ngoai = (e) => { if (!el.contains(e.target)) el.dong(); };
+  let hen = 0;
+  el.dong = () => {
+    clearTimeout(hen); el.remove();
+    document.removeEventListener("pointerdown", ngoai, true); removeEventListener("scroll", el.dong);
+  };
+  el.querySelector(".hoan").onclick = () => { el.dong(); hoan(); };
+  el.querySelector(".dong").onclick = el.dong;
+  // Vuốt: kéo theo ngón tay, quá 40px thì đóng, chưa tới thì trả về chỗ cũ.
+  let x0 = null, y0 = 0;
+  el.onpointerdown = (e) => { if (e.target.tagName !== "BUTTON") { x0 = e.clientX; y0 = e.clientY; el.setPointerCapture(e.pointerId); } };
+  el.onpointermove = (e) => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0, dy = Math.max(0, e.clientY - y0);
+    el.style.transform = `translate(calc(-50% + ${dx}px), ${dy}px)`; el.style.opacity = String(1 - Math.min(1, Math.max(Math.abs(dx), dy) / 120));
+  };
+  el.onpointerup = el.onpointercancel = (e) => {
+    if (x0 === null) return;
+    const xa = Math.max(Math.abs(e.clientX - x0), e.clientY - y0) > 40;
+    x0 = null;
+    if (xa) el.dong(); else { el.style.transform = ""; el.style.opacity = ""; }
+  };
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 6000);
+  hen = setTimeout(el.dong, 4000);
+  setTimeout(() => { document.addEventListener("pointerdown", ngoai, true); addEventListener("scroll", el.dong, { passive: true }); }, 0);
 }
 function datBua(day, next) {
   S.meals[day] = next;

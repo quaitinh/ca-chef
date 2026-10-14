@@ -398,7 +398,9 @@ body.cook main { padding-top: 12px; }
   display: flex; align-items: center; gap: 12px; max-width: calc(100% - 32px); padding: 10px 10px 10px 16px; border-radius: 14px;
   background: var(--ink); color: var(--card); font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
 .bao span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bao { touch-action: none; user-select: none; }
 .bao button { flex: none; min-height: 36px; border: 0; border-radius: 10px; padding: 0 12px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.bao .dong { min-width: 36px; padding: 0; background: none; color: var(--card); opacity: .7; font-weight: 400; }
 
 /* Tên món trong bữa: tối đa 2 dòng thay vì cắt "…" (line-height đủ để không cắt dấu như "Ếch"). */
 .row .tx b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.35; padding-top: 1px; }
