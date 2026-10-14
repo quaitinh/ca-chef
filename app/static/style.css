@@ -98,8 +98,8 @@ body.cook .tabbar, body.cook .topbar, body.cook .foot { display: none; }
 .peak { color: var(--peak); font-weight: 700; }
 .hot { color: var(--warm); }
 .cool { color: var(--cool); }
-.ck { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card);
-  color: transparent; font-weight: 800; cursor: pointer; display: grid; place-items: center; padding: 0; }
+.ck { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card);
+  color: var(--line); font-weight: 800; font-size: 17px; cursor: pointer; display: grid; place-items: center; padding: 0; }
 .ck:hover { border-color: var(--accent); color: var(--have); }
 .ck.on { background: var(--accent); border-color: var(--accent); color: #fff; }
 
@@ -387,8 +387,15 @@ body.cook main { padding-top: 12px; }
 .tim-nut { display: flex; flex-wrap: wrap; border-top: 1px dashed var(--line); }
 .tim-nut .tim-mo { flex: 1 1 auto; width: auto; border-top: 0; }
 .tim-mo.them { color: var(--green); }
-.row .xoa { flex: none; width: 30px; height: 30px; border: 0; background: none; color: var(--muted); font-size: 15px; border-radius: 50%; opacity: .6; }
+.row .xoa { flex: none; width: 40px; height: 40px; border: 0; background: none; color: var(--muted); font-size: 15px; border-radius: 50%; opacity: .6; }
 .row .xoa:active { background: var(--none); opacity: 1; }
 .row .du-nut { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px dashed var(--line); background: none; border-radius: 12px; font-size: 16px; line-height: 1; color: var(--muted); padding: 0; }
 .row .du-nut small { font-size: 9px; margin-top: 2px; white-space: nowrap; }
 .row .du-nut.on { border-style: solid; border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+/* Thông báo bỏ món có nút Hoàn tác */
+.bao { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tab-h) + 12px + env(safe-area-inset-bottom)); z-index: 20;
+  display: flex; align-items: center; gap: 12px; max-width: calc(100% - 32px); padding: 10px 10px 10px 16px; border-radius: 14px;
+  background: var(--ink); color: var(--card); font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+.bao span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bao button { flex: none; min-height: 36px; border: 0; border-radius: 10px; padding: 0 12px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }

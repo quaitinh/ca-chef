@@ -40,7 +40,7 @@ suon_xao_chua_ngot,Sườn xào chua ngọt,mon_chinh,am,nhe,vua,thit_heo,moi,4,
 suon_non_kho_thom,Sườn non kho thơm,mon_chinh,nong,nang,vua,thit_heo,mua,4,70,de,"Sườn non kho nước dừa với thơm và trứng cút – chua ngọt, thơm mùi dứa.","1. Thơm bỏ lõi, cắt miếng dày; sườn rửa sạch, ướp với một nửa phần sốt kho (hoặc nước mắm, đường) 30 phút.
 2. Phi hành tỏi, đảo sườn cho săn, đổ nước dừa xâm xấp, hớt bọt, kho lửa nhỏ 30 phút.
 3. Thêm thơm, trứng cút, ớt, tiêu xanh và phần sốt còn lại, kho thêm 15 phút; thiếu nước thì thêm chút nước lọc.",,https://cookpad.com/vn/cong-thuc/24839862,chua_nau_thu
-thit_ba_chi_sot_ca_chua,Thịt ba chỉ sốt cà chua,mon_chinh,am,nang,vua,ca_chua,moi,4,25,de,"Ba chỉ rang xém rồi rim với cà chua – nhanh, đưa cơm.","1. Ba chỉ thái miếng vừa ăn; cà chua bổ múi cau.
+thit_ba_chi_sot_ca_chua,Thịt ba chỉ sốt cà chua,mon_chinh,am,nang,vua,thit_heo|ca_chua,moi,4,25,de,"Ba chỉ rang xém rồi rim với cà chua – nhanh, đưa cơm.","1. Ba chỉ thái miếng vừa ăn; cà chua bổ múi cau.
 2. Rang thịt với chút dầu và gia vị đến khi xém vàng cạnh.
 3. Cho cà chua vào đảo đến khi mềm, quyện với thịt; nêm lại, thêm hành lá và tiêu.",,https://cookpad.com/vn/cong-thuc/5222899,chua_nau_thu
 thit_dong,Thịt đông (món Tết),mon_chinh,am,nhe,it,thit_heo,moi,4,120,vua,"Móng giò, ba chỉ nấu với nấm hương mộc nhĩ rồi để đông – món Tết miền Bắc.","1. Móng giò chặt miếng nhỏ, chần sạch, ninh mềm (nồi áp suất khoảng 20 phút) với nước và chút muối, hạt nêm.
@@ -52,7 +52,7 @@ thit_kho_trung,Thịt kho trứng,mon_chinh,am,nang,vua,trung|thit_heo,mua,4,90,
 3. Thắng đường làm nước màu, cho thịt vào đảo săn cho ngấm màu.
 4. Đổ nước dừa xâm xấp, kho lửa nhỏ 40 phút, hớt bọt.
 5. Cho trứng vào kho thêm 20 phút đến khi thịt mềm, trứng thấm màu; nêm lại vừa ăn.",301,https://cookpad.com/vn/cong-thuc/1069610-th%E1%BB%8Bt-kho-tr%E1%BB%A9ng-th%E1%BB%8Bt-kho-tau,chua_nau_thu
-thit_kho_cu_cai,Thịt kho củ cải,mon_chinh,am,nang,vua,cu_cai,mua,4,50,de,"Ba chỉ kho với củ cải trắng thấm nước kho ngọt mặn, ăn với cơm nóng.","1. Ba chỉ cắt miếng, chần sơ, ướp nước mắm, đường, hành tỏi băm, tiêu 20 phút.
+thit_kho_cu_cai,Thịt kho củ cải,mon_chinh,am,nang,vua,thit_heo|cu_cai,mua,4,50,de,"Ba chỉ kho với củ cải trắng thấm nước kho ngọt mặn, ăn với cơm nóng.","1. Ba chỉ cắt miếng, chần sơ, ướp nước mắm, đường, hành tỏi băm, tiêu 20 phút.
 2. Thắng chút đường làm nước màu, cho thịt vào đảo săn.
 3. Đổ nước xâm xấp, kho lửa nhỏ 20 phút.
 4. Củ cải gọt vỏ, cắt miếng dày, cho vào kho thêm 15 phút đến khi trong và thấm.
@@ -70,7 +70,7 @@ ca_bung,Cà tím bung đậu phụ thịt ba chỉ,mon_chinh,nong,nang,vua,ca_ti
 thit_luoc_cham_mam_dua_leo,"Thịt luộc chấm mắm, dưa leo",mon_chinh,mat,nhe,it,thit_heo,nang,4,40,de,"Thịt đùi luộc thái mỏng, chấm nước mắm hành, ăn kèm dưa leo – món mát, đơn giản.","1. Thịt bóp muối rửa sạch; luộc với chút muối, hạt nêm và vài củ hành tím đập dập đến khi chín (xiên không ra nước hồng).
 2. Vớt thịt ngâm nước nguội cho trắng, thái mỏng; nước luộc dùng nấu canh.
 3. Pha nước chấm: nước mắm, đường, nước lọc, chanh, tiêu và hành tím thái mỏng; ăn kèm dưa leo.",,https://cookpad.com/vn/cong-thuc/22560971,chua_nau_thu
-thit_vien_sot_ca_chua,Thịt viên sốt cà chua,mon_chinh,am,nang,vua,ca_chua,moi,4,40,de,"Thịt viên trộn nấm hương mộc nhĩ, rán vàng rồi om sốt cà chua – trẻ em rất thích.","1. Nấm hương, mộc nhĩ ngâm mềm, băm nhỏ, trộn với thịt xay, chút gia vị và 1–2 thìa bột mì cho viên dễ kết dính.
+thit_vien_sot_ca_chua,Thịt viên sốt cà chua,mon_chinh,am,nang,vua,thit_heo|ca_chua,moi,4,40,de,"Thịt viên trộn nấm hương mộc nhĩ, rán vàng rồi om sốt cà chua – trẻ em rất thích.","1. Nấm hương, mộc nhĩ ngâm mềm, băm nhỏ, trộn với thịt xay, chút gia vị và 1–2 thìa bột mì cho viên dễ kết dính.
 2. Viên thành từng viên nhỏ, rán sơ đến khi hơi vàng.
 3. Phi hành, cho cà chua bổ múi cau vào xào nát với chút nước mắm, đường, thêm ít nước.
 4. Thả thịt viên vào om lửa nhỏ đến khi chín và thấm sốt; rắc hành lá.",,https://cookpad.com/vn/cong-thuc/12222398,chua_nau_thu
@@ -97,7 +97,7 @@ ca_kho_rieng,Cá kho riềng (kiểu Bắc),mon_chinh,nong,nang,vua,ca_tram,mua,
 2. Ướp cá với gia vị kho riềng (hoặc nước mắm, đường, chút muối) cùng một phần riềng sả gừng ít nhất 45 phút.
 3. Làm nước màu; xếp lần lượt riềng sả gừng, ba chỉ, cá và phần riềng sả còn lại vào nồi.
 4. Đổ nước ngập cá, sôi thì hạ lửa thật nhỏ, kho 30–40 phút; không đảo để cá khỏi nát; để nguội rồi kho thêm lần nữa cho đậm.",,https://cookpad.com/vn/cong-thuc/5514398,chua_nau_thu
-ca_hoi_sot_ca_chua,Cá hồi sốt cà chua,mon_chinh,am,nang,vua,ca_chua,moi,4,30,de,Cá hồi áp chảo rồi rim trong sốt cà chua nước mắm.,"1. Cá hồi rửa nhanh, thấm khô, cắt khúc vừa ăn.
+ca_hoi_sot_ca_chua,Cá hồi sốt cà chua,mon_chinh,am,nang,vua,ca_hoi|ca_chua,moi,4,30,de,Cá hồi áp chảo rồi rim trong sốt cà chua nước mắm.,"1. Cá hồi rửa nhanh, thấm khô, cắt khúc vừa ăn.
 2. Áp chảo cá lửa vừa, rán kỹ phần da cho giòn, phần thịt vừa chín tới để khỏi khô.
 3. Thấm bớt dầu, phi hành tỏi, cho cà chua băm vào xào mềm.
 4. Hòa nước mắm, đường với ít nước rưới vào, đậy nắp rim lửa nhỏ, thỉnh thoảng trở cá, đến khi sốt sệt; rắc tiêu.",,https://cookpad.com/vn/cong-thuc/2991329,chua_nau_thu
@@ -296,7 +296,7 @@ bap_bo_hap_sa_gung,Bắp bò hấp sả gừng,mon_chinh,mat,nhe,it,thit_bo,nang
 3. Hấp khoảng 15–20 phút, xiên đũa thấy không còn nước đỏ là chín, vớt ra để ráo.
 4. Băm tỏi và gừng còn lại, pha với nước sôi, nước mắm, đường, giấm hoặc chanh và chút ớt băm làm nước chấm.
 5. Thái bắp bò lát mỏng, bày ra đĩa, ăn kèm nước chấm.",,https://cookpad.com/vn/cong-thuc/14872375,chua_nau_thu
-bo_xao_mang_tay,Bò xào măng tây,mon_chinh,am,nhe,vua,mang_tay,moi,4,20,de,"Bò xào măng tây xanh giòn, thịt mềm, thơm tỏi phi, làm nhanh trong 20 phút.","1. Thịt bò thái lát mỏng, ướp dầu hào, nước tương và chút dầu ăn; măng tây bỏ gốc già, cắt khúc.
+bo_xao_mang_tay,Bò xào măng tây,mon_chinh,am,nhe,vua,thit_bo|mang_tay,moi,4,20,de,"Bò xào măng tây xanh giòn, thịt mềm, thơm tỏi phi, làm nhanh trong 20 phút.","1. Thịt bò thái lát mỏng, ướp dầu hào, nước tương và chút dầu ăn; măng tây bỏ gốc già, cắt khúc.
 2. Phi thơm tỏi băm, cho bò vào xào nhanh lửa lớn rồi trút ra đĩa.
 3. Cho măng tây vào chảo, thêm chút nước, nước tương và hạt nêm, xào đến khi măng vừa chín còn xanh.
 4. Trút bò vào đảo đều, rắc tiêu và tỏi phi rồi tắt bếp.",,https://cookpad.com/vn/cong-thuc/25375748,chua_nau_thu
@@ -1207,7 +1207,7 @@ kho_qua_nhoi_thit_hap,Canh khổ qua nhồi thịt,canh,mat,nhe,it,thit_heo|kho_
 3. Đun sôi nước, thả khổ qua vào, cho thêm thân và rễ ngò, hầm lửa nhỏ.
 4. Nêm đường, nước mắm, hạt nêm vừa ăn; hầm tiếp đến khi khổ qua mềm.
 5. Múc ra, rắc hành lá và ngò rí thái nhỏ.",,https://cookpad.com/vn/cong-thuc/26351790,chua_nau_thu
-ca_dieu_hong_sot_ca_chua,Cá diêu hồng sốt cà chua,mon_chinh,nong,nhe,vua,ca_chua,moi,4,40,de,"Cá diêu hồng chiên vàng hai mặt rồi rim nhỏ lửa trong sốt cà chua sền sệt, ăn kèm rau sống.","1. Đánh vảy cá, rửa với muối cho sạch nhớt. Cắt cà chua múi cau; rửa sạch hành lá và rau sống, để ráo.
+ca_dieu_hong_sot_ca_chua,Cá diêu hồng sốt cà chua,mon_chinh,nong,nhe,vua,ca_dieu_hong|ca_chua,moi,4,40,de,"Cá diêu hồng chiên vàng hai mặt rồi rim nhỏ lửa trong sốt cà chua sền sệt, ăn kèm rau sống.","1. Đánh vảy cá, rửa với muối cho sạch nhớt. Cắt cà chua múi cau; rửa sạch hành lá và rau sống, để ráo.
 2. Đun nóng dầu, chiên cá vàng đều hai mặt rồi gắp ra đĩa.
 3. Chắt bớt dầu, cho cà chua vào xào, nêm hạt nêm, nước mắm và tiêu đến khi sốt sền sệt.
 4. Cho cá vào chảo sốt, rim lửa nhỏ khoảng 5 phút.
@@ -2432,32 +2432,32 @@ ca_ho_kho_hanh_gung,Cá hố kho hành gừng,mon_chinh,nong,nang,vua,ca_ho,mua,
 4. Kho lửa nhỏ đến khi nước gần cạn, thêm 1 muỗng canh tương ớt, 1/2 muỗng cà phê tiêu và gừng sợi, kho tiếp đến khi sệt thì tắt bếp.
 5. Bày cá ra dĩa với xà lách, dưa leo, cà chua; ăn nóng với cơm.
 6. Mẹo: Chiên cá trước khi kho cho thơm; giấm gạo vừa tạo vị vừa khử tanh.",,https://monngonmoingay.com/ca-ho-kho-hanh-gung/,chua_nau_thu
-ca_hoi_chien_mam_dua,Cá hồi chiên mắm dừa,mon_chinh,am,nang,nhieu,dua,moi,4,15,vua,"Cá hồi cắt quân cờ chiên giòn, chấm nước mắm dừa cô đặc, ăn với khổ qua sống trộn dầu giấm.","1. Cá hồi bỏ da, cắt quân cờ, ướp 1/2 muỗng cà phê cọng ngò băm và 1/2 muỗng cà phê nước cốt chanh. Ớt sừng: 1 trái thái lát, 1 trái băm nhỏ.
+ca_hoi_chien_mam_dua,Cá hồi chiên mắm dừa,mon_chinh,am,nang,nhieu,ca_hoi,moi,4,15,vua,"Cá hồi cắt quân cờ chiên giòn, chấm nước mắm dừa cô đặc, ăn với khổ qua sống trộn dầu giấm.","1. Cá hồi bỏ da, cắt quân cờ, ướp 1/2 muỗng cà phê cọng ngò băm và 1/2 muỗng cà phê nước cốt chanh. Ớt sừng: 1 trái thái lát, 1 trái băm nhỏ.
 2. Khổ qua thái lát mỏng, xếp ra dĩa cùng húng quế, húng lủi rồi cất ngăn mát tủ lạnh.
 3. Pha nước dầu giấm: 2 muỗng canh giấm gạo, 2 muỗng canh đường, 2 muỗng canh nước, chút muối và tiêu, khuấy tan.
 4. Pha nước chấm: 1 chén nước dừa, 3 muỗng canh đường, 3 muỗng canh nước mắm, đun lửa nhỏ cho cô lại còn khoảng 1 chén; để nguội rồi thêm 2 muỗng canh nước cốt chanh, tỏi và ớt băm.
 5. Lăn cá với 1/2 gói bột tẩm khô chiên giòn, chiên ngập dầu lửa lớn đến vàng giòn, vớt ra để ráo.
 6. Xếp cá ra dĩa, bày khổ qua và chén nước chấm xung quanh, trang trí ớt lát; khi ăn rưới dầu giấm lên khổ qua và rau thơm.
 7. Mẹo: Khổ qua để lạnh ăn sống giòn hơn; chiên cá lửa to cho vỏ giòn mà bên trong vẫn ngọt.",,https://monngonmoingay.com/ca-hoi-chien-mam-dua/,chua_nau_thu
-ca_hoi_chien_sot_chanh,Cá hồi chiên sốt chanh,mon_chinh,am,nhe,vua,,moi,4,30,vua,"Cá hồi còn da áp chảo giòn với bơ, rưới xốt chanh vàng mật ong sánh, chua ngọt thơm bơ.","1. Khứa các đường song song trên da cá, tẩm 1/2 gói bột tẩm khô chiên giòn quanh miếng cá.
+ca_hoi_chien_sot_chanh,Cá hồi chiên sốt chanh,mon_chinh,am,nhe,vua,ca_hoi,moi,4,30,vua,"Cá hồi còn da áp chảo giòn với bơ, rưới xốt chanh vàng mật ong sánh, chua ngọt thơm bơ.","1. Khứa các đường song song trên da cá, tẩm 1/2 gói bột tẩm khô chiên giòn quanh miếng cá.
 2. Chanh cắt 3 lát, phần còn lại bào lấy 1 muỗng cà phê vỏ và vắt lấy 3 muỗng canh nước cốt.
 3. Đun nóng 3 muỗng canh dầu, áp chảo mặt da trước cho sém, lật lại áp mặt thịt đến vừa chín. Chắt bỏ dầu, thêm 1 muỗng canh bơ lạt cho thơm rồi gắp cá ra; cho 3 lát chanh vào áp chảo hơi sém.
 4. Làm xốt: pha 3 muỗng canh nước cốt chanh với 3 muỗng canh nước, 1 muỗng canh mật ong, 1 muỗng cà phê đường, 2 muỗng cà phê nước bột năng, 1 muỗng cà phê hạt nêm; khuấy trên bếp đến khi sánh, thêm 1 muỗng canh bơ lạt, tắt bếp rồi cho vỏ chanh bào vào.
 5. Rưới xốt ra dĩa, đặt cá lên với mặt da phía trên, thêm 3 lát chanh.
 6. Mẹo: Khứa da để cá thấm bột, chiên ngon hơn; cho bơ vào sau khi chiên để giữ mùi bơ.",,https://monngonmoingay.com/ca-hoi-chien-sot-chanh/,chua_nau_thu
-ca_hoi_kho_nuoc_tuong,Cá hồi kho nước tương,mon_chinh,am,nhe,vua,mang_tay,moi,4,20,de,"Cá hồi áp chảo dầu điều rồi kho liu riu với nước tương giã gừng hành thì là, thêm măng tây.","1. Măng tây cắt khúc 6cm; thì là cắt khúc.
+ca_hoi_kho_nuoc_tuong,Cá hồi kho nước tương,mon_chinh,am,nhe,vua,ca_hoi,moi,4,20,de,"Cá hồi áp chảo dầu điều rồi kho liu riu với nước tương giã gừng hành thì là, thêm măng tây.","1. Măng tây cắt khúc 6cm; thì là cắt khúc.
 2. Giã nhuyễn 5 đầu hành lá, 1 miếng gừng cỡ ngón tay, 1/3 trái ớt sừng, 2 muỗng canh cọng thì là; thêm 1,5 muỗng canh đường, 1 muỗng cà phê bột ngọt, 4 muỗng canh nước tương, 4 muỗng canh nước, đun nóng cho tan.
 3. Đun nóng 2 muỗng canh dầu điều, áp chảo cá cho săn hai mặt rồi gắp ra; cho măng tây vào chảo đảo sơ.
 4. Cho cá và hỗn hợp gia vị vào nồi, kho liu riu 4 phút cho thấm, rồi thêm măng tây và thì là.
 5. Bày ra dĩa, ăn nóng với cơm.
 6. Mẹo: Đun gia vị trước cho tan đều, dậy mùi; áp chảo cá giúp mặt cá săn, vàng sém đẹp.",,https://monngonmoingay.com/ca-hoi-kho-nuoc-tuong/,chua_nau_thu
-ca_hoi_ngu_sac,Cá hồi ngũ sắc,mon_chinh,am,nhe,vua,khoai_tay,moi,4,20,vua,"Cá hồi ướp thì là chanh áp chảo bơ, đặt trên khoai tây, bông cải, ớt chuông xào, chấm nước tương mù tạt.","1. Cá hồi cắt 4 lát dày khoảng 1,5cm. Bông cải cắt miếng 3cm, ớt chuông cắt hình thoi 2cm, khoai tây cắt tam giác 3cm; thì là băm nhỏ, để riêng cọng và lá.
+ca_hoi_ngu_sac,Cá hồi ngũ sắc,mon_chinh,am,nhe,vua,ca_hoi,moi,4,20,vua,"Cá hồi ướp thì là chanh áp chảo bơ, đặt trên khoai tây, bông cải, ớt chuông xào, chấm nước tương mù tạt.","1. Cá hồi cắt 4 lát dày khoảng 1,5cm. Bông cải cắt miếng 3cm, ớt chuông cắt hình thoi 2cm, khoai tây cắt tam giác 3cm; thì là băm nhỏ, để riêng cọng và lá.
 2. Ướp cá với 1 muỗng canh hành tỏi băm, 1 muỗng cà phê cọng thì là băm, 1/2 muỗng canh nước cốt chanh, 1 muỗng cà phê hạt nêm, 1/2 muỗng cà phê tiêu. Pha nước chấm: 2 muỗng canh nước tương với 1/2 muỗng cà phê mù tạt xanh.
 3. Đun sôi nước với chút nước bột năng và muối, luộc khoai tây vừa chín, chần bông cải, vớt ra để ráo.
 4. Áp chảo khoai tây với ít dầu đến vàng mặt, cho bông cải vào xào nhanh, thêm ớt chuông, nêm 1 muỗng cà phê hạt nêm, 1 muỗng cà phê thì là, 1 muỗng cà phê dầu hào.
 5. Đun nóng ít dầu với 1 muỗng canh bơ, áp chảo cá lửa lớn đến vàng sém hai mặt, đặt lên phần rau củ. Ăn nóng với nước chấm.
 6. Mẹo: Bột năng trong nước luộc giúp khoai áp chảo giòn hơn; cá hồi chỉ áp chảo vừa chín, giữ phần giữa còn hồng và ngọt.",,https://monngonmoingay.com/ca-hoi-ngu-sac/,chua_nau_thu
-ca_hoi_xot_cay,Cá hồi xốt cay,mon_chinh,nong,nang,nhieu,hanh_tay,mua,4,5,de,"Cá hồi tẩm bột chiên giòn, rưới xốt cay xào cà chua, hành tây, tương ớt và ớt hiểm.","1. Cá hồi rửa sạch, để ráo, cắt miếng vuông 2,5cm. Cà chua, hành tây cắt hạt lựu; ngò rí thái nhuyễn; ớt hiểm đập dập.
+ca_hoi_xot_cay,Cá hồi xốt cay,mon_chinh,nong,nang,nhieu,ca_hoi,mua,4,5,de,"Cá hồi tẩm bột chiên giòn, rưới xốt cay xào cà chua, hành tây, tương ớt và ớt hiểm.","1. Cá hồi rửa sạch, để ráo, cắt miếng vuông 2,5cm. Cà chua, hành tây cắt hạt lựu; ngò rí thái nhuyễn; ớt hiểm đập dập.
 2. Cho cá vào tô cùng 1/2 gói bột tẩm khô chiên giòn, xóc đều cho bột bám, chiên vàng trong dầu nóng rồi vớt ra để ráo.
 3. Làm xốt cay: phi thơm 1 muỗng cà phê tỏi băm, xào mềm hành tây và cà chua; nêm 1 muỗng canh tương ớt, 1 muỗng canh nước tương, 2 muỗng cà phê đường, 1 muỗng cà phê giấm gạo, 1/2 muỗng cà phê tiêu và ớt đập dập.
 4. Thêm 1 muỗng canh nước, nấu đến khi cà mềm, rắc ngò rí rồi tắt bếp.
@@ -2529,7 +2529,7 @@ ca_keo_kho_rau_ram,Cá kèo kho rau răm,mon_chinh,am,nhe,vua,ca_keo,moi,4,25,vu
 4. Kho đến khi cá chín, nước còn ít thì rắc thêm rau răm và tiêu, tắt bếp.
 5. Để nguyên trong nồi đất, ăn với cơm nóng, dưa leo và rau sống.
 6. Mẹo: Giữ lại bụng cá vì tuy hơi đắng nhưng rất béo; lót rau răm giúp thơm và chống dính nồi.",,https://monngonmoingay.com/ca-keo-kho-rau-ram/,chua_nau_thu
-ca_kho_chuoi_xanh,Cá kho chuối xanh,mon_chinh,am,nang,nhieu,chuoi_xanh,mua,4,25,vua,"Cá cam kho với chuối xanh, thịt ba chỉ, riềng trong nước trà xanh; đậm đà, thơm riềng.","1. Cá cam cắt khúc 2cm, ướp 1,5 muỗng canh hạt nêm, chút muối, 1/3 muỗng canh tiêu, 5 muỗng cà phê đường, 2 muỗng canh nước mắm, 1 muỗng canh hành tím băm, 2 trái ớt hiểm đập dập.
+ca_kho_chuoi_xanh,Cá kho chuối xanh,mon_chinh,am,nang,nhieu,ca_cam|chuoi_xanh,mua,4,25,vua,"Cá cam kho với chuối xanh, thịt ba chỉ, riềng trong nước trà xanh; đậm đà, thơm riềng.","1. Cá cam cắt khúc 2cm, ướp 1,5 muỗng canh hạt nêm, chút muối, 1/3 muỗng canh tiêu, 5 muỗng cà phê đường, 2 muỗng canh nước mắm, 1 muỗng canh hành tím băm, 2 trái ớt hiểm đập dập.
 2. Thịt ba chỉ cắt miếng vuông, ướp 1/2 muỗng canh hạt nêm, 1/3 muỗng canh muối, 1/2 muỗng canh nước mắm, 1/4 muỗng canh tiêu, 1 muỗng canh hành tím băm.
 3. Chuối cắt lát xéo dày 1cm, ngâm nước muối loãng rồi chần qua nước sôi. Riềng cắt lát, đầu hành lá đập dập.
 4. Thắng 2 muỗng canh dầu với 2 muỗng canh đường tới màu vàng nhạt, chiên cá vàng rồi gắp ra; cho thịt vào xào săn.
