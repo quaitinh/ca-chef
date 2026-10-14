@@ -1201,17 +1201,18 @@ function pageHome(day = 0) {
 
 // Lưu bữa mới của một ngày; ngày sau (đã lên thực đơn) có món trùng món mới thì gợi ý lại ngày đó (giữ món đã chọn).
 // Thông báo nhỏ có nút Hoàn tác (bấm nhầm ✕ trên điện thoại). Tự ẩn sau 4 giây; đóng sớm bằng ✕,
-// vuốt ngang/xuống, chạm ra ngoài hoặc cuộn trang.
+// vuốt ngang/xuống, chạm ra ngoài hoặc cuộn trang quá 40px.
 function baoHoanTac(text, hoan) {
   document.querySelector(".bao")?.dong();
   const el = document.createElement("div");
   el.className = "bao"; el.setAttribute("role", "status");
   el.innerHTML = `<span>${esc(text)}</span><button class="hoan">↶ Hoàn tác</button><button class="dong" aria-label="Đóng">✕</button>`;
   const ngoai = (e) => { if (!el.contains(e.target)) el.dong(); };
+  const y = scrollY, cuon = () => { if (Math.abs(scrollY - y) > 40) el.dong(); }; // trang còn trôi quán tính thì chưa đóng
   let hen = 0;
   el.dong = () => {
     clearTimeout(hen); el.remove();
-    document.removeEventListener("pointerdown", ngoai, true); removeEventListener("scroll", el.dong);
+    document.removeEventListener("pointerdown", ngoai, true); removeEventListener("scroll", cuon);
   };
   el.querySelector(".hoan").onclick = () => { el.dong(); hoan(); };
   el.querySelector(".dong").onclick = el.dong;
@@ -1231,7 +1232,7 @@ function baoHoanTac(text, hoan) {
   };
   document.body.appendChild(el);
   hen = setTimeout(el.dong, 4000);
-  setTimeout(() => { document.addEventListener("pointerdown", ngoai, true); addEventListener("scroll", el.dong, { passive: true }); }, 0);
+  setTimeout(() => { document.addEventListener("pointerdown", ngoai, true); addEventListener("scroll", cuon, { passive: true }); }, 0);
 }
 function datBua(day, next) {
   S.meals[day] = next;
