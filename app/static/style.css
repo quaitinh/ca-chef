@@ -409,7 +409,7 @@ body.cook main { padding-top: 12px; }
   .row .ic { width: 40px; height: 40px; }
   .row .du-nut { width: 32px; height: 44px; border: 0; }
   .row .du-nut.on { border: 1px solid var(--accent); }
-  .row .du-nut small { font-size: 8px; }
+  .row .du-nut small { font-size: 9px; letter-spacing: -.2px; }
   .row .xoa { width: 30px; height: 44px; border-radius: 10px; }
   .ck { width: 34px; height: 34px; margin-left: 2px; }
 }
