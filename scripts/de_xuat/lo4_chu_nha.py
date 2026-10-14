@@ -66,6 +66,16 @@ def M(vai, dam, *a, **kw):
 
 
 RECIPES = [
+    # ---------- Rau ----------
+    # Cách luộc theo công thức Bí xanh luộc (Cookpad); gừng là cách nhà mình thêm (chủ nhà chọn 14/10/2026).
+    M("rau", "", "bi_dao_luoc_gung", "Bí đao luộc gừng", "mon_chinh", "mat", "nhe", "it", "bi_dao", "nang", 15, "de",
+      "Bí đao luộc với vài lát gừng cho thơm và đỡ lạnh bụng – chấm nước mắm hoặc ăn kèm món kho; nhẹ, hợp bữa đã có món hầm.",
+      ["Bí đao gọt vỏ, bổ dọc; bí già thì nạo bỏ ruột, bí non còn lông tơ thì để nguyên ruột; cắt miếng dày khoảng 1,5 cm.",
+       "Gừng cạo vỏ, thái vài lát rồi đập dập.",
+       "Đun sôi nồi nước với chút muối và gừng, thả bí vào, giữ lửa to khoảng 5 phút; xiên đũa qua miếng bí là chín, vớt ngay kẻo nhũn.",
+       "Xếp bí ra đĩa, chấm nước mắm (thích thì thêm chút gừng băm, ớt) hoặc ăn kèm món kho."],
+      None, CP + "8493766",
+      [("bi_dao", "Bí đao", 600, "g", "n", "chinh"), GUNG(1), MUOI, MAM(2)]),
     # ---------- Gà ----------
     M("man", "ga", "ga_ham_nam", "Gà hầm nấm", "mon_chinh", "nong", "nang", "it", "ga_ta", "mua", 90, "de",
       "Gà ri nguyên con hầm với hạt sen, nấm đông cô, cà rốt, kỷ tử – nước trong ngọt, thịt mềm, cả nhà đều ăn được.",

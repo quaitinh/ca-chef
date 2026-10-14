@@ -356,6 +356,7 @@ nuoc_ep_oi,do_uong,,,co,lo3
 nuong_kieu_han_kim_chi,nuong,heo,nuong,can_nhac,lo3
 nuong_thap_cam_kieu_viet,nuong,heo,nuong,co,lo3
 hai_san_nuong_mo_hanh,nuong,hai_san,nuong,co,lo3
+bi_dao_luoc_gung,rau,,luoc_hap,co,lo4
 ga_ham_nam,man,ga,nau,co,lo4
 ga_ham_sa,lau,ga,nau,co,lo4
 ga_hap_mam_nhi,man,ga,luoc_hap,can_nhac,lo4

@@ -559,7 +559,8 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     // Hết món chưa xem: lấy lại món xem đã lâu nhất trước (xoay vòng hết lượt), không chỉ mấy món điểm cao nhất.
     const thuTu = [...ex.da_xem], xemLau = (d) => (thuTu.indexOf(d.ma_mon) + 1) || 0;
     pool2.sort((a, b) => xemLau(a) - xemLau(b));
-    const tuOk = (x) => cung(x) && t(x) && (vai !== "rau" || coRauXanh(x));
+    // Đồ trong tủ được ưu tiên kể cả rau không phải rau xanh (bí đao luộc…): canh sau đó vẫn ưu tiên có rau xanh (uaThich).
+    const tuOk = (x) => cung(x) && t(x);
     const muc = [(x) => dungDoSomMoi(x, ctx) && tuOk(x), (x) => dungDoTuoiMoi(x, ctx) && tuOk(x), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
