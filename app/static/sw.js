@@ -1,8 +1,9 @@
 // Cá Chef – service worker: mở app khi sóng yếu / mất mạng.
 // - data.json?v=<mã>: nội dung theo mã phiên bản không đổi -> lấy từ bộ nhớ trước, chỉ giữ bản mới nhất.
 // - Các file khác cùng trang (app.js, style.css, version.json...): mạng trước (luôn bản mới), mất mạng thì dùng bản đã lưu.
+//   version.json, data.json?t=… lưu theo đường dẫn không kèm tham số (một bản), không phình bộ nhớ.
 // - Request khác trang (thời tiết, ảnh Cookpad, đồng bộ Apps Script): không can thiệp.
-const CACHE = "cachef-v2";
+const CACHE = "cachef-v3"; // v3: dọn các bản data.json?t=… thừa của v2
 const SHELL = ["./", "index.html", "app.js", "dong_bo.js", "style.css", "manifest.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
@@ -28,13 +29,13 @@ self.addEventListener("fetch", (e) => {
     }));
     return;
   }
-  if (url.searchParams.has("refresh")) return;
+  const motBan = /\/(version|data)\.json$/.test(url.pathname);
   e.respondWith(fetch(req).then((res) => {
     if (res.ok) {
-      const ban = res.clone(), khoa = url.pathname.endsWith("/version.json") ? new Request(url.origin + url.pathname) : req;
+      const ban = res.clone(), khoa = motBan ? new Request(url.origin + url.pathname) : req;
       caches.open(CACHE).then((c) => c.put(khoa, ban));
     }
     return res;
-  }).catch(async () => (await caches.match(url.pathname.endsWith("/version.json") ? url.origin + url.pathname : req, { ignoreSearch: url.pathname.endsWith("/data.json") })) ||
+  }).catch(async () => (await caches.match(motBan ? url.origin + url.pathname : req, { ignoreSearch: url.pathname.endsWith("/data.json") })) ||
     (req.mode === "navigate" ? caches.match("index.html") : Response.error())));
 });
