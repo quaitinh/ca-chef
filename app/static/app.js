@@ -160,10 +160,9 @@ async function load() {
   dbTuDong();
   // App để mở qua nửa đêm (PWA giữ trong bộ nhớ): sang ngày mới thì tải lại để dựng bữa theo ngày mới,
   // tránh ghi bữa hôm qua vào ngày hôm nay. Đang nấu từng bước thì đợi nấu xong.
-  const ngayMo = today();
-  const sangNgay = () => { if (today() !== ngayMo && !location.hash.startsWith("#/nau/")) location.reload(); };
+  S.ngayMo = today();
   document.addEventListener("visibilitychange", () => { if (!document.hidden) sangNgay(); });
-  setInterval(sangNgay, 60000);
+  setInterval(() => { if (document.activeElement?.tagName !== "INPUT") sangNgay(); }, 60000);
   // Cập nhật ngầm sau khi đã hiện trang.
   setTimeout(async () => {
     if (dbBat()) { const doi = await dbKeo(); if (doi) DB.onDoi(); }
@@ -288,6 +287,7 @@ function weatherRulesHit(i = 0) {
   const d = S.weather?.daily;
   if (!d || d.time.length <= i) return [];
   const w = Object.fromEntries(Object.keys(d).map((k) => [k, d[k][i]]));
+  if (w.temperature_2m_max != null) w.temperature_2m_max = Math.round(w.temperature_2m_max); // so như số hiển thị (31° là 31)
   return S.data.quy_tac.filter((r) => {
     if (!(r.bien in w) || !compare(w[r.bien], r.toan_tu, r.nguong)) return false;
     // R09: khả năng mưa cao chỉ tính khi chưa đủ mưa để kích hoạt quy tắc "Có mưa".
@@ -846,7 +846,7 @@ function headerBar() {
   const d = S.weather?.daily, c = S.weather?.current, wx = document.getElementById("wx");
   if (!d) { wx.hidden = true; return; }
   const [icon] = wmo(c ? c.weather_code : d.weather_code[0]);
-  wx.textContent = `${icon} ${Math.round(c ? c.temperature_2m : d.temperature_2m_max[0])}° ${d.precipitation_probability_max[0] != null ? ` · mưa ${d.precipitation_probability_max[0]}%` : ""}`;
+  wx.textContent = `${icon} ${Math.round(c ? c.temperature_2m : d.temperature_2m_max[0])}°${d.precipitation_probability_max[0] != null ? ` · mưa ${d.precipitation_probability_max[0]}%` : ""}`;
 }
 
 // Lời khuyên theo thời tiết: so tổng điểm các quy tắc nghiêng về món nóng với món mát, kèm lý do chính.
@@ -924,8 +924,9 @@ function metaMon(d, du) {
   return p.join(" · ");
 }
 
-// Món giữ lại khi Đổi: món đã chọn, và món trưa đang nấu dư cho tối (giữ ngầm, không tính là đã chọn).
-const giuMon = (meals, chon, k, d) => chon[k].has(d.ma_mon) || (k === "trua" && laDu(meals, d.ma_mon));
+// Món giữ lại khi Đổi: món đã chọn, và món trưa chủ nhà bật "dư tối" (giữ ngầm, không tính là đã chọn).
+// Món ăn với bún tự nấu dư (không do chủ nhà bật) vẫn đổi được.
+const giuMon = (meals, chon, k, d) => chon[k].has(d.ma_mon) || (k === "trua" && chon.du.includes(d.ma_mon));
 function mealBlock(meals, k, chon) {
   const anLai = (d) => k === "toi" && laDu(meals, d.ma_mon), coDu = (meals.du || []).length > 0;
   const nau = meals[k].filter((d) => !anLai(d) && vaiOf(d) !== "dua_kem"); // đồ ăn kèm làm trước, không tính vào giờ nấu
@@ -2060,7 +2061,13 @@ function veDuyet() {
   document.querySelectorAll("[data-bo]").forEach((b) => (b.onclick = () => { datDuyet(b.dataset.bo, -1); veDuyet(); }));
 }
 
+// Sang ngày mới (app để mở qua nửa đêm): tải lại để dựng bữa theo ngày mới, trừ khi đang nấu từng bước.
+function sangNgay() {
+  if (S.ngayMo && today() !== S.ngayMo && !location.hash.startsWith("#/nau/")) { location.reload(); return true; }
+  return false;
+}
 function route() {
+  if (sangNgay()) return;
   const h = (location.hash.slice(1) || "/").split("?")[0];
   const [, page, arg, arg2] = h.split("/");
   const tab = page === "lich" ? "lich" : page === "mon" || page === "yeu-thich" || page === "duyet-mon" ? "mon" : page === "tu-lanh" ? "tu-lanh" : page === "di-cho" ? "di-cho" : page === "nau" ? "" : "home";
