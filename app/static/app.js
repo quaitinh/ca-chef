@@ -90,7 +90,13 @@ const today = () => {
   return homNay.ngay;
 };
 // Ngày (YYYY-MM-DD, giờ Việt Nam) cách hôm nay `i` ngày; tháng tương ứng.
-const dayStr = (i = 0) => new Date(Date.parse(today()) + i * 86400000).toISOString().slice(0, 10);
+// Nhớ theo ngày hôm nay (gọi hàng nghìn lần mỗi lượt chấm điểm).
+let _dayStr = { ngay: "", kq: {} };
+const dayStr = (i = 0) => {
+  const t = today();
+  if (_dayStr.ngay !== t) _dayStr = { ngay: t, kq: {} };
+  return _dayStr.kq[i] ??= new Date(Date.parse(t) + i * 86400000).toISOString().slice(0, 10);
+};
 const month = (i = 0) => Number(dayStr(i).slice(5, 7));
 
 // ---------- Dữ liệu ----------
@@ -681,7 +687,7 @@ const conThieu = (giu) => giu.some(anBun) ? (giu.some((d) => vaiOf(d) === "rau")
 const THU_TU_VAI = ["lau", "nuong", "man", "rau", "canh", "mot_to", "dua_kem", "trang_mieng"];
 // Canh cua đồng ăn kèm cà pháo muối cho giòn miệng (nếu bữa chưa có đồ ăn kèm).
 const MA_CA_PHAO = "ca_phao_muoi_xoi", MA_DUA_GOP = "dua_gop_su_hao", MA_DO_CHUA = "do_chua_ca_rot_cu_cai";
-function themKem(ranked, bua, cam, used = new Set()) {
+function themKem(ranked, bua, cam, used = new Set(), day = 0) {
   if (bua.some((d) => vaiOf(d) === "dua_kem")) return bua;
   const canhCua = bua.some((d) => vaiOf(d) === "canh" && String(d.nguyen_lieu_chinh || "").split("|").includes("cua_dong"));
   // Đồ ăn kèm làm trong ngày (dưa cải muối chua phải ủ nhiều ngày nên không gợi ý): canh cua – cà pháo;
@@ -691,7 +697,8 @@ function themKem(ranked, bua, cam, used = new Set()) {
     : man.some((d) => cachNau(d) === "nuong") ? [MA_DO_CHUA, MA_DUA_GOP]
     : man.some((d) => ["kho_om", "chien"].includes(cachNau(d)) && ["heo", "ca"].includes(damOf(d))) ? [MA_DUA_GOP, MA_DO_CHUA] : [];
   // Vừa ăn gần đây (điểm thấp) thì thôi; không trùng nguyên liệu trong ngày (dưa góp, đồ chua có cà rốt, củ cải).
-  const k = ds.map((ma) => ranked.find((d) => d.ma_mon === ma)).find((d) => d && d.score > -3 && !cam.includes(d.ma_mon) && khongTrung(d, used));
+  const k = ds.map((ma) => ranked.find((d) => d.ma_mon === ma)).find((d) => d && d.score > -3 && !cam.includes(d.ma_mon) && khongTrung(d, used) &&
+    daysSinceSuggested(d.ma_mon, dayStr(day)) > 3); // mỗi món ăn kèm cách nhau ít nhất 4 ngày
   if (k) dungNL(k, used);
   return k ? [...bua, k] : bua;
 }
@@ -708,7 +715,7 @@ function pickTrua(ranked, daXem, cam, used, ctx, deThoi, giu = []) {
     const giuLai = bua.filter((d) => vaiOf(d) !== "canh" || giu.includes(d));
     return theoVai(giuLai);
   }
-  return theoVai(themKem(ranked, bua, ex.cam, used));
+  return theoVai(themKem(ranked, bua, ex.cam, used, ctx.day));
 }
 
 // Số người ăn: trưa 2 người lớn, tối thêm 2 bé đi học về. Tối cơm đủ 4 món (thêm một món mặn hợp bé).
@@ -727,7 +734,7 @@ function pickToi(ranked, daXem, used, ctx, trua, du, giu = []) {
   const ex = { da_xem: daXem, cam: [...trua.map((d) => d.ma_mon), ...giu.map((d) => d.ma_mon), ...vuaHien(daXem)] };
   const damTrua = damOf(trua.find((d) => vaiOf(d) === "man") || {});
   const bua = [...coSan, ...pickBua(ranked, conThieu(coSan), ex, used, ctx, [...coSan], { man: (x) => !damTrua || damOf(x) !== damTrua })];
-  return theoVai(themKem(ranked, themManToi(ranked, bua, ex, used, ctx, trua), ex.cam, used));
+  return theoVai(themKem(ranked, themManToi(ranked, bua, ex, used, ctx, trua), ex.cam, used, ctx.day));
 }
 
 // Phở trưa nấu dư nước dùng, tối nấu súp/miến thay canh. Phở được chọn khi điểm không kém món mặn tốt nhất quá 2 điểm,
@@ -751,7 +758,7 @@ function toTrua(ranked, day, kTrua, kToi, sh) {
   const ref = dayStr(day), mon = S.monMa ||= Object.fromEntries(S.data.mon_an.map((d) => [d.ma_mon, d]));
   const gan = Object.entries(readHistory()).some(([date, list]) => date < ref && (Date.parse(ref) - Date.parse(date)) / 864e5 <= MOT_TO_CACH_NGAY &&
     list.some((ma) => mon[ma] && vaiOf(mon[ma]) === "mot_to"));
-  if (gan) return null;
+  if (gan || [...sh.trua].some((ma) => mon[ma] && laToTrua(mon[ma]))) return null; // vừa Đổi khỏi một tô thì quay về bữa cơm
   const bestMan = ranked.find((d) => d.score > -3 && vaiOf(d) === "man");
   return ranked.find((d) => laToTrua(d) && d.score > -3 && !sh.trua.has(d.ma_mon) && d.score >= (bestMan?.score ?? -99) - 1 &&
     daysSinceSuggested(d.ma_mon, ref) > 10 &&
@@ -779,7 +786,7 @@ function pickMeals(ranked, day, keep = {}) {
 function pickMeals0(ranked, day, keep = {}) {
   const sh = S.shown[day], used = new Set();
   const kTrua = keep.trua || [], kToi = keep.toi || [];
-  const ctx = { mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong),
+  const ctx = { day, mo: [...kTrua, ...kToi].filter((d) => d.dau_mo === "nhieu").length, nuong: [...kTrua, ...kToi].some(laNuong),
     tlDung: new Set([...kTrua, ...kToi, ...(day && S.meals[0] ? mealDishes(S.meals[0]) : [])].flatMap(doTuCua)) };
   [...kTrua, ...kToi].forEach((d) => dungNL(d, used));
   // Bữa tối một món (lẩu, nướng): giữ nếu đã chọn; nếu tối chưa có món nào giữ thì xét gợi ý
