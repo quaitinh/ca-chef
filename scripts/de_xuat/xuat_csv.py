@@ -28,6 +28,7 @@ OUT = os.path.join(DATA, "de_xuat")
 sys.path.insert(0, HERE)
 import lo1_bac  # noqa: E402
 import lo2_bac  # noqa: E402
+import sua_tay  # noqa: E402
 import lo3_dam  # noqa: E402
 import lo4_chu_nha  # noqa: E402
 import lo5_mnmn  # noqa: E402
@@ -180,7 +181,7 @@ def main():
     loi = []
     goc_mon = {r["ma_mon"]: r for r in doc(os.path.join(DATA, "mon_an.csv"))}
     goc_nl = {r["ma"] for r in doc(os.path.join(DATA, "nguyen_lieu.csv"))}
-    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU + lo5_mnmn.NGUYEN_LIEU
+    NGUYEN_LIEU_MOI = lo1_bac.NGUYEN_LIEU + lo2_bac.NGUYEN_LIEU + lo3_dam.NGUYEN_LIEU + lo4_chu_nha.NGUYEN_LIEU + lo5_mnmn.NGUYEN_LIEU + sua_tay.NGUYEN_LIEU
     moi_nl = {n[0] for n in NGUYEN_LIEU_MOI}
     tat_ca_nl = goc_nl | moi_nl | {r["ma"] for r in doc(os.path.join(OUT, "nhanh_nguyen_lieu.csv"))}  # nhánh: server.py tạo khi build
     lo1 = {r["ma"]: r for r in lo1_bac.RECIPES + lo2_bac.RECIPES + lo3_dam.RECIPES + lo4_chu_nha.RECIPES + lo5_mnmn.RECIPES}
@@ -298,6 +299,7 @@ def main():
         r[12] = "\n".join(f"{i}. {b}" for i, b in enumerate(buoc, 1))
 
     dung_that_cookpad(mon_rows, mon_nl_rows, lo1, loi)
+    sua_tay.ap_dung(mon_rows, mon_nl_rows, nhan_rows)  # sửa tay sau đánh giá (sua_tay.py)
 
     for r in mon_rows:
         rec = dict(zip(MON_AN_HEADER, r))

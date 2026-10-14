@@ -176,6 +176,10 @@ def merge_de_xuat(tabs):
     tabs["mon_nguyen_lieu"] = [r for r in tabs["mon_nguyen_lieu"] if r["ma_mon"] not in an] + \
         [r for r in read_de_xuat("mon_nguyen_lieu_moi.csv") if r["ma_mon"] in them]
     tabs.setdefault("mon_nhan", [r for r in read_de_xuat("mon_nhan.csv") if r["ma_mon"] not in an])
+    # Giá GO! trong repo (data/gia_go.csv) của nguyên liệu Sheet chưa có giá (vd. nguyên liệu mới thêm) thì bổ sung.
+    co_gia = {r["ma_nguyen_lieu"] for r in tabs.get("gia_go", [])}
+    with open(os.path.join(DATA, "gia_go.csv"), newline="") as f:
+        tabs["gia_go"] = tabs.get("gia_go", []) + [r for r in to_records(list(csv.reader(f))) if r["ma_nguyen_lieu"] not in co_gia]
     gan_ma(tabs)
     tach_nhanh(tabs)
     # Ảnh món: mã ảnh trên CDN Cookpad (lay_anh.py). Đọc nguyên chuỗi: mã hex như "8e12…" không được đổi thành số.
