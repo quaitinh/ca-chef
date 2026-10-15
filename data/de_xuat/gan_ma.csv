@@ -31,3 +31,6 @@ khoai môn,khoai_mon,
 bánh đa nem,banh_trang,
 ^miến,bun,
 ^mỡ heo|^xương .*(heo|lợn),thit_heo,Nhánh mỡ/xương do nhanh_nguyen_lieu.csv tách tiếp
+^(giò|chả) lụa(?! chay),gio_lua,Giò lụa Bắc = chả lụa
+^lá é|^é trắng,la_e,
+^hành lá,hanh_la,Dùng chung như rau thơm (app.js NL_CHUNG)

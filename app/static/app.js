@@ -648,7 +648,7 @@ const NL_MA = { thit_heo: "heo", long_heo: "heo", ba_chi: "heo", suon_heo: "heo"
   nac_vai: "heo", thit_nac: "heo", ga_nguyen_con: "ga", canh_ga: "ga", uc_ga: "ga", chan_co_ga: "ga", long_ga: "ga", ba_chi_bo_my: "bo", mo_heo: "heo", tai_heo: "heo", luoi_heo: "heo", da_heo: "heo", vit: "ga", ngan: "ga", chim_cut: "ga", tom_the: "tom", tom_hum: "tom", muc_tuoi: "muc", muc_mot_nang: "muc",
   thit_bo: "bo", ga_ta: "ga", thit_de: "de", thit_cuu: "cuu", cua_dong: "cua", sup_lo_trang: "sup_lo", bo_booth: "bo_trai", bo_sap: "bo_trai",
   ghe: "cua", cua_bien: "cua", ngheu: "so_oc", oc: "so_oc", oc_dong: "so_oc", so_diep: "so_oc", gia_do: "gia" };
-const NL_CHUNG = new Set(["rau_thom", "sa_ot", "sa", "gung", "ot", "hanh_tay", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
+const NL_CHUNG = new Set(["rau_thom", "hanh_la", "sa_ot", "sa", "gung", "ot", "hanh_tay", "toi_pr", "hanh_tim", "mam_ca_na", "muoi_ca_na", "khe_me", "dau_phong", "bun", "banh_trang", "bot_gao", "xa_lach"]);
 // Không trùng nguyên liệu giữa các món trong ngày chỉ xét nguyên liệu chính (theo tên món và dòng "chinh"):
 // cà chua, dứa… nấu kèm (vai "phu") không chặn món khác. tatCa: kể cả nguyên liệu phụ (để biết món có rau xanh không).
 const _keys = {}, _keysAll = {};
@@ -1806,7 +1806,10 @@ function pageFridge() {
   // Gõ tìm chỉ vẽ lại danh sách nguyên liệu, không vẽ lại cả trang (vẽ lại ô nhập làm vỡ chữ đang ghép của bộ gõ tiếng Việt).
   const veNl = (q) => {
     const kq = document.getElementById("tl-nl");
-    kq.innerHTML = nlLoc(q).map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>';
+    // Gõ tìm: thứ đã có trong tủ vẫn hiện, ghi rõ "đã có trong tủ" (không thì tưởng app thiếu nguyên liệu).
+    const daCo = q ? Object.keys(tl).filter((c) => S.ing[c] && plain(S.ing[c].ten).includes(q))
+      .map((c) => `<span class="chip co-tu">✓ ${esc(S.ing[c].ten)} · đã có trong tủ${tl[c].n ? ` từ ${tl[c].n.slice(8, 10)}/${tl[c].n.slice(5, 7)}` : ""}</span>`) : [];
+    kq.innerHTML = daCo.join("") + nlLoc(q).map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>';
     kq.querySelectorAll("[data-nl]").forEach((b) => (b.onclick = () => { tl[b.dataset.nl] = { n: dayStr(0) }; saveTuLanh(); pageFridge(); }));
   };
   veNl(q);

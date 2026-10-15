@@ -9,6 +9,10 @@ măng tây… ghi "chính"), cá trứng gắn nhầm mã trứng gà, cá cơm 
 NGUYEN_LIEU = [
     ("ca_trung", "Cá trứng (đông lạnh)", "hải sản", "nhập khẩu", [1] * 12, "GO!/siêu thị", "B",
      "Cá trứng đông lạnh đóng gói, có quanh năm ở GO! (8 loại 200–600g, 43.000–119.000đ – catalog sieuthi-go.vn 07/10/2026)"),
+    # Chủ nhà đi chợ 15/10/2026 mua về mà dữ liệu chưa có mã riêng.
+    ("gio_lua", "Giò lụa (chả lụa)", "thịt", "chung", [1] * 12, "chợ/GO!", "C", "Giò Bắc làm từ thịt lợn, miền Nam gọi chả lụa; hàng làm sẵn, có quanh năm"),
+    ("la_e", "Lá é", "rau củ", "chung", [1] * 12, "chợ", "C", "Chưa có nguồn riêng"),
+    ("hanh_la", "Hành lá", "rau củ", "chung", [1] * 12, "chợ/GO!", "C", "Có quanh năm; dùng chung như rau thơm"),
 ]
 
 # Cột nguyen_lieu_chinh của món.
@@ -17,7 +21,7 @@ NL_CHINH = {
     "bo_xao_mang_tay": "thit_bo|mang_tay", "ca_dieu_hong_sot_ca_chua": "ca_dieu_hong|ca_chua", "ca_kho_chuoi_xanh": "ca_cam|chuoi_xanh",
     "ca_hoi_chien_mam_dua": "ca_hoi", "ca_hoi_chien_sot_chanh": "ca_hoi", "ca_hoi_kho_nuoc_tuong": "ca_hoi", "ca_hoi_ngu_sac": "ca_hoi",
     "ca_hoi_xot_cay": "ca_hoi", "ca_hoi_sot_ca_chua": "ca_hoi|ca_chua", "ca_com_than_chien_ca_ri": "ca_com",
-    "ca_trung_cham_tuong_me": "ca_trung", "ca_trung_chien_bo_toi": "ca_trung", "ca_trung_chien_gion": "ca_trung",
+    "ca_trung_cham_tuong_me": "ca_trung", "canh_ga_la_e": "ga_ta|la_e", "cha_lua_kho_trung_cut": "gio_lua|trung", "ca_trung_chien_bo_toi": "ca_trung", "ca_trung_chien_gion": "ca_trung",
 }
 CA_HOI = {"ca_hoi_chien_mam_dua", "ca_hoi_chien_sot_chanh", "ca_hoi_kho_nuoc_tuong", "ca_hoi_ngu_sac", "ca_hoi_xot_cay",
           "ca_hoi_sot_ca_chua", "canh_chua_dau_ca_hoi", "chao_ca_hoi"}
@@ -39,6 +43,10 @@ def sua_dong(r):
         r[1], r[6] = "ca_com", "chinh"
     elif ma == "ca_com_than_chien_ca_ri" and nl == "trung":
         r[6] = "phu"
+    elif ma == "canh_ga_la_e" and nl == "rau_thom" and ten.startswith("lá é"):
+        r[1], r[6] = "la_e", "chinh"
+    elif ma == "cha_lua_kho_trung_cut" and not nl and ten.startswith("chả lụa"):
+        r[1], r[6] = "gio_lua", "chinh"
     elif (ma, nl) in VE_PHU:
         r[6] = "phu"
     elif (ma, nl) in LEN_CHINH:
