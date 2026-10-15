@@ -613,7 +613,9 @@ function ghepBua(ranked, vais, ex, used, ctx, bua, them) {
     const muc = [(x) => dungDoSomMoi(x, ctx) && tuOk(x), (x) => dungDoTuoiMoi(x, ctx) && tuOk(x), (x) => cung(x) && t(x) && uaThich(x, bua, vai), (x) => cung(x) && t(x), cung, (x) => khongTrung(x, used), () => true];
     let d = null;
     for (let i = 0; i < muc.length && !d; i++) {
-      const c = i > 1 ? pool1.filter(muc[i]).concat(pool2.filter(muc[i])) : pool1.filter(muc[i]); // ưu tiên đồ trong tủ chỉ trong món được gợi ý lại
+      // Mức đồ trong tủ (0, 1): món chưa xem trước, rồi xoay vòng cả món đã xem (xem lâu nhất trước) – bấm Đổi vẫn ra món
+      // dùng đồ trong tủ (rau muống, mồng tơi…) trước món phải đi chợ.
+      const c = pool1.filter(muc[i]).concat(pool2.filter((x) => !pool1.includes(x) && muc[i](x)));
       const tre = ctx.trua ? () => true : hopTre; // trưa chỉ 2 người lớn: không cần ưu tiên món hợp trẻ em
       if (c.length) { d = c.find((x) => tre(x) && pool1.includes(x)) || c.find(tre) || c[0]; if (i >= 4) no += i - 3; }
     }
