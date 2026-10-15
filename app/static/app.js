@@ -1806,7 +1806,10 @@ function pageFridge() {
   // Gõ tìm chỉ vẽ lại danh sách nguyên liệu, không vẽ lại cả trang (vẽ lại ô nhập làm vỡ chữ đang ghép của bộ gõ tiếng Việt).
   const veNl = (q) => {
     const kq = document.getElementById("tl-nl");
-    kq.innerHTML = nlLoc(q).map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>';
+    // Gõ tìm: thứ đã có trong tủ vẫn hiện, ghi rõ "đã có trong tủ" (không thì tưởng app thiếu nguyên liệu).
+    const daCo = q ? Object.keys(tl).filter((c) => S.ing[c] && plain(S.ing[c].ten).includes(q))
+      .map((c) => `<span class="chip co-tu">✓ ${esc(S.ing[c].ten)} · đã có trong tủ${tl[c].n ? ` từ ${tl[c].n.slice(8, 10)}/${tl[c].n.slice(5, 7)}` : ""}</span>`) : [];
+    kq.innerHTML = daCo.join("") + nlLoc(q).map(chip).join("") || '<span class="muted">Không thấy nguyên liệu.</span>';
     kq.querySelectorAll("[data-nl]").forEach((b) => (b.onclick = () => { tl[b.dataset.nl] = { n: dayStr(0) }; saveTuLanh(); pageFridge(); }));
   };
   veNl(q);
