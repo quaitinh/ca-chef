@@ -28,6 +28,8 @@ CA_HOI = {"ca_hoi_chien_mam_dua", "ca_hoi_chien_sot_chanh", "ca_hoi_kho_nuoc_tuo
 CA_TRUNG = {"ca_trung_cham_tuong_me", "ca_trung_chien_bo_toi", "ca_trung_chien_gion"}
 VE_PHU = {("ca_hoi_chien_mam_dua", "dua"), ("ca_hoi_kho_nuoc_tuong", "mang_tay"), ("ca_hoi_ngu_sac", "khoai_tay"), ("ca_hoi_xot_cay", "hanh_tay")}
 LEN_CHINH = {("ca_dieu_hong_sot_ca_chua", "ca_dieu_hong"), ("ca_kho_chuoi_xanh", "ca_cam")}
+# Món ăn chơi giữa buổi, không phải món mặn trong bữa (chủ nhà 16/10/2026).
+AN_VAT = {"chan_ga_sa_tac"}
 # Nhóm đạm: ếch như các món ếch khác.
 NHOM_DAM = {"cha_ech_la_lot_chien": "khac"}
 
@@ -56,6 +58,8 @@ def sua_dong(r):
 def ap_dung(mon_rows, mon_nl_rows, nhan_rows):
     for r in mon_rows:
         if r[0] in NL_CHINH: r[6] = NL_CHINH[r[0]]
+        if r[0] in AN_VAT: r[2] = "an_vat"
     for r in mon_nl_rows: sua_dong(r)
     for r in nhan_rows:
         if r[0] in NHOM_DAM: r[2] = NHOM_DAM[r[0]]
+        if r[0] in AN_VAT: r[1] = "an_vat"
