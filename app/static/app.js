@@ -152,7 +152,19 @@ function veLai() {
   if (location.hash.startsWith("#/nau/") || document.activeElement?.tagName === "INPUT") return;
   headerBar(); route();
 }
+// Làm lại từ đầu một lần trên mỗi máy (mốc DB_MOC ở dong_bo.js): xóa lịch sử gợi ý, món đã chọn, bữa đã lên trên máy.
+function lamLai() {
+  try {
+    if (localStorage.getItem("cachef.lam_lai") === String(DB_MOC)) return;
+    for (const [k, ten] of Object.entries(DB_TEN)) if (DB_LAM_LAI.has(ten)) localStorage.removeItem(k);
+    const cfg = dbCfg();
+    for (const p of Object.keys(cfg.cho)) if (DB_LAM_LAI.has(p.split("/")[0])) delete cfg.cho[p]; // không gửi lại mục cũ
+    dbLuu();
+    localStorage.setItem("cachef.lam_lai", String(DB_MOC));
+  } catch { /* chặn lưu: không có gì để xóa */ }
+}
 async function load() {
+  lamLai();
   const ttCu = docThoiTiet();
   const ttMoi = taiThoiTiet();
   const [data, weather] = await Promise.all([taiDuLieu(), ttCu || choToiDa(ttMoi, 1500)]);

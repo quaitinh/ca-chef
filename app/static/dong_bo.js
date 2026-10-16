@@ -6,6 +6,9 @@
 const DB_KEY = "cachef.dong_bo"; // { url, nha, since, t: { "tên/mục": giờ sửa }, cho: { "tên/mục": 1 chờ gửi } }
 const DB_TEN = { "cachef.tulanh": "tulanh", "cachef.danh_gia": "danh_gia", "cachef.chon": "chon", "cachef.bua": "bua",
   "cachef.history": "lich_su", "cachef.da_an": "da_an", "cachef.di_cho": "di_cho", "cachef.duyet": "duyet", "cachef.nl_mua": "nl_mua" };
+// Mốc làm lại từ đầu (chủ nhà xóa lịch sử gợi ý, món đã chọn, bữa đã lên – 16/10/2026): mục cũ hơn mốc trên Sheet bỏ qua,
+// máy nào mở bản mới cũng xóa dữ liệu cũ trên máy một lần (app.js lamLai). Tủ lạnh, đánh giá, đi chợ giữ nguyên.
+const DB_MOC = Date.parse("2026-10-16T03:50:00Z"), DB_LAM_LAI = new Set(["lich_su", "da_an", "chon", "bua"]);
 const DB_LS = Object.fromEntries(Object.entries(DB_TEN).map(([k, v]) => [v, k]));
 const DB = { cfg: null, hen: null, dang: false, loi: "", luc: 0, onDoi: null };
 
@@ -72,7 +75,7 @@ async function dbKeo() {
     const doi = new Map(); // khóa localStorage -> object đã sửa
     for (const e of res.entries || []) {
       const [ten, ...r] = String(e.k).split("/"), ls = DB_LS[ten], muc = r.join("/");
-      if (!ls || !muc) continue;
+      if (!ls || !muc || (DB_LAM_LAI.has(ten) && !(e.t >= DB_MOC))) continue;
       const obj = doi.get(ls) || docLS(ls);
       if (ten === "lich_su" && e.v !== null) {
         // Lịch sử gợi ý: gộp món của cả hai máy trong ngày.
