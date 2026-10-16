@@ -40,8 +40,9 @@ function chonOf(day) {
 function saveChon(day, chon) {
   S.chon[dayStr(day)] = chon;
   try {
-    const all = readChon(), giu = new Set([dayStr(0), dayStr(1)]);
-    for (const d of Object.keys(all)) if (!giu.has(d)) delete all[d];
+    // Giữ món đã chọn 14 ngày: lịch sử ăn dùng để biết ngày đã qua ăn món nào (món không ✓ coi như ăn ngoài).
+    const all = readChon(), tu = dayStr(-14);
+    for (const d of Object.keys(all)) if (d < tu) delete all[d];
     all[dayStr(day)] = { trua: [...chon.trua], toi: [...chon.toi], ...(chon.bo?.trua.size || chon.bo?.toi.size ? { bo: { trua: [...chon.bo.trua], toi: [...chon.bo.toi] } } : {}), ...(chon.du?.length ? { du: chon.du } : {}) };
     ghiLS(CHON_KEY, all);
   } catch { /* trình duyệt chặn lưu: lựa chọn chỉ còn trong phiên này */ }
@@ -252,9 +253,21 @@ const DIEM_DG = { ngon: 2, khongHop: -6, tim: 1 };
 
 // ---------- Chấm điểm ----------
 // Số ngày từ lần món có trong bữa gần nhất trước ngày `ref` (ngày mai thì tính cả món gợi ý hôm nay).
+// Lịch sử ăn: ngày đã qua (từ LICH_SU_TU) chỉ tính món đã ✓ (chốt) – bữa không ✓ món nào coi như ăn ngoài,
+// hôm sau món đó vẫn gợi ý lại được. Hôm nay, ngày mai: tính cả món đang gợi ý (để không ghép trùng khi lên bữa).
+// Ngày trước LICH_SU_TU giữ như cũ (lúc đó chưa lưu món đã chọn của ngày đã qua).
+const LICH_SU_TU = "2026-10-16";
 function readHistory() {
   if (S.memo?.hist) return S.memo.hist;
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}"); } catch { return {}; }
+  let h;
+  try { h = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}") || {}; } catch { return {}; }
+  const t = today(), chon = readChon();
+  for (const [d, list] of Object.entries(h)) {
+    if (d >= t || d < LICH_SU_TU) continue;
+    const c = chon[d] || {}, an = new Set([...(c.trua || []), ...(c.toi || []), ...[c.du || []].flat()]);
+    h[d] = list.filter((ma) => an.has(ma));
+  }
+  return h;
 }
 
 function daysSinceSuggested(ma, ref = today()) {
