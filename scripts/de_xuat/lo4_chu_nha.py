@@ -67,6 +67,17 @@ def M(vai, dam, *a, **kw):
 
 
 RECIPES = [
+    # Chủ nhà chọn 17/10/2026. Bài gốc 3 người (800 g cá, 4 cà chua) – quy về 4 người.
+    M("man", "ca", "ca_chim_sot_ca_chua", "Cá chim sốt cà chua", "mon_chinh", "am", "nang", "vua", "ca_chim", "moi", 35, "de",
+      "Cá chim chiên vàng rồi om trong sốt cà chua tỏi, rắc hành phi, hành lá – đậm đà, đưa cơm.",
+      ["Cá chim làm sạch, cắt khúc, thấm khô; chiên đến khi vàng nâu hai mặt rồi gắp ra.",
+       "Cà chua thái múi cau hoặc hạt lựu; tỏi băm; hành khô thái lát, phi vàng để riêng.",
+       "Phi thơm tỏi, cho cà chua vào đảo đến khi mềm nhừ; thêm khoảng 200 ml nước, tương ớt, bột canh, hạt nêm, tiêu, ớt; đun sôi đến khi sốt sánh (phần bé bớt ớt, tương ớt).",
+       "Thả cá vào sốt, để lửa nhỏ khoảng 10 phút, trở mặt cá cho thấm.",
+       "Rắc hành phi, hành lá rồi tắt bếp."],
+      None, CP + "13567520",
+      [("ca_chim", "Cá chim", 1000, "g", "n", "chinh"), ("ca_chua", "Cà chua", 5, "quả", "n", "phu"), OT(2), HANH_LA,
+       TOI(4), HANH(3), ("", "Tương ớt", 1, MC, "x", "gia_vi"), ("", "Bột canh", 3, MCF, "x", "gia_vi"), HAT_NEM(3), TIEU, DAU(4)]),
     # ---------- Cá trác (chủ nhà đi chợ 15/10/2026) – công thức Cookpad, cách làm viết lại ----------
     M("man", "ca", "ca_trac_kho_thom_ca", "Cá trác kho thơm cà", "mon_chinh", "am", "nang", "vua", "ca_trac", "moi", 100, "de",
       "Cá trác kho với cà chua, thơm, tiêu xanh – kho hai lần lửa nhỏ cho thấm, nước kho chấm rau sống.",
